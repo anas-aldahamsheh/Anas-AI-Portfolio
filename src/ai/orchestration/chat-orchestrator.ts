@@ -5,6 +5,10 @@ import {
   ResponseLanguage,
   ScoredCandidate,
   ScriptDirection,
+  RagDebugTelemetry,
+  RagDebugStageLatency,
+  RagDebugSourceItem,
+  RagDebugValidationState,
 } from "@/ai/contracts";
 import { languageResolver, getScriptDirection } from "@/ai/language";
 import { queryRouter } from "@/ai/router";
@@ -31,22 +35,13 @@ export interface ChatOrchestratorInput {
   projectScopeTitle?: string | undefined;
   allowGlobalContext?: boolean | undefined;
   history?: ChatHistoryMessage[] | undefined;
+  isAdmin?: boolean | undefined;
 }
 
-export interface ChatOrchestratorTelemetry {
-  routeId: string;
-  language: ResponseLanguage;
-  direction: ScriptDirection;
-  rewriteCount: number;
-  retrievedCount: number;
-  rerankedCount: number;
-  selectedChunksCount: number;
-  tokenCount: number;
+export interface ChatOrchestratorTelemetry extends RagDebugTelemetry {
   generationLatencyMs: number;
   totalLatencyMs: number;
   strategy: string;
-  projectScopeId?: string | undefined;
-  isScopedRetrieval: boolean;
 }
 
 export interface ChatOrchestratorResult {
@@ -83,13 +78,16 @@ export class ChatOrchestrator {
     );
 
     // 3. Query Routing & Policy Selection
+    const routingStart = performance.now();
     const routeResult = await queryRouter.route(message, {
       forceRouteId: input.projectScopeId ? "project" : undefined,
     });
+    const routingMs = Math.round(performance.now() - routingStart);
 
-    // 3. Query Expansion & Rewriting (if route signals rewrite or ambiguous)
+    // 4. Query Expansion & Rewriting (if route signals rewrite or ambiguous)
     let searchQueries = [message];
     let rewriteCount = 0;
+    const rewriteStart = performance.now();
     if (routeResult.needs_rewrite) {
       try {
         const rewriteResult = await queryRewriter.rewrite({
@@ -110,8 +108,9 @@ export class ChatOrchestrator {
         });
       }
     }
+    const rewriteMs = Math.round(performance.now() - rewriteStart);
 
-    // 4. Hybrid Retrieval (Dense Vector + Sparse BM25 Fusion)
+    // 5. Hybrid Retrieval (Dense Vector + Sparse BM25 Fusion)
     const isScoped = Boolean(input.projectScopeId);
     const allowGlobalContext = Boolean(input.allowGlobalContext);
 
@@ -121,6 +120,7 @@ export class ChatOrchestrator {
       retrievalFilter.sourceType = "project";
     }
 
+    const retrievalStart = performance.now();
     let candidates: ScoredCandidate[] = [];
     try {
       // Execute hybrid retrieval for primary query with hard scope filter
@@ -178,10 +178,12 @@ export class ChatOrchestrator {
       });
       candidates = [];
     }
+    const retrievalMs = Math.round(performance.now() - retrievalStart);
 
-    // 5. Cross-Encoder Reranking
+    // 6. Cross-Encoder Reranking
     let candidatesForContext: ContextInputCandidate[] = candidates;
     let rerankedCount = candidates.length;
+    const rerankingStart = performance.now();
 
     if (candidates.length > 0) {
       try {
@@ -199,14 +201,17 @@ export class ChatOrchestrator {
         });
       }
     }
+    const rerankingMs = Math.round(performance.now() - rerankingStart);
 
-    // 6. Context Packing, Token Budgeting & Deduplication
+    // 7. Context Packing, Token Budgeting & Deduplication
+    const contextStart = performance.now();
     const contextResult = await contextBuilder.buildContext(candidatesForContext, {
       language,
       deduplicate: true,
     });
+    const contextMs = Math.round(performance.now() - contextStart);
 
-    // 7. Grounded Generation & Citation Validation
+    // 8. Grounded Generation & Citation Validation
     const genStart = performance.now();
     const groundedAnswer = await groundedGenerator.generate({
       userMessage: message,
@@ -222,6 +227,31 @@ export class ChatOrchestrator {
 
     const totalLatency = Math.round(performance.now() - start);
 
+    // 9. Build Sanitized Engineering Telemetry (Zero hidden prompts or CoT leakage)
+    const sources: RagDebugSourceItem[] = contextResult.chunks.map((c) => ({
+      id: c.id,
+      title: c.title,
+      sourceType: c.sourceType,
+      score: c.score !== undefined ? Number(c.score.toFixed(4)) : undefined,
+      snippet: c.content ? c.content.slice(0, 160) + (c.content.length > 160 ? "..." : "") : undefined,
+    }));
+
+    const validationState: RagDebugValidationState = {
+      isValid: !groundedAnswer.hasInsufficientEvidence,
+      citationsCount: groundedAnswer.citations.length,
+      ungroundedCount: groundedAnswer.validation?.invalidCitedIds?.length ?? 0,
+    };
+
+    const latencies: RagDebugStageLatency = {
+      routingMs,
+      rewriteMs,
+      retrievalMs,
+      rerankingMs,
+      contextMs,
+      generationMs: genLatency,
+      totalMs: totalLatency,
+    };
+
     return {
       answer: groundedAnswer.content,
       language: groundedAnswer.language,
@@ -231,18 +261,36 @@ export class ChatOrchestrator {
       hasInsufficientEvidence: groundedAnswer.hasInsufficientEvidence,
       telemetry: {
         routeId: routeResult.route_id,
+        routeLabel:
+          routeResult.route_id === "project"
+            ? "Project Scope & Architecture Intent"
+            : routeResult.route_id === "technical_detail"
+              ? "Deep Technical Deep Dive"
+              : routeResult.route_id === "job_fit" ||
+                  routeResult.route_id === "experience" ||
+                  routeResult.route_id === "cv"
+                ? "Recruiter & Experience Evaluation"
+                : "General Portfolio Inquiry",
         language,
         direction,
+        conversationMode,
         rewriteCount,
+        retrievalMethod: "hybrid",
         retrievedCount: candidates.length,
         rerankedCount,
         selectedChunksCount: contextResult.chunks.length,
         tokenCount: contextResult.telemetry.totalEstimatedTokens,
+        modelId: groundedAnswer.telemetry.modelUsed || "gpt-4o",
+        providerType: groundedAnswer.telemetry.providerType || "openai_compatible",
+        latencies,
+        sources,
+        validationState,
+        projectScopeId: input.projectScopeId,
+        isScopedRetrieval: isScoped,
+        isAdminView: Boolean(input.isAdmin),
         generationLatencyMs: genLatency,
         totalLatencyMs: totalLatency,
         strategy: groundedAnswer.telemetry.strategy,
-        projectScopeId: input.projectScopeId,
-        isScopedRetrieval: isScoped,
       },
     };
   }

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useLocalization } from "@/modules/localization/presentation/localization-provider";
-import { ConversationMode, ScriptDirection, CitationMapping } from "@/ai/contracts";
+import { ConversationMode, ScriptDirection, CitationMapping, RagDebugTelemetry } from "@/ai/contracts";
 import { ChatMessage, ChatMessageItem } from "./chat-message";
 
 export interface ChatDrawerProps {
@@ -21,7 +21,7 @@ interface StreamEventCallbacks {
   onMeta: (direction: ScriptDirection) => void;
   onToken: (accumulated: string) => void;
   onCitations: (citations: CitationMapping[]) => void;
-  onDone: (answer: string, citations: CitationMapping[]) => void;
+  onDone: (answer: string, citations: CitationMapping[], telemetry?: RagDebugTelemetry | undefined) => void;
 }
 
 async function readChatEventStream(
@@ -81,7 +81,7 @@ async function readChatEventStream(
         if (next?.startsWith("data: ")) {
           try {
             const doneData = JSON.parse(next.slice(6));
-            callbacks.onDone(doneData.answer || text, doneData.citations || []);
+            callbacks.onDone(doneData.answer || text, doneData.citations || [], doneData.telemetry);
           } catch {
             // ignore JSON parse error
           }
@@ -276,7 +276,7 @@ export function ChatDrawer({
           onCitations: (citations) => {
             finalCitations = citations;
           },
-          onDone: (answer, citations) => {
+          onDone: (answer, citations, telemetry) => {
             setMessages((prev) =>
               prev.map((m) =>
                 m.id === assistantMessageId
@@ -285,6 +285,7 @@ export function ChatDrawer({
                       content: answer,
                       citations: citations.length > 0 ? citations : finalCitations,
                       direction: finalDirection,
+                      telemetry,
                       isStreaming: false,
                     }
                   : m,
@@ -304,6 +305,7 @@ export function ChatDrawer({
                     content: data.result.answer,
                     citations: data.result.citations || [],
                     direction: data.result.direction,
+                    telemetry: data.result.telemetry,
                     isStreaming: false,
                   }
                 : m,

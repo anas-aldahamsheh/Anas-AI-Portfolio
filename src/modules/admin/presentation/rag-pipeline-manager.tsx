@@ -9,6 +9,8 @@ import {
 } from "@/ai/contracts/reranker";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { RagDebugTelemetry } from "@/ai/contracts/rag-debug";
+import { RagDebugModal } from "@/modules/chat/presentation";
 
 interface RagPipelineManagerProps {
   initialStatus: RagIndexStatus;
@@ -51,6 +53,47 @@ export function RagPipelineManager({
   const [rerankTelemetry, setRerankTelemetry] = useState<RerankerTelemetryContract | null>(null);
   const [isReranking, setIsReranking] = useState(false);
   const [rerankError, setRerankError] = useState<string | null>(null);
+  // Full RAG Debug Trace state (F036)
+  const [debugQuery, setDebugQuery] = useState("");
+  const [debugMode, setDebugMode] = useState<"general" | "recruiter" | "technical">("general");
+  const [debugTelemetry, setDebugTelemetry] = useState<RagDebugTelemetry | null>(null);
+  const [debugAnswer, setDebugAnswer] = useState<string | null>(null);
+  const [isDebugRunning, setIsDebugRunning] = useState(false);
+  const [debugError, setDebugError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleRunDebugTrace = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!debugQuery.trim()) return;
+
+    setIsDebugRunning(true);
+    setDebugError(null);
+    setDebugAnswer(null);
+
+    try {
+      const res = await fetch("/api/admin/rag/debug", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: debugQuery,
+          mode: debugMode,
+          locale: isAr ? "ar" : "en",
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setDebugError(data.error ?? "RAG debug trace failed");
+      } else {
+        setDebugTelemetry(data.data.telemetry);
+        setDebugAnswer(data.data.answer);
+      }
+    } catch (err) {
+      setDebugError(err instanceof Error ? err.message : "RAG debug trace error");
+    } finally {
+      setIsDebugRunning(false);
+    }
+  };
 
   const handleRerank = async () => {
     if (!searchResults || searchResults.length === 0) return;
@@ -875,6 +918,192 @@ export function RagPipelineManager({
                   )}
                 </div>
               )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Full RAG Pipeline Trace & Engineering Telemetry (F036) */}
+      <Card className="border-border">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-foreground text-lg">
+              {isAr ? "تتبع خط معالجة RAG المباشر (F036)" : "Live RAG Pipeline Trace (F036)"}
+            </CardTitle>
+            <span className="bg-primary/15 text-primary rounded px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
+              Admin Trace
+            </span>
+          </div>
+          <CardDescription>
+            {isAr
+              ? "تشغيل استعلام كامل عبر موجه الاستعلام، الاسترجاع الهجين، إعادة الترتيب، حزم السياق والتوليد مع فحص أزمنة المراحل."
+              : "Execute an end-to-end query through routing, hybrid retrieval, reranking, context packing, and grounded generation."}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <form onSubmit={handleRunDebugTrace} className="space-y-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <input
+                type="text"
+                value={debugQuery}
+                onChange={(e) => setDebugQuery(e.target.value)}
+                placeholder={
+                  isAr
+                    ? "أدخل سؤالاً تجريبياً (مثال: ما هي خبراتك في النماذج اللغوية؟)"
+                    : "Enter test query (e.g. What is your experience with LLMs?)"
+                }
+                className="bg-background border-border placeholder:text-muted-foreground focus:ring-primary/40 flex-1 rounded-md border px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+                data-testid="admin-rag-debug-input"
+              />
+              <select
+                value={debugMode}
+                onChange={(e) =>
+                  setDebugMode(e.target.value as "general" | "recruiter" | "technical")
+                }
+                className="bg-background border-border rounded-md border px-3 py-2 text-sm focus:outline-none"
+                data-testid="admin-rag-debug-mode-select"
+              >
+                <option value="general">General Mode</option>
+                <option value="recruiter">Recruiter Mode</option>
+                <option value="technical">Technical Mode</option>
+              </select>
+              <Button
+                type="submit"
+                disabled={isDebugRunning || !debugQuery.trim()}
+                data-testid="admin-rag-debug-submit"
+              >
+                {isDebugRunning
+                  ? isAr
+                    ? "جارٍ التتبع..."
+                    : "Tracing..."
+                  : isAr
+                    ? "تشغيل التتبع"
+                    : "Run Trace"}
+              </Button>
+            </div>
+          </form>
+
+          {debugError && (
+            <div className="text-destructive bg-destructive/10 border-destructive/20 rounded-md border p-3 text-xs">
+              {debugError}
+            </div>
+          )}
+
+          {debugTelemetry && (
+            <div className="space-y-4 border-t border-border pt-4" data-testid="admin-rag-debug-results">
+              {/* Telemetry Summary Cards */}
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 text-xs">
+                <div className="bg-muted/40 border-border/70 rounded-lg border p-2.5">
+                  <div className="text-muted-foreground text-[10px] uppercase font-semibold">
+                    {isAr ? "إجمالي الزمن" : "Total Latency"}
+                  </div>
+                  <div className="text-foreground font-mono text-base font-bold mt-1">
+                    {debugTelemetry.latencies.totalMs} ms
+                  </div>
+                </div>
+
+                <div className="bg-muted/40 border-border/70 rounded-lg border p-2.5">
+                  <div className="text-muted-foreground text-[10px] uppercase font-semibold">
+                    {isAr ? "المسار المعتمد" : "Route"}
+                  </div>
+                  <div className="text-foreground font-semibold truncate mt-1" title={debugTelemetry.routeLabel}>
+                    {debugTelemetry.routeId}
+                  </div>
+                </div>
+
+                <div className="bg-muted/40 border-border/70 rounded-lg border p-2.5">
+                  <div className="text-muted-foreground text-[10px] uppercase font-semibold">
+                    {isAr ? "رموز السياق" : "Tokens"}
+                  </div>
+                  <div className="text-foreground font-mono text-base font-bold mt-1">
+                    {debugTelemetry.tokenCount} tok
+                  </div>
+                </div>
+
+                <div className="bg-muted/40 border-border/70 rounded-lg border p-2.5">
+                  <div className="text-muted-foreground text-[10px] uppercase font-semibold">
+                    {isAr ? "المرشحون / المختارون" : "Candidates / Chunks"}
+                  </div>
+                  <div className="text-foreground font-mono text-base font-bold mt-1">
+                    {debugTelemetry.rerankedCount} / {debugTelemetry.selectedChunksCount}
+                  </div>
+                </div>
+
+                <div className="bg-muted/40 border-border/70 rounded-lg border p-2.5 col-span-2 sm:col-span-1">
+                  <div className="text-muted-foreground text-[10px] uppercase font-semibold">
+                    {isAr ? "حالة الإسناد" : "Grounding"}
+                  </div>
+                  <div className="mt-1 flex items-center gap-1.5 font-semibold">
+                    <span
+                      className={`h-2 w-2 rounded-full ${
+                        debugTelemetry.validationState.isValid ? "bg-emerald-500" : "bg-amber-500"
+                      }`}
+                    />
+                    <span className="text-xs">
+                      {debugTelemetry.validationState.isValid ? "Grounded" : "Insufficient"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Latencies Waterfall Preview */}
+              <div className="bg-muted/30 border-border/60 rounded-lg border p-3 space-y-2 text-xs">
+                <div className="flex items-center justify-between text-muted-foreground font-semibold">
+                  <span>{isAr ? "مخطط أزمنة المراحل" : "Stage Latencies Breakdown"}</span>
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(true)}
+                    className="text-primary hover:underline flex items-center gap-1 text-[11px] font-medium"
+                    data-testid="admin-open-modal-btn"
+                  >
+                    🔍 {isAr ? "عرض نافذة التتبع التفصيلية" : "Open Full Trace Modal"}
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 font-mono text-[11px] text-center pt-1">
+                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                    <div className="text-muted-foreground text-[10px]">Routing</div>
+                    <div className="font-bold">{debugTelemetry.latencies.routingMs}ms</div>
+                  </div>
+                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                    <div className="text-muted-foreground text-[10px]">Rewrite</div>
+                    <div className="font-bold">{debugTelemetry.latencies.rewriteMs}ms</div>
+                  </div>
+                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                    <div className="text-muted-foreground text-[10px]">Retrieval</div>
+                    <div className="font-bold">{debugTelemetry.latencies.retrievalMs}ms</div>
+                  </div>
+                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                    <div className="text-muted-foreground text-[10px]">Rerank</div>
+                    <div className="font-bold">{debugTelemetry.latencies.rerankingMs}ms</div>
+                  </div>
+                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                    <div className="text-muted-foreground text-[10px]">Context</div>
+                    <div className="font-bold">{debugTelemetry.latencies.contextMs}ms</div>
+                  </div>
+                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                    <div className="text-muted-foreground text-[10px]">Gen</div>
+                    <div className="font-bold">{debugTelemetry.latencies.generationMs}ms</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Answer Preview */}
+              {debugAnswer && (
+                <div className="bg-background border-border rounded-lg border p-3 text-xs space-y-1">
+                  <div className="text-muted-foreground font-semibold text-[10px] uppercase">
+                    {isAr ? "الإجابة المولدة" : "Generated Answer"}
+                  </div>
+                  <p className="text-foreground leading-relaxed whitespace-pre-wrap">{debugAnswer}</p>
+                </div>
+              )}
+
+              {/* Trace Modal */}
+              <RagDebugModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                telemetry={debugTelemetry}
+              />
             </div>
           )}
         </CardContent>

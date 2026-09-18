@@ -1572,6 +1572,188 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     },
   },
 
+  // RAG Debug View (F036)
+  {
+    key: "chat.debug.button",
+    category: "chat",
+    description: "Affordance button to open RAG telemetry trace on assistant message",
+    translations: {
+      ar: "تتبع RAG",
+      en: "RAG Trace",
+    },
+  },
+  {
+    key: "chat.debug.title",
+    category: "chat",
+    description: "Header title for RAG Debug View modal",
+    translations: {
+      ar: "بيانات خط معالجة RAG",
+      en: "RAG Pipeline Telemetry",
+    },
+  },
+  {
+    key: "chat.debug.subtitle",
+    category: "chat",
+    description: "Header subtitle for RAG Debug View modal",
+    translations: {
+      ar: "فحص أزمنة المراحل، توجيه القصد، والأدلة الموثقة بشفافية هندسية.",
+      en: "Inspect stage latencies, routing intent, and verified evidence.",
+    },
+  },
+  {
+    key: "chat.debug.stages",
+    category: "chat",
+    description: "Section header for pipeline waterfall stages",
+    translations: {
+      ar: "مراحل المعالجة وزمن الاستجابة",
+      en: "Pipeline Stages & Latency",
+    },
+  },
+  {
+    key: "chat.debug.routing",
+    category: "chat",
+    description: "Stage name: Query routing",
+    translations: {
+      ar: "توجيه القصد",
+      en: "Intent & Routing",
+    },
+  },
+  {
+    key: "chat.debug.rewrite",
+    category: "chat",
+    description: "Stage name: Query rewriting",
+    translations: {
+      ar: "إعادة صياغة الاستعلام",
+      en: "Query Rewriting",
+    },
+  },
+  {
+    key: "chat.debug.retrieval",
+    category: "chat",
+    description: "Stage name: Hybrid retrieval",
+    translations: {
+      ar: "الاسترجاع الهجين",
+      en: "Hybrid Retrieval",
+    },
+  },
+  {
+    key: "chat.debug.reranking",
+    category: "chat",
+    description: "Stage name: Cross-encoder rerank",
+    translations: {
+      ar: "إعادة الترتيب بالمرمز",
+      en: "Cross-Encoder Rerank",
+    },
+  },
+  {
+    key: "chat.debug.context",
+    category: "chat",
+    description: "Stage name: Context packing",
+    translations: {
+      ar: "تجهيز وتنسيق السياق",
+      en: "Context Budgeting",
+    },
+  },
+  {
+    key: "chat.debug.generation",
+    category: "chat",
+    description: "Stage name: Grounded generation",
+    translations: {
+      ar: "التوليد المسند بالأدلة",
+      en: "Grounded Generation",
+    },
+  },
+  {
+    key: "chat.debug.latency",
+    category: "chat",
+    description: "Metric label: Total latency",
+    translations: {
+      ar: "إجمالي زمن الاستجابة",
+      en: "Total Latency",
+    },
+  },
+  {
+    key: "chat.debug.sources",
+    category: "chat",
+    description: "Section header for retrieved context sources",
+    translations: {
+      ar: "المصادر والأدلة المفحوصة",
+      en: "Inspected Sources & Evidence",
+    },
+  },
+  {
+    key: "chat.debug.tokens",
+    category: "chat",
+    description: "Metric label: Estimated context tokens",
+    translations: {
+      ar: "رموز السياق التقديرية",
+      en: "Context Tokens",
+    },
+  },
+  {
+    key: "chat.debug.valid",
+    category: "chat",
+    description: "Metric label: Citation validation status",
+    translations: {
+      ar: "حالة توثيق الاستشهادات",
+      en: "Citation Grounding Status",
+    },
+  },
+  {
+    key: "chat.debug.valid.grounded",
+    category: "chat",
+    description: "Grounded status badge: verified",
+    translations: {
+      ar: "موثق ومسند بالكامل",
+      en: "Verified Grounded",
+    },
+  },
+  {
+    key: "chat.debug.valid.insufficient",
+    category: "chat",
+    description: "Grounded status badge: insufficient evidence",
+    translations: {
+      ar: "أدلة غير كافية",
+      en: "Insufficient Evidence",
+    },
+  },
+  {
+    key: "chat.debug.model",
+    category: "chat",
+    description: "Metric label: Model and provider",
+    translations: {
+      ar: "النموذج ومزود الخدمة",
+      en: "Model & Provider",
+    },
+  },
+  {
+    key: "chat.debug.route_id",
+    category: "chat",
+    description: "Metric label: Route identifier",
+    translations: {
+      ar: "المسار المعتمد",
+      en: "Resolved Route",
+    },
+  },
+  {
+    key: "chat.debug.safety_notice",
+    category: "chat",
+    description: "Safety guarantee notice for transparency mode",
+    translations: {
+      ar: "نمط الشفافية الهندسية. التعليمات التأسيسية، سلاسل التفكير الداخلية، والمفاتيح السرية محمية بالكامل.",
+      en: "Engineering transparency mode. System prompts, internal reasoning, and secret credentials are strictly protected.",
+    },
+  },
+  {
+    key: "chat.debug.close",
+    category: "chat",
+    description: "Close button for RAG debug view modal",
+    translations: {
+      ar: "إغلاق التتبع",
+      en: "Close Trace",
+    },
+  },
+
   // Job Fit Analyzer (F034)
   {
     key: "jobfit.title",

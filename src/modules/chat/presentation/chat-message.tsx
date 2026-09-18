@@ -1,7 +1,10 @@
 "use client";
 
-import { CitationMapping, ScriptDirection } from "@/ai/contracts";
+import { useState } from "react";
+import { CitationMapping, ScriptDirection, RagDebugTelemetry } from "@/ai/contracts";
+import { useLocalization } from "@/modules/localization/presentation/localization-provider";
 import { ChatCitationBadge } from "./chat-citation-badge";
+import { RagDebugModal } from "./rag-debug-modal";
 
 export interface ChatMessageItem {
   id: string;
@@ -9,6 +12,7 @@ export interface ChatMessageItem {
   content: string;
   direction?: ScriptDirection;
   citations?: CitationMapping[];
+  telemetry?: RagDebugTelemetry | undefined;
   isStreaming?: boolean;
 }
 
@@ -17,6 +21,8 @@ export interface ChatMessageProps {
 }
 
 export function ChatMessage({ message }: ChatMessageProps) {
+  const { t } = useLocalization();
+  const [isDebugOpen, setIsDebugOpen] = useState(false);
   const isUser = message.role === "user";
   const direction = message.direction || "ltr";
 
@@ -103,6 +109,42 @@ export function ChatMessage({ message }: ChatMessageProps) {
           <span className="bg-primary ms-1 inline-block h-3.5 w-1.5 animate-pulse align-middle" />
         )}
       </div>
+
+      {!isUser && !message.isStreaming && message.telemetry && (
+        <div className="mt-1.5 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsDebugOpen(true)}
+            className="text-muted-foreground hover:text-foreground hover:bg-muted/80 flex items-center gap-1.5 rounded-md px-2 py-1 text-[11px] font-medium transition-colors"
+            data-testid="rag-debug-trigger-button"
+            title={t("chat.debug.button")}
+          >
+            <svg
+              className="text-primary h-3.5 w-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+              />
+            </svg>
+            <span>{t("chat.debug.button")}</span>
+            <span className="text-muted-foreground/80 font-mono text-[10px]">
+              ({message.telemetry.latencies.totalMs}ms)
+            </span>
+          </button>
+
+          <RagDebugModal
+            isOpen={isDebugOpen}
+            onClose={() => setIsDebugOpen(false)}
+            telemetry={message.telemetry}
+          />
+        </div>
+      )}
     </div>
   );
 }
