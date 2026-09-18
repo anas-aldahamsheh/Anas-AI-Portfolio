@@ -3,6 +3,9 @@ import { GuestReassuranceBadge } from "@/modules/auth/presentation/guest-reassur
 import { DirectionalIcon } from "@/modules/localization/presentation/directional-icon";
 import { MixedContent } from "@/modules/localization/presentation/mixed-content";
 import { ThemeToggle } from "@/modules/theme/presentation/theme-toggle";
+import { LanguageSelect } from "@/modules/localization/presentation/language-select";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface PublicPageProps {
   params: Promise<{ locale: string }>;
@@ -17,21 +20,25 @@ export default async function PublicHomePage({ params }: PublicPageProps) {
       id: "projects",
       title: t("guest.capabilities.projects.title"),
       description: t("guest.capabilities.projects.description"),
+      tag: "Live",
     },
     {
       id: "cv",
       title: t("guest.capabilities.cv.title"),
       description: t("guest.capabilities.cv.description"),
+      tag: "Verified",
     },
     {
       id: "ai-assistant",
       title: t("guest.capabilities.ai.title"),
       description: t("guest.capabilities.ai.description"),
+      tag: "AI",
     },
     {
       id: "job-fit",
       title: t("guest.capabilities.job_fit.title"),
       description: t("guest.capabilities.job_fit.description"),
+      tag: "Tool",
     },
   ];
 
@@ -46,7 +53,10 @@ export default async function PublicHomePage({ params }: PublicPageProps) {
             <h1 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-neutral-50">
               {t("home.title")}
             </h1>
-            <ThemeToggle locale={locale} />
+            <div className="flex items-center gap-2">
+              <LanguageSelect currentLocale={locale} />
+              <ThemeToggle locale={locale} />
+            </div>
           </div>
           <p className="text-sm text-neutral-600 sm:text-base dark:text-neutral-400">
             <MixedContent text={t("home.subtitle")} />
@@ -68,26 +78,29 @@ export default async function PublicHomePage({ params }: PublicPageProps) {
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {publicFeatures.map((feature) => (
-              <div
+              <Card
                 key={feature.id}
-                className="group relative flex flex-col justify-between rounded-lg border border-neutral-200 bg-white p-5 shadow-xs transition-all hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-neutral-700"
+                className="group relative transition-all hover:border-neutral-300 dark:hover:border-neutral-700"
               >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
-                      {feature.title}
-                    </h3>
+                <CardHeader>
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <CardTitle>{feature.title}</CardTitle>
+                      <Badge variant="secondary" size="sm">
+                        {feature.tag}
+                      </Badge>
+                    </div>
                     <DirectionalIcon
                       name="chevron-end"
                       size={18}
                       className="text-neutral-400 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5"
                     />
                   </div>
-                  <p className="mt-2 text-xs leading-relaxed text-neutral-600 sm:text-sm dark:text-neutral-400">
+                  <CardDescription className="mt-2 text-xs leading-relaxed sm:text-sm">
                     <MixedContent text={feature.description} />
-                  </p>
-                </div>
-              </div>
+                  </CardDescription>
+                </CardHeader>
+              </Card>
             ))}
           </div>
         </section>
