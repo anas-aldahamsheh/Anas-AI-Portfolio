@@ -16,4 +16,6 @@ export { ContentCenterManager } from "./content-center-manager";
 export type { ContentCenterManagerProps } from "./content-center-manager";
 export { AiControlCenter } from "./ai-control-center";
 export type { AiControlCenterProps } from "./ai-control-center";
+export { AuditLogViewer } from "./audit-log-viewer";
+export type { AuditLogViewerProps } from "./audit-log-viewer";
 
