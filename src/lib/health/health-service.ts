@@ -26,6 +26,8 @@ export interface LivenessCheckResult {
   status: "healthy";
   timestamp: string;
   uptimeSeconds: number;
+  uptime?: number | undefined;
+  environment?: string | undefined;
   memory: {
     rssMb: number;
     heapUsedMb: number;
@@ -40,7 +42,7 @@ async function withTimeout<T>(promise: Promise<T>, ms = 500): Promise<T> {
   return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
 }
 
-function sanitizeErrorMessage(err: unknown): string {
+export function sanitizeErrorMessage(err: unknown): string {
   if (!err) return "Unknown error";
   const str = String(err);
   // Redact potential connection string patterns, passwords, keys
@@ -56,10 +58,13 @@ export class HealthService {
    */
   public getLiveness(): LivenessCheckResult {
     const mem = process.memoryUsage ? process.memoryUsage() : { rss: 0, heapUsed: 0 };
+    const upSec = Math.floor(process.uptime());
     return {
       status: "healthy",
       timestamp: new Date().toISOString(),
-      uptimeSeconds: Math.floor(process.uptime()),
+      uptimeSeconds: upSec,
+      uptime: upSec,
+      environment: process.env.NODE_ENV || "development",
       memory: {
         rssMb: Number((mem.rss / (1024 * 1024)).toFixed(2)),
         heapUsedMb: Number((mem.heapUsed / (1024 * 1024)).toFixed(2)),
