@@ -7,3 +7,5 @@ export type { EditableRegionProps } from "./editable-region";
 export { ContextualEditorDialog } from "./contextual-editor-dialog";
 export { AiRegistryManager } from "./ai-registry-manager";
 export type { AiRegistryManagerProps } from "./ai-registry-manager";
+export { PromptRegistryManager } from "./prompt-registry-manager";
+export type { PromptRegistryManagerProps } from "./prompt-registry-manager";

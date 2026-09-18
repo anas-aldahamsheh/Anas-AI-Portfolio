@@ -1035,4 +1035,157 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
       en: "Check Failed",
     },
   },
+  {
+    key: "admin.prompts.title",
+    category: "admin",
+    description: "Prompt registry page title",
+    translations: {
+      ar: "سجل التوجيهات الذكية (Prompts)",
+      en: "AI Prompt Registry",
+    },
+  },
+  {
+    key: "admin.prompts.subtitle",
+    category: "admin",
+    description: "Prompt registry page subtitle",
+    translations: {
+      ar: "إدارة قوالب وتوجيهات الذكاء الاصطناعي مع دعم الإصدارات والاسترجاع الآمن.",
+      en: "Manage, version, test, and rollback production AI prompts safely.",
+    },
+  },
+  {
+    key: "admin.prompts.current_version",
+    category: "admin",
+    description: "Active version badge",
+    translations: {
+      ar: "الإصدار النشط: v{version}",
+      en: "Active: v{version}",
+    },
+  },
+  {
+    key: "admin.prompts.total_versions",
+    category: "admin",
+    description: "Total versions count",
+    translations: {
+      ar: "{count} إصدارات",
+      en: "{count} versions",
+    },
+  },
+  {
+    key: "admin.prompts.tab.current",
+    category: "admin",
+    description: "Tab for viewing current version",
+    translations: {
+      ar: "الإصدار الحالي",
+      en: "Current Version",
+    },
+  },
+  {
+    key: "admin.prompts.tab.history",
+    category: "admin",
+    description: "Tab for version history",
+    translations: {
+      ar: "سجل الإصدارات",
+      en: "Version History",
+    },
+  },
+  {
+    key: "admin.prompts.tab.new_version",
+    category: "admin",
+    description: "Tab for drafting new version",
+    translations: {
+      ar: "إصدار جديد",
+      en: "New Version",
+    },
+  },
+  {
+    key: "admin.prompts.tab.compare",
+    category: "admin",
+    description: "Tab for comparing versions",
+    translations: {
+      ar: "مقارنة الإصدارات",
+      en: "Compare",
+    },
+  },
+  {
+    key: "admin.prompts.tab.test",
+    category: "admin",
+    description: "Tab for testing template rendering",
+    translations: {
+      ar: "اختبار القالب",
+      en: "Template Tester",
+    },
+  },
+  {
+    key: "admin.prompts.rollback_button",
+    category: "admin",
+    description: "Rollback button text",
+    translations: {
+      ar: "استرجاع وتفعيل هذا الإصدار",
+      en: "Rollback to this version",
+    },
+  },
+  {
+    key: "admin.prompts.publish_immediate",
+    category: "admin",
+    description: "Checkbox for immediate activation",
+    translations: {
+      ar: "تفعيل هذا الإصدار فوراً (Make Active)",
+      en: "Make active immediately",
+    },
+  },
+  {
+    key: "admin.prompts.save_version",
+    category: "admin",
+    description: "Save version button",
+    translations: {
+      ar: "حفظ الإصدار",
+      en: "Save Version",
+    },
+  },
+  {
+    key: "admin.prompts.changelog_label",
+    category: "admin",
+    description: "Changelog field label",
+    translations: {
+      ar: "ملخص التعديلات (Changelog)",
+      en: "Changelog",
+    },
+  },
+  {
+    key: "admin.prompts.system_prompt_label",
+    category: "admin",
+    description: "System prompt field label",
+    translations: {
+      ar: "توجيه النظام (System Prompt)",
+      en: "System Prompt",
+    },
+  },
+  {
+    key: "admin.prompts.user_template_label",
+    category: "admin",
+    description: "User template field label",
+    translations: {
+      ar: "قالب المستخدم (User Template)",
+      en: "User Template",
+    },
+  },
+  {
+    key: "admin.prompts.variables_label",
+    category: "admin",
+    description: "Variables section label",
+    translations: {
+      ar: "المتغيرات المطلوبة:",
+      en: "Required Variables:",
+    },
+  },
+  {
+    key: "admin.prompts.test_run",
+    category: "admin",
+    description: "Run template test button",
+    translations: {
+      ar: "معاينة التوليد",
+      en: "Preview Render",
+    },
+  },
 ];
