@@ -7,6 +7,7 @@ import { CardCollectionBlock } from "./blocks/card-collection-block";
 import { SkillTagsBlock } from "./blocks/skill-tags-block";
 import { CodeBlock } from "./blocks/code-block";
 import { QuoteBlock } from "./blocks/quote-block";
+import { EditableRegion } from "@/modules/admin/presentation/editable-region";
 
 interface BlockRendererProps {
   block: GenericBlockData;
@@ -16,24 +17,54 @@ interface BlockRendererProps {
 export function BlockRenderer({ block, locale }: BlockRendererProps) {
   if (!block.isVisible) return null;
 
+  let blockContent: React.ReactNode = null;
+
   switch (block.blockType) {
     case "heading":
-      return <HeadingBlock config={block.config} content={block.content} />;
+      blockContent = <HeadingBlock config={block.config} content={block.content} />;
+      break;
     case "rich_text":
-      return <RichTextBlock config={block.config} content={block.content} />;
+      blockContent = <RichTextBlock config={block.config} content={block.content} />;
+      break;
     case "cta":
-      return <CtaBlock config={block.config} content={block.content} locale={locale} />;
+      blockContent = <CtaBlock config={block.config} content={block.content} locale={locale} />;
+      break;
     case "metrics":
-      return <MetricsBlock content={block.content} />;
+      blockContent = <MetricsBlock content={block.content} />;
+      break;
     case "card_collection":
-      return <CardCollectionBlock config={block.config} content={block.content} locale={locale} />;
+      blockContent = (
+        <CardCollectionBlock config={block.config} content={block.content} locale={locale} />
+      );
+      break;
     case "skill_tags":
-      return <SkillTagsBlock content={block.content} />;
+      blockContent = <SkillTagsBlock content={block.content} />;
+      break;
     case "code_block":
-      return <CodeBlock config={block.config} content={block.content} />;
+      blockContent = <CodeBlock config={block.config} content={block.content} />;
+      break;
     case "quote":
-      return <QuoteBlock content={block.content} />;
+      blockContent = <QuoteBlock content={block.content} />;
+      break;
     default:
       return null;
   }
+
+  return (
+    <EditableRegion
+      editableRef={{
+        entityType: "block",
+        entityId: block.id,
+        fieldOrBlockId: block.blockType,
+        locale: locale === "en" ? "en" : "ar",
+        title: `${block.blockType} block`,
+        initialData: {
+          config: block.config,
+          content: block.content,
+        },
+      }}
+    >
+      {blockContent}
+    </EditableRegion>
+  );
 }

@@ -2,6 +2,7 @@ import type { SectionData } from "../domain/sections";
 import { BlockRenderer } from "./block-renderer";
 import { FadeIn } from "@/components/motion";
 import { cn } from "@/lib/utils";
+import { EditableRegion } from "@/modules/admin/presentation/editable-region";
 
 interface SectionRendererProps {
   section: SectionData;
@@ -26,19 +27,33 @@ export function SectionRenderer({ section, locale, className }: SectionRendererP
       <FadeIn delay={0.05}>
         {/* Section Header if title exists and no heading block is the first block */}
         {section.title && section.blocks[0]?.blockType !== "heading" && (
-          <div className="space-y-1 text-start">
-            <h2
-              id={headingId}
-              className="text-xl font-bold tracking-tight text-neutral-900 sm:text-2xl dark:text-neutral-100"
-            >
-              {section.title}
-            </h2>
-            {section.subtitle && (
-              <p className="max-w-2xl text-xs text-neutral-600 sm:text-sm dark:text-neutral-400">
-                {section.subtitle}
-              </p>
-            )}
-          </div>
+          <EditableRegion
+            editableRef={{
+              entityType: "section",
+              entityId: section.id,
+              fieldOrBlockId: "header",
+              locale: locale === "en" ? "en" : "ar",
+              title: section.title,
+              initialData: {
+                title: section.title,
+                subtitle: section.subtitle || "",
+              },
+            }}
+          >
+            <div className="space-y-1 text-start">
+              <h2
+                id={headingId}
+                className="text-xl font-bold tracking-tight text-neutral-900 sm:text-2xl dark:text-neutral-100"
+              >
+                {section.title}
+              </h2>
+              {section.subtitle && (
+                <p className="max-w-2xl text-xs text-neutral-600 sm:text-sm dark:text-neutral-400">
+                  {section.subtitle}
+                </p>
+              )}
+            </div>
+          </EditableRegion>
         )}
 
         {/* Ordered Section Blocks */}
