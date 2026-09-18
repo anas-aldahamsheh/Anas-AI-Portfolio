@@ -20,4 +20,6 @@ export { AuditLogViewer } from "./audit-log-viewer";
 export type { AuditLogViewerProps } from "./audit-log-viewer";
 export { FeatureFlagManager } from "./feature-flag-manager";
 export type { FeatureFlagManagerProps } from "./feature-flag-manager";
+export { CacheManager } from "./cache-manager";
+export type { CacheManagerProps } from "./cache-manager";
 
