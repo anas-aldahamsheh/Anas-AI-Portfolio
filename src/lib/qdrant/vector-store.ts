@@ -31,6 +31,11 @@ export interface IVectorStore {
     limit?: number,
     filter?: SearchFilter,
   ): Promise<ScoredPoint[]>;
+  scrollPoints(
+    collectionName: string,
+    limit?: number,
+    filter?: SearchFilter,
+  ): Promise<VectorPoint[]>;
   getCollectionInfo(collectionName: string): Promise<CollectionInfo | null>;
 }
 
@@ -295,7 +300,14 @@ export class QdrantVectorStore implements IVectorStore {
       if (filter?.must && filter.must.length > 0) {
         let matches = true;
         for (const condition of filter.must) {
-          if (pt.payload[condition.key] !== condition.match.value) {
+          const actualVal = pt.payload[condition.key];
+          const expectedVal = condition.match.value;
+          if (Array.isArray(expectedVal)) {
+            if (!expectedVal.includes(actualVal)) {
+              matches = false;
+              break;
+            }
+          } else if (actualVal !== expectedVal) {
             matches = false;
             break;
           }
@@ -313,6 +325,89 @@ export class QdrantVectorStore implements IVectorStore {
 
     scored.sort((a, b) => b.score - a.score);
     return scored.slice(0, limit);
+  }
+
+  public async scrollPoints(
+    collectionName: string,
+    limit: number = 200,
+    filter?: SearchFilter,
+  ): Promise<VectorPoint[]> {
+    if (this.preferInMemory || !this.baseUrl) {
+      return this.inMemoryScroll(collectionName, limit, filter);
+    }
+
+    try {
+      const body: Record<string, unknown> = {
+        limit,
+        with_payload: true,
+        with_vector: false,
+      };
+      if (filter) {
+        body["filter"] = filter;
+      }
+
+      const res = await fetch(`${this.baseUrl}/collections/${collectionName}/points/scroll`, {
+        method: "POST",
+        headers: this.getHeaders(),
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        return this.inMemoryScroll(collectionName, limit, filter);
+      }
+
+      const data = (await res.json()) as {
+        result?: {
+          points?: Array<{
+            id: string;
+            vector?: number[];
+            payload?: Record<string, unknown>;
+          }>;
+        };
+      };
+
+      return (data.result?.points ?? []).map((pt) => ({
+        id: pt.id,
+        vector: pt.vector ?? [],
+        payload: pt.payload ?? {},
+      }));
+    } catch {
+      return this.inMemoryScroll(collectionName, limit, filter);
+    }
+  }
+
+  private inMemoryScroll(
+    collectionName: string,
+    limit: number = 200,
+    filter?: SearchFilter,
+  ): VectorPoint[] {
+    const col = this.getInMemoryCollection(collectionName);
+    const results: VectorPoint[] = [];
+
+    for (const [, pt] of col.entries()) {
+      if (filter?.must && filter.must.length > 0) {
+        let matches = true;
+        for (const condition of filter.must) {
+          const actualVal = pt.payload[condition.key];
+          const expectedVal = condition.match.value;
+          if (Array.isArray(expectedVal)) {
+            if (!expectedVal.includes(actualVal)) {
+              matches = false;
+              break;
+            }
+          } else if (actualVal !== expectedVal) {
+            matches = false;
+            break;
+          }
+        }
+        if (!matches) continue;
+      }
+
+      results.push(pt);
+      if (results.length >= limit) break;
+    }
+
+    return results;
   }
 
   public async getCollectionInfo(collectionName: string): Promise<CollectionInfo | null> {

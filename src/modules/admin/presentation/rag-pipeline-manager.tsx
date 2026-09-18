@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { RagConfiguration, RagIndexStatus } from "@/ai/contracts/ingestion";
+import { ScoredCandidate, RetrievalTelemetry } from "@/ai/contracts/retrieval";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -31,6 +32,50 @@ export function RagPipelineManager({
   const [rerankThreshold, setRerankThreshold] = useState(config.rerankThreshold);
   const [hybridAlpha, setHybridAlpha] = useState(config.hybridAlpha);
   const [contextTokenBudget, setContextTokenBudget] = useState(config.contextTokenBudget);
+
+  // Hybrid search playground state
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchMode, setSearchMode] = useState<"hybrid" | "dense" | "sparse">("hybrid");
+  const [searchLocale, setSearchLocale] = useState<"all" | "ar" | "en">("all");
+  const [searchResults, setSearchResults] = useState<ScoredCandidate[] | null>(null);
+  const [searchTelemetry, setSearchTelemetry] = useState<RetrievalTelemetry | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+
+    setIsSearching(true);
+    setSearchError(null);
+
+    try {
+      const res = await fetch("/api/admin/rag/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: searchQuery,
+          mode: searchMode,
+          locale: searchLocale === "all" ? undefined : searchLocale,
+          topK: 10,
+          rrfK: 60,
+          candidateCap: 10,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setSearchError(data.error ?? "Search failed");
+      } else {
+        setSearchResults(data.candidates ?? []);
+        setSearchTelemetry(data.telemetry ?? null);
+      }
+    } catch (err) {
+      setSearchError(err instanceof Error ? err.message : "Search error");
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   const fetchStatus = async () => {
     try {
@@ -455,6 +500,218 @@ export function RagPipelineManager({
                   : "Save Configuration"}
             </Button>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Hybrid Retrieval Playground */}
+      <Card id="rag-playground-card" className="border-border bg-card">
+        <CardHeader>
+          <CardTitle className="text-foreground text-lg">
+            {isAr
+              ? "تجربة واختبار البحث الهجين (Hybrid Retrieval Playground)"
+              : "Hybrid Retrieval Playground"}
+          </CardTitle>
+          <CardDescription className="text-muted-foreground text-sm">
+            {isAr
+              ? "اختبر البحث الدلالي (Dense)، والبحث اللفظي (Sparse BM25)، وخوارزمية الدمج بالرتب المتبادلة (RRF) لحظياً."
+              : "Test dense semantic search, sparse BM25 lexical search, and reciprocal rank fusion in real-time."}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <form onSubmit={handleSearch} className="space-y-4">
+            <div>
+              <label
+                htmlFor="rag-search-query-input"
+                className="text-foreground mb-1 block text-xs font-semibold"
+              >
+                {isAr ? "نص الاستعلام (Query)" : "Search Query"}
+              </label>
+              <input
+                id="rag-search-query-input"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={
+                  isAr
+                    ? "اكتب سؤالاً أو كلمات مفتاحية مثل: ما هي خبرات أنس في الذكاء الاصطناعي؟"
+                    : "Enter a question or keywords e.g. What are Anas's AI projects?"
+                }
+                className="border-input bg-background focus:border-primary w-full rounded-md border px-3 py-2 text-sm focus:outline-none"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="rag-search-mode-select"
+                  className="text-foreground mb-1 block text-xs font-semibold"
+                >
+                  {isAr ? "نمط البحث (Retrieval Mode)" : "Retrieval Mode"}
+                </label>
+                <select
+                  id="rag-search-mode-select"
+                  value={searchMode}
+                  onChange={(e) => setSearchMode(e.target.value as "hybrid" | "dense" | "sparse")}
+                  className="border-input bg-background focus:border-primary w-full rounded-md border px-3 py-2 text-sm focus:outline-none"
+                >
+                  <option value="hybrid">
+                    {isAr ? "بحث هجين (Hybrid Dense + Sparse RRF)" : "Hybrid (Dense + Sparse RRF)"}
+                  </option>
+                  <option value="dense">
+                    {isAr ? "بحث دلالي فقط (Dense Vector Only)" : "Dense Only (Vector / BGE-M3)"}
+                  </option>
+                  <option value="sparse">
+                    {isAr ? "بحث لفظي فقط (Sparse BM25 Only)" : "Sparse Only (Lexical BM25)"}
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="rag-search-locale-select"
+                  className="text-foreground mb-1 block text-xs font-semibold"
+                >
+                  {isAr ? "تصفية اللغة (Locale Filter)" : "Locale Filter"}
+                </label>
+                <select
+                  id="rag-search-locale-select"
+                  value={searchLocale}
+                  onChange={(e) => setSearchLocale(e.target.value as "all" | "ar" | "en")}
+                  className="border-input bg-background focus:border-primary w-full rounded-md border px-3 py-2 text-sm focus:outline-none"
+                >
+                  <option value="all">{isAr ? "جميع اللغات" : "All Locales"}</option>
+                  <option value="ar">{isAr ? "العربية فقط (ar)" : "Arabic Only (ar)"}</option>
+                  <option value="en">{isAr ? "الإنجليزية فقط (en)" : "English Only (en)"}</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex justify-end">
+              <Button
+                id="rag-search-submit-button"
+                type="submit"
+                disabled={isSearching || !searchQuery.trim()}
+              >
+                {isSearching
+                  ? isAr
+                    ? "جارٍ البحث والدمج..."
+                    : "Searching & Fusing..."
+                  : isAr
+                    ? "تشغيل البحث الهجين"
+                    : "Run Retrieval"}
+              </Button>
+            </div>
+          </form>
+
+          {searchError && (
+            <div className="rounded-md border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-600 dark:text-red-400">
+              {searchError}
+            </div>
+          )}
+
+          {searchTelemetry && (
+            <div
+              id="rag-search-telemetry"
+              className="bg-muted/40 grid grid-cols-2 gap-3 rounded-lg border p-3 sm:grid-cols-4"
+            >
+              <div>
+                <div className="text-muted-foreground text-xs">
+                  {isAr ? "المرشحون الدلاليون" : "Dense Candidates"}
+                </div>
+                <div className="font-mono text-sm font-semibold">
+                  {searchTelemetry.denseCandidateCount} ({searchTelemetry.denseLatencyMs}ms)
+                </div>
+              </div>
+              <div>
+                <div className="text-muted-foreground text-xs">
+                  {isAr ? "المرشحون اللفظيون" : "Sparse Candidates"}
+                </div>
+                <div className="font-mono text-sm font-semibold">
+                  {searchTelemetry.sparseCandidateCount} ({searchTelemetry.sparseLatencyMs}ms)
+                </div>
+              </div>
+              <div>
+                <div className="text-muted-foreground text-xs">
+                  {isAr ? "النتائج المدمجة" : "Fused Results"}
+                </div>
+                <div className="font-mono text-sm font-semibold">
+                  {searchTelemetry.fusedCandidateCount} ({searchTelemetry.fusionLatencyMs}ms)
+                </div>
+              </div>
+              <div>
+                <div className="text-muted-foreground text-xs">
+                  {isAr ? "إجمالي زمن الاستجابة" : "Total Latency"}
+                </div>
+                <div className="text-primary font-mono text-sm font-semibold">
+                  {searchTelemetry.totalLatencyMs}ms
+                </div>
+              </div>
+            </div>
+          )}
+
+          {searchResults && (
+            <div className="space-y-3">
+              <h4 className="text-foreground text-sm font-semibold">
+                {isAr
+                  ? `النتائج المسترجعة (${searchResults.length})`
+                  : `Retrieved Candidates (${searchResults.length})`}
+              </h4>
+
+              {searchResults.length === 0 ? (
+                <div className="text-muted-foreground py-4 text-center text-xs">
+                  {isAr
+                    ? "لم يتم العثور على أي مقاطع تطابق معايير البحث."
+                    : "No matching chunks found for this query."}
+                </div>
+              ) : (
+                searchResults.map((item) => (
+                  <div
+                    key={item.id}
+                    className="border-border bg-background space-y-2 rounded-lg border p-3 text-xs"
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 font-mono font-bold">
+                          #{item.rank}
+                        </span>
+                        <span className="text-foreground font-semibold">{item.title}</span>
+                        <span className="bg-muted text-muted-foreground font-mono">
+                          {item.citationId}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`rounded px-2 py-0.5 text-[10px] font-medium uppercase ${
+                            item.retrieverType === "hybrid"
+                              ? "bg-blue-500/15 text-blue-600 dark:text-blue-400"
+                              : item.retrieverType === "dense"
+                                ? "bg-purple-500/15 text-purple-600 dark:text-purple-400"
+                                : "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
+                          }`}
+                        >
+                          {item.retrieverType}
+                        </span>
+                        <span className="text-muted-foreground font-mono">
+                          Score: {item.score.toFixed(4)}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground line-clamp-3 leading-relaxed">
+                      {item.content}
+                    </p>
+                    <div className="text-muted-foreground flex items-center gap-3 font-mono text-[10px]">
+                      <span>Source: {item.sourceType}</span>
+                      <span>Locale: {item.locale}</span>
+                      {item.denseRank !== undefined && <span>Dense Rank: #{item.denseRank}</span>}
+                      {item.sparseRank !== undefined && (
+                        <span>Sparse Rank: #{item.sparseRank}</span>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
