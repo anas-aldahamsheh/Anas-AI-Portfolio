@@ -2425,4 +2425,123 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
       en: "Regression Detected in Candidate",
     },
   },
+  // AI Evaluation Runner (F038)
+  {
+    key: "eval.runner.title",
+    category: "eval",
+    description: "Runner card title",
+    translations: {
+      ar: "تشغيل حزمة تقييم الذكاء الاصطناعي وبوابة الانحدار",
+      en: "AI Evaluation Runner & Regression Gate",
+    },
+  },
+  {
+    key: "eval.runner.desc",
+    category: "eval",
+    description: "Runner card description",
+    translations: {
+      ar: "تنفيذ اختبارات معيارية مؤتمتة تقيس دقة الاسترجاع والتوليد وحاجز الأمان قبل نشر النماذج.",
+      en: "Execute automated benchmark test suites evaluating retrieval, generation, and safety gates.",
+    },
+  },
+  {
+    key: "eval.runner.trigger",
+    category: "eval",
+    description: "Trigger evaluation button",
+    translations: {
+      ar: "بدء فحص الحزمة والمعايير",
+      en: "Run Benchmark Suite",
+    },
+  },
+  {
+    key: "eval.runner.running",
+    category: "eval",
+    description: "Running evaluation progress state",
+    translations: {
+      ar: "جارٍ تشغيل التقييم والفحص...",
+      en: "Running Benchmark Suite...",
+    },
+  },
+  {
+    key: "eval.runner.mode.label",
+    category: "eval",
+    description: "Evaluation mode selector label",
+    translations: {
+      ar: "نطاق التقييم:",
+      en: "Evaluation Mode:",
+    },
+  },
+  {
+    key: "eval.runner.mode.full",
+    category: "eval",
+    description: "Full mode option",
+    translations: {
+      ar: "شامل (استرجاع + توليد + أمان)",
+      en: "Full Suite (Retrieval + Generation + Safety)",
+    },
+  },
+  {
+    key: "eval.runner.mode.retrieval",
+    category: "eval",
+    description: "Retrieval only mode option",
+    translations: {
+      ar: "الاسترجاع فقط (Recall@5, Precision@5, MRR)",
+      en: "Retrieval Only (Recall@5, Precision@5, MRR)",
+    },
+  },
+  {
+    key: "eval.runner.mode.generation",
+    category: "eval",
+    description: "Generation only mode option",
+    translations: {
+      ar: "التوليد والأمان (الأمانة والاستشهادات)",
+      en: "Generation & Safety (Faithfulness & Citations)",
+    },
+  },
+  {
+    key: "eval.runner.gate.title",
+    category: "eval",
+    description: "Gate result card title",
+    translations: {
+      ar: "قرار بوابة الاعتماد (Release Gate Decision)",
+      en: "Release Gate Decision",
+    },
+  },
+  {
+    key: "eval.runner.gate.passed",
+    category: "eval",
+    description: "Gate passed status badge",
+    translations: {
+      ar: "اجتاز بنجاح (جاهز للاعتماد)",
+      en: "GATE PASSED (Ready for Production)",
+    },
+  },
+  {
+    key: "eval.runner.gate.warning",
+    category: "eval",
+    description: "Gate warning status badge",
+    translations: {
+      ar: "تحذير أداء (يتطلب مراجعة)",
+      en: "GATE WARNING (Review Regressions)",
+    },
+  },
+  {
+    key: "eval.runner.gate.blocked",
+    category: "eval",
+    description: "Gate blocked status badge",
+    translations: {
+      ar: "محظور (انحدار في الأمان أو الأمانة)",
+      en: "GATE BLOCKED (Grounding / Safety Regressed)",
+    },
+  },
+  {
+    key: "eval.runner.recent_results",
+    category: "eval",
+    description: "Recent case results table heading",
+    translations: {
+      ar: "نتائج الحالات المفصلة",
+      en: "Detailed Case Results",
+    },
+  },
 ];
+

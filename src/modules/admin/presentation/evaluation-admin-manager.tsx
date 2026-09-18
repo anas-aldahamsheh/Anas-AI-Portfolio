@@ -5,6 +5,7 @@ import {
   EvaluationDashboardData,
   EvaluationRunSummary,
   RegressionComparison,
+  EvaluationRunExecutionResponse,
 } from "@/ai/contracts/evaluation";
 import { useLocalization } from "@/modules/localization/presentation/localization-provider";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -18,7 +19,7 @@ export interface EvaluationAdminManagerProps {
 export function EvaluationAdminManager({ initialData }: EvaluationAdminManagerProps) {
   const { t, dir } = useLocalization();
 
-  const [runs] = useState<EvaluationRunSummary[]>(initialData.recentRuns);
+  const [runs, setRuns] = useState<EvaluationRunSummary[]>(initialData.recentRuns);
   const [baselineId, setBaselineId] = useState<string>(
     initialData.activeBaselineRun.id || runs[0]?.id || "",
   );
@@ -28,6 +29,41 @@ export function EvaluationAdminManager({ initialData }: EvaluationAdminManagerPr
   const [comparison, setComparison] = useState<RegressionComparison | null>(null);
   const [isComparing, setIsComparing] = useState(false);
   const [compareError, setCompareError] = useState<string | null>(null);
+
+  // F038 Evaluation Runner State
+  const [runnerMode, setRunnerMode] = useState<"full" | "retrieval" | "generation">("full");
+  const [isRunning, setIsRunning] = useState(false);
+  const [runnerResult, setRunnerResult] = useState<EvaluationRunExecutionResponse | null>(null);
+  const [runnerError, setRunnerError] = useState<string | null>(null);
+  const [showCaseResults, setShowCaseResults] = useState(false);
+
+  const handleRunSuite = async () => {
+    setIsRunning(true);
+    setRunnerError(null);
+
+    try {
+      const res = await fetch("/api/admin/evaluation/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mode: runnerMode }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        setRunnerError(json.error || "Failed to execute evaluation suite");
+      } else {
+        setRunnerResult(json.data);
+        if (json.data.run) {
+          setRuns((prev) => [json.data.run, ...prev]);
+          setCandidateId(json.data.run.id);
+        }
+      }
+    } catch (err) {
+      setRunnerError(err instanceof Error ? err.message : "Runner network error");
+    } finally {
+      setIsRunning(false);
+    }
+  };
 
   const handleCompare = async () => {
     if (!baselineId || !candidateId) return;
@@ -76,39 +112,233 @@ export function EvaluationAdminManager({ initialData }: EvaluationAdminManagerPr
       <Card className="border-border">
         <CardHeader className="p-4 pb-2">
           <CardTitle className="text-foreground text-sm font-semibold">
-            Active Runtime AI Environment
+            {t("eval.admin.env.title") !== "eval.admin.env.title" ? t("eval.admin.env.title") : "Active Runtime AI Environment"}
           </CardTitle>
           <CardDescription className="text-xs">
-            Current models and policies configured across the portfolio pipeline
+            Active production models and policies currently serving portfolio requests.
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-4 pt-0">
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 font-mono text-xs">
-            <div className="bg-muted/30 rounded-lg p-2.5 border border-border/50">
-              <div className="text-muted-foreground text-[10px] uppercase font-semibold">Generation</div>
-              <div className="text-foreground font-bold mt-0.5 truncate" title={initialData.activeEnvironment.generationModel}>
+        <CardContent className="p-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="space-y-1">
+              <span className="text-muted-foreground text-xs">
+                {t("eval.admin.env.generation") !== "eval.admin.env.generation" ? t("eval.admin.env.generation") : "Generation"}
+              </span>
+              <p className="text-foreground text-xs font-medium">
                 {initialData.activeEnvironment.generationModel}
-              </div>
+              </p>
             </div>
-            <div className="bg-muted/30 rounded-lg p-2.5 border border-border/50">
-              <div className="text-muted-foreground text-[10px] uppercase font-semibold">Embedding</div>
-              <div className="text-foreground font-bold mt-0.5 truncate" title={initialData.activeEnvironment.embeddingModel}>
+            <div className="space-y-1">
+              <span className="text-muted-foreground text-xs">
+                {t("eval.admin.env.embedding") !== "eval.admin.env.embedding" ? t("eval.admin.env.embedding") : "Embedding"}
+              </span>
+              <p className="text-foreground text-xs font-medium">
                 {initialData.activeEnvironment.embeddingModel}
-              </div>
+              </p>
             </div>
-            <div className="bg-muted/30 rounded-lg p-2.5 border border-border/50">
-              <div className="text-muted-foreground text-[10px] uppercase font-semibold">Reranker</div>
-              <div className="text-foreground font-bold mt-0.5 truncate" title={initialData.activeEnvironment.rerankerModel}>
+            <div className="space-y-1">
+              <span className="text-muted-foreground text-xs">
+                {t("eval.admin.env.reranker") !== "eval.admin.env.reranker" ? t("eval.admin.env.reranker") : "Reranker"}
+              </span>
+              <p className="text-foreground text-xs font-medium">
                 {initialData.activeEnvironment.rerankerModel}
-              </div>
+              </p>
             </div>
-            <div className="bg-muted/30 rounded-lg p-2.5 border border-border/50">
-              <div className="text-muted-foreground text-[10px] uppercase font-semibold">Retrieval Fusion</div>
-              <div className="text-foreground font-bold mt-0.5 truncate" title={initialData.activeEnvironment.retrievalPolicy}>
+            <div className="space-y-1">
+              <span className="text-muted-foreground text-xs">
+                {t("eval.admin.env.retrieval_policy") !== "eval.admin.env.retrieval_policy" ? t("eval.admin.env.retrieval_policy") : "Retrieval Policy"}
+              </span>
+              <p className="text-foreground text-xs font-medium">
                 {initialData.activeEnvironment.retrievalPolicy}
-              </div>
+              </p>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* F038: AI Evaluation Runner & Release Gate Card */}
+      <Card className="border-border" data-testid="evaluation-runner-card">
+        <CardHeader className="p-4 pb-2">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-foreground text-sm font-semibold">
+              {t("eval.runner.title") !== "eval.runner.title" ? t("eval.runner.title") : "AI Evaluation Runner & Regression Gate"}
+            </CardTitle>
+            <Badge variant="outline" className="text-xs font-mono">
+              F038 Engine
+            </Badge>
+          </div>
+          <CardDescription className="text-xs">
+            {t("eval.runner.desc") !== "eval.runner.desc" ? t("eval.runner.desc") : "Execute automated benchmark test suites evaluating retrieval, generation, and safety gates."}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-4 space-y-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+            <div className="flex-1 space-y-1">
+              <label className="text-muted-foreground text-xs font-medium">
+                {t("eval.runner.mode.label") !== "eval.runner.mode.label" ? t("eval.runner.mode.label") : "Evaluation Mode:"}
+              </label>
+              <select
+                value={runnerMode}
+                onChange={(e) => setRunnerMode(e.target.value as "full" | "retrieval" | "generation")}
+                className="bg-background border-border text-foreground w-full rounded-md border px-3 py-2 text-xs focus:outline-none"
+                data-testid="select-runner-mode"
+                disabled={isRunning}
+              >
+                <option value="full">
+                  {t("eval.runner.mode.full") !== "eval.runner.mode.full" ? t("eval.runner.mode.full") : "Full Suite (Retrieval + Generation + Safety)"}
+                </option>
+                <option value="retrieval">
+                  {t("eval.runner.mode.retrieval") !== "eval.runner.mode.retrieval" ? t("eval.runner.mode.retrieval") : "Retrieval Only"}
+                </option>
+                <option value="generation">
+                  {t("eval.runner.mode.generation") !== "eval.runner.mode.generation" ? t("eval.runner.mode.generation") : "Generation & Safety"}
+                </option>
+              </select>
+            </div>
+
+            <Button
+              onClick={handleRunSuite}
+              disabled={isRunning}
+              className="px-5 text-xs font-semibold"
+              data-testid="btn-trigger-eval-runner"
+            >
+              {isRunning
+                ? (t("eval.runner.running") !== "eval.runner.running" ? t("eval.runner.running") : "Running Benchmark Suite...")
+                : (t("eval.runner.trigger") !== "eval.runner.trigger" ? t("eval.runner.trigger") : "Run Benchmark Suite")}
+            </Button>
+          </div>
+
+          {runnerError && (
+            <div className="text-destructive bg-destructive/10 border-destructive/20 rounded-md border p-3 text-xs">
+              {runnerError}
+            </div>
+          )}
+
+          {runnerResult && (
+            <div className="bg-muted/30 border-border space-y-4 rounded-lg border p-4" data-testid="runner-result-panel">
+              {/* Gate Decision Header */}
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/60 pb-3">
+                <div className="space-y-1">
+                  <span className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">
+                    {t("eval.runner.gate.title") !== "eval.runner.gate.title" ? t("eval.runner.gate.title") : "Release Gate Decision"}
+                  </span>
+                  <p className="text-foreground text-xs font-medium">
+                    {runnerResult.gate.message}
+                  </p>
+                </div>
+                <div>
+                  {runnerResult.gate.verdict === "PASSED" ? (
+                    <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 text-xs px-2.5 py-1">
+                      {t("eval.runner.gate.passed") !== "eval.runner.gate.passed" ? t("eval.runner.gate.passed") : "GATE PASSED"}
+                    </Badge>
+                  ) : runnerResult.gate.verdict === "WARNING" ? (
+                    <Badge className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 text-xs px-2.5 py-1">
+                      {t("eval.runner.gate.warning") !== "eval.runner.gate.warning" ? t("eval.runner.gate.warning") : "GATE WARNING"}
+                    </Badge>
+                  ) : (
+                    <Badge className="bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20 text-xs px-2.5 py-1">
+                      {t("eval.runner.gate.blocked") !== "eval.runner.gate.blocked" ? t("eval.runner.gate.blocked") : "GATE BLOCKED"}
+                    </Badge>
+                  )}
+                </div>
+              </div>
+
+              {/* Metrics Summary Pills */}
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 text-center">
+                <div className="bg-background/80 border-border/80 rounded-md border p-2">
+                  <span className="text-muted-foreground block text-[10px] uppercase">Recall@5</span>
+                  <span className="text-foreground text-sm font-mono font-semibold">
+                    {(runnerResult.gate.metricsSummary.recallAt5 * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="bg-background/80 border-border/80 rounded-md border p-2">
+                  <span className="text-muted-foreground block text-[10px] uppercase">Faithfulness</span>
+                  <span className="text-foreground text-sm font-mono font-semibold">
+                    {(runnerResult.gate.metricsSummary.faithfulness * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="bg-background/80 border-border/80 rounded-md border p-2">
+                  <span className="text-muted-foreground block text-[10px] uppercase">Citation Prec.</span>
+                  <span className="text-foreground text-sm font-mono font-semibold">
+                    {(runnerResult.gate.metricsSummary.citationCorrectness * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="bg-background/80 border-border/80 rounded-md border p-2">
+                  <span className="text-muted-foreground block text-[10px] uppercase">AR/EN Parity</span>
+                  <span className="text-foreground text-sm font-mono font-semibold">
+                    {(runnerResult.gate.metricsSummary.arabicParityRatio * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="bg-background/80 border-border/80 rounded-md border p-2">
+                  <span className="text-muted-foreground block text-[10px] uppercase">Avg Latency</span>
+                  <span className="text-foreground text-sm font-mono font-semibold">
+                    {runnerResult.gate.metricsSummary.averageLatencyMs} ms
+                  </span>
+                </div>
+              </div>
+
+              {/* Regressions or Warnings */}
+              {runnerResult.gate.regressions.length > 0 && (
+                <div className="bg-rose-500/10 border-rose-500/20 text-rose-700 dark:text-rose-300 rounded-md border p-3 text-xs space-y-1">
+                  <p className="font-semibold">Regressions detected violating release gate:</p>
+                  <ul className="list-disc pl-4 space-y-0.5">
+                    {runnerResult.gate.regressions.map((reg, idx) => (
+                      <li key={idx}>{reg}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Case Results Toggle */}
+              <div className="flex items-center justify-between pt-2">
+                <span className="text-muted-foreground text-xs font-medium">
+                  {runnerResult.caseResults.length} cases executed ({runnerResult.run.passedCases} passed, {runnerResult.caseResults.length - runnerResult.run.passedCases} failed)
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowCaseResults((prev) => !prev)}
+                  className="text-xs"
+                  data-testid="toggle-case-results"
+                >
+                  {showCaseResults ? "Hide Case Details" : "View Case Details"}
+                </Button>
+              </div>
+
+              {showCaseResults && (
+                <div className="border-border max-h-64 overflow-y-auto rounded-md border">
+                  <table className="w-full text-left text-xs" dir="ltr">
+                    <thead className="bg-muted text-muted-foreground border-border border-b font-medium">
+                      <tr>
+                        <th className="p-2">Query</th>
+                        <th className="p-2">Lang</th>
+                        <th className="p-2">Category</th>
+                        <th className="p-2">Status</th>
+                        <th className="p-2">Latency</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-border divide-y">
+                      {runnerResult.caseResults.map((c) => (
+                        <tr key={c.caseId} className="hover:bg-muted/30">
+                          <td className="p-2 max-w-xs truncate text-foreground">{c.query}</td>
+                          <td className="p-2 uppercase text-muted-foreground">{c.localeCode}</td>
+                          <td className="p-2 text-muted-foreground">{c.category}</td>
+                          <td className="p-2">
+                            {c.passed ? (
+                              <span className="text-emerald-600 font-semibold">PASS</span>
+                            ) : (
+                              <span className="text-rose-600 font-semibold">FAIL</span>
+                            )}
+                          </td>
+                          <td className="p-2 font-mono text-muted-foreground">{c.latencyMs}ms</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
 
