@@ -16,7 +16,8 @@ export interface CoreSystemKeyDefinition {
     | "admin"
     | "jobfit"
     | "lab"
-    | "eval";
+    | "eval"
+    | "content";
   description: string;
   translations: Record<SupportedLocale, string>;
 }
@@ -2543,5 +2544,52 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
       en: "Detailed Case Results",
     },
   },
+  // Admin Content Center (F039)
+  {
+    key: "admin.content.title",
+    category: "content",
+    description: "Content center page heading",
+    translations: {
+      ar: "مركز إدارة المحتوى والأقسام",
+      en: "Admin Content Center",
+    },
+  },
+  {
+    key: "admin.content.desc",
+    category: "content",
+    description: "Content center description",
+    translations: {
+      ar: "إدارة الصفحات، بناء الأقسام التركيبية، ومتابعة جودة النشر والتحديثات ثنائية اللغة.",
+      en: "Manage portfolio pages, composable sections, and bilingual publishing workflow.",
+    },
+  },
+  {
+    key: "admin.content.pages_tab",
+    category: "content",
+    description: "Pages tab label",
+    translations: {
+      ar: "إدارة الصفحات",
+      en: "Pages Management",
+    },
+  },
+  {
+    key: "admin.content.sections_tab",
+    category: "content",
+    description: "Sections tab label",
+    translations: {
+      ar: "بناء الأقسام",
+      en: "Sections Builder",
+    },
+  },
+  {
+    key: "admin.content.publish_tab",
+    category: "content",
+    description: "Publishing tab label",
+    translations: {
+      ar: "طابور النشر والمراجعة",
+      en: "Publishing Queue",
+    },
+  },
 ];
+
 
