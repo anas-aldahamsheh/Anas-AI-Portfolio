@@ -1,16 +1,12 @@
 import { NextResponse } from "next/server";
+import { healthService } from "@/lib/health/health-service";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const healthData = {
-    status: "healthy",
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    environment: process.env.NODE_ENV ?? "development",
-  };
+  const liveness = healthService.getLiveness();
 
-  return NextResponse.json(healthData, {
+  return NextResponse.json(liveness, {
     status: 200,
     headers: {
       "Cache-Control": "no-store, no-cache, must-revalidate",
