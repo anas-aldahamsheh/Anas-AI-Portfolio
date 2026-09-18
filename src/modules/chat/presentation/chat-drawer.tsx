@@ -99,10 +99,44 @@ export function ChatDrawer({
   const { t, locale, dir } = useLocalization();
   const [isOpen, setIsOpen] = useState(initialOpen);
   const [mode, setMode] = useState<ConversationMode>("general");
+  const [availableModes, setAvailableModes] = useState<
+    Array<{ slug: ConversationMode; name: string; description: string }>
+  >([
+    { slug: "general", name: "chat.mode.general", description: "" },
+    { slug: "recruiter", name: "chat.mode.recruiter", description: "" },
+    { slug: "technical", name: "chat.mode.technical", description: "" },
+  ]);
   const [messages, setMessages] = useState<ChatMessageItem[]>([]);
   const [inputVal, setInputVal] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isCancelled = false;
+    async function loadModes() {
+      try {
+        const res = await fetch(`/api/chat/modes?locale=${locale}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (!isCancelled && json.success && Array.isArray(json.data) && json.data.length > 0) {
+            setAvailableModes(
+              json.data.map((m: { slug: ConversationMode; name: string; description: string }) => ({
+                slug: m.slug,
+                name: m.name,
+                description: m.description,
+              })),
+            );
+          }
+        }
+      } catch {
+        // Retain baseline modes gracefully
+      }
+    }
+    void loadModes();
+    return () => {
+      isCancelled = true;
+    };
+  }, [locale]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -364,19 +398,20 @@ export function ChatDrawer({
                 className="bg-muted/60 flex items-center gap-1 rounded-lg p-1 text-xs"
                 data-testid="chat-mode-selector"
               >
-                {(["general", "recruiter", "technical"] as ConversationMode[]).map((m) => (
+                {availableModes.map((m) => (
                   <button
-                    key={m}
+                    key={m.slug}
                     type="button"
-                    onClick={() => setMode(m)}
+                    onClick={() => setMode(m.slug)}
+                    title={m.description || undefined}
                     className={`flex-1 rounded-md py-1 font-medium transition-all ${
-                      mode === m
+                      mode === m.slug
                         ? "bg-card text-foreground shadow-sm"
                         : "text-muted-foreground hover:text-foreground"
                     }`}
-                    data-testid={`mode-tab-${m}`}
+                    data-testid={`mode-tab-${m.slug}`}
                   >
-                    {t(`chat.mode.${m}`)}
+                    {m.name.startsWith("chat.") ? t(m.name) : m.name}
                   </button>
                 ))}
               </div>

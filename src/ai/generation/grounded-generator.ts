@@ -17,6 +17,7 @@ import { generateHeuristicAnswer } from "./adapters/heuristic-generation-adapter
 import { modelRegistryService } from "@/ai/orchestration/model-registry-service";
 import { secretsService } from "@/lib/security/secrets-service";
 import { promptService } from "@/ai/prompts";
+import { conversationModeService } from "@/ai/modes";
 import { logger } from "@/lib/observability/logger";
 
 export interface GroundedGeneratorConfig {
@@ -101,7 +102,10 @@ export class GroundedGenerator implements GenerationPort {
     let promptTokens = 0;
     let completionTokens = 0;
     let strategy: "llm" | "fallback" | "insufficient_evidence" = "fallback";
-    let systemPrompt = `You are Anas's engineering portfolio AI assistant. Answer strictly using provided evidence in ${language} under ${mode} mode. Every claim must cite [cit:ID].`;
+    const modeConfig = await conversationModeService.getModeBySlug(mode);
+    const toneGuidelines = modeConfig?.toneGuidelines || "";
+    const focusAreas = modeConfig?.focusAreas || "";
+    let systemPrompt = `You are Anas's engineering portfolio AI assistant. Answer strictly using provided evidence in ${language} under ${mode} mode (${toneGuidelines}). Every claim must cite [cit:ID].`;
     let userPrompt = input.userMessage;
 
     try {
@@ -124,6 +128,9 @@ export class GroundedGenerator implements GenerationPort {
             const rendered = await promptService.renderPrompt(promptSlug, {
               response_language: language,
               conversation_mode: mode,
+              mode: mode,
+              tone_guidelines: toneGuidelines,
+              focus_areas: focusAreas,
               context_chunks: formattedContext,
               citation_catalog: catalogFormatted,
               conversation_summary: input.conversationSummary || "None",

@@ -13,6 +13,7 @@ import { hybridRetriever } from "@/ai/retrieval";
 import { getActiveRerankerAdapter } from "@/ai/reranker";
 import { contextBuilder } from "@/ai/context";
 import { groundedGenerator } from "@/ai/generation";
+import { conversationModeService } from "@/ai/modes";
 import { logger } from "@/lib/observability/logger";
 
 export interface ChatHistoryMessage {
@@ -62,7 +63,6 @@ export class ChatOrchestrator {
   public async processChat(input: ChatOrchestratorInput): Promise<ChatOrchestratorResult> {
     const start = performance.now();
     const message = input.message.trim();
-    const conversationMode: ConversationMode = input.conversationMode || "general";
 
     // 1. Conversation Language & Direction Resolution
     const langResult = await languageResolver.resolveLanguage({
@@ -73,7 +73,12 @@ export class ChatOrchestrator {
     const language = langResult.language;
     const direction = langResult.direction;
 
-    // 2. Query Routing & Policy Selection
+    // 2. Resolve & Verify Conversation Mode against enabled published policies
+    const conversationMode: ConversationMode = await conversationModeService.verifyMode(
+      input.conversationMode,
+    );
+
+    // 3. Query Routing & Policy Selection
     const routeResult = await queryRouter.route(message, {
       forceRouteId: input.projectScopeId ? "project" : undefined,
     });

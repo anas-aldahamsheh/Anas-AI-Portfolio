@@ -185,3 +185,28 @@ export const sourceChunks = pgTable(
     index("source_chunks_qdrant_idx").on(table.qdrantPointId),
   ],
 );
+
+export const conversationModes = pgTable(
+  "conversation_modes",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    slug: text("slug").notNull().unique(), // 'general', 'recruiter', 'technical'
+    nameEn: text("name_en").notNull(),
+    nameAr: text("name_ar").notNull(),
+    descriptionEn: text("description_en").notNull(),
+    descriptionAr: text("description_ar").notNull(),
+    toneGuidelines: text("tone_guidelines").notNull(),
+    focusAreas: text("focus_areas").notNull(),
+    promptSlug: text("prompt_slug").default("chat_system").notNull(),
+    isEnabled: boolean("is_enabled").default(true).notNull(),
+    isPublished: boolean("is_published").default(true).notNull(),
+    sortOrder: integer("sort_order").default(0).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("conv_modes_slug_idx").on(table.slug),
+    index("conv_modes_enabled_idx").on(table.isEnabled),
+    index("conv_modes_order_idx").on(table.sortOrder),
+  ],
+);

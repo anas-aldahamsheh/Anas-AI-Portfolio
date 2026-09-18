@@ -9,3 +9,4 @@ export * from "./reranker";
 export * from "./context-builder";
 export * from "./generation";
 export * from "./language-resolution";
+export * from "./conversation-mode";
