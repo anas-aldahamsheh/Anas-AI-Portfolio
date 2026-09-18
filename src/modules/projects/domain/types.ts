@@ -26,7 +26,13 @@ export interface Project {
   title: string;
   summary: string;
   problem?: string | null | undefined;
+  constraints?: string | null | undefined;
   solution?: string | null | undefined;
+  architecture?: string | null | undefined;
+  implementation?: string | null | undefined;
+  challenges?: string | null | undefined;
+  decisionsTradeoffs?: string | null | undefined;
+  results?: string | null | undefined;
   categories: string[];
   tags: string[];
   createdAt: string;

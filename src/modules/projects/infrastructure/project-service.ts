@@ -63,7 +63,13 @@ export class ProjectService {
           transTitle: projectTranslations.title,
           transSummary: projectTranslations.summary,
           problem: projectTranslations.problem,
+          constraints: projectTranslations.constraints,
           solution: projectTranslations.solution,
+          architecture: projectTranslations.architecture,
+          implementation: projectTranslations.implementation,
+          challenges: projectTranslations.challenges,
+          decisionsTradeoffs: projectTranslations.decisionsTradeoffs,
+          results: projectTranslations.results,
         })
         .from(projects)
         .leftJoin(
@@ -120,7 +126,13 @@ export class ProjectService {
           title: r.transTitle || r.slug,
           summary: r.transSummary || "",
           problem: r.problem,
+          constraints: r.constraints,
           solution: r.solution,
+          architecture: r.architecture,
+          implementation: r.implementation,
+          challenges: r.challenges,
+          decisionsTradeoffs: r.decisionsTradeoffs,
+          results: r.results,
           categories: categoriesByProject.get(r.id) ?? [],
           tags: tagsByProject.get(r.id) ?? [],
           createdAt: r.createdAt.toISOString(),
@@ -183,6 +195,32 @@ export class ProjectService {
     // Baseline fallback
     const baselines = getBaselineProjects(locale);
     return baselines.find((p) => p.slug === slug) ?? null;
+  }
+
+  /**
+   * Retrieves related projects based on shared categories or tags, excluding current slug.
+   */
+  async getRelatedProjects(slug: string, locale = "en", limit = 2): Promise<Project[]> {
+    const all = await this.listProjects({ locale, status: "PUBLISHED" });
+    const current = all.projects.find((p) => p.slug === slug);
+    if (!current) return all.projects.filter((p) => p.slug !== slug).slice(0, limit);
+
+    const related = all.projects.filter((p) => {
+      if (p.slug === slug) return false;
+      const sharedCat = p.categories.some((c) => current.categories.includes(c));
+      const sharedTag = p.tags.some((t) => current.tags.includes(t));
+      return sharedCat || sharedTag;
+    });
+
+    if (related.length >= limit) {
+      return related.slice(0, limit);
+    }
+
+    // Fill remaining with other published projects
+    const remaining = all.projects.filter(
+      (p) => p.slug !== slug && !related.some((r) => r.slug === p.slug),
+    );
+    return [...related, ...remaining].slice(0, limit);
   }
 
   /**

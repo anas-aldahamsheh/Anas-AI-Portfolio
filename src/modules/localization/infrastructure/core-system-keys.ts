@@ -724,4 +724,168 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
       en: "{count} projects found",
     },
   },
+
+  // Project Deep Dive (F018)
+  {
+    key: "project.detail.overview",
+    category: "projects",
+    description: "Overview section header",
+    translations: {
+      ar: "نظرة عامة",
+      en: "Overview",
+    },
+  },
+  {
+    key: "project.detail.problem",
+    category: "projects",
+    description: "Problem statement section header",
+    translations: {
+      ar: "المشكلة والسياق العام",
+      en: "Problem & Context",
+    },
+  },
+  {
+    key: "project.detail.constraints",
+    category: "projects",
+    description: "Engineering constraints section header",
+    translations: {
+      ar: "القيود والمتطلبات الهندسية",
+      en: "Engineering Constraints",
+    },
+  },
+  {
+    key: "project.detail.solution",
+    category: "projects",
+    description: "Solution architecture section header",
+    translations: {
+      ar: "الحل والمعالجة",
+      en: "Solution & Strategy",
+    },
+  },
+  {
+    key: "project.detail.architecture",
+    category: "projects",
+    description: "System architecture section header",
+    translations: {
+      ar: "البنية المعمارية والأنماط",
+      en: "System Architecture & Patterns",
+    },
+  },
+  {
+    key: "project.detail.implementation",
+    category: "projects",
+    description: "Implementation details section header",
+    translations: {
+      ar: "تفاصيل التنفيذ والتقنيات",
+      en: "Implementation Details",
+    },
+  },
+  {
+    key: "project.detail.tech_stack",
+    category: "projects",
+    description: "Tech stack section title",
+    translations: {
+      ar: "التقنيات والأدوات المستخدمة",
+      en: "Technologies & Tech Stack",
+    },
+  },
+  {
+    key: "project.detail.scope_badge",
+    category: "projects",
+    description: "AI scoped retrieval badge text",
+    translations: {
+      ar: "نطاق استرجاع مخصص: براهين المشروع فقط",
+      en: "Scoped Retrieval: Project Evidence Only",
+    },
+  },
+  {
+    key: "project.detail.challenges",
+    category: "projects",
+    description: "Challenges and mitigations section header",
+    translations: {
+      ar: "أبرز التحديات والمعالجات",
+      en: "Key Challenges & Mitigations",
+    },
+  },
+  {
+    key: "project.detail.tradeoffs",
+    category: "projects",
+    description: "Decisions and tradeoffs section header",
+    translations: {
+      ar: "القرارات المعمارية والمفاضلات",
+      en: "Decisions & Trade-offs",
+    },
+  },
+  {
+    key: "project.detail.results",
+    category: "projects",
+    description: "Impact and results section header",
+    translations: {
+      ar: "الأثر والنتائج القابلة للقياس",
+      en: "Impact & Measurable Results",
+    },
+  },
+  {
+    key: "project.detail.ask_ai",
+    category: "projects",
+    description: "Ask AI about this project card title",
+    translations: {
+      ar: "اسأل الذكاء الاصطناعي عن هذا المشروع",
+      en: "Ask AI About This Project",
+    },
+  },
+  {
+    key: "project.detail.ask_ai_desc",
+    category: "projects",
+    description: "Ask AI about this project explanation",
+    translations: {
+      ar: "اطرح أسئلة برمجية ومعمارية موثقة ومستندة حصريًا إلى براهين هذا المشروع.",
+      en: "Ask verified architectural, code, or design questions grounded specifically in this project's evidence.",
+    },
+  },
+  {
+    key: "project.detail.ask_ai_cta",
+    category: "projects",
+    description: "Launch AI conversation button label",
+    translations: {
+      ar: "بدء محادثة ذكية عن المشروع",
+      en: "Launch AI Project Query",
+    },
+  },
+  {
+    key: "project.detail.back_to_projects",
+    category: "projects",
+    description: "Back to projects catalog link",
+    translations: {
+      ar: "العودة إلى المشاريع",
+      en: "Back to Projects",
+    },
+  },
+  {
+    key: "project.detail.related_projects",
+    category: "projects",
+    description: "Related projects section title",
+    translations: {
+      ar: "مشاريع ذات صلة",
+      en: "Related Projects",
+    },
+  },
+  {
+    key: "project.detail.not_found_title",
+    category: "projects",
+    description: "Project not found heading",
+    translations: {
+      ar: "المشروع غير موجود",
+      en: "Project Not Found",
+    },
+  },
+  {
+    key: "project.detail.not_found_desc",
+    category: "projects",
+    description: "Project not found description",
+    translations: {
+      ar: "المشروع المطلوب غير موجود أو تمت أرشفته.",
+      en: "The requested project could not be found or has been archived.",
+    },
+  },
 ];

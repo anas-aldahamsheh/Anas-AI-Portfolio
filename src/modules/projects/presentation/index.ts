@@ -4,3 +4,5 @@ export { ProjectFilters } from "./project-filters";
 export type { ProjectFiltersProps } from "./project-filters";
 export { ProjectCatalog } from "./project-catalog";
 export type { ProjectCatalogProps } from "./project-catalog";
+export { ProjectDeepDive } from "./project-deep-dive";
+export type { ProjectDeepDiveProps } from "./project-deep-dive";
