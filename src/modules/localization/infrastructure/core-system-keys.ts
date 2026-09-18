@@ -3,7 +3,16 @@ import type { SupportedLocale } from "../domain/locales";
 export interface CoreSystemKeyDefinition {
   key: string;
   category:
-    "navigation" | "guest" | "actions" | "home" | "auth" | "common" | "chat" | "cv" | "projects";
+    | "navigation"
+    | "guest"
+    | "actions"
+    | "home"
+    | "auth"
+    | "common"
+    | "chat"
+    | "cv"
+    | "projects"
+    | "social";
   description: string;
   translations: Record<SupportedLocale, string>;
 }
@@ -457,6 +466,62 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     translations: {
       ar: "استعادة هذا الإصدار",
       en: "Rollback to Version",
+    },
+  },
+
+  // Social Profiles & Popovers
+  {
+    key: "social.github.title",
+    category: "social",
+    description: "Title for GitHub popover",
+    translations: {
+      ar: "حساب GitHub البرمجي",
+      en: "GitHub Profile",
+    },
+  },
+  {
+    key: "social.github.description",
+    category: "social",
+    description: "Description for GitHub popover",
+    translations: {
+      ar: "استكشف المستودعات والمشاريع المفتوحة المصدر والمساهمات البرمجية.",
+      en: "Explore open-source repositories, agentic architectures, and code contributions.",
+    },
+  },
+  {
+    key: "social.copy_url",
+    category: "social",
+    description: "Copy URL action label",
+    translations: {
+      ar: "نسخ الرابط",
+      en: "Copy URL",
+    },
+  },
+  {
+    key: "social.copied",
+    category: "social",
+    description: "Copied feedback message",
+    translations: {
+      ar: "تم النسخ بنجاح!",
+      en: "Copied to clipboard!",
+    },
+  },
+  {
+    key: "social.open_profile",
+    category: "social",
+    description: "Open profile action label",
+    translations: {
+      ar: "فتح الملف الشخصي",
+      en: "Open Profile",
+    },
+  },
+  {
+    key: "social.canonical_url",
+    category: "social",
+    description: "Label for canonical URL display",
+    translations: {
+      ar: "الرابط الرسمي:",
+      en: "Canonical URL:",
     },
   },
 ];

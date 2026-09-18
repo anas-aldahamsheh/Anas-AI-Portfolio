@@ -8,6 +8,7 @@ import {
   AdminToolbar,
   ContextualEditorDialog,
 } from "@/modules/admin/presentation";
+import { socialService } from "@/modules/social/infrastructure/social-service";
 import { Navbar, Footer } from "@/modules/navigation/presentation";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 
@@ -20,12 +21,13 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
   const { locale } = await params;
   const supportedLocale = (locale === "en" ? "en" : "ar") as SupportedLocale;
 
-  // Retrieve dynamic navigation items, dictionary, and check admin session concurrently
-  const [headerItems, footerItems, dictionary, session] = await Promise.all([
+  // Retrieve dynamic navigation items, dictionary, admin session, and github profile concurrently
+  const [headerItems, footerItems, dictionary, session, githubProfile] = await Promise.all([
     navigationService.getNavigationItems("header"),
     navigationService.getNavigationItems("footer"),
     localizedTextService.getDictionary(supportedLocale),
     getCurrentSession(),
+    socialService.getProfile("github", supportedLocale),
   ]);
 
   const isAdmin = session?.role === "ADMIN";
@@ -34,7 +36,7 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
     <LocalizationProvider locale={supportedLocale} dictionary={dictionary}>
       <AdminEditProvider isAdmin={isAdmin}>
         <div className="bg-background text-foreground flex min-h-screen flex-col">
-          <Navbar locale={supportedLocale} items={headerItems} />
+          <Navbar locale={supportedLocale} items={headerItems} githubProfile={githubProfile} />
           <div id="main-content" className="flex-1">
             {children}
           </div>
