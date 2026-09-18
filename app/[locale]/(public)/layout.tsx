@@ -45,9 +45,9 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
             githubProfile={githubProfile}
             linkedinProfile={linkedinProfile}
           />
-          <div id="main-content" className="flex-1">
+          <main id="main-content" className="flex-1">
             {children}
-          </div>
+          </main>
           <Footer
             locale={supportedLocale}
             items={footerItems}

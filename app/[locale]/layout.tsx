@@ -9,6 +9,7 @@ import { getThemeFromCookie } from "@/modules/theme/infrastructure/theme-cookie"
 import type { Theme } from "@/modules/theme/domain/theme";
 
 import { MotionProvider } from "@/modules/motion/presentation/motion-provider";
+import { SkipLink, AnnouncerProvider } from "@/modules/accessibility/presentation";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -61,7 +62,12 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
       <body className="bg-background text-foreground selection:bg-primary selection:text-primary-foreground min-h-screen font-sans antialiased">
         <ThemeProvider initialTheme={serverTheme}>
           <MotionProvider>
-            <DirectionProvider dir={dir}>{children}</DirectionProvider>
+            <DirectionProvider dir={dir}>
+              <AnnouncerProvider>
+                <SkipLink locale={locale} />
+                {children}
+              </AnnouncerProvider>
+            </DirectionProvider>
           </MotionProvider>
         </ThemeProvider>
       </body>

@@ -101,7 +101,7 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
       </aside>
 
       {/* Main content area */}
-      <main className="flex-1 overflow-y-auto p-6 md:p-10">{children}</main>
+      <main id="main-content" className="flex-1 overflow-y-auto p-6 md:p-10">{children}</main>
     </div>
   );
 }
