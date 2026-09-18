@@ -13,7 +13,8 @@ export interface CoreSystemKeyDefinition {
     | "cv"
     | "projects"
     | "social"
-    | "admin";
+    | "admin"
+    | "jobfit";
   description: string;
   translations: Record<SupportedLocale, string>;
 }
@@ -1567,6 +1568,278 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     translations: {
       ar: "اشرح بنية تدفق البيانات وآليات الموثوقية.",
       en: "Explain the end-to-end data pipeline and reliability mechanisms.",
+    },
+  },
+
+  // Job Fit Analyzer (F034)
+  {
+    key: "jobfit.title",
+    category: "jobfit",
+    description: "Title of Job Fit Analyzer page",
+    translations: {
+      ar: "محلل التوافق الوظيفي المدعوم بالأدلة",
+      en: "Job Fit Analyzer",
+    },
+  },
+  {
+    key: "jobfit.subtitle",
+    category: "jobfit",
+    description: "Subtitle of Job Fit Analyzer page",
+    translations: {
+      ar: "مطابقة متطلبات أي دور هندسي مباشرة مع الأدلة الموثقة ومشاريع المحفظة الحقيقية.",
+      en: "Map any role requirements directly to verified engineering evidence, projects, and architectural decisions.",
+    },
+  },
+  {
+    key: "jobfit.privacy_badge",
+    category: "jobfit",
+    description: "Privacy reassurance badge",
+    translations: {
+      ar: "معالجة فورية مشفرة في الذاكرة (بدون حفظ النص)",
+      en: "In-Memory Confidential Analysis (Zero persistence)",
+    },
+  },
+  {
+    key: "jobfit.input.label",
+    category: "jobfit",
+    description: "Label for job description textarea",
+    translations: {
+      ar: "نص الوصف الوظيفي المستهدف",
+      en: "Target Job Description (JD)",
+    },
+  },
+  {
+    key: "jobfit.input.placeholder",
+    category: "jobfit",
+    description: "Placeholder for job description textarea",
+    translations: {
+      ar: "الصق الوصف الوظيفي الكامل، المتطلبات التقنية، أو مواصفات المنصب هنا...",
+      en: "Paste complete job description, technical requirements, or role specification...",
+    },
+  },
+  {
+    key: "jobfit.input.sample_label",
+    category: "jobfit",
+    description: "Label for sample JD quick buttons",
+    translations: {
+      ar: "أمثلة سريعة:",
+      en: "Quick sample JDs:",
+    },
+  },
+  {
+    key: "jobfit.input.sample_1",
+    category: "jobfit",
+    description: "Sample JD button 1",
+    translations: {
+      ar: "مهندس بنية منصات الذكاء الاصطناعي (AI Architect)",
+      en: "AI Platform Architect",
+    },
+  },
+  {
+    key: "jobfit.input.sample_2",
+    category: "jobfit",
+    description: "Sample JD button 2",
+    translations: {
+      ar: "مهندس برمجيات أول شامل (Staff Full-Stack)",
+      en: "Staff Full-Stack Engineer",
+    },
+  },
+  {
+    key: "jobfit.input.char_count",
+    category: "jobfit",
+    description: "Character count unit label",
+    translations: {
+      ar: "حرف",
+      en: "chars",
+    },
+  },
+  {
+    key: "jobfit.action.analyze",
+    category: "jobfit",
+    description: "Button to execute job fit analysis",
+    translations: {
+      ar: "تحليل التوافق الوظيفي",
+      en: "Analyze Job Alignment",
+    },
+  },
+  {
+    key: "jobfit.action.analyzing",
+    category: "jobfit",
+    description: "Analyzing state button text",
+    translations: {
+      ar: "جاري تحليل المتطلبات ومطابقة الأدلة...",
+      en: "Analyzing Requirements & Evidence...",
+    },
+  },
+  {
+    key: "jobfit.action.clear",
+    category: "jobfit",
+    description: "Clear button text",
+    translations: {
+      ar: "إعادة تعيين",
+      en: "Clear",
+    },
+  },
+  {
+    key: "jobfit.action.copy_report",
+    category: "jobfit",
+    description: "Button to copy summary report",
+    translations: {
+      ar: "نسخ تقرير المطابقة",
+      en: "Copy Analysis Report",
+    },
+  },
+  {
+    key: "jobfit.action.copied",
+    category: "jobfit",
+    description: "Copied confirmation text",
+    translations: {
+      ar: "تم نسخ التقرير!",
+      en: "Report Copied!",
+    },
+  },
+  {
+    key: "jobfit.status.supported",
+    category: "jobfit",
+    description: "Evidence status: Supported",
+    translations: {
+      ar: "مدعوم بالأدلة",
+      en: "Supported",
+    },
+  },
+  {
+    key: "jobfit.status.partially_supported",
+    category: "jobfit",
+    description: "Evidence status: Partially Supported",
+    translations: {
+      ar: "مدعوم جزئياً",
+      en: "Partially Supported",
+    },
+  },
+  {
+    key: "jobfit.status.not_found",
+    category: "jobfit",
+    description: "Evidence status: Not Found",
+    translations: {
+      ar: "غير موثق في المحفظة",
+      en: "Not Found",
+    },
+  },
+  {
+    key: "jobfit.summary.match_score",
+    category: "jobfit",
+    description: "Match score headline",
+    translations: {
+      ar: "مؤشر التوافق الإجمالي",
+      en: "Overall Alignment",
+    },
+  },
+  {
+    key: "jobfit.summary.total",
+    category: "jobfit",
+    description: "Total requirements evaluated",
+    translations: {
+      ar: "إجمالي المتطلبات",
+      en: "Total Requirements",
+    },
+  },
+  {
+    key: "jobfit.summary.strengths",
+    category: "jobfit",
+    description: "Strengths section header",
+    translations: {
+      ar: "أبرز نقاط التوافق المعمارية",
+      en: "Key Architectural Strengths",
+    },
+  },
+  {
+    key: "jobfit.summary.considerations",
+    category: "jobfit",
+    description: "Considerations section header",
+    translations: {
+      ar: "الملاحظات ومجالات التدقيق",
+      en: "Gaps & Considerations",
+    },
+  },
+  {
+    key: "jobfit.filter.all",
+    category: "jobfit",
+    description: "Filter all requirements",
+    translations: {
+      ar: "الكل",
+      en: "All",
+    },
+  },
+  {
+    key: "jobfit.filter.supported",
+    category: "jobfit",
+    description: "Filter supported requirements",
+    translations: {
+      ar: "مدعومة",
+      en: "Supported",
+    },
+  },
+  {
+    key: "jobfit.filter.partially_supported",
+    category: "jobfit",
+    description: "Filter partially supported requirements",
+    translations: {
+      ar: "مدعومة جزئياً",
+      en: "Partially Supported",
+    },
+  },
+  {
+    key: "jobfit.filter.not_found",
+    category: "jobfit",
+    description: "Filter not found requirements",
+    translations: {
+      ar: "غير موثقة",
+      en: "Not Found",
+    },
+  },
+  {
+    key: "jobfit.citation.sources",
+    category: "jobfit",
+    description: "Verified evidence heading",
+    translations: {
+      ar: "الأدلة والمصادر الموثقة:",
+      en: "Verified Evidence Sources:",
+    },
+  },
+  {
+    key: "jobfit.uncertainty.label",
+    category: "jobfit",
+    description: "Uncertainty note label",
+    translations: {
+      ar: "ملاحظة دقة:",
+      en: "Precision Note:",
+    },
+  },
+  {
+    key: "jobfit.empty.title",
+    category: "jobfit",
+    description: "Empty state title",
+    translations: {
+      ar: "جاهز للتحليل الفوري",
+      en: "Ready for Evidence-Bound Analysis",
+    },
+  },
+  {
+    key: "jobfit.empty.desc",
+    category: "jobfit",
+    description: "Empty state description",
+    translations: {
+      ar: "الصق وصفاً وظيفياً أو اختر أحد النماذج أعلاه لرؤية مطابقة المتطلبات بنداً ببند مع الأدلة الحقيقية.",
+      en: "Paste a job description or choose a sample above to inspect verified evidence matching requirement by requirement.",
+    },
+  },
+  {
+    key: "jobfit.disclaimer",
+    category: "jobfit",
+    description: "Strict evidence disclaimer",
+    translations: {
+      ar: "تحليل موضوعي مقيد بالأدلة الموثقة فقط. لا يتم افتراض شهادات أو أدوات أو سنوات خبرة غير مسجلة صراحة.",
+      en: "Objective analysis strictly bound to verified portfolio evidence. Never fabricates certifications, tools, or undocumented years of experience.",
     },
   },
 ];
