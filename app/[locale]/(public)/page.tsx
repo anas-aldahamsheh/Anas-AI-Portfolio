@@ -2,6 +2,7 @@ import { getTranslations } from "@/modules/localization/application/get-translat
 import { GuestReassuranceBadge } from "@/modules/auth/presentation/guest-reassurance-badge";
 import { DirectionalIcon } from "@/modules/localization/presentation/directional-icon";
 import { MixedContent } from "@/modules/localization/presentation/mixed-content";
+import { ThemeToggle } from "@/modules/theme/presentation/theme-toggle";
 
 interface PublicPageProps {
   params: Promise<{ locale: string }>;
@@ -41,9 +42,12 @@ export default async function PublicHomePage({ params }: PublicPageProps) {
     >
       <div className="w-full max-w-4xl space-y-8">
         <header className="space-y-3 text-start">
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-neutral-50">
-            {t("home.title")}
-          </h1>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <h1 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-neutral-50">
+              {t("home.title")}
+            </h1>
+            <ThemeToggle locale={locale} />
+          </div>
           <p className="text-sm text-neutral-600 sm:text-base dark:text-neutral-400">
             <MixedContent text={t("home.subtitle")} />
           </p>

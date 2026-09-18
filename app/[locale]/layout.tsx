@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import "../globals.css";
 import { DirectionProvider } from "@/modules/localization/presentation/direction-provider";
+import { ThemeProvider } from "@/modules/theme/presentation/theme-provider";
+import { ThemeScript } from "@/modules/theme/presentation/theme-script";
+import { getThemeFromCookie } from "@/modules/theme/infrastructure/theme-cookie";
+import type { Theme } from "@/modules/theme/domain/theme";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -31,10 +36,30 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
 
   const dir = locale === "ar" ? "rtl" : "ltr";
 
+  let serverTheme: Theme = "system";
+  try {
+    const cookieStore = await cookies();
+    const cookieHeader = cookieStore.toString();
+    serverTheme = getThemeFromCookie(cookieHeader);
+  } catch {
+    // Graceful fallback for static page generation and test environments
+    serverTheme = "system";
+  }
+
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={dir}
+      className={serverTheme === "dark" ? "dark" : ""}
+      suppressHydrationWarning
+    >
+      <head>
+        <ThemeScript />
+      </head>
       <body className="bg-background text-foreground selection:bg-primary selection:text-primary-foreground min-h-screen font-sans antialiased">
-        <DirectionProvider dir={dir}>{children}</DirectionProvider>
+        <ThemeProvider initialTheme={serverTheme}>
+          <DirectionProvider dir={dir}>{children}</DirectionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
