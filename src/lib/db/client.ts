@@ -12,7 +12,7 @@ const connectionString =
 const clientOptions: postgres.Options<{}> = {
   max: process.env.NODE_ENV === "production" ? 10 : 1,
   idle_timeout: 20,
-  connect_timeout: 10,
+  connect_timeout: process.env.NODE_ENV === "test" ? 1 : 10,
 };
 
 if (connectionString.includes("sslmode=require")) {
