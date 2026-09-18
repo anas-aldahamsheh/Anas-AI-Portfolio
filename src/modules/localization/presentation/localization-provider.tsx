@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useMemo } from "react";
 import type { SupportedLocale } from "../domain/locales";
 import type { TranslationDictionary, TranslationParams } from "../domain/types";
-import { interpolate } from "../application/get-translations";
+import { interpolate } from "../domain/interpolation";
 
 interface LocalizationContextValue {
   t: (key: string, params?: TranslationParams) => string;
@@ -17,14 +17,14 @@ const LocalizationContext = createContext<LocalizationContextValue | null>(null)
 interface LocalizationProviderProps {
   children: React.ReactNode;
   locale: SupportedLocale;
-  dir: "rtl" | "ltr";
+  dir?: "rtl" | "ltr";
   dictionary: TranslationDictionary;
 }
 
 export function LocalizationProvider({
   children,
   locale,
-  dir,
+  dir = locale === "ar" ? "rtl" : "ltr",
   dictionary,
 }: LocalizationProviderProps) {
   const value = useMemo<LocalizationContextValue>(() => {
@@ -54,3 +54,5 @@ export function useTranslation(): LocalizationContextValue {
   }
   return context;
 }
+
+export const useLocalization = useTranslation;

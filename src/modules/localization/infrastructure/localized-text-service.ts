@@ -301,3 +301,4 @@ class LocalizedTextServiceImpl {
 }
 
 export const LocalizedTextService = new LocalizedTextServiceImpl();
+export const localizedTextService = LocalizedTextService;

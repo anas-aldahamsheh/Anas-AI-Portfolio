@@ -55,6 +55,96 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     },
   },
   {
+    key: "nav.admin",
+    category: "navigation",
+    description: "Navigation link to admin panel",
+    translations: {
+      ar: "لوحة التحكم",
+      en: "Admin",
+    },
+  },
+  {
+    key: "nav.sign_in",
+    category: "navigation",
+    description: "Navigation link to sign in",
+    translations: {
+      ar: "تسجيل الدخول",
+      en: "Sign In",
+    },
+  },
+  {
+    key: "nav.sign_out",
+    category: "navigation",
+    description: "Navigation link to sign out",
+    translations: {
+      ar: "تسجيل الخروج",
+      en: "Sign Out",
+    },
+  },
+  {
+    key: "nav.github",
+    category: "navigation",
+    description: "Navigation link to GitHub profile",
+    translations: {
+      ar: "GitHub",
+      en: "GitHub",
+    },
+  },
+  {
+    key: "nav.linkedin",
+    category: "navigation",
+    description: "Navigation link to LinkedIn profile",
+    translations: {
+      ar: "LinkedIn",
+      en: "LinkedIn",
+    },
+  },
+  {
+    key: "footer.rights",
+    category: "common",
+    description: "Footer copyright rights notice",
+    translations: {
+      ar: "جميع الحقوق محفوظة",
+      en: "All rights reserved",
+    },
+  },
+  {
+    key: "footer.built_with",
+    category: "common",
+    description: "Footer engineering tag",
+    translations: {
+      ar: "منظومة برمجية إنتاجية مبنية بأعلى معايير الجودة والأداء.",
+      en: "Engineered with production-grade reliability, performance, and accessibility.",
+    },
+  },
+  {
+    key: "footer.navigation",
+    category: "navigation",
+    description: "Footer section header for navigation",
+    translations: {
+      ar: "التنقل",
+      en: "Navigation",
+    },
+  },
+  {
+    key: "footer.capabilities",
+    category: "navigation",
+    description: "Footer section header for capabilities",
+    translations: {
+      ar: "القدرات البرمجية",
+      en: "Capabilities",
+    },
+  },
+  {
+    key: "footer.connect",
+    category: "navigation",
+    description: "Footer section header for social/connect links",
+    translations: {
+      ar: "التواصل والملفات",
+      en: "Connect",
+    },
+  },
+  {
     key: "actions.explore",
     category: "actions",
     description: "Action button to explore features",

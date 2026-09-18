@@ -13,22 +13,8 @@ export interface TranslationsContext {
   dir: "rtl" | "ltr";
 }
 
-/**
- * Interpolates variables in a translated string (e.g. "Hello {name}" -> "Hello Anas").
- */
-export function interpolate(text: string, params?: TranslationParams): string {
-  if (!params || Object.keys(params).length === 0) {
-    return text;
-  }
-
-  return text.replace(/\{([^{}]+)\}/g, (match, paramName: string) => {
-    const trimmed = paramName.trim();
-    if (params[trimmed] !== undefined) {
-      return String(params[trimmed]);
-    }
-    return match;
-  });
-}
+import { interpolate } from "../domain/interpolation";
+export { interpolate };
 
 /**
  * Server-side translation helper for React Server Components and route handlers.

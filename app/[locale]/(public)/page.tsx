@@ -2,8 +2,6 @@ import { getTranslations } from "@/modules/localization/application/get-translat
 import { GuestReassuranceBadge } from "@/modules/auth/presentation/guest-reassurance-badge";
 import { DirectionalIcon } from "@/modules/localization/presentation/directional-icon";
 import { MixedContent } from "@/modules/localization/presentation/mixed-content";
-import { ThemeToggle } from "@/modules/theme/presentation/theme-toggle";
-import { LanguageSelect } from "@/modules/localization/presentation/language-select";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/motion";
@@ -51,15 +49,9 @@ export default async function PublicHomePage({ params }: PublicPageProps) {
       <div className="w-full max-w-4xl space-y-8">
         <FadeIn delay={0.05}>
           <header className="space-y-3 text-start">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <h1 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-neutral-50">
-                {t("home.title")}
-              </h1>
-              <div className="flex items-center gap-2">
-                <LanguageSelect currentLocale={locale} />
-                <ThemeToggle locale={locale} />
-              </div>
-            </div>
+            <h1 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-neutral-50">
+              {t("home.title")}
+            </h1>
             <p className="text-sm text-neutral-600 sm:text-base dark:text-neutral-400">
               <MixedContent text={t("home.subtitle")} />
             </p>

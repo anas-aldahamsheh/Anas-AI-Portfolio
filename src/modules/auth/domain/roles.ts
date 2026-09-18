@@ -1,4 +1,5 @@
 export type Role = "GUEST" | "USER" | "ADMIN";
+export type UserRole = Role;
 
 export const ROLES: Record<Role, Role> = {
   GUEST: "GUEST",
