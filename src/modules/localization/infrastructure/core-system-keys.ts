@@ -1297,4 +1297,222 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
       en: "Save RAG Configuration",
     },
   },
+
+  // Portfolio AI Chat (F031)
+  {
+    key: "chat.trigger.label",
+    category: "chat",
+    description: "Floating chat trigger button label",
+    translations: {
+      ar: "محادثة المساعد الذكي",
+      en: "Chat with Portfolio AI",
+    },
+  },
+  {
+    key: "chat.trigger.aria",
+    category: "chat",
+    description: "Accessible ARIA label for chat trigger",
+    translations: {
+      ar: "فتح نافذة المحادثة مع الذكاء الاصطناعي",
+      en: "Open AI conversation drawer",
+    },
+  },
+  {
+    key: "chat.title",
+    category: "chat",
+    description: "Main header for the AI chat panel",
+    translations: {
+      ar: "المساعد الذكي لملف الأعمال",
+      en: "Portfolio AI Assistant",
+    },
+  },
+  {
+    key: "chat.subtitle",
+    category: "chat",
+    description: "Subtitle for the AI chat panel",
+    translations: {
+      ar: "إجابات موثقة بالأدلة والاستشهادات عن مشاريع وخبرات أنس",
+      en: "Evidence-grounded answers citing Anas's verified projects & skills",
+    },
+  },
+  {
+    key: "chat.placeholder",
+    category: "chat",
+    description: "Chat input field placeholder",
+    translations: {
+      ar: "اسأل عن المشاريع، المهارات، أو المعمارية...",
+      en: "Ask about projects, architecture, or skills...",
+    },
+  },
+  {
+    key: "chat.send",
+    category: "chat",
+    description: "Send button label",
+    translations: {
+      ar: "إرسال",
+      en: "Send",
+    },
+  },
+  {
+    key: "chat.close",
+    category: "chat",
+    description: "Close chat dialog label",
+    translations: {
+      ar: "إغلاق المحادثة",
+      en: "Close chat",
+    },
+  },
+  {
+    key: "chat.clear",
+    category: "chat",
+    description: "Clear chat history label",
+    translations: {
+      ar: "محادثة جديدة",
+      en: "New Chat",
+    },
+  },
+  {
+    key: "chat.mode.general",
+    category: "chat",
+    description: "Conversation Mode: General",
+    translations: {
+      ar: "عام",
+      en: "General",
+    },
+  },
+  {
+    key: "chat.mode.recruiter",
+    category: "chat",
+    description: "Conversation Mode: Recruiter",
+    translations: {
+      ar: "مسؤولي التوظيف",
+      en: "Recruiter",
+    },
+  },
+  {
+    key: "chat.mode.technical",
+    category: "chat",
+    description: "Conversation Mode: Technical",
+    translations: {
+      ar: "تقني معمق",
+      en: "Technical",
+    },
+  },
+  {
+    key: "chat.citations.title",
+    category: "chat",
+    description: "Title for citations popover/card",
+    translations: {
+      ar: "المصادر والاستشهادات الموثقة",
+      en: "Verified Evidence & Citations",
+    },
+  },
+  {
+    key: "chat.citations.badge",
+    category: "chat",
+    description: "Label on citation pill",
+    translations: {
+      ar: "مصدر",
+      en: "Source",
+    },
+  },
+  {
+    key: "chat.citations.open",
+    category: "chat",
+    description: "Link to view verified source",
+    translations: {
+      ar: "عرض المصدر",
+      en: "View Source",
+    },
+  },
+  {
+    key: "chat.citations.section",
+    category: "chat",
+    description: "Section label in citation card",
+    translations: {
+      ar: "القسم",
+      en: "Section",
+    },
+  },
+  {
+    key: "chat.error.general",
+    category: "chat",
+    description: "General chat error state message",
+    translations: {
+      ar: "حدث خطأ أثناء معالجة استفسارك. يرجى المحاولة مرة أخرى.",
+      en: "An error occurred while processing your question. Please try again.",
+    },
+  },
+  {
+    key: "chat.retry",
+    category: "chat",
+    description: "Retry action button",
+    translations: {
+      ar: "إعادة المحاولة",
+      en: "Retry",
+    },
+  },
+  {
+    key: "chat.empty.title",
+    category: "chat",
+    description: "Empty chat state title",
+    translations: {
+      ar: "كيف يمكنني مساعدتك اليوم؟",
+      en: "How can I help you today?",
+    },
+  },
+  {
+    key: "chat.empty.subtitle",
+    category: "chat",
+    description: "Empty chat state subtitle",
+    translations: {
+      ar: "اختر موضوعاً مقترحاً أو اكتب سؤالك للاطلاع على الأدلة الموثقة في ملف الأعمال.",
+      en: "Pick a suggested topic or ask a question to explore verified portfolio evidence.",
+    },
+  },
+  {
+    key: "chat.suggested.skills",
+    category: "chat",
+    description: "Suggested prompt chip: Skills",
+    translations: {
+      ar: "ما هي أبرز مهارات أنس في الذكاء الاصطناعي؟",
+      en: "What are Anas's primary AI & ML engineering skills?",
+    },
+  },
+  {
+    key: "chat.suggested.projects",
+    category: "chat",
+    description: "Suggested prompt chip: Projects",
+    translations: {
+      ar: "حدثني عن المعمارية التقنية لمشاريع أنس",
+      en: "Tell me about the technical architecture of Anas's key projects",
+    },
+  },
+  {
+    key: "chat.suggested.experience",
+    category: "chat",
+    description: "Suggested prompt chip: Experience",
+    translations: {
+      ar: "ملخص خبرات وإنجازات أنس المهنية",
+      en: "Summarize Anas's professional engineering track record",
+    },
+  },
+  {
+    key: "chat.insufficientEvidence",
+    category: "chat",
+    description: "Insufficient evidence notification in chat",
+    translations: {
+      ar: "لا تحتوي قاعدة معارف ملف الأعمال على معلومات موثقة كافية للإجابة على هذا الاستفسار.",
+      en: "The portfolio knowledge base does not contain verified information to answer this inquiry.",
+    },
+  },
+  {
+    key: "chat.disclaimer",
+    category: "chat",
+    description: "Grounding disclaimer below chat input",
+    translations: {
+      ar: "يجيب المساعد حصرياً استناداً إلى الأدلة الموثقة في ملف أعمال أنس.",
+      en: "Answers strictly grounded in Anas's verified portfolio evidence.",
+    },
+  },
 ];

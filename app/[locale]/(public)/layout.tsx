@@ -10,6 +10,7 @@ import {
 } from "@/modules/admin/presentation";
 import { socialService } from "@/modules/social/infrastructure/social-service";
 import { Navbar, Footer } from "@/modules/navigation/presentation";
+import { ChatDrawer } from "@/modules/chat/presentation";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 
 interface PublicLayoutProps {
@@ -56,6 +57,7 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
         </div>
         <AdminToolbar locale={supportedLocale} />
         <ContextualEditorDialog />
+        <ChatDrawer />
       </AdminEditProvider>
     </LocalizationProvider>
   );
