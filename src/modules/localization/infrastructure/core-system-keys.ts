@@ -2,7 +2,8 @@ import type { SupportedLocale } from "../domain/locales";
 
 export interface CoreSystemKeyDefinition {
   key: string;
-  category: "navigation" | "guest" | "actions" | "home" | "auth" | "common" | "chat";
+  category:
+    "navigation" | "guest" | "actions" | "home" | "auth" | "common" | "chat" | "cv" | "projects";
   description: string;
   translations: Record<SupportedLocale, string>;
 }
@@ -337,6 +338,125 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     translations: {
       ar: "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
       en: "An unexpected error occurred. Please try again.",
+    },
+  },
+
+  // CV System keys
+  {
+    key: "cv.title",
+    category: "cv",
+    description: "Title of CV page",
+    translations: {
+      ar: "السيرة الذاتية المهنية",
+      en: "Curriculum Vitae",
+    },
+  },
+  {
+    key: "cv.subtitle",
+    category: "cv",
+    description: "Subtitle of CV page",
+    translations: {
+      ar: "عرض وتحميل أحدث نسخة معتمدة من السيرة الذاتية لمهندس البرمجيات والذكاء الاصطناعي.",
+      en: "View and download the latest verified resume for Software & AI Engineering.",
+    },
+  },
+  {
+    key: "cv.download",
+    category: "cv",
+    description: "Download CV button label",
+    translations: {
+      ar: "تحميل السيرة الذاتية (PDF)",
+      en: "Download Resume (PDF)",
+    },
+  },
+  {
+    key: "cv.open_fullscreen",
+    category: "cv",
+    description: "Open in new window button label",
+    translations: {
+      ar: "فتح في نافذة مستقلة",
+      en: "Open in New Window",
+    },
+  },
+  {
+    key: "cv.version_label",
+    category: "cv",
+    description: "CV version display",
+    translations: {
+      ar: "الإصدار {version}",
+      en: "Version {version}",
+    },
+  },
+  {
+    key: "cv.published_date",
+    category: "cv",
+    description: "CV publication date display",
+    translations: {
+      ar: "تاريخ النشر: {date}",
+      en: "Published: {date}",
+    },
+  },
+  {
+    key: "cv.filesize_label",
+    category: "cv",
+    description: "CV file size display",
+    translations: {
+      ar: "الحجم: {size}",
+      en: "Size: {size}",
+    },
+  },
+  {
+    key: "cv.no_published",
+    category: "cv",
+    description: "Empty state when no CV is published",
+    translations: {
+      ar: "لا توجد نسخة سيرة ذاتية منشورة حالياً.",
+      en: "No published CV is currently available.",
+    },
+  },
+  {
+    key: "cv.fallback_notice",
+    category: "cv",
+    description: "Notice when inline PDF viewer is unavailable",
+    translations: {
+      ar: "إذا لم يظهر مستند PDF في المتصفح، يمكنك تحميله مباشرة أو فتحه في نافذة جديدة.",
+      en: "If the PDF does not display in your browser, you can download it directly or open it in a new window.",
+    },
+  },
+  {
+    key: "cv.admin.upload_title",
+    category: "cv",
+    description: "Admin title for CV upload section",
+    translations: {
+      ar: "رفع وتحديث السيرة الذاتية",
+      en: "Upload & Update CV",
+    },
+  },
+  {
+    key: "cv.admin.changelog",
+    category: "cv",
+    description: "Admin changelog field label",
+    translations: {
+      ar: "ملاحظات التغيير والإصدار",
+      en: "Changelog & Release Notes",
+    },
+  },
+  {
+    key: "cv.admin.publish",
+    category: "cv",
+    description: "Admin publish action",
+    translations: {
+      ar: "اعتماد ونشر",
+      en: "Publish Version",
+    },
+  },
+  {
+    key: "cv.admin.rollback",
+    category: "cv",
+    description: "Admin rollback action",
+    translations: {
+      ar: "استعادة هذا الإصدار",
+      en: "Rollback to Version",
     },
   },
 ];
