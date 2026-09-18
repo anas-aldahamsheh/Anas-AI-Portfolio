@@ -12,7 +12,8 @@ export interface CoreSystemKeyDefinition {
     | "chat"
     | "cv"
     | "projects"
-    | "social";
+    | "social"
+    | "admin";
   description: string;
   translations: Record<SupportedLocale, string>;
 }
@@ -886,6 +887,152 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     translations: {
       ar: "المشروع المطلوب غير موجود أو تمت أرشفته.",
       en: "The requested project could not be found or has been archived.",
+    },
+  },
+
+  // AI Provider & Model Registry (F019)
+  {
+    key: "admin.ai.registry.title",
+    category: "admin",
+    description: "AI Provider & Model Registry title",
+    translations: {
+      ar: "سجل مزودي ونماذج الذكاء الاصطناعي",
+      en: "AI Provider & Model Registry",
+    },
+  },
+  {
+    key: "admin.ai.registry.subtitle",
+    category: "admin",
+    description: "AI Provider & Model Registry description",
+    translations: {
+      ar: "إدارة مزودي ونماذج الذكاء الاصطناعي وتعيين الأدوار والسياسات التشغيلية بشكل ديناميكي دون الحاجة لإعادة النشر.",
+      en: "Configure and manage AI providers, models, active capability assignments, and runtime policies without requiring redeployment.",
+    },
+  },
+  {
+    key: "admin.ai.tabs.assignments",
+    category: "admin",
+    description: "Capability assignments tab label",
+    translations: {
+      ar: "تعيينات القدرات النشطة",
+      en: "Capability Assignments",
+    },
+  },
+  {
+    key: "admin.ai.tabs.providers",
+    category: "admin",
+    description: "Providers tab label",
+    translations: {
+      ar: "المزودون السحابيون والداخليون",
+      en: "AI Providers",
+    },
+  },
+  {
+    key: "admin.ai.tabs.models",
+    category: "admin",
+    description: "Models tab label",
+    translations: {
+      ar: "النماذج المسجلة والفحص",
+      en: "Models & Verification",
+    },
+  },
+  {
+    key: "admin.ai.tabs.policy",
+    category: "admin",
+    description: "Runtime policy tab label",
+    translations: {
+      ar: "السياسة التشغيلية والمهل",
+      en: "Runtime Policy",
+    },
+  },
+  {
+    key: "admin.ai.capabilities.generation",
+    category: "admin",
+    description: "Generation capability label",
+    translations: {
+      ar: "توليد المحادثة والإجابات",
+      en: "Conversational Generation",
+    },
+  },
+  {
+    key: "admin.ai.capabilities.embedding",
+    category: "admin",
+    description: "Embedding capability label",
+    translations: {
+      ar: "التضمين الشعاعي (Dense Vector)",
+      en: "Multilingual Embedding",
+    },
+  },
+  {
+    key: "admin.ai.capabilities.reranking",
+    category: "admin",
+    description: "Reranking capability label",
+    translations: {
+      ar: "إعادة الترتيب العصبي (Cross-Encoder)",
+      en: "Neural Reranking",
+    },
+  },
+  {
+    key: "admin.ai.capabilities.router",
+    category: "admin",
+    description: "Router capability label",
+    translations: {
+      ar: "توجيه النوايا والاستعلامات",
+      en: "Query Intent Router",
+    },
+  },
+  {
+    key: "admin.ai.capabilities.rewrite",
+    category: "admin",
+    description: "Rewrite capability label",
+    translations: {
+      ar: "إعادة صياغة وتوسيع الاستعلام",
+      en: "Query Rewriter",
+    },
+  },
+  {
+    key: "admin.ai.capabilities.evaluator",
+    category: "admin",
+    description: "Evaluator capability label",
+    translations: {
+      ar: "التقييم وضمان السلامة",
+      en: "Evaluation & Safety Guard",
+    },
+  },
+  {
+    key: "admin.ai.test.button",
+    category: "admin",
+    description: "Test capability button text",
+    translations: {
+      ar: "فحص القدرة",
+      en: "Test Capability",
+    },
+  },
+  {
+    key: "admin.ai.test.running",
+    category: "admin",
+    description: "Test running state text",
+    translations: {
+      ar: "جارٍ الفحص...",
+      en: "Testing...",
+    },
+  },
+  {
+    key: "admin.ai.test.success",
+    category: "admin",
+    description: "Test success state text",
+    translations: {
+      ar: "سليم ومطابق",
+      en: "Healthy",
+    },
+  },
+  {
+    key: "admin.ai.test.failed",
+    category: "admin",
+    description: "Test failed state text",
+    translations: {
+      ar: "فشل التحقق",
+      en: "Check Failed",
     },
   },
 ];
