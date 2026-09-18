@@ -489,6 +489,24 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     },
   },
   {
+    key: "social.linkedin.title",
+    category: "social",
+    description: "Title for LinkedIn popover",
+    translations: {
+      ar: "الملف المهني على LinkedIn",
+      en: "LinkedIn Profile",
+    },
+  },
+  {
+    key: "social.linkedin.description",
+    category: "social",
+    description: "Description for LinkedIn popover",
+    translations: {
+      ar: "تواصل مهنيًا لمناقشة قيادة فرق الذكاء الاصطناعي وهندسة الأنظمة المتقدمة.",
+      en: "Connect for professional collaborations, AI leadership, and enterprise engineering.",
+    },
+  },
+  {
     key: "social.copy_url",
     category: "social",
     description: "Copy URL action label",

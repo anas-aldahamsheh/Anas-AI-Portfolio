@@ -13,17 +13,22 @@ import { PresenceTransition } from "@/components/motion";
 import type { NavigationItem } from "../domain/types";
 import { NavIcon } from "./nav-icon";
 import { cn } from "@/lib/utils";
-import { type SocialProfile, BASELINE_GITHUB_PROFILE } from "@/modules/social/domain/types";
-import { GitHubPopover } from "@/modules/social/presentation";
+import {
+  type SocialProfile,
+  BASELINE_GITHUB_PROFILE,
+  BASELINE_LINKEDIN_PROFILE,
+} from "@/modules/social/domain/types";
+import { GitHubPopover, LinkedInPopover } from "@/modules/social/presentation";
 
 export interface NavbarProps {
   locale: string;
   items: NavigationItem[];
   brandTitle?: string | undefined;
   githubProfile?: SocialProfile | undefined;
+  linkedinProfile?: SocialProfile | undefined;
 }
 
-export function Navbar({ locale, items, brandTitle, githubProfile }: NavbarProps) {
+export function Navbar({ locale, items, brandTitle, githubProfile, linkedinProfile }: NavbarProps) {
   const pathname = usePathname();
   const { t } = useLocalization();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -122,9 +127,13 @@ export function Navbar({ locale, items, brandTitle, githubProfile }: NavbarProps
             })}
           </nav>
 
-          {/* Right Controls: GitHub Popover, Language Selector, Theme Toggle, Mobile Menu Trigger */}
+          {/* Right Controls: GitHub Popover, LinkedIn Popover, Language Selector, Theme Toggle, Mobile Menu Trigger */}
           <div className="flex items-center gap-2">
             <GitHubPopover profile={githubProfile || BASELINE_GITHUB_PROFILE} locale={locale} />
+            <LinkedInPopover
+              profile={linkedinProfile || BASELINE_LINKEDIN_PROFILE}
+              locale={locale}
+            />
             <LanguageSelect currentLocale={locale} />
             <ThemeToggle locale={locale} />
 

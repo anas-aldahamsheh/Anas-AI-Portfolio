@@ -8,8 +8,10 @@ import {
   type SocialPlatform,
   type SocialProfileUpdateInput,
   BASELINE_GITHUB_PROFILE,
+  BASELINE_LINKEDIN_PROFILE,
+  BASELINE_SOCIAL_PROFILES,
 } from "../domain/types";
-export { BASELINE_GITHUB_PROFILE };
+export { BASELINE_GITHUB_PROFILE, BASELINE_LINKEDIN_PROFILE, BASELINE_SOCIAL_PROFILES };
 
 export class SocialService {
   private cache: Map<string, SocialProfile[]> = new Map();
@@ -31,6 +33,9 @@ export class SocialService {
 
     if (platform === "github") {
       return BASELINE_GITHUB_PROFILE;
+    }
+    if (platform === "linkedin") {
+      return BASELINE_LINKEDIN_PROFILE;
     }
 
     return {
@@ -105,7 +110,7 @@ export class SocialService {
       });
     }
 
-    const baseline = [BASELINE_GITHUB_PROFILE];
+    const baseline = [...BASELINE_SOCIAL_PROFILES];
     this.cache.set(locale, baseline);
     this.cacheTimestamps.set(locale, now);
     return baseline;

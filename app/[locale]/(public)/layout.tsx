@@ -21,14 +21,16 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
   const { locale } = await params;
   const supportedLocale = (locale === "en" ? "en" : "ar") as SupportedLocale;
 
-  // Retrieve dynamic navigation items, dictionary, admin session, and github profile concurrently
-  const [headerItems, footerItems, dictionary, session, githubProfile] = await Promise.all([
-    navigationService.getNavigationItems("header"),
-    navigationService.getNavigationItems("footer"),
-    localizedTextService.getDictionary(supportedLocale),
-    getCurrentSession(),
-    socialService.getProfile("github", supportedLocale),
-  ]);
+  // Retrieve dynamic navigation items, dictionary, admin session, and social profiles concurrently
+  const [headerItems, footerItems, dictionary, session, githubProfile, linkedinProfile] =
+    await Promise.all([
+      navigationService.getNavigationItems("header"),
+      navigationService.getNavigationItems("footer"),
+      localizedTextService.getDictionary(supportedLocale),
+      getCurrentSession(),
+      socialService.getProfile("github", supportedLocale),
+      socialService.getProfile("linkedin", supportedLocale),
+    ]);
 
   const isAdmin = session?.role === "ADMIN";
 
@@ -36,11 +38,21 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
     <LocalizationProvider locale={supportedLocale} dictionary={dictionary}>
       <AdminEditProvider isAdmin={isAdmin}>
         <div className="bg-background text-foreground flex min-h-screen flex-col">
-          <Navbar locale={supportedLocale} items={headerItems} githubProfile={githubProfile} />
+          <Navbar
+            locale={supportedLocale}
+            items={headerItems}
+            githubProfile={githubProfile}
+            linkedinProfile={linkedinProfile}
+          />
           <div id="main-content" className="flex-1">
             {children}
           </div>
-          <Footer locale={supportedLocale} items={footerItems} />
+          <Footer
+            locale={supportedLocale}
+            items={footerItems}
+            githubProfile={githubProfile}
+            linkedinProfile={linkedinProfile}
+          />
         </div>
         <AdminToolbar locale={supportedLocale} />
         <ContextualEditorDialog />

@@ -4,14 +4,22 @@ import Link from "next/link";
 import { useLocalization } from "@/modules/localization/presentation/localization-provider";
 import type { NavigationItem } from "../domain/types";
 import { NavIcon } from "./nav-icon";
+import {
+  type SocialProfile,
+  BASELINE_GITHUB_PROFILE,
+  BASELINE_LINKEDIN_PROFILE,
+} from "@/modules/social/domain/types";
+import { GitHubPopover, LinkedInPopover } from "@/modules/social/presentation";
 
 export interface FooterProps {
   locale: string;
   items: NavigationItem[];
   brandTitle?: string;
+  githubProfile?: SocialProfile;
+  linkedinProfile?: SocialProfile;
 }
 
-export function Footer({ locale, items, brandTitle }: FooterProps) {
+export function Footer({ locale, items, brandTitle, githubProfile, linkedinProfile }: FooterProps) {
   const { t } = useLocalization();
   const currentYear = new Date().getFullYear();
 
@@ -48,6 +56,13 @@ export function Footer({ locale, items, brandTitle }: FooterProps) {
             <p className="max-w-md text-xs leading-relaxed text-neutral-500 sm:text-sm dark:text-neutral-400">
               {t("footer.built_with")}
             </p>
+            <div className="flex items-center gap-2 pt-2">
+              <GitHubPopover profile={githubProfile || BASELINE_GITHUB_PROFILE} locale={locale} />
+              <LinkedInPopover
+                profile={linkedinProfile || BASELINE_LINKEDIN_PROFILE}
+                locale={locale}
+              />
+            </div>
           </div>
 
           {/* Navigation Links Column */}

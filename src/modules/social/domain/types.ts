@@ -25,4 +25,8 @@ export const socialProfileUpdateSchema = z.object({
 
 export type SocialProfileUpdateInput = z.infer<typeof socialProfileUpdateSchema>;
 
-export { BASELINE_GITHUB_PROFILE } from "./baseline";
+export {
+  BASELINE_GITHUB_PROFILE,
+  BASELINE_LINKEDIN_PROFILE,
+  BASELINE_SOCIAL_PROFILES,
+} from "./baseline";
