@@ -1188,4 +1188,113 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
       en: "Preview Render",
     },
   },
+  // RAG & Knowledge Pipeline
+  {
+    key: "admin.rag.title",
+    category: "admin",
+    description: "RAG Ingestion title",
+    translations: {
+      ar: "منظومة الاسترجاع المعزز (RAG Pipeline)",
+      en: "RAG Knowledge Pipeline",
+    },
+  },
+  {
+    key: "admin.rag.description",
+    category: "admin",
+    description: "RAG Ingestion description",
+    translations: {
+      ar: "إدارة الفهرسة واستخراج البيانات وتضمين المعارف المتجهية للمحفظة.",
+      en: "Manage knowledge extraction, semantic chunking, and vector index synchronization.",
+    },
+  },
+  {
+    key: "admin.rag.active_version",
+    category: "admin",
+    description: "Active index version tag label",
+    translations: {
+      ar: "إصدار الفهرس النشط",
+      en: "Active Index Version",
+    },
+  },
+  {
+    key: "admin.rag.embedding_model",
+    category: "admin",
+    description: "Embedding model label",
+    translations: {
+      ar: "نموذج التضمين المتجهي",
+      en: "Embedding Model",
+    },
+  },
+  {
+    key: "admin.rag.total_docs",
+    category: "admin",
+    description: "Total indexed documents count label",
+    translations: {
+      ar: "إجمالي الوثائق المفهرسة",
+      en: "Indexed Documents",
+    },
+  },
+  {
+    key: "admin.rag.total_chunks",
+    category: "admin",
+    description: "Total indexed chunks count label",
+    translations: {
+      ar: "إجمالي المقاطع الدلالية (Chunks)",
+      en: "Indexed Chunks",
+    },
+  },
+  {
+    key: "admin.rag.ingest_button",
+    category: "admin",
+    description: "Trigger ingestion button",
+    translations: {
+      ar: "بدء مزامنة الفهرس (Ingest All)",
+      en: "Trigger Ingestion Sync",
+    },
+  },
+  {
+    key: "admin.rag.force_reindex",
+    category: "admin",
+    description: "Force reindex checkbox",
+    translations: {
+      ar: "إعادة بناء كاملة بدون تخطي (Force Reindex)",
+      en: "Force full reindex (bypass hash cache)",
+    },
+  },
+  {
+    key: "admin.rag.config_chunk_size",
+    category: "admin",
+    description: "Chunk size config label",
+    translations: {
+      ar: "حجم المقطع المستهدف (Chunk Size)",
+      en: "Target Chunk Size (Tokens)",
+    },
+  },
+  {
+    key: "admin.rag.config_chunk_overlap",
+    category: "admin",
+    description: "Chunk overlap config label",
+    translations: {
+      ar: "تداخل المقاطع (Chunk Overlap)",
+      en: "Chunk Overlap (Tokens)",
+    },
+  },
+  {
+    key: "admin.rag.config_top_k",
+    category: "admin",
+    description: "Retrieval Top K label",
+    translations: {
+      ar: "عدد النتائج المسترجعة (Top K)",
+      en: "Retrieval Candidates (Top K)",
+    },
+  },
+  {
+    key: "admin.rag.config_save",
+    category: "admin",
+    description: "Save RAG config button",
+    translations: {
+      ar: "حفظ إعدادات RAG",
+      en: "Save RAG Configuration",
+    },
+  },
 ];
