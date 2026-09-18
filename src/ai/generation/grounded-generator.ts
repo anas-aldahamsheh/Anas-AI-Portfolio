@@ -8,6 +8,7 @@ import {
   ResponseLanguage,
 } from "@/ai/contracts";
 import { citationValidator } from "@/ai/citations";
+import { languageResolver } from "@/ai/language";
 import {
   createInsufficientEvidenceAnswer,
   isInsufficientEvidenceText,
@@ -46,7 +47,13 @@ export class GroundedGenerator implements GenerationPort {
     options?: GenerationOptions,
   ): Promise<GroundedAnswer> {
     const start = performance.now();
-    const language: ResponseLanguage = input.responseLanguage || "en";
+    let language: ResponseLanguage = input.responseLanguage!;
+    if (!language) {
+      const resolved = await languageResolver.resolveLanguage({
+        message: input.userMessage,
+      });
+      language = resolved.language;
+    }
     const mode: ConversationMode = input.conversationMode || "general";
     const chunks = input.contextChunks || [];
 
@@ -140,8 +147,7 @@ export class GroundedGenerator implements GenerationPort {
             }
           }
 
-          const timeoutMs =
-            options?.timeoutMs ?? runtimePolicy?.timeoutMs ?? this.defaultTimeoutMs;
+          const timeoutMs = options?.timeoutMs ?? runtimePolicy?.timeoutMs ?? this.defaultTimeoutMs;
           const temperature = options?.temperature ?? this.defaultTemperature;
           const maxTokens = options?.maxTokens ?? this.defaultMaxTokens;
 
