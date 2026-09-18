@@ -542,4 +542,186 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
       en: "Canonical URL:",
     },
   },
+
+  // Project Catalog & Filtering (F017)
+  {
+    key: "projects.catalog.title",
+    category: "projects",
+    description: "Main title for the project catalog page",
+    translations: {
+      ar: "المشاريع والأنظمة الهندسية",
+      en: "Engineering & AI Projects",
+    },
+  },
+  {
+    key: "projects.catalog.description",
+    category: "projects",
+    description: "Subtitle describing project showcase",
+    translations: {
+      ar: "منظومات إنتاجية، وهياكل وكيلة، ومساهمات مفتوحة المصدر تم بناؤها بمعايير موثوقية عالية.",
+      en: "Production systems, agentic architectures, and open-source contributions built with high reliability.",
+    },
+  },
+  {
+    key: "projects.search.placeholder",
+    category: "projects",
+    description: "Search placeholder input for filtering projects",
+    translations: {
+      ar: "ابحث في المشاريع بالكلمة المفتاحية أو التقنية...",
+      en: "Search projects by keyword, tech, or topic...",
+    },
+  },
+  {
+    key: "projects.filter.all_categories",
+    category: "projects",
+    description: "Label for selecting all domains/categories",
+    translations: {
+      ar: "جميع المجالات",
+      en: "All Domains",
+    },
+  },
+  {
+    key: "projects.filter.all_tags",
+    category: "projects",
+    description: "Label for selecting all tech tags",
+    translations: {
+      ar: "جميع التقنيات",
+      en: "All Technologies",
+    },
+  },
+  {
+    key: "projects.filter.featured_only",
+    category: "projects",
+    description: "Checkbox label for filtering featured projects only",
+    translations: {
+      ar: "المشاريع المميزة فقط",
+      en: "Featured Only",
+    },
+  },
+  {
+    key: "projects.filter.category_label",
+    category: "projects",
+    description: "Filter dropdown label for categories",
+    translations: {
+      ar: "المجال",
+      en: "Domain",
+    },
+  },
+  {
+    key: "projects.filter.tag_label",
+    category: "projects",
+    description: "Filter dropdown label for tags",
+    translations: {
+      ar: "التقنية",
+      en: "Technology",
+    },
+  },
+  {
+    key: "projects.sort.label",
+    category: "projects",
+    description: "Sort selector label",
+    translations: {
+      ar: "الترتيب",
+      en: "Sort By",
+    },
+  },
+  {
+    key: "projects.sort.order",
+    category: "projects",
+    description: "Sort option by recommended order",
+    translations: {
+      ar: "الترتيب الموصى به",
+      en: "Recommended Order",
+    },
+  },
+  {
+    key: "projects.sort.latest",
+    category: "projects",
+    description: "Sort option by latest publication date",
+    translations: {
+      ar: "الأحدث تاريخًا",
+      en: "Most Recent",
+    },
+  },
+  {
+    key: "projects.sort.title",
+    category: "projects",
+    description: "Sort option alphabetical by title",
+    translations: {
+      ar: "أبجديًا",
+      en: "Alphabetical",
+    },
+  },
+  {
+    key: "projects.card.view_project",
+    category: "projects",
+    description: "Button label to open project deep dive",
+    translations: {
+      ar: "استعراض تفاصيل المشروع",
+      en: "View Deep Dive",
+    },
+  },
+  {
+    key: "projects.card.source_code",
+    category: "projects",
+    description: "Link label for project repository code",
+    translations: {
+      ar: "الكود المصدري",
+      en: "Source Code",
+    },
+  },
+  {
+    key: "projects.card.live_demo",
+    category: "projects",
+    description: "Link label for live project demo",
+    translations: {
+      ar: "تجربة حية",
+      en: "Live Demo",
+    },
+  },
+  {
+    key: "projects.card.featured_badge",
+    category: "projects",
+    description: "Badge text for featured projects",
+    translations: {
+      ar: "مميز",
+      en: "Featured",
+    },
+  },
+  {
+    key: "projects.empty.title",
+    category: "projects",
+    description: "Title when no projects match search/filters",
+    translations: {
+      ar: "لا توجد مشاريع تطابق خيارات البحث",
+      en: "No projects match your filter criteria",
+    },
+  },
+  {
+    key: "projects.empty.description",
+    category: "projects",
+    description: "Description advising user how to reset project search",
+    translations: {
+      ar: "جرّب تغيير كلمات البحث أو اختيار مجال أو تقنية مختلفة.",
+      en: "Try adjusting your search keywords, domain, or technology tags.",
+    },
+  },
+  {
+    key: "projects.empty.reset",
+    category: "projects",
+    description: "Button label to reset all active filters",
+    translations: {
+      ar: "إعادة ضبط الفلاتر",
+      en: "Reset Filters",
+    },
+  },
+  {
+    key: "projects.count",
+    category: "projects",
+    description: "Results count summary message",
+    translations: {
+      ar: "تم العثور على {count} مشروع",
+      en: "{count} projects found",
+    },
+  },
 ];

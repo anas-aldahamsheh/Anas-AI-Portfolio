@@ -1,0 +1,183 @@
+import type { Project, ProjectCategory, ProjectTag } from "./types";
+
+export const BASELINE_CATEGORIES: ProjectCategory[] = [
+  { id: "cat-agentic-ai", slug: "agentic-ai", name: "Agentic AI" },
+  { id: "cat-enterprise-systems", slug: "enterprise-systems", name: "Enterprise Systems" },
+  { id: "cat-fullstack-edge", slug: "fullstack-edge", name: "Full Stack & Edge" },
+];
+
+export const BASELINE_TAGS: ProjectTag[] = [
+  { id: "tag-typescript", slug: "typescript", name: "TypeScript" },
+  { id: "tag-python", slug: "python", name: "Python" },
+  { id: "tag-rag", slug: "rag", name: "RAG" },
+  { id: "tag-pgvector", slug: "pgvector", name: "pgvector" },
+  { id: "tag-rust", slug: "rust", name: "Rust" },
+  { id: "tag-nextjs", slug: "nextjs", name: "Next.js" },
+  { id: "tag-webrtc", slug: "webrtc", name: "WebRTC" },
+  { id: "tag-fastapi", slug: "fastapi", name: "FastAPI" },
+  { id: "tag-tailwindcss", slug: "tailwindcss", name: "TailwindCSS" },
+];
+
+export const BASELINE_PROJECTS_EN: Project[] = [
+  {
+    id: "proj-rag-engine",
+    slug: "autonomous-rag-engine",
+    status: "PUBLISHED",
+    orderIndex: 1,
+    isFeatured: true,
+    coverImageUrl: null,
+    repoUrl: "https://github.com/anas-ai-engineer/multimodal-rag-engine",
+    demoUrl: "https://rag-demo.anas-ai.dev",
+    title: "Autonomous Multimodal RAG Engine",
+    summary:
+      "Production-grade agentic retrieval-augmented generation engine with hybrid dense/sparse vector search and dynamic reranking.",
+    problem: "Traditional semantic search struggles with dense contextual domain shifts.",
+    solution: "Integrated reciprocal rank fusion with BGE-M3 and custom contextual reranking.",
+    categories: ["Agentic AI"],
+    tags: ["TypeScript", "pgvector", "RAG", "Python"],
+    createdAt: "2026-01-15T00:00:00.000Z",
+    updatedAt: "2026-03-01T00:00:00.000Z",
+  },
+  {
+    id: "proj-policy-router",
+    slug: "enterprise-policy-router",
+    status: "PUBLISHED",
+    orderIndex: 2,
+    isFeatured: true,
+    coverImageUrl: null,
+    repoUrl: "https://github.com/anas-ai-engineer/edge-policy-router",
+    demoUrl: null,
+    title: "Enterprise Edge Gateway & Policy Router",
+    summary:
+      "Ultra-low latency edge gateway enforcing cryptographic RBAC, rate-limiting, and distributed session consensus.",
+    problem: "Centralized authorization introduces latency spikes across distributed edge nodes.",
+    solution: "Zero-allocation token verification with cryptographic session consensus.",
+    categories: ["Enterprise Systems"],
+    tags: ["Rust", "Next.js", "TypeScript"],
+    createdAt: "2026-02-10T00:00:00.000Z",
+    updatedAt: "2026-03-10T00:00:00.000Z",
+  },
+  {
+    id: "proj-speech-stream",
+    slug: "neural-speech-pipeline",
+    status: "PUBLISHED",
+    orderIndex: 3,
+    isFeatured: false,
+    coverImageUrl: null,
+    repoUrl: "https://github.com/anas-ai-engineer/neural-speech-stream",
+    demoUrl: "https://voice-demo.anas-ai.dev",
+    title: "Real-Time Neural Speech & Synthesis Pipeline",
+    summary:
+      "Sub-150ms bidirectional voice conversation stream integrating WebRTC with low-latency streaming speech models.",
+    problem: "Interactive AI voice agents suffer from audio turn-taking latency and jitter.",
+    solution: "Chunked bidirectional WebRTC streaming pipeline with neural voice synthesis.",
+    categories: ["Agentic AI", "Full Stack & Edge"],
+    tags: ["Python", "WebRTC", "FastAPI"],
+    createdAt: "2026-02-20T00:00:00.000Z",
+    updatedAt: "2026-03-12T00:00:00.000Z",
+  },
+  {
+    id: "proj-bilingual-studio",
+    slug: "adaptive-design-studio",
+    status: "PUBLISHED",
+    orderIndex: 4,
+    isFeatured: false,
+    coverImageUrl: null,
+    repoUrl: "https://github.com/anas-ai-engineer/bilingual-design-studio",
+    demoUrl: null,
+    title: "Adaptive Bilingual Design System & Component Studio",
+    summary:
+      "Zero-runtime overhead design system strictly adhering to WCAG 2.2 AA standards with bidirectional RTL/LTR layout.",
+    problem:
+      "Most design systems treat RTL mirroring as an afterthought causing visual distortion.",
+    solution: "CSS logical properties and automated script orientation detection.",
+    categories: ["Full Stack & Edge"],
+    tags: ["TypeScript", "Next.js", "TailwindCSS"],
+    createdAt: "2026-03-01T00:00:00.000Z",
+    updatedAt: "2026-03-15T00:00:00.000Z",
+  },
+];
+
+export const BASELINE_PROJECTS_AR: Project[] = [
+  {
+    id: "proj-rag-engine",
+    slug: "autonomous-rag-engine",
+    status: "PUBLISHED",
+    orderIndex: 1,
+    isFeatured: true,
+    coverImageUrl: null,
+    repoUrl: "https://github.com/anas-ai-engineer/multimodal-rag-engine",
+    demoUrl: "https://rag-demo.anas-ai.dev",
+    title: "محرك استرجاع متعدد الوسائط مؤتمت (RAG)",
+    summary:
+      "منظومة استرجاع معززة بالتوليد من الدرجة الإنتاجية تدعم البحث الهجين الكثيف والدقيق وإعادة الترتيب التلقائي.",
+    problem: "يعاني البحث الدلالي التقليدي عند التعامل مع سياقات متخصصة ومتغيرة.",
+    solution: "دمج خوارزميات الترتيب المتبادل مع BGE-M3 ونماذج إعادة الترتيب السياقية.",
+    categories: ["Agentic AI"],
+    tags: ["TypeScript", "pgvector", "RAG", "Python"],
+    createdAt: "2026-01-15T00:00:00.000Z",
+    updatedAt: "2026-03-01T00:00:00.000Z",
+  },
+  {
+    id: "proj-policy-router",
+    slug: "enterprise-policy-router",
+    status: "PUBLISHED",
+    orderIndex: 2,
+    isFeatured: true,
+    coverImageUrl: null,
+    repoUrl: "https://github.com/anas-ai-engineer/edge-policy-router",
+    demoUrl: null,
+    title: "بوابة الطرفية المؤسسية وموجّه السياسات",
+    summary:
+      "بوابة حافة فائقة السرعة تطبق ضوابط الوصول المشفرة والحد الذكي من المعدلات مع توافق الجلسات الموزعة.",
+    problem: "التحقق المركزي من الصلاحيات يسبب تباطؤًا في الاستجابة عبر العقد الطرفية.",
+    solution: "التحقق الفوري من التوكنات دون تخصيص إضافي للذاكرة مع إجماع الجلسات الموزع.",
+    categories: ["Enterprise Systems"],
+    tags: ["Rust", "Next.js", "TypeScript"],
+    createdAt: "2026-02-10T00:00:00.000Z",
+    updatedAt: "2026-03-10T00:00:00.000Z",
+  },
+  {
+    id: "proj-speech-stream",
+    slug: "neural-speech-pipeline",
+    status: "PUBLISHED",
+    orderIndex: 3,
+    isFeatured: false,
+    coverImageUrl: null,
+    repoUrl: "https://github.com/anas-ai-engineer/neural-speech-stream",
+    demoUrl: "https://voice-demo.anas-ai.dev",
+    title: "منظومة معالجة وتوليد الصوت العصبي الحي",
+    summary:
+      "تدفق صوتي ثنائي الاتجاه بزمن استجابة أقل من 150 ملي ثانية يدمج WebRTC مع نماذج التوليد الصوتي العصبي.",
+    problem: "تعاني الأنظمة الصوتية الحوارية من تأخر تبادل الأدوار وعدم انتظام البث الصوتي.",
+    solution: "خط أنابيب WebRTC مجزأ يضمن التدفق المتزامن وتوليف الكلام العصبي.",
+    categories: ["Agentic AI", "Full Stack & Edge"],
+    tags: ["Python", "WebRTC", "FastAPI"],
+    createdAt: "2026-02-20T00:00:00.000Z",
+    updatedAt: "2026-03-12T00:00:00.000Z",
+  },
+  {
+    id: "proj-bilingual-studio",
+    slug: "adaptive-design-studio",
+    status: "PUBLISHED",
+    orderIndex: 4,
+    isFeatured: false,
+    coverImageUrl: null,
+    repoUrl: "https://github.com/anas-ai-engineer/bilingual-design-studio",
+    demoUrl: null,
+    title: "نظام تصميم ثنائي اللغة متكيف وأستوديو المكونات",
+    summary:
+      "نظام تصميم خفيف وسريع يمتثل كليًا لمعايير إمكانية الوصول WCAG 2.2 AA مع دعم تلقائي للاتجاهين RTL و LTR.",
+    problem: "تعتبر معظم أنظمة التصميم دعم العربية مجرد انعكاس بصري شكلي مما يؤدي لتشوه العناصر.",
+    solution: "الاعتماد على الخصائص المنطقية للـ CSS واكتشاف اتجاه النصوص البرمجية تلقائيًا.",
+    categories: ["Full Stack & Edge"],
+    tags: ["TypeScript", "Next.js", "TailwindCSS"],
+    createdAt: "2026-03-01T00:00:00.000Z",
+    updatedAt: "2026-03-15T00:00:00.000Z",
+  },
+];
+
+export function getBaselineProjects(locale = "en"): Project[] {
+  const base = locale === "ar" ? BASELINE_PROJECTS_AR : BASELINE_PROJECTS_EN;
+  return base.map((p) => ({ ...p }));
+}

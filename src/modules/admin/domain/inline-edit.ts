@@ -7,6 +7,7 @@ export const editableEntityTypeSchema = z.enum([
   "ui_text",
   "navigation",
   "system_setting",
+  "project",
 ]);
 
 export type EditableEntityType = z.infer<typeof editableEntityTypeSchema>;
