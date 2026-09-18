@@ -134,6 +134,7 @@ export class GroundedGenerator implements GenerationPort {
               context_chunks: formattedContext,
               citation_catalog: catalogFormatted,
               conversation_summary: input.conversationSummary || "None",
+              current_scope: input.currentScope || "None",
               user_message: input.userMessage,
             });
             systemPrompt = rendered.systemPrompt;

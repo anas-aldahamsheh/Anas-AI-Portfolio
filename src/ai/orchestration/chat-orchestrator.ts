@@ -28,6 +28,8 @@ export interface ChatOrchestratorInput {
   previousLanguage?: ResponseLanguage | undefined;
   conversationSummary?: string | undefined;
   projectScopeId?: string | undefined;
+  projectScopeTitle?: string | undefined;
+  allowGlobalContext?: boolean | undefined;
   history?: ChatHistoryMessage[] | undefined;
 }
 
@@ -43,6 +45,8 @@ export interface ChatOrchestratorTelemetry {
   generationLatencyMs: number;
   totalLatencyMs: number;
   strategy: string;
+  projectScopeId?: string | undefined;
+  isScopedRetrieval: boolean;
 }
 
 export interface ChatOrchestratorResult {
@@ -108,14 +112,18 @@ export class ChatOrchestrator {
     }
 
     // 4. Hybrid Retrieval (Dense Vector + Sparse BM25 Fusion)
-    const retrievalFilter: { sourceId?: string } = {};
-    if (input.projectScopeId) {
+    const isScoped = Boolean(input.projectScopeId);
+    const allowGlobalContext = Boolean(input.allowGlobalContext);
+
+    const retrievalFilter: { sourceId?: string; sourceType?: "project" } = {};
+    if (isScoped && input.projectScopeId) {
       retrievalFilter.sourceId = input.projectScopeId;
+      retrievalFilter.sourceType = "project";
     }
 
     let candidates: ScoredCandidate[] = [];
     try {
-      // Execute hybrid retrieval for primary query
+      // Execute hybrid retrieval for primary query with hard scope filter
       const primaryRes = await hybridRetriever.retrieve({
         text: searchQueries[0] || message,
         filter: Object.keys(retrievalFilter).length > 0 ? retrievalFilter : undefined,
@@ -143,6 +151,25 @@ export class ChatOrchestrator {
         }
       } else {
         candidates = primaryRes.candidates;
+      }
+
+      // Optional global context: if allowed and scoped, retrieve broad evidence, preserving project chunks as primary
+      if (isScoped && allowGlobalContext) {
+        try {
+          const globalRes = await hybridRetriever.retrieve({
+            text: message,
+            topK: 4,
+          });
+          const projectCandidateIds = new Set(candidates.map((c) => c.id));
+          for (const cand of globalRes.candidates) {
+            if (!projectCandidateIds.has(cand.id)) {
+              projectCandidateIds.add(cand.id);
+              candidates.push({ ...cand, score: cand.score * 0.5 });
+            }
+          }
+        } catch {
+          // Ignore global context errors
+        }
       }
     } catch (err) {
       logger.warn("Hybrid retrieval failed in chat orchestrator", {
@@ -189,6 +216,7 @@ export class ChatOrchestrator {
       responseLanguage: language,
       conversationMode,
       conversationSummary: input.conversationSummary,
+      currentScope: input.projectScopeTitle || input.projectScopeId,
     });
     const genLatency = Math.round(performance.now() - genStart);
 
@@ -213,6 +241,8 @@ export class ChatOrchestrator {
         generationLatencyMs: genLatency,
         totalLatencyMs: totalLatency,
         strategy: groundedAnswer.telemetry.strategy,
+        projectScopeId: input.projectScopeId,
+        isScopedRetrieval: isScoped,
       },
     };
   }

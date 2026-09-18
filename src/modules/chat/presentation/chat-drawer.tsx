@@ -99,6 +99,8 @@ export function ChatDrawer({
   const { t, locale, dir } = useLocalization();
   const [isOpen, setIsOpen] = useState(initialOpen);
   const [mode, setMode] = useState<ConversationMode>("general");
+  const [activeScopeId, setActiveScopeId] = useState<string | undefined>(projectScopeId);
+  const [activeScopeTitle, setActiveScopeTitle] = useState<string | undefined>(projectScopeTitle);
   const [availableModes, setAvailableModes] = useState<
     Array<{ slug: ConversationMode; name: string; description: string }>
   >([
@@ -155,6 +157,38 @@ export function ChatDrawer({
     }
   }, [isOpen]);
 
+  // Adjust state when prop changes without effect
+  const [prevProjectScopeId, setPrevProjectScopeId] = useState(projectScopeId);
+  if (projectScopeId !== prevProjectScopeId) {
+    setPrevProjectScopeId(projectScopeId);
+    setActiveScopeId(projectScopeId);
+    setActiveScopeTitle(projectScopeTitle);
+  }
+
+  // Listen to open-project-chat event dispatched from project deep dive or elsewhere
+  useEffect(() => {
+    function handleOpenProjectChat(e: Event) {
+      const customEvent = e as CustomEvent<{
+        projectId?: string;
+        projectTitle?: string;
+        prompt?: string;
+      }>;
+      const detail = customEvent.detail;
+      if (detail) {
+        if (detail.projectId) {
+          setActiveScopeId(detail.projectId);
+          setActiveScopeTitle(detail.projectTitle || detail.projectId);
+        }
+        setIsOpen(true);
+        if (detail.prompt) {
+          setInputVal(detail.prompt);
+        }
+      }
+    }
+    window.addEventListener("open-project-chat", handleOpenProjectChat);
+    return () => window.removeEventListener("open-project-chat", handleOpenProjectChat);
+  }, []);
+
   // Handle Escape key to close
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -205,7 +239,8 @@ export function ChatDrawer({
           message: text,
           mode,
           conversationLocale: locale,
-          projectScopeId,
+          projectScopeId: activeScopeId,
+          projectScopeTitle: activeScopeTitle,
           stream: true,
         }),
       });
@@ -290,11 +325,13 @@ export function ChatDrawer({
     setErrorMessage(null);
   };
 
-  const suggestedPrompts = [
-    t("chat.suggested.skills"),
-    t("chat.suggested.projects"),
-    t("chat.suggested.experience"),
-  ];
+  const suggestedPrompts = activeScopeId
+    ? [
+        t("chat.scope.prompt.architecture"),
+        t("chat.scope.prompt.performance"),
+        t("chat.scope.prompt.data_flow"),
+      ]
+    : [t("chat.suggested.skills"), t("chat.suggested.projects"), t("chat.suggested.experience")];
 
   return (
     <>
@@ -357,8 +394,10 @@ export function ChatDrawer({
                   </div>
                   <div>
                     <h3 className="text-foreground text-sm font-semibold">{t("chat.title")}</h3>
-                    {projectScopeTitle && (
-                      <p className="text-primary text-[11px] font-medium">{projectScopeTitle}</p>
+                    {activeScopeTitle && (
+                      <p className="text-primary max-w-[200px] truncate text-[11px] font-medium">
+                        {activeScopeTitle}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -392,6 +431,38 @@ export function ChatDrawer({
                   </button>
                 </div>
               </div>
+
+              {/* Active Project Scope Badge */}
+              {activeScopeId && (
+                <div
+                  className="bg-primary/10 border-primary/25 flex items-center justify-between gap-2 rounded-lg border px-3 py-1.5 text-xs"
+                  data-testid="chat-scope-badge-container"
+                >
+                  <div className="flex items-center gap-1.5 overflow-hidden">
+                    <span className="bg-primary text-primary-foreground flex h-4 w-4 shrink-0 items-center justify-center rounded text-[10px] font-bold">
+                      P
+                    </span>
+                    <span className="text-foreground truncate font-semibold">
+                      {activeScopeTitle || activeScopeId}
+                    </span>
+                    <span className="text-muted-foreground hidden text-[10px] sm:inline">
+                      • {t("chat.scope.badge")}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveScopeId(undefined);
+                      setActiveScopeTitle(undefined);
+                    }}
+                    className="text-muted-foreground hover:text-foreground shrink-0 rounded px-1.5 py-0.5 text-[11px] font-medium transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+                    data-testid="exit-scope-button"
+                    title={t("chat.scope.exit")}
+                  >
+                    ✕ {t("chat.scope.exit")}
+                  </button>
+                </div>
+              )}
 
               {/* Mode Selector Tabs */}
               <div

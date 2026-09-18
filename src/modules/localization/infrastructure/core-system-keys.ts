@@ -1515,4 +1515,58 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
       en: "Answers strictly grounded in Anas's verified portfolio evidence.",
     },
   },
+  {
+    key: "chat.scope.badge",
+    category: "chat",
+    description: "Scoped retrieval badge indicator",
+    translations: {
+      ar: "نطاق محدد: أدلة المشروع فقط",
+      en: "Project Evidence Scoped",
+    },
+  },
+  {
+    key: "chat.scope.exit",
+    category: "chat",
+    description: "Button to exit project-scoped retrieval and return to global portfolio",
+    translations: {
+      ar: "إلغاء الحصر",
+      en: "Exit Scope",
+    },
+  },
+  {
+    key: "chat.scope.all_portfolio",
+    category: "chat",
+    description: "Notification indicating search has returned to full portfolio",
+    translations: {
+      ar: "تمت العودة للبحث في كامل ملف الأعمال",
+      en: "Returned to full portfolio search",
+    },
+  },
+  {
+    key: "chat.scope.prompt.architecture",
+    category: "chat",
+    description: "Project scoped suggested prompt: Architecture & trade-offs",
+    translations: {
+      ar: "ما هي المفاضلات والقرارات المعمارية في هذا المشروع؟",
+      en: "What architectural decisions and trade-offs were made?",
+    },
+  },
+  {
+    key: "chat.scope.prompt.performance",
+    category: "chat",
+    description: "Project scoped suggested prompt: Performance & latency",
+    translations: {
+      ar: "كيف تم التعامل مع قيود الأداء وزمن الاستجابة؟",
+      en: "How were performance and latency constraints addressed?",
+    },
+  },
+  {
+    key: "chat.scope.prompt.data_flow",
+    category: "chat",
+    description: "Project scoped suggested prompt: Data flow & reliability",
+    translations: {
+      ar: "اشرح بنية تدفق البيانات وآليات الموثوقية.",
+      en: "Explain the end-to-end data pipeline and reliability mechanisms.",
+    },
+  },
 ];

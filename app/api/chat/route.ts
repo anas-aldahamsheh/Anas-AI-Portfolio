@@ -10,6 +10,8 @@ const ChatRequestSchema = z.object({
   conversationLocale: z.enum(RESPONSE_LANGUAGES).optional(),
   previousLanguage: z.enum(RESPONSE_LANGUAGES).optional(),
   projectScopeId: z.string().optional(),
+  projectScopeTitle: z.string().optional(),
+  allowGlobalContext: z.boolean().optional().default(false),
   stream: z.boolean().optional().default(false),
   history: z
     .array(
@@ -33,8 +35,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { message, mode, conversationLocale, previousLanguage, projectScopeId, stream, history } =
-      parsed.data;
+    const {
+      message,
+      mode,
+      conversationLocale,
+      previousLanguage,
+      projectScopeId,
+      projectScopeTitle,
+      allowGlobalContext,
+      stream,
+      history,
+    } = parsed.data;
 
     // Execute chat pipeline
     const result = await chatOrchestrator.processChat({
@@ -43,6 +54,8 @@ export async function POST(request: NextRequest) {
       conversationLocale,
       previousLanguage,
       projectScopeId,
+      projectScopeTitle,
+      allowGlobalContext,
       history,
     });
 

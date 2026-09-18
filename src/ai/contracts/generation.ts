@@ -75,6 +75,7 @@ export interface GenerationInput {
   responseLanguage?: ResponseLanguage | undefined;
   conversationMode?: ConversationMode | undefined;
   conversationSummary?: string | undefined;
+  currentScope?: string | undefined;
   promptSlug?: string | undefined;
   options?: GenerationOptions | undefined;
 }

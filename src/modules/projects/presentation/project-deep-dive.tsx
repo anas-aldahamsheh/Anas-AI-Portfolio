@@ -139,6 +139,20 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
           "Explain the end-to-end data pipeline and reliability mechanisms.",
         ];
 
+  const openProjectChat = (promptText?: string) => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("open-project-chat", {
+          detail: {
+            projectId: project.id,
+            projectTitle: project.title,
+            prompt: promptText,
+          },
+        }),
+      );
+    }
+  };
+
   return (
     <article className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       {/* Back Link Breadcrumb */}
@@ -230,7 +244,13 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
             )}
           </div>
 
-          <Link href={askAiHref}>
+          <Link
+            href={askAiHref}
+            onClick={(e) => {
+              e.preventDefault();
+              openProjectChat();
+            }}
+          >
             <Button variant="primary" size="sm" className="gap-2 shadow-xs">
               <Bot className="h-4 w-4" aria-hidden="true" />
               <span>{askAiCta}</span>
@@ -360,6 +380,10 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
                   <Link
                     key={prompt}
                     href={`${askAiHref}&prompt=${encodeURIComponent(prompt)}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      openProjectChat(prompt);
+                    }}
                     className="block rounded-md border border-neutral-200/70 bg-white/80 p-2 text-xs text-neutral-700 transition-colors hover:border-neutral-400 hover:bg-neutral-100/80 dark:border-neutral-800 dark:bg-neutral-900/80 dark:text-neutral-300 dark:hover:border-neutral-700 dark:hover:bg-neutral-800"
                   >
                     &ldquo;{prompt}&rdquo;
@@ -370,7 +394,14 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
 
             {/* Launch CTA */}
             <div className="mt-5">
-              <Link href={askAiHref} className="w-full">
+              <Link
+                href={askAiHref}
+                onClick={(e) => {
+                  e.preventDefault();
+                  openProjectChat();
+                }}
+                className="w-full"
+              >
                 <Button variant="primary" size="sm" className="w-full gap-2">
                   <Bot className="h-4 w-4" aria-hidden="true" />
                   <span>{askAiCta}</span>
