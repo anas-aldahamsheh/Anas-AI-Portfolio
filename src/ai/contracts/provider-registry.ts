@@ -64,6 +64,8 @@ export interface AiRuntimePolicy {
 export interface DisplaySafeProvider extends AiProvider {
   modelsCount: number;
   activeModelsCount: number;
+  hasApiKey?: boolean;
+  maskedKey?: string | null;
 }
 
 export interface DisplaySafeModel extends AiModel {

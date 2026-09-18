@@ -26,6 +26,8 @@ import {
   BASELINE_RUNTIME_POLICY,
 } from "../contracts/baseline-registry";
 
+import { secretsService, type SecretMetadata } from "@/lib/security/secrets-service";
+
 export class ModelRegistryService {
   private providersCache: AiProvider[] | null = null;
   private modelsCache: AiModel[] | null = null;
@@ -43,7 +45,7 @@ export class ModelRegistryService {
   }
 
   /**
-   * Lists all AI providers with display-safe metadata.
+   * Lists all AI providers with display-safe metadata and secret status.
    */
   async listProviders(): Promise<DisplaySafeProvider[]> {
     const rawProviders = await this.getRawProviders();
@@ -54,16 +56,42 @@ export class ModelRegistryService {
       rawAssignments.filter((a) => a.isActive).map((a) => a.modelId),
     );
 
+    const secretMetas = await Promise.all(
+      rawProviders.map((p) => secretsService.getSecretMetadata(`ai_provider_${p.id}_api_key`)),
+    );
+    const secretMap = new Map(secretMetas.map((sm) => [sm.key, sm]));
+
     return rawProviders.map((p) => {
       const providerModels = rawModels.filter((m) => m.providerId === p.id);
       const activeModels = providerModels.filter((m) => assignedModelIds.has(m.id));
+      const sMeta = secretMap.get(`ai_provider_${p.id}_api_key`);
 
       return {
         ...p,
         modelsCount: providerModels.length,
         activeModelsCount: activeModels.length,
+        hasApiKey: sMeta?.exists ?? false,
+        maskedKey: sMeta?.maskedPreview ?? null,
       };
     });
+  }
+
+  /**
+   * Sets encrypted API key for a provider.
+   */
+  async setProviderApiKey(
+    providerId: string,
+    apiKey: string,
+    adminUserId: string,
+  ): Promise<SecretMetadata> {
+    return secretsService.setSecret(`ai_provider_${providerId}_api_key`, apiKey, adminUserId);
+  }
+
+  /**
+   * Gets decrypted API key for a provider in server code only.
+   */
+  async getProviderApiKey(providerId: string): Promise<string | null> {
+    return secretsService.getSecret(`ai_provider_${providerId}_api_key`);
   }
 
   /**
