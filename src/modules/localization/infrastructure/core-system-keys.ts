@@ -14,7 +14,8 @@ export interface CoreSystemKeyDefinition {
     | "projects"
     | "social"
     | "admin"
-    | "jobfit";
+    | "jobfit"
+    | "lab";
   description: string;
   translations: Record<SupportedLocale, string>;
 }
@@ -1840,6 +1841,232 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     translations: {
       ar: "تحليل موضوعي مقيد بالأدلة الموثقة فقط. لا يتم افتراض شهادات أو أدوات أو سنوات خبرة غير مسجلة صراحة.",
       en: "Objective analysis strictly bound to verified portfolio evidence. Never fabricates certifications, tools, or undocumented years of experience.",
+    },
+  },
+  // AI Lab
+  {
+    key: "lab.title",
+    category: "lab",
+    description: "AI Lab main title",
+    translations: {
+      ar: "مختبر هندسة الذكاء الاصطناعي",
+      en: "AI Engineering Lab",
+    },
+  },
+  {
+    key: "lab.subtitle",
+    category: "lab",
+    description: "AI Lab subtitle",
+    translations: {
+      ar: "عروض تفاعلية حية لمعمارية استرجاع RAG، والبحث المتجهي، وإعادة الترتيب بالمرمز المتقاطع، والاستخراج المهيكل.",
+      en: "Interactive demonstrations of production RAG, vector search, cross-encoder reranking, and deterministic extraction.",
+    },
+  },
+  {
+    key: "lab.badge",
+    category: "lab",
+    description: "AI Lab authenticity badge",
+    translations: {
+      ar: "تنفيذ حقيقي • بلا بيانات وهمية",
+      en: "Real Execution • Zero Mockups",
+    },
+  },
+  {
+    key: "lab.params.title",
+    category: "lab",
+    description: "Parameters section title",
+    translations: {
+      ar: "إعدادات ومعاملات التجربة",
+      en: "Demo Configuration & Parameters",
+    },
+  },
+  {
+    key: "lab.params.query",
+    category: "lab",
+    description: "Evaluation query input label",
+    translations: {
+      ar: "استعلام الفحص / المدخلات:",
+      en: "Evaluation Query / Prompt:",
+    },
+  },
+  {
+    key: "lab.params.topK",
+    category: "lab",
+    description: "Top K results slider label",
+    translations: {
+      ar: "أعلى النتائج المسترجعة (Top-K):",
+      en: "Top Candidates (Top-K):",
+    },
+  },
+  {
+    key: "lab.params.denseWeight",
+    category: "lab",
+    description: "Dense weight slider label",
+    translations: {
+      ar: "وزن المتجهات الكثيفة (Dense / Vector):",
+      en: "Dense Weight (Vector):",
+    },
+  },
+  {
+    key: "lab.params.candidateCount",
+    category: "lab",
+    description: "Candidate count label",
+    translations: {
+      ar: "حجم مجمع المرشحين:",
+      en: "Candidate Pool Size:",
+    },
+  },
+  {
+    key: "lab.params.topN",
+    category: "lab",
+    description: "Top N reranked output label",
+    translations: {
+      ar: "عدد نتائج إعادة الترتيب (Top-N):",
+      en: "Rerank Top-N Output:",
+    },
+  },
+  {
+    key: "lab.params.threshold",
+    category: "lab",
+    description: "Relevance threshold label",
+    translations: {
+      ar: "حد أدنى لدرجة الصلة:",
+      en: "Relevance Threshold:",
+    },
+  },
+  {
+    key: "lab.params.schemaType",
+    category: "lab",
+    description: "Target extraction schema label",
+    translations: {
+      ar: "مخطط الاستخراج المستهدف:",
+      en: "Extraction Target Schema:",
+    },
+  },
+  {
+    key: "lab.params.claim",
+    category: "lab",
+    description: "Factual claim input label",
+    translations: {
+      ar: "الادعاء المراد فحصه وتوثيقه:",
+      en: "Factual Claim to Verify:",
+    },
+  },
+  {
+    key: "lab.params.text",
+    category: "lab",
+    description: "Input context text label",
+    translations: {
+      ar: "النص المدخل للتحليل:",
+      en: "Input Context Text:",
+    },
+  },
+  {
+    key: "lab.run.button",
+    category: "lab",
+    description: "Run demo button text",
+    translations: {
+      ar: "تشغيل الخوارزمية الحية",
+      en: "Execute Real Algorithm",
+    },
+  },
+  {
+    key: "lab.run.running",
+    category: "lab",
+    description: "Run demo running text",
+    translations: {
+      ar: "جاري التنفيذ الحقيقي...",
+      en: "Executing Real Pipeline...",
+    },
+  },
+  {
+    key: "lab.telemetry.title",
+    category: "lab",
+    description: "Telemetry section heading",
+    translations: {
+      ar: "بيانات القياس الحية (Telemetry)",
+      en: "Live Execution Telemetry",
+    },
+  },
+  {
+    key: "lab.telemetry.latency",
+    category: "lab",
+    description: "Latency metric label",
+    translations: {
+      ar: "زمن الاستجابة:",
+      en: "Latency:",
+    },
+  },
+  {
+    key: "lab.telemetry.real",
+    category: "lab",
+    description: "Authentic execution metric label",
+    translations: {
+      ar: "تنفيذ خوارزمي حقيقي:",
+      en: "Authentic Execution:",
+    },
+  },
+  {
+    key: "lab.telemetry.tokens",
+    category: "lab",
+    description: "Tokens used metric label",
+    translations: {
+      ar: "الرموز المستخدمة:",
+      en: "Tokens Used:",
+    },
+  },
+  {
+    key: "lab.results.title",
+    category: "lab",
+    description: "Live results section title",
+    translations: {
+      ar: "النتائج الحية وتتبع المعالجة",
+      en: "Live Output & Pipeline Trace",
+    },
+  },
+  {
+    key: "lab.results.raw",
+    category: "lab",
+    description: "Raw JSON tab label",
+    translations: {
+      ar: "مخرجات JSON الصافية",
+      en: "Raw Output JSON",
+    },
+  },
+  {
+    key: "lab.results.visual",
+    category: "lab",
+    description: "Visual analysis tab label",
+    translations: {
+      ar: "التحليل البصري التفاعلي",
+      en: "Interactive Visual Analysis",
+    },
+  },
+  {
+    key: "lab.nav.link",
+    category: "lab",
+    description: "AI Lab navigation link",
+    translations: {
+      ar: "مختبر الذكاء",
+      en: "AI Lab",
+    },
+  },
+  {
+    key: "lab.error.failed",
+    category: "lab",
+    description: "Execution failed error message",
+    translations: {
+      ar: "تعذر تنفيذ التجربة. يرجى التحقق من المدخلات.",
+      en: "Failed to execute demonstration. Please check your inputs.",
+    },
+  },
+  {
+    key: "lab.error.retry",
+    category: "lab",
+    description: "Retry execution button",
+    translations: {
+      ar: "إعادة المحاولة",
+      en: "Retry Execution",
     },
   },
 ];

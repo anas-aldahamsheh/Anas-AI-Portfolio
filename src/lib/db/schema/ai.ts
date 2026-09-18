@@ -210,3 +210,28 @@ export const conversationModes = pgTable(
     index("conv_modes_order_idx").on(table.sortOrder),
   ],
 );
+
+export const aiLabDemos = pgTable(
+  "ai_lab_demos",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    slug: text("slug").notNull().unique(), // e.g. 'hybrid-search', 'reranking'
+    type: text("type").notNull(), // 'hybrid_search', 'reranking', 'structured_extraction', 'citation_verification', 'retrieval_comparison'
+    titleEn: text("title_en").notNull(),
+    titleAr: text("title_ar").notNull(),
+    descriptionEn: text("description_en").notNull(),
+    descriptionAr: text("description_ar").notNull(),
+    isPublished: boolean("is_published").default(true).notNull(),
+    rateLimitRpm: integer("rate_limit_rpm").default(30).notNull(),
+    timeoutMs: integer("timeout_ms").default(10000).notNull(),
+    sortOrder: integer("sort_order").default(0).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("ai_lab_demos_slug_idx").on(table.slug),
+    index("ai_lab_demos_type_idx").on(table.type),
+    index("ai_lab_demos_published_idx").on(table.isPublished),
+    index("ai_lab_demos_order_idx").on(table.sortOrder),
+  ],
+);

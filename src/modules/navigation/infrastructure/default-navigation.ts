@@ -51,6 +51,18 @@ export const DEFAULT_NAVIGATION_ITEMS: NavigationItem[] = [
     placement: "both",
   },
   {
+    id: "nav-lab",
+    destinationType: "internal",
+    target: "/lab",
+    labelKey: "lab.nav.link",
+    iconKey: "flask-conical",
+    orderIndex: 45,
+    isVisible: true,
+    openInNewTab: false,
+    authVisibility: "all",
+    placement: "both",
+  },
+  {
     id: "nav-admin",
     destinationType: "internal",
     target: "/admin",

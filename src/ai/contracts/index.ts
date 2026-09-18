@@ -11,3 +11,4 @@ export * from "./generation";
 export * from "./language-resolution";
 export * from "./conversation-mode";
 export * from "./job-fit";
+export * from "./ai-lab";

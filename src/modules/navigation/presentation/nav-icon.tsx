@@ -4,6 +4,7 @@ import {
   Sparkles,
   Briefcase,
   LayoutDashboard,
+  FlaskConical,
   LogIn,
   ExternalLink,
 } from "lucide-react";
@@ -30,6 +31,9 @@ export function NavIcon({ name, className = "h-4 w-4", size = 16 }: NavIconProps
     case "briefcase":
     case "job-fit":
       return <Briefcase className={className} size={size} aria-hidden="true" />;
+    case "flask-conical":
+    case "lab":
+      return <FlaskConical className={className} size={size} aria-hidden="true" />;
     case "layout-dashboard":
     case "admin":
       return <LayoutDashboard className={className} size={size} aria-hidden="true" />;
