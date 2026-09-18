@@ -3,6 +3,10 @@
 import { useState, useTransition } from "react";
 import { RagConfiguration, RagIndexStatus } from "@/ai/contracts/ingestion";
 import { ScoredCandidate, RetrievalTelemetry } from "@/ai/contracts/retrieval";
+import {
+  RerankedCandidate,
+  RerankTelemetry as RerankerTelemetryContract,
+} from "@/ai/contracts/reranker";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -41,6 +45,43 @@ export function RagPipelineManager({
   const [searchTelemetry, setSearchTelemetry] = useState<RetrievalTelemetry | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
+
+  // Reranking playground state
+  const [rerankResults, setRerankResults] = useState<RerankedCandidate[] | null>(null);
+  const [rerankTelemetry, setRerankTelemetry] = useState<RerankerTelemetryContract | null>(null);
+  const [isReranking, setIsReranking] = useState(false);
+  const [rerankError, setRerankError] = useState<string | null>(null);
+
+  const handleRerank = async () => {
+    if (!searchResults || searchResults.length === 0) return;
+    setIsReranking(true);
+    setRerankError(null);
+
+    try {
+      const res = await fetch("/api/admin/ai/rerank/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: searchQuery,
+          candidates: searchResults,
+          topN: rerankTopN,
+          minThreshold: rerankThreshold,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setRerankError(data.error ?? "Reranking failed");
+      } else {
+        setRerankResults(data.result.candidates ?? []);
+        setRerankTelemetry(data.result.telemetry ?? null);
+      }
+    } catch (err) {
+      setRerankError(err instanceof Error ? err.message : "Reranking error");
+    } finally {
+      setIsReranking(false);
+    }
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -709,6 +750,130 @@ export function RagPipelineManager({
                     </div>
                   </div>
                 ))
+              )}
+              {searchResults.length > 0 && (
+                <div className="border-border/60 bg-muted/20 space-y-4 rounded-xl border p-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <h4 className="text-foreground text-sm font-semibold">
+                        {isAr ? "إعادة الترتيب بنموذج BGE Reranker" : "BGE Cross-Encoder Reranking"}
+                      </h4>
+                      <p className="text-muted-foreground text-xs">
+                        {isAr
+                          ? `إعادة تسجيل المقاطع بناءً على التطابق العابر (Top ${rerankTopN}, Threshold: ${rerankThreshold})`
+                          : `Rerank candidates using cross-encoder scoring (Top ${rerankTopN}, Threshold: ${rerankThreshold})`}
+                      </p>
+                    </div>
+                    <Button
+                      id="rag-rerank-submit-button"
+                      type="button"
+                      variant="outline"
+                      disabled={isReranking}
+                      onClick={handleRerank}
+                    >
+                      {isReranking
+                        ? isAr
+                          ? "جارٍ إعادة الترتيب..."
+                          : "Reranking..."
+                        : isAr
+                          ? "تشغيل BGE Reranker"
+                          : "Run BGE Reranker"}
+                    </Button>
+                  </div>
+
+                  {rerankError && (
+                    <div className="rounded-md border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-600 dark:text-red-400">
+                      {rerankError}
+                    </div>
+                  )}
+
+                  {rerankTelemetry && (
+                    <div className="bg-background/80 grid grid-cols-2 gap-3 rounded-lg border p-3 text-xs sm:grid-cols-4">
+                      <div>
+                        <div className="text-muted-foreground">{isAr ? "النموذج" : "Model"}</div>
+                        <div className="truncate font-mono font-semibold">
+                          {rerankTelemetry.rerankerModel}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-muted-foreground">
+                          {isAr ? "زمن الاستجابة" : "Latency"}
+                        </div>
+                        <div className="text-primary font-mono font-semibold">
+                          {rerankTelemetry.latencyMs}ms
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-muted-foreground">
+                          {isAr ? "المرشحون بعد التصفية" : "Selected"}
+                        </div>
+                        <div className="font-mono font-semibold">
+                          {rerankTelemetry.outputCandidateCount} /{" "}
+                          {rerankTelemetry.inputCandidateCount}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-muted-foreground">
+                          {isAr ? "الاستراتيجية" : "Strategy"}
+                        </div>
+                        <div className="font-mono font-semibold capitalize">
+                          {rerankTelemetry.strategy}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {rerankResults && (
+                    <div className="space-y-2">
+                      <h5 className="text-foreground text-xs font-semibold">
+                        {isAr
+                          ? `النتائج بعد إعادة الترتيب (${rerankResults.length})`
+                          : `Reranked Candidates (${rerankResults.length})`}
+                      </h5>
+                      {rerankResults.length === 0 ? (
+                        <div className="text-muted-foreground py-3 text-center text-xs">
+                          {isAr
+                            ? "لم يتجاوز أي مقطع حد الملاءمة المطلوب."
+                            : "No candidates passed the relevance threshold."}
+                        </div>
+                      ) : (
+                        rerankResults.map((item) => (
+                          <div
+                            key={item.id}
+                            className="border-primary/20 bg-background space-y-2 rounded-lg border p-3 text-xs shadow-xs"
+                          >
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                              <div className="flex items-center gap-2">
+                                <span className="rounded bg-emerald-500/15 px-1.5 py-0.5 font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                                  #{item.rerankRank}
+                                </span>
+                                {item.previousRank && (
+                                  <span className="text-muted-foreground text-[10px] line-through">
+                                    (was #{item.previousRank})
+                                  </span>
+                                )}
+                                <span className="text-foreground font-semibold">{item.title}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                                  Rerank Score: {item.rerankScore.toFixed(4)}
+                                </span>
+                                {item.rawRerankScore !== undefined && (
+                                  <span className="text-muted-foreground font-mono text-[10px]">
+                                    (raw: {item.rawRerankScore})
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            <p className="text-muted-foreground line-clamp-2 leading-relaxed">
+                              {item.content}
+                            </p>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           )}

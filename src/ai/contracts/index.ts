@@ -5,3 +5,4 @@ export * from "./ingestion";
 export * from "./retrieval";
 export * from "./router";
 export * from "./query-rewriter";
+export * from "./reranker";
