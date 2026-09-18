@@ -7,3 +7,4 @@ export * from "./router";
 export * from "./query-rewriter";
 export * from "./reranker";
 export * from "./context-builder";
+export * from "./generation";
