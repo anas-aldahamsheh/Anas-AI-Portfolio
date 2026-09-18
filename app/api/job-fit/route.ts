@@ -2,8 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { jobFitService } from "@/ai/job-fit/job-fit-service";
 import { JobFitRequestSchema } from "@/ai/contracts/job-fit";
 import { logger } from "@/lib/observability/logger";
+import { applyRateLimit, rateLimiter } from "@/lib/security/rate-limiter";
 
 export async function POST(request: NextRequest) {
+  const rateLimit = applyRateLimit(request, "job_fit");
+  if (!rateLimit.isAllowed && rateLimit.response) {
+    return rateLimit.response;
+  }
+
   try {
     const body = await request.json();
     const parsed = JobFitRequestSchema.safeParse(body);
@@ -21,10 +27,11 @@ export async function POST(request: NextRequest) {
 
     const result = await jobFitService.analyze(parsed.data);
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       data: result,
     });
+    return rateLimiter.attachHeaders(response, rateLimit.result);
   } catch (error) {
     logger.error("Job fit analysis route error", {
       module: "api_job_fit",

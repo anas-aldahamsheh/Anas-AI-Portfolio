@@ -3,6 +3,7 @@ import { z } from "zod";
 import { chatOrchestrator } from "@/ai/orchestration/chat-orchestrator";
 import { CONVERSATION_MODES, RESPONSE_LANGUAGES } from "@/ai/contracts";
 import { logger } from "@/lib/observability/logger";
+import { applyRateLimit } from "@/lib/security/rate-limiter";
 
 const ChatRequestSchema = z.object({
   message: z.string().min(1).max(2000),
@@ -24,6 +25,10 @@ const ChatRequestSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const rateLimit = applyRateLimit(request, "chat");
+  if (!rateLimit.isAllowed && rateLimit.response) {
+    return rateLimit.response;
+  }
   try {
     const body = await request.json();
     const parsed = ChatRequestSchema.safeParse(body);
