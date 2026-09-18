@@ -10,3 +10,5 @@ export type { AiRegistryManagerProps } from "./ai-registry-manager";
 export { PromptRegistryManager } from "./prompt-registry-manager";
 export type { PromptRegistryManagerProps } from "./prompt-registry-manager";
 export { RagPipelineManager } from "./rag-pipeline-manager";
+export { EvaluationAdminManager } from "./evaluation-admin-manager";
+export type { EvaluationAdminManagerProps } from "./evaluation-admin-manager";

@@ -63,6 +63,18 @@ export const DEFAULT_NAVIGATION_ITEMS: NavigationItem[] = [
     placement: "both",
   },
   {
+    id: "nav-evaluation",
+    destinationType: "internal",
+    target: "/evaluation",
+    labelKey: "eval.nav.link",
+    iconKey: "chart-bar",
+    orderIndex: 48,
+    isVisible: true,
+    openInNewTab: false,
+    authVisibility: "all",
+    placement: "both",
+  },
+  {
     id: "nav-admin",
     destinationType: "internal",
     target: "/admin",

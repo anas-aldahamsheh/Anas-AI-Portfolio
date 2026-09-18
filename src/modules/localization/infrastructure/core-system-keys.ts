@@ -15,7 +15,8 @@ export interface CoreSystemKeyDefinition {
     | "social"
     | "admin"
     | "jobfit"
-    | "lab";
+    | "lab"
+    | "eval";
   description: string;
   translations: Record<SupportedLocale, string>;
 }
@@ -2249,6 +2250,179 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     translations: {
       ar: "إعادة المحاولة",
       en: "Retry Execution",
+    },
+  },
+
+  // AI Evaluation Dashboard (F037)
+  {
+    key: "eval.title",
+    category: "eval",
+    description: "Evaluation dashboard header title",
+    translations: {
+      ar: "لوحة تقييم الجودة الهندسية",
+      en: "AI Quality Evaluation Dashboard",
+    },
+  },
+  {
+    key: "eval.subtitle",
+    category: "eval",
+    description: "Evaluation dashboard header subtitle",
+    translations: {
+      ar: "مقاييس جودة الاسترجاع والتوليد المقاسة فعلياً مع ضمانات الإسناد وتكافؤ اللغات.",
+      en: "Measured retrieval and generation quality benchmarks with strict grounding and bilingual parity guarantees.",
+    },
+  },
+  {
+    key: "eval.nav.link",
+    category: "eval",
+    description: "Evaluation dashboard navigation link",
+    translations: {
+      ar: "تقييم الجودة",
+      en: "Evaluation",
+    },
+  },
+  {
+    key: "eval.tab.metrics",
+    category: "eval",
+    description: "Tab: Aggregate quality metrics",
+    translations: {
+      ar: "المقاييس الشاملة",
+      en: "Aggregate Metrics",
+    },
+  },
+  {
+    key: "eval.tab.methodology",
+    category: "eval",
+    description: "Tab: Methodology and golden datasets",
+    translations: {
+      ar: "المنهجية ومجموعات الاختبار",
+      en: "Methodology & Datasets",
+    },
+  },
+  {
+    key: "eval.tab.benchmarks",
+    category: "eval",
+    description: "Tab: Measured benchmark runs and ablation comparisons",
+    translations: {
+      ar: "مقارنات النماذج والتجارب",
+      en: "Benchmark Runs",
+    },
+  },
+  {
+    key: "eval.metric.target",
+    category: "eval",
+    description: "Target threshold label",
+    translations: {
+      ar: "الحد الأدنى المطلوب",
+      en: "Target Threshold",
+    },
+  },
+  {
+    key: "eval.metric.passed",
+    category: "eval",
+    description: "Status badge: passed",
+    translations: {
+      ar: "محققة بنجاح",
+      en: "Passed",
+    },
+  },
+  {
+    key: "eval.metric.warning",
+    category: "eval",
+    description: "Status badge: warning",
+    translations: {
+      ar: "قريبة من الحد",
+      en: "Warning",
+    },
+  },
+  {
+    key: "eval.metric.failed",
+    category: "eval",
+    description: "Status badge: failed",
+    translations: {
+      ar: "غير محققة",
+      en: "Failed",
+    },
+  },
+  {
+    key: "eval.parity.title",
+    category: "eval",
+    description: "Bilingual parity section title",
+    translations: {
+      ar: "تكافؤ الجودة بين العربية والإنجليزية",
+      en: "Arabic / English Language Parity",
+    },
+  },
+  {
+    key: "eval.parity.desc",
+    category: "eval",
+    description: "Bilingual parity description",
+    translations: {
+      ar: "يتم تقييم الاستفسارات باللغة العربية بنفس المعايير الصارمة للغة الإنجليزية لضمان عدم وجود تراجع غير معلن.",
+      en: "Arabic queries are evaluated with identical rigor to English cases, ensuring zero silent quality degradation.",
+    },
+  },
+  {
+    key: "eval.parity.balanced",
+    category: "eval",
+    description: "Status badge: balanced language parity",
+    translations: {
+      ar: "تكافؤ متوازن",
+      en: "Balanced Parity",
+    },
+  },
+  {
+    key: "eval.pledge.title",
+    category: "eval",
+    description: "Measured values pledge title",
+    translations: {
+      ar: "تعهد الشفافية والبيانات المقاسة",
+      en: "Measured Values Pledge",
+    },
+  },
+  {
+    key: "eval.pledge.desc",
+    category: "eval",
+    description: "Measured values pledge description",
+    translations: {
+      ar: "جميع النسب المعروضة ناتجة عن تقييم حقيقي على مجموعات اختبار موثقة، ولا يتم استخدام أي أرقام مفبركة.",
+      en: "All displayed percentages are derived from ground-truth test runs on verified portfolio datasets. Zero invented metrics.",
+    },
+  },
+  {
+    key: "eval.admin.title",
+    category: "eval",
+    description: "Admin evaluation control center title",
+    translations: {
+      ar: "مركز إدارة وتقييم جودة النماذج",
+      en: "AI Evaluation Control Center",
+    },
+  },
+  {
+    key: "eval.admin.compare.title",
+    category: "eval",
+    description: "Regression comparison section title",
+    translations: {
+      ar: "فحص انحدار الجودة ومقارنة الجولات",
+      en: "Quality Regression Comparison",
+    },
+  },
+  {
+    key: "eval.admin.compare.no_regression",
+    category: "eval",
+    description: "Regression badge: no regression detected",
+    translations: {
+      ar: "لا يوجد انحدار ملحوظ (جاهز للاعتماد)",
+      en: "No Critical Regression Detected",
+    },
+  },
+  {
+    key: "eval.admin.compare.has_regression",
+    category: "eval",
+    description: "Regression badge: regression detected",
+    translations: {
+      ar: "تم رصد انحدار في بعض المقاييس",
+      en: "Regression Detected in Candidate",
     },
   },
 ];

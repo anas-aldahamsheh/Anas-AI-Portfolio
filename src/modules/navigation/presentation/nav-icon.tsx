@@ -7,6 +7,7 @@ import {
   FlaskConical,
   LogIn,
   ExternalLink,
+  BarChart2,
 } from "lucide-react";
 
 interface NavIconProps {
@@ -37,6 +38,9 @@ export function NavIcon({ name, className = "h-4 w-4", size = 16 }: NavIconProps
     case "layout-dashboard":
     case "admin":
       return <LayoutDashboard className={className} size={size} aria-hidden="true" />;
+    case "chart-bar":
+    case "evaluation":
+      return <BarChart2 className={className} size={size} aria-hidden="true" />;
     case "log-in":
       return <LogIn className={className} size={size} aria-hidden="true" />;
     case "external-link":
