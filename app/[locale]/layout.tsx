@@ -8,6 +8,8 @@ import { ThemeScript } from "@/modules/theme/presentation/theme-script";
 import { getThemeFromCookie } from "@/modules/theme/infrastructure/theme-cookie";
 import type { Theme } from "@/modules/theme/domain/theme";
 
+import { MotionProvider } from "@/modules/motion/presentation/motion-provider";
+
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "AI & Web Engineering Portfolio",
@@ -58,7 +60,9 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
       </head>
       <body className="bg-background text-foreground selection:bg-primary selection:text-primary-foreground min-h-screen font-sans antialiased">
         <ThemeProvider initialTheme={serverTheme}>
-          <DirectionProvider dir={dir}>{children}</DirectionProvider>
+          <MotionProvider>
+            <DirectionProvider dir={dir}>{children}</DirectionProvider>
+          </MotionProvider>
         </ThemeProvider>
       </body>
     </html>

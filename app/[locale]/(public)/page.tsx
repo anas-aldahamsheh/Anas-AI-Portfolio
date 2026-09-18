@@ -6,6 +6,7 @@ import { ThemeToggle } from "@/modules/theme/presentation/theme-toggle";
 import { LanguageSelect } from "@/modules/localization/presentation/language-select";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/motion";
 
 interface PublicPageProps {
   params: Promise<{ locale: string }>;
@@ -48,61 +49,66 @@ export default async function PublicHomePage({ params }: PublicPageProps) {
       className="flex min-h-screen flex-col items-center justify-start px-4 py-12 sm:px-6 md:px-8 lg:px-12"
     >
       <div className="w-full max-w-4xl space-y-8">
-        <header className="space-y-3 text-start">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <h1 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-neutral-50">
-              {t("home.title")}
-            </h1>
-            <div className="flex items-center gap-2">
-              <LanguageSelect currentLocale={locale} />
-              <ThemeToggle locale={locale} />
+        <FadeIn delay={0.05}>
+          <header className="space-y-3 text-start">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <h1 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-neutral-50">
+                {t("home.title")}
+              </h1>
+              <div className="flex items-center gap-2">
+                <LanguageSelect currentLocale={locale} />
+                <ThemeToggle locale={locale} />
+              </div>
             </div>
-          </div>
-          <p className="text-sm text-neutral-600 sm:text-base dark:text-neutral-400">
-            <MixedContent text={t("home.subtitle")} />
-          </p>
-        </header>
+            <p className="text-sm text-neutral-600 sm:text-base dark:text-neutral-400">
+              <MixedContent text={t("home.subtitle")} />
+            </p>
+          </header>
+        </FadeIn>
 
         {/* Dynamic Guest Reassurance Banner */}
-        <GuestReassuranceBadge
-          title={t("guest.reassurance.title")}
-          description={t("guest.reassurance.description")}
-          ariaLabel={t("guest.reassurance.title")}
-          locale={locale}
-        />
+        <FadeIn delay={0.1}>
+          <GuestReassuranceBadge
+            title={t("guest.reassurance.title")}
+            description={t("guest.reassurance.description")}
+            ariaLabel={t("guest.reassurance.title")}
+            locale={locale}
+          />
+        </FadeIn>
 
         {/* Core Guest Capabilities Grid */}
         <section aria-label={t("guest.capabilities.title")} className="space-y-4">
-          <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-            {t("guest.capabilities.title")}
-          </h2>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <FadeIn delay={0.15}>
+            <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+              {t("guest.capabilities.title")}
+            </h2>
+          </FadeIn>
+          <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {publicFeatures.map((feature) => (
-              <Card
-                key={feature.id}
-                className="group relative transition-all hover:border-neutral-300 dark:hover:border-neutral-700"
-              >
-                <CardHeader>
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <CardTitle>{feature.title}</CardTitle>
-                      <Badge variant="secondary" size="sm">
-                        {feature.tag}
-                      </Badge>
+              <StaggerItem key={feature.id}>
+                <Card className="group relative h-full transition-all hover:border-neutral-300 dark:hover:border-neutral-700">
+                  <CardHeader>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <CardTitle>{feature.title}</CardTitle>
+                        <Badge variant="secondary" size="sm">
+                          {feature.tag}
+                        </Badge>
+                      </div>
+                      <DirectionalIcon
+                        name="chevron-end"
+                        size={18}
+                        className="text-neutral-400 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5"
+                      />
                     </div>
-                    <DirectionalIcon
-                      name="chevron-end"
-                      size={18}
-                      className="text-neutral-400 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5"
-                    />
-                  </div>
-                  <CardDescription className="mt-2 text-xs leading-relaxed sm:text-sm">
-                    <MixedContent text={feature.description} />
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+                    <CardDescription className="mt-2 text-xs leading-relaxed sm:text-sm">
+                      <MixedContent text={feature.description} />
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </section>
       </div>
     </main>
