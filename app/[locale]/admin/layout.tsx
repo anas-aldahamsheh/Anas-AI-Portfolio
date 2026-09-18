@@ -53,6 +53,7 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
     { href: `/${locale}/admin/rag`, label: isArabic ? "فهرسة المعرفة (RAG)" : "RAG Pipeline" },
     { href: `/${locale}/admin/evaluation`, label: isArabic ? "تقييم الجودة" : "Evaluation" },
     { href: `/${locale}/admin/theme`, label: isArabic ? "المظهر" : "Theme" },
+    { href: `/${locale}/admin/feature-flags`, label: isArabic ? "رايات الميزات" : "Feature Flags" },
     { href: `/${locale}/admin/audit`, label: isArabic ? "سجل التدقيق" : "Audit Logs" },
   ];
 
