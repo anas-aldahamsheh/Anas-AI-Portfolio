@@ -1,27 +1,59 @@
 "use client";
 
 import Link from "next/link";
-import { useLocalization } from "@/modules/localization/presentation/localization-provider";
+import { Phone, ShieldCheck } from "lucide-react";
 import type { NavigationItem } from "../domain/types";
-import { NavIcon } from "./nav-icon";
-import {
-  type SocialProfile,
-  BASELINE_GITHUB_PROFILE,
-  BASELINE_LINKEDIN_PROFILE,
-} from "@/modules/social/domain/types";
-import { GitHubPopover, LinkedInPopover } from "@/modules/social/presentation";
+import type { SocialProfile } from "@/modules/social/domain/types";
+import { useLocalization } from "@/modules/localization/presentation/localization-provider";
+
+export type DashboardLocale = "en" | "ar";
 
 export interface FooterProps {
-  locale: string;
-  items: NavigationItem[];
+  locale?: string;
+  items?: NavigationItem[];
   brandTitle?: string;
   githubProfile?: SocialProfile;
   linkedinProfile?: SocialProfile;
+  copy?: {
+    navRunCenter?: string;
+    navResults?: string;
+  };
 }
 
-export function Footer({ locale, items, brandTitle, githubProfile, linkedinProfile }: FooterProps) {
+function GithubIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      role="img"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+    </svg>
+  );
+}
+
+function LinkedinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      role="img"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+    </svg>
+  );
+}
+
+export function Footer({ locale = "ar", items, brandTitle, copy }: FooterProps) {
   const { t } = useLocalization();
-  const currentYear = new Date().getFullYear();
+
+  const navRunCenterLabel = copy?.navRunCenter || (locale === "ar" ? "مركز التشغيل" : "Run Center");
+  const navResultsLabel =
+    copy?.navResults || (locale === "ar" ? "النتائج والمشكلات" : "Results & Issues");
 
   const getLocalizedHref = (item: NavigationItem): string => {
     if (item.destinationType === "external") {
@@ -31,95 +63,131 @@ export function Footer({ locale, items, brandTitle, githubProfile, linkedinProfi
     return `/${locale}${cleanTarget === "/" ? "" : cleanTarget}`;
   };
 
-  const resolvedBrandTitle = brandTitle || t("home.title");
-
-  // Separate navigation items for footer display
-  const primaryNavItems = items.filter(
-    (item) => item.target !== "/chat" && item.target !== "/job-fit",
-  );
-  const capabilityItems = items.filter(
-    (item) => item.target === "/chat" || item.target === "/job-fit",
-  );
-
   return (
-    <footer className="w-full border-t border-neutral-200 bg-neutral-50 py-12 text-neutral-600 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Brand & Mission Column */}
-          <div className="space-y-3 sm:col-span-2">
-            <Link
-              href={`/${locale}`}
-              className="text-base font-bold text-neutral-900 transition-colors hover:text-neutral-700 dark:text-neutral-100 dark:hover:text-neutral-300"
-            >
-              {resolvedBrandTitle}
-            </Link>
-            <p className="max-w-md text-xs leading-relaxed text-neutral-500 sm:text-sm dark:text-neutral-400">
-              {t("footer.built_with")}
+    <footer className="border-border bg-card/95 text-card-foreground mt-auto border-t">
+      <div className="mx-auto max-w-7xl px-4 py-10 md:px-8">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
+          {/* Brand & Creator Info */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2.5">
+              <span className="bg-primary text-primary-foreground flex h-9 w-9 items-center justify-center rounded-md">
+                <ShieldCheck className="h-5 w-5" />
+              </span>
+              <div>
+                <h3 className="text-foreground text-sm font-extrabold tracking-tight">
+                  {brandTitle ? (
+                    brandTitle
+                  ) : (
+                    <>
+                      Website QA <span className="text-primary">Agent</span>
+                    </>
+                  )}
+                </h3>
+                <p className="text-muted-foreground text-xs font-medium">
+                  {locale === "ar" ? "تطوير: أنس الدحامشة" : "Engineered by Anas Aldahamsheh"}
+                </p>
+              </div>
+            </div>
+            <p className="text-muted-foreground text-xs leading-relaxed">
+              {locale === "ar"
+                ? "منظومة عملية متقدمة لفحص ومراقبة جودة المواقع، متابعة التقدم لحظياً، وتنظيم وتحليل النتائج الفنية بدقة."
+                : "A practical console for website quality scanning, live progress tracking, and organized technical review."}
             </p>
-            <div className="flex items-center gap-2 pt-2">
-              <GitHubPopover profile={githubProfile || BASELINE_GITHUB_PROFILE} locale={locale} />
-              <LinkedInPopover
-                profile={linkedinProfile || BASELINE_LINKEDIN_PROFILE}
-                locale={locale}
-              />
+          </div>
+
+          {/* Developer Contacts */}
+          <div className="space-y-3">
+            <h4 className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+              {locale === "ar" ? "بيانات التواصل المباشر" : "Contact Developer"}
+            </h4>
+            <div className="flex flex-col items-start gap-2.5 text-xs">
+              {/* Phone */}
+              <a
+                href="tel:+962789495167"
+                className="group text-foreground hover:text-primary inline-flex items-center gap-2.5 font-medium transition-colors"
+              >
+                <div className="bg-primary/10 text-primary group-hover:bg-primary/20 flex h-7 w-7 items-center justify-center rounded-md transition">
+                  <Phone className="h-3.5 w-3.5 shrink-0" />
+                </div>
+                <span dir="ltr" className="font-mono text-xs">
+                  +962 789 495 167
+                </span>
+              </a>
+
+              {/* LinkedIn */}
+              <a
+                href="https://www.linkedin.com/in/anas-aldahamsheh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group text-foreground hover:text-primary inline-flex items-center gap-2.5 font-medium transition-colors"
+              >
+                <div className="bg-primary/10 text-primary group-hover:bg-primary/20 flex h-7 w-7 items-center justify-center rounded-md transition">
+                  <LinkedinIcon className="h-3.5 w-3.5 shrink-0" />
+                </div>
+                <span dir="ltr" className="font-mono text-xs">
+                  linkedin.com/in/anas-aldahamsheh
+                </span>
+              </a>
+
+              {/* GitHub */}
+              <a
+                href="https://github.com/anas-aldahamsheh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group text-foreground hover:text-primary inline-flex items-center gap-2.5 font-medium transition-colors"
+              >
+                <div className="bg-primary/10 text-primary group-hover:bg-primary/20 flex h-7 w-7 items-center justify-center rounded-md transition">
+                  <GithubIcon className="h-3.5 w-3.5 shrink-0" />
+                </div>
+                <span dir="ltr" className="font-mono text-xs">
+                  github.com/anas-aldahamsheh
+                </span>
+              </a>
             </div>
           </div>
 
-          {/* Navigation Links Column */}
+          {/* Quick Links */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold tracking-wider text-neutral-900 uppercase dark:text-neutral-200">
-              {t("footer.navigation")}
+            <h4 className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+              {locale === "ar" ? "روابط سريعة" : "Navigation"}
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm">
-              {primaryNavItems.map((item) => (
-                <li key={item.id}>
+            <div className="flex flex-col gap-2 text-xs font-medium">
+              {items && items.length > 0 ? (
+                items.slice(0, 5).map((item) => (
                   <Link
+                    key={item.id}
                     href={getLocalizedHref(item)}
-                    target={item.openInNewTab ? "_blank" : undefined}
-                    rel={item.openInNewTab ? "noopener noreferrer" : undefined}
-                    className="flex items-center gap-1.5 transition-colors hover:text-neutral-900 dark:hover:text-neutral-100"
+                    className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    <NavIcon name={item.iconKey} className="h-3.5 w-3.5 opacity-60" />
-                    <span>{t(item.labelKey)}</span>
+                    {t(item.labelKey)}
                   </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Capabilities Links Column */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-semibold tracking-wider text-neutral-900 uppercase dark:text-neutral-200">
-              {t("footer.capabilities")}
-            </h4>
-            <ul className="space-y-2 text-xs sm:text-sm">
-              {capabilityItems.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    href={getLocalizedHref(item)}
-                    target={item.openInNewTab ? "_blank" : undefined}
-                    rel={item.openInNewTab ? "noopener noreferrer" : undefined}
-                    className="flex items-center gap-1.5 transition-colors hover:text-neutral-900 dark:hover:text-neutral-100"
+                ))
+              ) : (
+                <>
+                  <a
+                    href="/Run%20Center"
+                    className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    <NavIcon name={item.iconKey} className="h-3.5 w-3.5 opacity-60" />
-                    <span>{t(item.labelKey)}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                    {navRunCenterLabel}
+                  </a>
+                  <a
+                    href="/results"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {navResultsLabel}
+                  </a>
+                </>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Bottom Rights & Metadata Bar */}
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-neutral-200/80 pt-6 text-xs text-neutral-500 sm:flex-row dark:border-neutral-800/80 dark:text-neutral-400">
+        {/* Bottom copyright line */}
+        <div className="border-border text-muted-foreground mt-8 border-t pt-5 text-center text-xs sm:text-start">
           <p>
-            © {currentYear} {resolvedBrandTitle}. {t("footer.rights")}.
+            © 2026 <strong>Anas Aldahamsheh</strong>.{" "}
+            {locale === "ar" ? "جميع الحقوق محفوظة." : "All rights reserved."}
           </p>
-          <div className="flex items-center gap-4 text-[11px]">
-            <span>WCAG 2.2 AA</span>
-            <span>•</span>
-            <span>RTL / LTR</span>
-          </div>
         </div>
       </div>
     </footer>
