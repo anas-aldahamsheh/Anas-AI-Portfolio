@@ -47,19 +47,22 @@ export class FeatureFlagService {
     }
 
     try {
-      const rows = await withTimeout(
-        db.select().from(featureFlags),
-        300,
-      );
+      const rows = await withTimeout(db.select().from(featureFlags), 300);
 
       const dbMap = new Map(rows.map((r) => [r.key, r]));
 
       const flags: FeatureFlag[] = BASELINE_FEATURE_FLAGS.map((base) => {
         const row = dbMap.get(base.key);
         const override = this.overrides.get(base.key);
-        const isEnabled = override?.isEnabled !== undefined ? override.isEnabled : (row ? row.isEnabled : base.isEnabled);
+        const isEnabled =
+          override?.isEnabled !== undefined
+            ? override.isEnabled
+            : row
+              ? row.isEnabled
+              : base.isEnabled;
         const description = override?.description ?? row?.description ?? base.description;
-        const targetRolloutPercentage = override?.targetRolloutPercentage ?? base.targetRolloutPercentage ?? 100;
+        const targetRolloutPercentage =
+          override?.targetRolloutPercentage ?? base.targetRolloutPercentage ?? 100;
 
         return {
           key: base.key,
@@ -180,7 +183,8 @@ export class FeatureFlagService {
     this.overrides.set(key, {
       isEnabled: input.isEnabled,
       description,
-      targetRolloutPercentage: input.targetRolloutPercentage ?? existing?.targetRolloutPercentage ?? 100,
+      targetRolloutPercentage:
+        input.targetRolloutPercentage ?? existing?.targetRolloutPercentage ?? 100,
     });
 
     this.invalidateCache();
@@ -190,7 +194,8 @@ export class FeatureFlagService {
       isEnabled: input.isEnabled,
       description,
       category,
-      targetRolloutPercentage: input.targetRolloutPercentage ?? existing?.targetRolloutPercentage ?? 100,
+      targetRolloutPercentage:
+        input.targetRolloutPercentage ?? existing?.targetRolloutPercentage ?? 100,
       updatedAt: new Date().toISOString(),
     };
   }
@@ -208,10 +213,7 @@ export class FeatureFlagService {
     this.invalidateCache();
 
     try {
-      await withTimeout(
-        db.delete(featureFlags),
-        300,
-      );
+      await withTimeout(db.delete(featureFlags), 300);
 
       await withTimeout(
         db.insert(auditEvents).values({

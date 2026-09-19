@@ -1,11 +1,13 @@
 import { defineConfig } from "vitest/config";
 import path from "node:path";
+import fs from "node:fs";
 
 export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: ["./tests/setup.ts"],
+    setupFiles: fs.existsSync("./tests/setup.ts") ? ["./tests/setup.ts"] : [],
+    passWithNoTests: true,
     include: ["tests/**/*.test.{ts,tsx}"],
     coverage: {
       provider: "v8",

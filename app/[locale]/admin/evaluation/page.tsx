@@ -8,9 +8,7 @@ export interface AdminEvaluationPageProps {
   params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: AdminEvaluationPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: AdminEvaluationPageProps): Promise<Metadata> {
   const { locale } = await params;
   const supportedLocale = (locale === "en" ? "en" : "ar") as SupportedLocale;
   const dict = await localizedTextService.getDictionary(supportedLocale);

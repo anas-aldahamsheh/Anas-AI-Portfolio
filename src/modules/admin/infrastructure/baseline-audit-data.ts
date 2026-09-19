@@ -35,7 +35,11 @@ export const BASELINE_AUDIT_EVENTS: AuditEventRecord[] = [
     entityType: "prompt",
     entityId: "system_chat",
     previousState: { versionNumber: 1, isCurrent: true },
-    newState: { versionNumber: 2, isCurrent: true, changelog: "Added strict anti-hallucination instruction" },
+    newState: {
+      versionNumber: 2,
+      isCurrent: true,
+      changelog: "Added strict anti-hallucination instruction",
+    },
     ipAddress: "192.168.1.100",
     userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
     createdAt: "2026-09-18T15:45:00.000Z",

@@ -121,7 +121,12 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
     }
   };
 
-  const categories: { key: string; labelEn: string; labelAr: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  const categories: {
+    key: string;
+    labelEn: string;
+    labelAr: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }[] = [
     { key: "all", labelEn: "All Flags", labelAr: "جميع الرايات", icon: Sliders },
     { key: "ai", labelEn: "AI & RAG", labelAr: "الذكاء الاصطناعي", icon: Sparkles },
     { key: "security", labelEn: "Security", labelAr: "الأمان", icon: Shield },
@@ -148,7 +153,7 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <span className="bg-primary/10 text-primary rounded px-2.5 py-1 text-xs font-bold uppercase tracking-wider">
+            <span className="bg-primary/10 text-primary rounded px-2.5 py-1 text-xs font-bold tracking-wider uppercase">
               F042
             </span>
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
@@ -164,12 +169,12 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
 
         <div className="flex items-center gap-2 text-xs">
           <Badge variant="outline" className="gap-1 text-xs">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 inline-block" />
+            <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
             {isAr ? `${activeCount} مفعل` : `${activeCount} Active`}
           </Badge>
           {canaryCount > 0 && (
-            <Badge variant="outline" className="gap-1 text-xs text-amber-600 border-amber-500/30">
-              <span className="h-2 w-2 rounded-full bg-amber-500 inline-block" />
+            <Badge variant="outline" className="gap-1 border-amber-500/30 text-xs text-amber-600">
+              <span className="inline-block h-2 w-2 rounded-full bg-amber-500" />
               {isAr ? `${canaryCount} إطلاق تدريجي` : `${canaryCount} Canary`}
             </Badge>
           )}
@@ -189,7 +194,7 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
           <span>{feedback.message}</span>
           <button
             onClick={() => setFeedback(null)}
-            className="hover:opacity-75 text-xs font-semibold uppercase"
+            className="text-xs font-semibold uppercase hover:opacity-75"
           >
             {isAr ? "إغلاق" : "Dismiss"}
           </button>
@@ -198,7 +203,7 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
 
       {/* Toolbar: Category tabs and search */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap gap-1 border-b border-border sm:border-0">
+        <div className="border-border flex flex-wrap gap-1 border-b sm:border-0">
           {categories.map((cat) => {
             const Icon = cat.icon;
             const isSelected = selectedCategory === cat.key;
@@ -218,7 +223,7 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
         </div>
 
         <div className="relative w-full sm:w-64">
-          <Search className="absolute start-3 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="text-muted-foreground absolute start-3 top-2.5 h-4 w-4" />
           <Input
             placeholder={isAr ? "بحث في الرايات..." : "Search flags..."}
             value={searchQuery}
@@ -237,11 +242,11 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
             const isCanary = flag.isEnabled && rollout < 100;
 
             return (
-              <Card key={flag.key} className="transition-all hover:border-primary/30">
-                <CardContent className="p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div className="space-y-1.5 max-w-xl">
+              <Card key={flag.key} className="hover:border-primary/30 transition-all">
+                <CardContent className="flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between">
+                  <div className="max-w-xl space-y-1.5">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-sm font-semibold text-foreground">
+                      <span className="text-foreground font-mono text-sm font-semibold">
                         {flag.key}
                       </span>
                       <Badge variant="outline" className="text-xs uppercase">
@@ -249,21 +254,21 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
                       </Badge>
                       {flag.isEnabled ? (
                         isCanary ? (
-                          <Badge className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 text-xs">
+                          <Badge className="border-amber-500/20 bg-amber-500/10 text-xs text-amber-600 dark:text-amber-400">
                             {isAr ? `تدريجي (${rollout}%)` : `Canary (${rollout}%)`}
                           </Badge>
                         ) : (
-                          <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 text-xs">
+                          <Badge className="border-emerald-500/20 bg-emerald-500/10 text-xs text-emerald-600 dark:text-emerald-400">
                             {isAr ? "مفعل 100%" : "Active 100%"}
                           </Badge>
                         )
                       ) : (
-                        <Badge variant="secondary" className="text-xs text-muted-foreground">
+                        <Badge variant="secondary" className="text-muted-foreground text-xs">
                           {isAr ? "معطل" : "Disabled"}
                         </Badge>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
+                    <p className="text-muted-foreground text-xs leading-relaxed">
                       {flag.description}
                     </p>
                   </div>
@@ -281,9 +286,9 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
                           max="100"
                           value={rollout}
                           onChange={(e) => handleRolloutChange(flag, Number(e.target.value))}
-                          className="w-24 accent-primary cursor-pointer"
+                          className="accent-primary w-24 cursor-pointer"
                         />
-                        <span className="w-8 font-mono text-end font-medium">{rollout}%</span>
+                        <span className="w-8 text-end font-mono font-medium">{rollout}%</span>
                       </div>
                     )}
 
@@ -293,23 +298,17 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
                       size="sm"
                       onClick={() => handleToggle(flag)}
                       disabled={isToggling}
-                      className="gap-2 min-w-28 text-xs font-medium"
+                      className="min-w-28 gap-2 text-xs font-medium"
                     >
                       {isToggling ? (
                         <RefreshCw className="h-4 w-4 animate-spin" />
                       ) : flag.isEnabled ? (
                         <ToggleRight className="h-4 w-4" />
                       ) : (
-                        <ToggleLeft className="h-4 w-4 text-muted-foreground" />
+                        <ToggleLeft className="text-muted-foreground h-4 w-4" />
                       )}
                       <span>
-                        {flag.isEnabled
-                          ? isAr
-                            ? "مفعل"
-                            : "Enabled"
-                          : isAr
-                            ? "معطل"
-                            : "Disabled"}
+                        {flag.isEnabled ? (isAr ? "مفعل" : "Enabled") : isAr ? "معطل" : "Disabled"}
                       </span>
                     </Button>
                   </div>
@@ -319,7 +318,7 @@ export function FeatureFlagManager({ initialFlags, locale }: FeatureFlagManagerP
           })
         ) : (
           <Card>
-            <CardContent className="p-8 text-center text-sm text-muted-foreground">
+            <CardContent className="text-muted-foreground p-8 text-center text-sm">
               {isAr
                 ? "لا توجد رايات ميزات مطابقة للفئة أو البحث المحدد."
                 : "No feature flags match the selected category or search filter."}

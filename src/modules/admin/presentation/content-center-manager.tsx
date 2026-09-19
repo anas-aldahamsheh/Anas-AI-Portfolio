@@ -74,9 +74,7 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
       });
       const json = await res.json();
       if (res.ok && json.success) {
-        setPages((prev) =>
-          prev.map((p) => (p.id === pageId ? { ...p, status: nextStatus } : p)),
-        );
+        setPages((prev) => prev.map((p) => (p.id === pageId ? { ...p, status: nextStatus } : p)));
         setActionMessage(
           nextStatus === "PUBLISHED"
             ? "Page published successfully."
@@ -203,14 +201,17 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
       <div className="space-y-1">
         <div className="flex items-center justify-between">
           <h1 className="text-foreground text-2xl font-bold tracking-tight">
-            {t("admin.content.title") !== "admin.content.title" ? t("admin.content.title") : "Admin Content Center"}
+            {t("admin.content.title") !== "admin.content.title"
+              ? t("admin.content.title")
+              : "Admin Content Center"}
           </h1>
           <Badge variant="outline" className="font-mono text-xs">
             F039 Content Center
           </Badge>
         </div>
         <p className="text-muted-foreground text-xs leading-relaxed">
-          Manage dynamic portfolio pages, composable sections, publishing workflow, and multi-language content.
+          Manage dynamic portfolio pages, composable sections, publishing workflow, and
+          multi-language content.
         </p>
       </div>
 
@@ -237,13 +238,13 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
         <Card className="border-border">
           <CardContent className="p-4">
             <span className="text-muted-foreground text-xs font-medium">Published Pages</span>
-            <p className="text-emerald-600 text-2xl font-bold">{totalPublished}</p>
+            <p className="text-2xl font-bold text-emerald-600">{totalPublished}</p>
           </CardContent>
         </Card>
         <Card className="border-border">
           <CardContent className="p-4">
             <span className="text-muted-foreground text-xs font-medium">Draft Pages</span>
-            <p className="text-amber-600 text-2xl font-bold">{totalDraft}</p>
+            <p className="text-2xl font-bold text-amber-600">{totalDraft}</p>
           </CardContent>
         </Card>
         <Card className="border-border">
@@ -300,7 +301,9 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
           <CardHeader className="p-4 pb-2">
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-foreground text-sm font-semibold">Portfolio Pages</CardTitle>
+                <CardTitle className="text-foreground text-sm font-semibold">
+                  Portfolio Pages
+                </CardTitle>
                 <CardDescription className="text-xs">
                   Create, configure, publish or archive dynamic routes.
                 </CardDescription>
@@ -315,7 +318,7 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
               </Button>
             </div>
           </CardHeader>
-          <CardContent className="p-4 space-y-4">
+          <CardContent className="space-y-4 p-4">
             {showAddPage && (
               <form
                 onSubmit={handleCreatePage}
@@ -396,31 +399,41 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
                 </thead>
                 <tbody className="divide-border divide-y">
                   {pages.map((p) => {
-                    const displayTitle = locale === "ar" ? p.translations.ar.title : p.translations.en.title;
+                    const displayTitle =
+                      locale === "ar" ? p.translations.ar.title : p.translations.en.title;
                     return (
-                      <tr key={p.id} className="hover:bg-muted/30" data-testid={`page-row-${p.slug}`}>
-                        <td className="p-3 font-mono font-medium text-foreground">
-                          /{p.slug} {p.isHome && <span className="text-[10px] text-muted-foreground">(Home)</span>}
+                      <tr
+                        key={p.id}
+                        className="hover:bg-muted/30"
+                        data-testid={`page-row-${p.slug}`}
+                      >
+                        <td className="text-foreground p-3 font-mono font-medium">
+                          /{p.slug}{" "}
+                          {p.isHome && (
+                            <span className="text-muted-foreground text-[10px]">(Home)</span>
+                          )}
                         </td>
-                        <td className="p-3 text-muted-foreground max-w-xs truncate">{displayTitle}</td>
+                        <td className="text-muted-foreground max-w-xs truncate p-3">
+                          {displayTitle}
+                        </td>
                         <td className="p-3 font-mono">{p.sectionsCount} sections</td>
                         <td className="p-3">
                           {p.status === "PUBLISHED" ? (
-                            <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-[10px]">
+                            <Badge className="border-emerald-500/20 bg-emerald-500/10 text-[10px] text-emerald-600">
                               PUBLISHED
                             </Badge>
                           ) : (
-                            <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 text-[10px]">
+                            <Badge className="border-amber-500/20 bg-amber-500/10 text-[10px] text-amber-600">
                               DRAFT
                             </Badge>
                           )}
                         </td>
-                        <td className="p-3 text-right space-x-2 space-x-reverse">
+                        <td className="space-x-2 space-x-reverse p-3 text-right">
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => handleTogglePageStatus(p.id, p.status)}
-                            className="text-xs h-7 px-2.5"
+                            className="h-7 px-2.5 text-xs"
                             data-testid={`btn-toggle-status-${p.slug}`}
                           >
                             {p.status === "PUBLISHED" ? "Unpublish" : "Publish"}
@@ -433,7 +446,7 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
                               setActiveTab("sections");
                               void loadSections(p.id);
                             }}
-                            className="text-xs h-7 px-2"
+                            className="h-7 px-2 text-xs"
                             data-testid={`btn-edit-sections-${p.slug}`}
                           >
                             Sections ➔
@@ -455,7 +468,9 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
           <CardHeader className="p-4 pb-2">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <CardTitle className="text-foreground text-sm font-semibold">Dynamic Section Builder</CardTitle>
+                <CardTitle className="text-foreground text-sm font-semibold">
+                  Dynamic Section Builder
+                </CardTitle>
                 <CardDescription className="text-xs">
                   Reorder, add, or customize composable sections for each page.
                 </CardDescription>
@@ -465,7 +480,7 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
                 <select
                   value={selectedPageId}
                   onChange={(e) => handleSelectPage(e.target.value)}
-                  className="bg-background border-border text-foreground rounded border px-3 py-1.5 text-xs font-mono"
+                  className="bg-background border-border text-foreground rounded border px-3 py-1.5 font-mono text-xs"
                   data-testid="select-page-for-sections"
                 >
                   {pages.map((p) => (
@@ -486,17 +501,21 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
               </div>
             </div>
           </CardHeader>
-          <CardContent className="p-4 space-y-4">
+          <CardContent className="space-y-4 p-4">
             {showAddSection && (
               <form
                 onSubmit={handleCreateSection}
                 className="bg-muted/30 border-border space-y-3 rounded-lg border p-4"
                 data-testid="form-add-section"
               >
-                <h4 className="text-foreground text-xs font-bold uppercase">Add New Section to Selected Page</h4>
+                <h4 className="text-foreground text-xs font-bold uppercase">
+                  Add New Section to Selected Page
+                </h4>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <div>
-                    <label className="text-muted-foreground block text-[11px] font-medium">Section Type</label>
+                    <label className="text-muted-foreground block text-[11px] font-medium">
+                      Section Type
+                    </label>
                     <select
                       value={newSectionType}
                       onChange={(e) => setNewSectionType(e.target.value)}
@@ -512,7 +531,9 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
                     </select>
                   </div>
                   <div>
-                    <label className="text-muted-foreground block text-[11px] font-medium">Title (Arabic)</label>
+                    <label className="text-muted-foreground block text-[11px] font-medium">
+                      Title (Arabic)
+                    </label>
                     <input
                       type="text"
                       dir="rtl"
@@ -525,7 +546,9 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
                     />
                   </div>
                   <div>
-                    <label className="text-muted-foreground block text-[11px] font-medium">Title (English)</label>
+                    <label className="text-muted-foreground block text-[11px] font-medium">
+                      Title (English)
+                    </label>
                     <input
                       type="text"
                       dir="ltr"
@@ -553,15 +576,19 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
             )}
 
             {isLoadingSections ? (
-              <div className="text-muted-foreground py-6 text-center text-xs">Loading page sections...</div>
+              <div className="text-muted-foreground py-6 text-center text-xs">
+                Loading page sections...
+              </div>
             ) : sections.length === 0 ? (
               <div className="text-muted-foreground bg-muted/20 rounded-md border border-dashed p-6 text-center text-xs">
-                No sections configured for this page yet. Click &quot;+ Add Section&quot; to compose your layout.
+                No sections configured for this page yet. Click &quot;+ Add Section&quot; to compose
+                your layout.
               </div>
             ) : (
               <div className="space-y-2" data-testid="sections-list">
                 {sections.map((sec, idx) => {
-                  const secTitle = locale === "ar" ? sec.translations.ar.title : sec.translations.en.title;
+                  const secTitle =
+                    locale === "ar" ? sec.translations.ar.title : sec.translations.en.title;
                   return (
                     <div
                       key={sec.id}
@@ -575,7 +602,7 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
                             type="button"
                             onClick={() => handleMoveSection(idx, "up")}
                             disabled={idx === 0}
-                            className="text-muted-foreground hover:text-foreground disabled:opacity-30 px-1 py-0.5"
+                            className="text-muted-foreground hover:text-foreground px-1 py-0.5 disabled:opacity-30"
                             aria-label={`Move section ${sec.sectionType} up`}
                             data-testid={`btn-move-up-${idx}`}
                           >
@@ -585,7 +612,7 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
                             type="button"
                             onClick={() => handleMoveSection(idx, "down")}
                             disabled={idx === sections.length - 1}
-                            className="text-muted-foreground hover:text-foreground disabled:opacity-30 px-1 py-0.5"
+                            className="text-muted-foreground hover:text-foreground px-1 py-0.5 disabled:opacity-30"
                             aria-label={`Move section ${sec.sectionType} down`}
                             data-testid={`btn-move-down-${idx}`}
                           >
@@ -602,9 +629,13 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
                               {sec.sectionType}
                             </Badge>
                             {sec.status === "PUBLISHED" ? (
-                              <span className="text-emerald-600 text-[10px] font-semibold">PUBLISHED</span>
+                              <span className="text-[10px] font-semibold text-emerald-600">
+                                PUBLISHED
+                              </span>
                             ) : (
-                              <span className="text-amber-600 text-[10px] font-semibold">DRAFT</span>
+                              <span className="text-[10px] font-semibold text-amber-600">
+                                DRAFT
+                              </span>
                             )}
                           </div>
                           <span className="text-muted-foreground text-[11px]">
@@ -618,7 +649,7 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
                           variant="ghost"
                           size="sm"
                           onClick={() => handleDeleteSection(sec.id)}
-                          className="text-destructive hover:bg-destructive/10 h-7 text-xs px-2"
+                          className="text-destructive hover:bg-destructive/10 h-7 px-2 text-xs"
                           data-testid={`btn-delete-section-${sec.id}`}
                         >
                           Delete
@@ -637,18 +668,21 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
       {activeTab === "publishing" && (
         <Card className="border-border" data-testid="publishing-panel">
           <CardHeader className="p-4 pb-2">
-            <CardTitle className="text-foreground text-sm font-semibold">Publishing & Quality Review Queue</CardTitle>
+            <CardTitle className="text-foreground text-sm font-semibold">
+              Publishing & Quality Review Queue
+            </CardTitle>
             <CardDescription className="text-xs">
               Validate and release pending drafts across pages, blocks, and translations.
             </CardDescription>
           </CardHeader>
-          <CardContent className="p-4 space-y-4">
+          <CardContent className="space-y-4 p-4">
             <div className="bg-muted/30 border-border rounded-lg border p-4">
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="text-foreground text-xs font-semibold">Pending Draft Revisions</h4>
                   <p className="text-muted-foreground text-xs">
-                    {totalDraft + pendingSections} items currently in draft mode awaiting verification.
+                    {totalDraft + pendingSections} items currently in draft mode awaiting
+                    verification.
                   </p>
                 </div>
                 <Button
@@ -669,10 +703,19 @@ export function ContentCenterManager({ initialSummary }: ContentCenterManagerPro
               <span className="text-muted-foreground block text-xs font-medium uppercase">
                 Content Quality Verification Rules
               </span>
-              <ul className="text-muted-foreground list-disc pl-5 text-xs space-y-1">
-                <li>Bilingual parity: All pages and sections must provide valid Arabic and English titles.</li>
-                <li>Link validation: All external references must pass protocol sanitization (https only).</li>
-                <li>Instant cache invalidation: Publishing updates PostgreSQL transactions and flushes Next.js ISR tags.</li>
+              <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-xs">
+                <li>
+                  Bilingual parity: All pages and sections must provide valid Arabic and English
+                  titles.
+                </li>
+                <li>
+                  Link validation: All external references must pass protocol sanitization (https
+                  only).
+                </li>
+                <li>
+                  Instant cache invalidation: Publishing updates PostgreSQL transactions and flushes
+                  Next.js ISR tags.
+                </li>
               </ul>
             </div>
           </CardContent>

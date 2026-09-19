@@ -8,9 +8,7 @@ export interface AdminContentPageProps {
   params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: AdminContentPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: AdminContentPageProps): Promise<Metadata> {
   const { locale } = await params;
   const supportedLocale = (locale === "en" ? "en" : "ar") as SupportedLocale;
   const dict = await localizedTextService.getDictionary(supportedLocale);

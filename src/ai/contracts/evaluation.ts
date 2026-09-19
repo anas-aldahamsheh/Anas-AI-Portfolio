@@ -108,11 +108,7 @@ export const CompareRunsRequestSchema = z.object({
 export type CompareRunsRequest = z.infer<typeof CompareRunsRequestSchema>;
 
 export type EvaluationCategory =
-  | "retrieval"
-  | "generation"
-  | "negative_refusal"
-  | "security_injection"
-  | "project_scoped";
+  "retrieval" | "generation" | "negative_refusal" | "security_injection" | "project_scoped";
 
 export interface EvaluationCaseItem {
   id: string;
@@ -183,4 +179,3 @@ export interface EvaluationRunExecutionResponse {
   gate: EvaluationGateDecision;
   caseResults: EvaluationCaseResult[];
 }
-

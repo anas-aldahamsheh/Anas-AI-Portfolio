@@ -8,9 +8,7 @@ interface AdminFeatureFlagsPageProps {
   params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: AdminFeatureFlagsPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: AdminFeatureFlagsPageProps): Promise<Metadata> {
   const { locale } = await params;
   const isArabic = locale === "ar";
   return {

@@ -53,7 +53,10 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: "Forbidden: Admin access required" }, { status: 403 });
     }
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: "Validation failed", details: error.errors }, { status: 400 });
+      return NextResponse.json(
+        { error: "Validation failed", details: error.errors },
+        { status: 400 },
+      );
     }
 
     return NextResponse.json({ error: "Failed to update section" }, { status: 500 });

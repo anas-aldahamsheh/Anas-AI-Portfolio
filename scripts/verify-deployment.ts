@@ -68,7 +68,9 @@ export async function runDeploymentVerification(): Promise<{
           );
         }
         console.info(`   -> Operational Status: ${readiness.status.toUpperCase()}`);
-        console.info(`   -> Checks: DB=${readiness.checks.database.status}, Cache=${readiness.checks.cache.status}, Config=${readiness.checks.configuration.status}`);
+        console.info(
+          `   -> Checks: DB=${readiness.checks.database.status}, Cache=${readiness.checks.cache.status}, Config=${readiness.checks.configuration.status}`,
+        );
         return true;
       },
     },
@@ -140,7 +142,8 @@ export async function runDeploymentVerification(): Promise<{
 // Execute directly if invoked from CLI
 if (
   process.argv[1] &&
-  (process.argv[1].endsWith("verify-deployment.ts") || process.argv[1].endsWith("verify-deployment.js"))
+  (process.argv[1].endsWith("verify-deployment.ts") ||
+    process.argv[1].endsWith("verify-deployment.js"))
 ) {
   runDeploymentVerification()
     .then((res) => {

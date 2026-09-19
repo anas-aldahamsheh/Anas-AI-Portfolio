@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       await db.insert(auditEvents).values({
         action: "rate_limit_reset",
         entityType: "rate_limit",
-        entityId: all ? "all" : (identifier || tier || "custom"),
+        entityId: all ? "all" : identifier || tier || "custom",
         userId: adminContext.user.id,
         previousState: null,
         newState: { all: all ?? false, identifier, tier },
@@ -69,9 +69,6 @@ export async function POST(request: NextRequest) {
       throttledClients: rateLimiter.listThrottledClients(),
     });
   } catch (err) {
-    return NextResponse.json(
-      { success: false, error: String(err) },
-      { status: 500 },
-    );
+    return NextResponse.json({ success: false, error: String(err) }, { status: 500 });
   }
 }

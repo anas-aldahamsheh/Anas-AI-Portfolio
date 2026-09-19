@@ -1,14 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  ShieldCheck,
-  AlertTriangle,
-  CheckCircle2,
-  XCircle,
-  Play,
-  RefreshCw,
-} from "lucide-react";
+import { ShieldCheck, AlertTriangle, CheckCircle2, XCircle, Play, RefreshCw } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -61,7 +54,9 @@ export function AiControlCenter({
   const isAr = locale === "ar";
   const [activeTab, setActiveTab] = useState<TabKey>("overview");
   const [overview, setOverview] = useState<AiControlOverview>(initialOverview);
-  const [bindings, setBindings] = useState<ActiveCapabilityBinding[]>(initialOverview.activeBindings);
+  const [bindings, setBindings] = useState<ActiveCapabilityBinding[]>(
+    initialOverview.activeBindings,
+  );
   const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(
     null,
   );
@@ -182,7 +177,7 @@ export function AiControlCenter({
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <span className="bg-primary/10 text-primary rounded px-2.5 py-1 text-xs font-bold uppercase tracking-wider">
+            <span className="bg-primary/10 text-primary rounded px-2.5 py-1 text-xs font-bold tracking-wider uppercase">
               F040
             </span>
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
@@ -239,7 +234,7 @@ export function AiControlCenter({
           <span>{feedback.message}</span>
           <button
             onClick={() => setFeedback(null)}
-            className="hover:opacity-75 text-xs font-semibold uppercase"
+            className="text-xs font-semibold uppercase hover:opacity-75"
           >
             {isAr ? "إغلاق" : "Dismiss"}
           </button>
@@ -255,26 +250,26 @@ export function AiControlCenter({
           return (
             <Card key={sub.id} className="relative overflow-hidden">
               <div
-                className={`absolute top-0 inset-x-0 h-1 ${
+                className={`absolute inset-x-0 top-0 h-1 ${
                   isHealthy ? "bg-emerald-500" : isDegraded ? "bg-destructive" : "bg-amber-500"
                 }`}
               />
-              <CardHeader className="pb-2 pt-4">
+              <CardHeader className="pt-4 pb-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-muted-foreground">
+                  <span className="text-muted-foreground text-xs font-semibold">
                     {isAr ? sub.nameAr : sub.name}
                   </span>
                   {isHealthy ? (
                     <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                   ) : isDegraded ? (
-                    <XCircle className="h-4 w-4 text-destructive" />
+                    <XCircle className="text-destructive h-4 w-4" />
                   ) : (
                     <AlertTriangle className="h-4 w-4 text-amber-500" />
                   )}
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-sm font-medium leading-snug">
+                <div className="text-sm leading-snug font-medium">
                   {isAr ? sub.messageAr : sub.message}
                 </div>
               </CardContent>
@@ -286,7 +281,7 @@ export function AiControlCenter({
       {/* Embedding Compatibility Warning Banner */}
       {!overview.embeddingCompatibility.isCompatible && (
         <div className="flex items-start gap-3 rounded-lg border border-amber-500/40 bg-amber-500/10 p-4 text-amber-700 dark:text-amber-400">
-          <AlertTriangle className="h-5 w-5 shrink-0 mt-0.5" />
+          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
           <div className="space-y-1 text-sm">
             <div className="font-semibold">
               {isAr
@@ -303,13 +298,13 @@ export function AiControlCenter({
       )}
 
       {/* Tabs Navigation */}
-      <div className="flex border-b border-border space-x-2 rtl:space-x-reverse overflow-x-auto">
+      <div className="border-border flex space-x-2 overflow-x-auto border-b rtl:space-x-reverse">
         <button
           onClick={() => setActiveTab("overview")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+          className={`border-b-2 px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
             activeTab === "overview"
               ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+              : "text-muted-foreground hover:text-foreground border-transparent"
           }`}
         >
           {isAr ? "نظرة عامة والتعيينات النشطة" : "Active Bindings & Overview"}
@@ -317,10 +312,10 @@ export function AiControlCenter({
 
         <button
           onClick={() => setActiveTab("providers_models")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+          className={`border-b-2 px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
             activeTab === "providers_models"
               ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+              : "text-muted-foreground hover:text-foreground border-transparent"
           }`}
         >
           {isAr ? "إدارة المزودين والنماذج" : "Providers & Models"}
@@ -328,10 +323,10 @@ export function AiControlCenter({
 
         <button
           onClick={() => setActiveTab("rag_controls")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+          className={`border-b-2 px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
             activeTab === "rag_controls"
               ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+              : "text-muted-foreground hover:text-foreground border-transparent"
           }`}
         >
           {isAr ? "محرك الاسترجاع و RAG" : "RAG & Retrieval Controls"}
@@ -339,10 +334,10 @@ export function AiControlCenter({
 
         <button
           onClick={() => setActiveTab("safety_gate")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+          className={`border-b-2 px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
             activeTab === "safety_gate"
               ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+              : "text-muted-foreground hover:text-foreground border-transparent"
           }`}
         >
           {isAr ? "سلامة التغييرات وبوابة الجودة" : "Change Safety & Quality Gate"}
@@ -377,24 +372,24 @@ export function AiControlCenter({
                   return (
                     <div
                       key={binding.capability}
-                      className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 rounded-lg border p-4 hover:bg-muted/10 transition-colors"
+                      className="hover:bg-muted/10 flex flex-col gap-4 rounded-lg border p-4 transition-colors lg:flex-row lg:items-center lg:justify-between"
                     >
-                      <div className="space-y-1 max-w-xl">
+                      <div className="max-w-xl space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-sm">
+                          <span className="text-sm font-semibold">
                             {isAr ? binding.labelAr : binding.label}
                           </span>
                           <Badge variant="outline" className="text-xs">
                             {binding.capability}
                           </Badge>
                           {binding.isReady && (
-                            <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 text-xs">
+                            <Badge className="border-emerald-500/20 bg-emerald-500/10 text-xs text-emerald-600 dark:text-emerald-400">
                               {isAr ? "جاهز" : "Active"}
                             </Badge>
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground">{binding.notes}</p>
-                        <div className="flex items-center gap-4 text-xs text-muted-foreground pt-1">
+                        <p className="text-muted-foreground text-xs">{binding.notes}</p>
+                        <div className="text-muted-foreground flex items-center gap-4 pt-1 text-xs">
                           <span>
                             {isAr ? "المزود:" : "Provider:"}{" "}
                             <strong className="text-foreground">{binding.providerName}</strong>
@@ -450,7 +445,9 @@ export function AiControlCenter({
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => handleValidateAssignment(binding.capability, binding.modelId)}
+                          onClick={() =>
+                            handleValidateAssignment(binding.capability, binding.modelId)
+                          }
                           disabled={validatingCap === binding.capability}
                           className="text-xs"
                         >
@@ -475,8 +472,8 @@ export function AiControlCenter({
             <Card className="border-primary/40 bg-primary/5">
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-base flex items-center gap-2">
-                    <ShieldCheck className="h-5 w-5 text-primary" />
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <ShieldCheck className="text-primary h-5 w-5" />
                     {isAr
                       ? "تقرير الفحص المسبق لسلامة التغيير (Pre-flight Validation Report)"
                       : "Change Safety Pre-flight Validation Report"}
@@ -495,7 +492,7 @@ export function AiControlCenter({
                 <div className="flex items-center gap-2">
                   <span className="font-medium">{isAr ? "الحالة:" : "Status:"}</span>
                   {validationResult.isValid ? (
-                    <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20">
+                    <Badge className="border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
                       {isAr ? "صالح وآمن للتطبيق" : "Valid & Safe"}
                     </Badge>
                   ) : (
@@ -509,7 +506,7 @@ export function AiControlCenter({
                 </div>
 
                 {validationResult.reindexReason && (
-                  <p className="text-amber-600 dark:text-amber-400 text-xs">
+                  <p className="text-xs text-amber-600 dark:text-amber-400">
                     {validationResult.reindexReason}
                   </p>
                 )}
@@ -519,7 +516,7 @@ export function AiControlCenter({
                     <span className="text-xs font-semibold text-amber-600">
                       {isAr ? "تحذيرات:" : "Warnings:"}
                     </span>
-                    <ul className="list-disc list-inside text-xs text-muted-foreground">
+                    <ul className="text-muted-foreground list-inside list-disc text-xs">
                       {validationResult.warnings.map((w, i) => (
                         <li key={i}>{w}</li>
                       ))}
@@ -529,10 +526,10 @@ export function AiControlCenter({
 
                 {validationResult.errors.length > 0 && (
                   <div className="space-y-1">
-                    <span className="text-xs font-semibold text-destructive">
+                    <span className="text-destructive text-xs font-semibold">
                       {isAr ? "أخطاء مانعة:" : "Blocking Errors:"}
                     </span>
-                    <ul className="list-disc list-inside text-xs text-destructive">
+                    <ul className="text-destructive list-inside list-disc text-xs">
                       {validationResult.errors.map((e, i) => (
                         <li key={i}>{e}</li>
                       ))}
@@ -582,12 +579,12 @@ export function AiControlCenter({
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg border bg-muted/20">
+              <div className="bg-muted/20 flex flex-col justify-between gap-4 rounded-lg border p-4 sm:flex-row sm:items-center">
                 <div>
-                  <div className="font-semibold text-sm">
+                  <div className="text-sm font-semibold">
                     {isAr ? "حكم البوابة الحالي:" : "Current Gate Verdict:"}
                   </div>
-                  <div className="text-xs text-muted-foreground mt-0.5">
+                  <div className="text-muted-foreground mt-0.5 text-xs">
                     {isAr
                       ? "المعايير المعتمدة: الاسترجاع Recall@5 >= 85%, الأمانة Faithfulness >= 95%, تطابق اللغتين >= 90%"
                       : "Strict Thresholds: Recall@5 >= 85%, Faithfulness >= 95%, Cross-lingual parity >= 90%"}
@@ -596,11 +593,11 @@ export function AiControlCenter({
 
                 <div className="flex items-center gap-3">
                   <Badge
-                    className={`text-sm px-3 py-1 ${
+                    className={`px-3 py-1 text-sm ${
                       gateVerdict === "PASSED"
-                        ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30"
+                        ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
                         : gateVerdict === "WARNING"
-                          ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30"
+                          ? "border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400"
                           : "bg-destructive/10 text-destructive border-destructive/30"
                     }`}
                   >
@@ -625,29 +622,35 @@ export function AiControlCenter({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-lg border space-y-1">
-                  <div className="text-xs text-muted-foreground">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div className="space-y-1 rounded-lg border p-4">
+                  <div className="text-muted-foreground text-xs">
                     {isAr ? "دقة الاسترجاع المعياري" : "Retrieval Recall@5"}
                   </div>
-                  <div className="text-2xl font-bold text-foreground">92.4%</div>
-                  <div className="text-xs text-emerald-600">✓ {isAr ? "فوق الحد الأدنى (85%)" : "Above threshold (85%)"}</div>
+                  <div className="text-foreground text-2xl font-bold">92.4%</div>
+                  <div className="text-xs text-emerald-600">
+                    ✓ {isAr ? "فوق الحد الأدنى (85%)" : "Above threshold (85%)"}
+                  </div>
                 </div>
 
-                <div className="p-4 rounded-lg border space-y-1">
-                  <div className="text-xs text-muted-foreground">
+                <div className="space-y-1 rounded-lg border p-4">
+                  <div className="text-muted-foreground text-xs">
                     {isAr ? "أمانة الإجابات والحقائق" : "Generation Faithfulness"}
                   </div>
-                  <div className="text-2xl font-bold text-foreground">98.5%</div>
-                  <div className="text-xs text-emerald-600">✓ {isAr ? "فوق الحد الأدنى (95%)" : "Zero hallucination detected"}</div>
+                  <div className="text-foreground text-2xl font-bold">98.5%</div>
+                  <div className="text-xs text-emerald-600">
+                    ✓ {isAr ? "فوق الحد الأدنى (95%)" : "Zero hallucination detected"}
+                  </div>
                 </div>
 
-                <div className="p-4 rounded-lg border space-y-1">
-                  <div className="text-xs text-muted-foreground">
+                <div className="space-y-1 rounded-lg border p-4">
+                  <div className="text-muted-foreground text-xs">
                     {isAr ? "تكافؤ الاستجابة (عربي/إنجليزي)" : "Cross-Lingual Parity"}
                   </div>
-                  <div className="text-2xl font-bold text-foreground">96.5%</div>
-                  <div className="text-xs text-emerald-600">✓ {isAr ? "فوق الحد الأدنى (90%)" : "Symmetric quality confirmed"}</div>
+                  <div className="text-foreground text-2xl font-bold">96.5%</div>
+                  <div className="text-xs text-emerald-600">
+                    ✓ {isAr ? "فوق الحد الأدنى (90%)" : "Symmetric quality confirmed"}
+                  </div>
                 </div>
               </div>
             </CardContent>

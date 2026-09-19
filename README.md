@@ -26,17 +26,17 @@ A modern, bilingual, production-grade AI engineering portfolio and interactive p
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-| :--- | :--- |
-| **Framework** | Next.js 16 (App Router, Turbopack) & React 19 |
-| **Language** | TypeScript (Strict Mode) |
-| **Styling** | Tailwind CSS v4 & Motion (Micro-animations) |
-| **Database** | PostgreSQL (Neon / Serverless) + Drizzle ORM |
-| **Vector DB** | Qdrant Cloud (Vector embeddings & hybrid retrieval) |
-| **Cache & Rate Limit** | Upstash Redis |
-| **Authentication** | Better Auth (RBAC for Administrator operations) |
-| **Testing** | Vitest (Unit & Integration) + Playwright (E2E) |
-| **Security** | AES-256-GCM encrypted provider secrets, Zod validation |
+| Layer                  | Technology                                             |
+| :--------------------- | :----------------------------------------------------- |
+| **Framework**          | Next.js 16 (App Router, Turbopack) & React 19          |
+| **Language**           | TypeScript (Strict Mode)                               |
+| **Styling**            | Tailwind CSS v4 & Motion (Micro-animations)            |
+| **Database**           | PostgreSQL (Neon / Serverless) + Drizzle ORM           |
+| **Vector DB**          | Qdrant Cloud (Vector embeddings & hybrid retrieval)    |
+| **Cache & Rate Limit** | Upstash Redis                                          |
+| **Authentication**     | Better Auth (RBAC for Administrator operations)        |
+| **Testing**            | Vitest (Unit & Integration) + Playwright (E2E)         |
+| **Security**           | AES-256-GCM encrypted provider secrets, Zod validation |
 
 ---
 
@@ -108,9 +108,10 @@ pnpm typecheck
 
 ## 👨‍💻 Author
 
-**Anas Aldahamsheh**  
-- **GitHub**: [@anas-aldahamsheh](https://github.com/anas-aldahamsheh)  
-- **LinkedIn**: [linkedin.com/in/anas-aldahamsheh](https://linkedin.com/in/anas-aldahamsheh)  
+**Anas Aldahamsheh**
+
+- **GitHub**: [@anas-aldahamsheh](https://github.com/anas-aldahamsheh)
+- **LinkedIn**: [linkedin.com/in/anas-aldahamsheh](https://linkedin.com/in/anas-aldahamsheh)
 
 ---
 

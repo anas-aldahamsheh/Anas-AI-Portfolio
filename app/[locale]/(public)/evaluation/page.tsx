@@ -13,7 +13,9 @@ export async function generateMetadata({ params }: EvaluationPageProps): Promise
   const supportedLocale = (locale === "en" ? "en" : "ar") as SupportedLocale;
   const dict = await localizedTextService.getDictionary(supportedLocale);
 
-  const title = dict["eval.title"] || (supportedLocale === "ar" ? "لوحة تقييم الجودة" : "AI Quality Evaluation");
+  const title =
+    dict["eval.title"] ||
+    (supportedLocale === "ar" ? "لوحة تقييم الجودة" : "AI Quality Evaluation");
   const description =
     dict["eval.subtitle"] ||
     (supportedLocale === "ar"

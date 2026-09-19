@@ -33,9 +33,6 @@ export async function GET(request: NextRequest) {
       metadata: { error: error instanceof Error ? error.message : String(error) },
     });
 
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

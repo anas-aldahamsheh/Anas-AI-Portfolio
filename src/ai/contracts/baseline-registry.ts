@@ -220,7 +220,9 @@ export const BASELINE_ASSIGNMENTS: AiModelAssignment[] = [
   {
     id: "assign-prod-router",
     capability: "router",
-    modelId: hasGeminiConfigured ? "model-router-gemini-3-1-flash-lite" : "model-router-gpt-4o-mini",
+    modelId: hasGeminiConfigured
+      ? "model-router-gemini-3-1-flash-lite"
+      : "model-router-gpt-4o-mini",
     environment: "production",
     isActive: true,
     updatedAt: "2026-01-01T00:00:00.000Z",
@@ -228,7 +230,9 @@ export const BASELINE_ASSIGNMENTS: AiModelAssignment[] = [
   {
     id: "assign-prod-rewrite",
     capability: "rewrite",
-    modelId: hasGeminiConfigured ? "model-rewrite-gemini-3-1-flash-lite" : "model-rewrite-gpt-4o-mini",
+    modelId: hasGeminiConfigured
+      ? "model-rewrite-gemini-3-1-flash-lite"
+      : "model-rewrite-gpt-4o-mini",
     environment: "production",
     isActive: true,
     updatedAt: "2026-01-01T00:00:00.000Z",

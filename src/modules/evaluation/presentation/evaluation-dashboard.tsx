@@ -36,7 +36,7 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
             {initialData.activeBaselineRun.datasetName}
           </Badge>
         </div>
-        <p className="text-muted-foreground text-sm max-w-3xl leading-relaxed">
+        <p className="text-muted-foreground max-w-3xl text-sm leading-relaxed">
           {t("eval.subtitle")}
         </p>
       </div>
@@ -49,7 +49,7 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
           className={`border-b-2 px-4 py-2.5 text-xs font-semibold transition-colors ${
             activeTab === "metrics"
               ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+              : "text-muted-foreground hover:text-foreground border-transparent"
           }`}
           data-testid="eval-tab-metrics"
         >
@@ -61,7 +61,7 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
           className={`border-b-2 px-4 py-2.5 text-xs font-semibold transition-colors ${
             activeTab === "methodology"
               ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+              : "text-muted-foreground hover:text-foreground border-transparent"
           }`}
           data-testid="eval-tab-methodology"
         >
@@ -73,7 +73,7 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
           className={`border-b-2 px-4 py-2.5 text-xs font-semibold transition-colors ${
             activeTab === "benchmarks"
               ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+              : "text-muted-foreground hover:text-foreground border-transparent"
           }`}
           data-testid="eval-tab-benchmarks"
         >
@@ -115,7 +115,10 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
 
               const barPercent =
                 metric.unit === "ms"
-                  ? Math.min(100, Math.max(10, Math.round((metric.value / metric.targetThreshold) * 100)))
+                  ? Math.min(
+                      100,
+                      Math.max(10, Math.round((metric.value / metric.targetThreshold) * 100)),
+                    )
                   : Math.min(100, Math.max(10, percentValue));
 
               return (
@@ -124,9 +127,9 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
                   className="border-border/70 bg-card/60 flex flex-col justify-between backdrop-blur-xs transition-shadow hover:shadow-md"
                   data-testid={`metric-card-${metric.id}`}
                 >
-                  <CardHeader className="p-4 pb-2 space-y-1">
+                  <CardHeader className="space-y-1 p-4 pb-2">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-muted-foreground rounded bg-muted/60 px-1.5 py-0.5 font-mono text-[10px] uppercase">
+                      <span className="text-muted-foreground bg-muted/60 rounded px-1.5 py-0.5 font-mono text-[10px] uppercase">
                         {metric.category}
                       </span>
                       <span
@@ -139,12 +142,12 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
                         }`}
                       />
                     </div>
-                    <CardTitle className="text-foreground text-sm font-semibold line-clamp-1">
+                    <CardTitle className="text-foreground line-clamp-1 text-sm font-semibold">
                       {metric.label}
                     </CardTitle>
                   </CardHeader>
 
-                  <CardContent className="p-4 pt-0 space-y-3">
+                  <CardContent className="space-y-3 p-4 pt-0">
                     <div className="flex items-baseline justify-between">
                       <span className="text-foreground font-mono text-2xl font-bold tracking-tight">
                         {metric.formattedValue}
@@ -174,7 +177,7 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
                       />
                     </div>
 
-                    <CardDescription className="text-muted-foreground text-[11px] leading-relaxed line-clamp-2">
+                    <CardDescription className="text-muted-foreground line-clamp-2 text-[11px] leading-relaxed">
                       {metric.description}
                     </CardDescription>
                   </CardContent>
@@ -190,33 +193,34 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
                 <CardTitle className="text-foreground text-base">
                   {t("eval.parity.title")}
                 </CardTitle>
-                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 font-mono text-xs">
+                <Badge
+                  variant="outline"
+                  className="border-emerald-500/20 bg-emerald-500/10 font-mono text-xs text-emerald-600 dark:text-emerald-400"
+                >
                   {t("eval.parity.balanced")}
                 </Badge>
               </div>
-              <CardDescription className="text-xs">
-                {t("eval.parity.desc")}
-              </CardDescription>
+              <CardDescription className="text-xs">{t("eval.parity.desc")}</CardDescription>
             </CardHeader>
             <CardContent className="p-5 pt-0">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div className="bg-background/80 rounded-xl border border-border/60 p-3 text-center">
+                <div className="bg-background/80 border-border/60 rounded-xl border p-3 text-center">
                   <div className="text-muted-foreground text-xs font-medium">Arabic Score</div>
                   <div className="text-foreground mt-1 font-mono text-xl font-bold">
                     {(initialData.languageParity.arabicScore * 100).toFixed(1)}%
                   </div>
                 </div>
 
-                <div className="bg-background/80 rounded-xl border border-border/60 p-3 text-center">
+                <div className="bg-background/80 border-border/60 rounded-xl border p-3 text-center">
                   <div className="text-muted-foreground text-xs font-medium">English Score</div>
                   <div className="text-foreground mt-1 font-mono text-xl font-bold">
                     {(initialData.languageParity.englishScore * 100).toFixed(1)}%
                   </div>
                 </div>
 
-                <div className="bg-background/80 rounded-xl border border-border/60 p-3 text-center">
+                <div className="bg-background/80 border-border/60 rounded-xl border p-3 text-center">
                   <div className="text-muted-foreground text-xs font-medium">Parity Ratio</div>
-                  <div className="text-emerald-600 dark:text-emerald-400 mt-1 font-mono text-xl font-bold">
+                  <div className="mt-1 font-mono text-xl font-bold text-emerald-600 dark:text-emerald-400">
                     {(initialData.languageParity.parityRatio * 100).toFixed(1)}%
                   </div>
                 </div>
@@ -231,14 +235,14 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
         <div className="space-y-6" data-testid="eval-methodology-view">
           {/* Principles */}
           <div className="space-y-3">
-            <h3 className="text-foreground text-sm font-bold uppercase tracking-wider">
+            <h3 className="text-foreground text-sm font-bold tracking-wider uppercase">
               Evaluation Engineering Principles
             </h3>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {initialData.methodology.principles.map((p, idx) => (
                 <div
                   key={idx}
-                  className="bg-card border-border/70 rounded-xl border p-4 space-y-1.5 text-xs"
+                  className="bg-card border-border/70 space-y-1.5 rounded-xl border p-4 text-xs"
                 >
                   <div className="flex items-center gap-2">
                     <span className="bg-primary/10 text-primary flex h-5 w-5 shrink-0 items-center justify-center rounded-full font-mono text-[10px] font-bold">
@@ -246,7 +250,7 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
                     </span>
                     <span className="text-foreground font-semibold">Principle #{idx + 1}</span>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed ps-7">{p}</p>
+                  <p className="text-muted-foreground ps-7 leading-relaxed">{p}</p>
                 </div>
               ))}
             </div>
@@ -254,7 +258,7 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
 
           {/* Golden Datasets Specifications */}
           <div className="space-y-3">
-            <h3 className="text-foreground text-sm font-bold uppercase tracking-wider">
+            <h3 className="text-foreground text-sm font-bold tracking-wider uppercase">
               Benchmark Golden Datasets
             </h3>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -270,9 +274,9 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
                       </Badge>
                     </div>
                   </CardHeader>
-                  <CardContent className="p-4 pt-0 space-y-2 text-xs">
+                  <CardContent className="space-y-2 p-4 pt-0 text-xs">
                     <div className="text-muted-foreground text-[11px]">
-                      <span className="font-semibold text-foreground">Languages:</span>{" "}
+                      <span className="text-foreground font-semibold">Languages:</span>{" "}
                       {ds.languages.join(", ")}
                     </div>
                     <p className="text-muted-foreground leading-relaxed">{ds.focus}</p>
@@ -284,13 +288,13 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
 
           {/* Release Quality Gates */}
           <div className="space-y-3">
-            <h3 className="text-foreground text-sm font-bold uppercase tracking-wider">
+            <h3 className="text-foreground text-sm font-bold tracking-wider uppercase">
               Automated Release Gates
             </h3>
             <div className="bg-muted/30 border-border/70 space-y-2 rounded-xl border p-4 text-xs">
               {initialData.methodology.evaluationGates.map((gate, idx) => (
-                <div key={idx} className="flex items-center gap-2.5 text-muted-foreground">
-                  <span className="text-emerald-500 font-bold">✓</span>
+                <div key={idx} className="text-muted-foreground flex items-center gap-2.5">
+                  <span className="font-bold text-emerald-500">✓</span>
                   <span className="text-foreground font-medium">{gate}</span>
                 </div>
               ))}
@@ -304,7 +308,7 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
         <div className="space-y-6" data-testid="eval-benchmarks-view">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-foreground text-sm font-bold uppercase tracking-wider">
+              <h3 className="text-foreground text-sm font-bold tracking-wider uppercase">
                 {t("eval.runs.title")}
               </h3>
               <span className="text-muted-foreground text-xs">
@@ -321,7 +325,7 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
                 >
                   <CardHeader className="p-4 pb-2">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="flex items-center gap-2 min-w-0">
+                      <div className="flex min-w-0 items-center gap-2">
                         <CardTitle className="text-foreground truncate text-sm font-semibold">
                           {run.datasetName}
                         </CardTitle>
@@ -335,13 +339,13 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
                         Commit: {run.gitCommit || "active"}
                       </span>
                     </div>
-                    <CardDescription className="text-xs font-mono">
+                    <CardDescription className="font-mono text-xs">
                       Model: {run.modelId} • Prompt: {run.promptVersion}
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className="p-4 pt-0 space-y-3 text-xs">
-                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 font-mono text-[11px]">
+                  <CardContent className="space-y-3 p-4 pt-0 text-xs">
+                    <div className="grid grid-cols-2 gap-2 font-mono text-[11px] sm:grid-cols-4">
                       <div className="bg-muted/40 rounded p-2">
                         <div className="text-muted-foreground text-[10px]">Pass Rate</div>
                         <div className="text-foreground font-bold">
@@ -362,9 +366,7 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
                       </div>
                       <div className="bg-muted/40 rounded p-2">
                         <div className="text-muted-foreground text-[10px]">Average Latency</div>
-                        <div className="text-foreground font-bold">
-                          {run.averageLatencyMs} ms
-                        </div>
+                        <div className="text-foreground font-bold">{run.averageLatencyMs} ms</div>
                       </div>
                     </div>
                   </CardContent>
@@ -376,8 +378,8 @@ export function EvaluationDashboard({ initialData }: EvaluationDashboardProps) {
       )}
 
       {/* Measured Values Transparency Pledge */}
-      <div className="bg-muted/20 border-border/60 rounded-xl border p-4 text-xs text-muted-foreground space-y-1">
-        <div className="flex items-center gap-1.5 font-semibold text-foreground">
+      <div className="bg-muted/20 border-border/60 text-muted-foreground space-y-1 rounded-xl border p-4 text-xs">
+        <div className="text-foreground flex items-center gap-1.5 font-semibold">
           <span>🔒</span>
           <span>{t("eval.pledge.title")}</span>
         </div>

@@ -149,7 +149,8 @@ export const BASELINE_AGGREGATE_METRICS: EvaluationMetricItem[] = [
     targetThreshold: 0.95,
     status: "passed",
     category: "generation",
-    description: "Proportion of claims in generated answers factually grounded in retrieved portfolio chunks.",
+    description:
+      "Proportion of claims in generated answers factually grounded in retrieved portfolio chunks.",
   },
   {
     id: "metric-citation-correctness",
@@ -161,7 +162,8 @@ export const BASELINE_AGGREGATE_METRICS: EvaluationMetricItem[] = [
     targetThreshold: 0.95,
     status: "passed",
     category: "generation",
-    description: "Accuracy of [cit:ID] markers mapped strictly to verified source documents without hallucinations.",
+    description:
+      "Accuracy of [cit:ID] markers mapped strictly to verified source documents without hallucinations.",
   },
   {
     id: "metric-recall-at-5",
@@ -173,7 +175,8 @@ export const BASELINE_AGGREGATE_METRICS: EvaluationMetricItem[] = [
     targetThreshold: 0.9,
     status: "passed",
     category: "retrieval",
-    description: "Fraction of relevant ground-truth evidence successfully included in the top 5 reranked candidates.",
+    description:
+      "Fraction of relevant ground-truth evidence successfully included in the top 5 reranked candidates.",
   },
   {
     id: "metric-precision-at-5",
@@ -185,7 +188,8 @@ export const BASELINE_AGGREGATE_METRICS: EvaluationMetricItem[] = [
     targetThreshold: 0.8,
     status: "passed",
     category: "retrieval",
-    description: "Percentage of retrieved top 5 chunks containing authoritative evidence directly answering the query.",
+    description:
+      "Percentage of retrieved top 5 chunks containing authoritative evidence directly answering the query.",
   },
   {
     id: "metric-mrr",
@@ -197,7 +201,8 @@ export const BASELINE_AGGREGATE_METRICS: EvaluationMetricItem[] = [
     targetThreshold: 0.8,
     status: "passed",
     category: "retrieval",
-    description: "Average reciprocal rank of the first relevant document across all benchmark test cases.",
+    description:
+      "Average reciprocal rank of the first relevant document across all benchmark test cases.",
   },
   {
     id: "metric-answer-relevance",
@@ -209,7 +214,8 @@ export const BASELINE_AGGREGATE_METRICS: EvaluationMetricItem[] = [
     targetThreshold: 0.9,
     status: "passed",
     category: "generation",
-    description: "Semantic alignment and direct completeness of the response relative to the user query.",
+    description:
+      "Semantic alignment and direct completeness of the response relative to the user query.",
   },
   {
     id: "metric-latency-p95",
@@ -221,7 +227,8 @@ export const BASELINE_AGGREGATE_METRICS: EvaluationMetricItem[] = [
     targetThreshold: 400,
     status: "passed",
     category: "latency",
-    description: "95th percentile latency across routing, hybrid retrieval, cross-encoder reranking, and context packaging.",
+    description:
+      "95th percentile latency across routing, hybrid retrieval, cross-encoder reranking, and context packaging.",
   },
   {
     id: "metric-language-parity",
@@ -233,7 +240,8 @@ export const BASELINE_AGGREGATE_METRICS: EvaluationMetricItem[] = [
     targetThreshold: 0.9,
     status: "passed",
     category: "parity",
-    description: "Cross-lingual evaluation equality comparing Arabic retrieval & generation quality against English baselines.",
+    description:
+      "Cross-lingual evaluation equality comparing Arabic retrieval & generation quality against English baselines.",
   },
 ];
 

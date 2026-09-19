@@ -1,9 +1,5 @@
 import { db } from "@/lib/db/client";
-import {
-  evaluationRuns,
-  evaluationResults,
-  evaluationMetrics,
-} from "@/lib/db/schema/evaluation";
+import { evaluationRuns, evaluationResults, evaluationMetrics } from "@/lib/db/schema/evaluation";
 import {
   EvaluationCaseItem,
   EvaluationCaseResult,
@@ -25,7 +21,6 @@ export interface EvaluationRunnerOptions {
   customCases?: EvaluationCaseItem[] | undefined;
 }
 
-
 export class EvaluationRunner {
   /**
    * Executes an evaluation run across golden benchmark cases or provided custom cases.
@@ -39,9 +34,10 @@ export class EvaluationRunner {
     const promptVersionId = options.promptVersionId || "chat_system:v2.1";
 
     // 1. Select and filter cases
-    let cases = options.customCases && options.customCases.length > 0
-      ? options.customCases
-      : GOLDEN_BENCHMARK_CASES;
+    let cases =
+      options.customCases && options.customCases.length > 0
+        ? options.customCases
+        : GOLDEN_BENCHMARK_CASES;
 
     if (mode === "retrieval") {
       cases = cases.filter((c) => c.category === "retrieval" || c.category === "project_scoped");
@@ -107,40 +103,84 @@ export class EvaluationRunner {
 
     // Retrieval metrics
     const retResults = caseResults.filter((r) => r.metrics.recallAtK !== undefined);
-    const recallAt5 = retResults.length > 0
-      ? Number((retResults.reduce((acc, curr) => acc + (curr.metrics.recallAtK ?? 0), 0) / retResults.length).toFixed(4))
-      : 0.932;
-    const precisionAt5 = retResults.length > 0
-      ? Number((retResults.reduce((acc, curr) => acc + (curr.metrics.precisionAtK ?? 0), 0) / retResults.length).toFixed(4))
-      : 0.865;
-    const mrr = retResults.length > 0
-      ? Number((retResults.reduce((acc, curr) => acc + (curr.metrics.mrr ?? 0), 0) / retResults.length).toFixed(4))
-      : 0.884;
+    const recallAt5 =
+      retResults.length > 0
+        ? Number(
+            (
+              retResults.reduce((acc, curr) => acc + (curr.metrics.recallAtK ?? 0), 0) /
+              retResults.length
+            ).toFixed(4),
+          )
+        : 0.932;
+    const precisionAt5 =
+      retResults.length > 0
+        ? Number(
+            (
+              retResults.reduce((acc, curr) => acc + (curr.metrics.precisionAtK ?? 0), 0) /
+              retResults.length
+            ).toFixed(4),
+          )
+        : 0.865;
+    const mrr =
+      retResults.length > 0
+        ? Number(
+            (
+              retResults.reduce((acc, curr) => acc + (curr.metrics.mrr ?? 0), 0) / retResults.length
+            ).toFixed(4),
+          )
+        : 0.884;
 
     // Generation metrics
     const genResults = caseResults.filter((r) => r.metrics.faithfulness !== undefined);
-    const faithfulness = genResults.length > 0
-      ? Number((genResults.reduce((acc, curr) => acc + (curr.metrics.faithfulness ?? 0), 0) / genResults.length).toFixed(4))
-      : 0.985;
+    const faithfulness =
+      genResults.length > 0
+        ? Number(
+            (
+              genResults.reduce((acc, curr) => acc + (curr.metrics.faithfulness ?? 0), 0) /
+              genResults.length
+            ).toFixed(4),
+          )
+        : 0.985;
     const citResults = caseResults.filter((r) => r.metrics.citationCorrectness !== undefined);
-    const citationCorrectness = citResults.length > 0
-      ? Number((citResults.reduce((acc, curr) => acc + (curr.metrics.citationCorrectness ?? 0), 0) / citResults.length).toFixed(4))
-      : 0.978;
+    const citationCorrectness =
+      citResults.length > 0
+        ? Number(
+            (
+              citResults.reduce((acc, curr) => acc + (curr.metrics.citationCorrectness ?? 0), 0) /
+              citResults.length
+            ).toFixed(4),
+          )
+        : 0.978;
     const relResults = caseResults.filter((r) => r.metrics.answerRelevance !== undefined);
-    const answerRelevance = relResults.length > 0
-      ? Number((relResults.reduce((acc, curr) => acc + (curr.metrics.answerRelevance ?? 0), 0) / relResults.length).toFixed(4))
-      : 0.942;
+    const answerRelevance =
+      relResults.length > 0
+        ? Number(
+            (
+              relResults.reduce((acc, curr) => acc + (curr.metrics.answerRelevance ?? 0), 0) /
+              relResults.length
+            ).toFixed(4),
+          )
+        : 0.942;
     const refResults = caseResults.filter((r) => r.metrics.refusalCorrectness !== undefined);
-    const insufficientEvidenceAccuracy = refResults.length > 0
-      ? Number((refResults.reduce((acc, curr) => acc + (curr.metrics.refusalCorrectness ?? 0), 0) / refResults.length).toFixed(4))
-      : 0.99;
+    const insufficientEvidenceAccuracy =
+      refResults.length > 0
+        ? Number(
+            (
+              refResults.reduce((acc, curr) => acc + (curr.metrics.refusalCorrectness ?? 0), 0) /
+              refResults.length
+            ).toFixed(4),
+          )
+        : 0.99;
 
     // Cross-lingual Parity
     const arCases = caseResults.filter((c) => c.localeCode === "ar");
     const enCases = caseResults.filter((c) => c.localeCode === "en");
-    const arPassRate = arCases.length > 0 ? arCases.filter((c) => c.passed).length / arCases.length : 1;
-    const enPassRate = enCases.length > 0 ? enCases.filter((c) => c.passed).length / enCases.length : 1;
-    const parityRatio = enPassRate > 0 ? Number(Math.min(1, arPassRate / enPassRate).toFixed(4)) : 1;
+    const arPassRate =
+      arCases.length > 0 ? arCases.filter((c) => c.passed).length / arCases.length : 1;
+    const enPassRate =
+      enCases.length > 0 ? enCases.filter((c) => c.passed).length / enCases.length : 1;
+    const parityRatio =
+      enPassRate > 0 ? Number(Math.min(1, arPassRate / enPassRate).toFixed(4)) : 1;
 
     // 4. Release Gate Decision Check (docs/testing/03_AI_EVAL_GATE.md)
     const regressions: string[] = [];
@@ -148,33 +188,47 @@ export class EvaluationRunner {
     let verdict: GateVerdict = "PASSED";
 
     if (faithfulness < 0.95) {
-      regressions.push(`Faithfulness (${(faithfulness * 100).toFixed(1)}%) is below mandatory threshold 95.0%`);
+      regressions.push(
+        `Faithfulness (${(faithfulness * 100).toFixed(1)}%) is below mandatory threshold 95.0%`,
+      );
       verdict = "BLOCKED";
     }
 
     if (citationCorrectness < 0.95) {
-      regressions.push(`Citation correctness (${(citationCorrectness * 100).toFixed(1)}%) is below mandatory threshold 95.0%`);
+      regressions.push(
+        `Citation correctness (${(citationCorrectness * 100).toFixed(1)}%) is below mandatory threshold 95.0%`,
+      );
       verdict = "BLOCKED";
     }
 
     if (unsupportedClaimCount > 0) {
-      regressions.push(`Detected ${unsupportedClaimCount} unsupported claims violating strict evidence grounding.`);
+      regressions.push(
+        `Detected ${unsupportedClaimCount} unsupported claims violating strict evidence grounding.`,
+      );
       verdict = "BLOCKED";
     }
 
-    if (recallAt5 < 0.80) {
-      regressions.push(`Recall@5 (${(recallAt5 * 100).toFixed(1)}%) regressed critically below 80.0%`);
+    if (recallAt5 < 0.8) {
+      regressions.push(
+        `Recall@5 (${(recallAt5 * 100).toFixed(1)}%) regressed critically below 80.0%`,
+      );
       verdict = "BLOCKED";
     } else if (recallAt5 < 0.85) {
-      warnings.push(`Recall@5 (${(recallAt5 * 100).toFixed(1)}%) is slightly below optimal target of 85.0%`);
+      warnings.push(
+        `Recall@5 (${(recallAt5 * 100).toFixed(1)}%) is slightly below optimal target of 85.0%`,
+      );
       if (verdict === "PASSED") verdict = "WARNING";
     }
 
     if (parityRatio < 0.85) {
-      regressions.push(`Arabic/English parity ratio (${(parityRatio * 100).toFixed(1)}%) is severely imbalanced (<85%)`);
+      regressions.push(
+        `Arabic/English parity ratio (${(parityRatio * 100).toFixed(1)}%) is severely imbalanced (<85%)`,
+      );
       verdict = "BLOCKED";
-    } else if (parityRatio < 0.90) {
-      warnings.push(`Arabic/English parity ratio (${(parityRatio * 100).toFixed(1)}%) indicates slight language gap (<90%)`);
+    } else if (parityRatio < 0.9) {
+      warnings.push(
+        `Arabic/English parity ratio (${(parityRatio * 100).toFixed(1)}%) indicates slight language gap (<90%)`,
+      );
       if (verdict === "PASSED") verdict = "WARNING";
     }
 
@@ -206,7 +260,10 @@ export class EvaluationRunner {
     const runSummary: EvaluationRunSummary = {
       id: runId,
       datasetId,
-      datasetName: datasetId === "ds-golden-v1" ? "Portfolio Golden Benchmark v1" : "Custom Evaluation Dataset",
+      datasetName:
+        datasetId === "ds-golden-v1"
+          ? "Portfolio Golden Benchmark v1"
+          : "Custom Evaluation Dataset",
       modelId,
       promptVersion: promptVersionId,
       gitCommit: "latest",
@@ -280,7 +337,9 @@ export class EvaluationRunner {
           precisionAtK: Number(precision.toFixed(4)),
           mrr: Number(mrr.toFixed(4)),
         },
-        failureReason: passed ? undefined : "Retrieval miss: expected source IDs not fully in top 5",
+        failureReason: passed
+          ? undefined
+          : "Retrieval miss: expected source IDs not fully in top 5",
         retrievedSourceIds: simulatedRetrieved,
       };
     }

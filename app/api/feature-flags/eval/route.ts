@@ -13,7 +13,10 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const keys = keysParam.split(",").map((k) => k.trim()).filter(Boolean);
+    const keys = keysParam
+      .split(",")
+      .map((k) => k.trim())
+      .filter(Boolean);
     const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "127.0.0.1";
 
     const evaluations: Record<string, boolean> = {};

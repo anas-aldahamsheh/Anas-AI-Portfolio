@@ -990,47 +990,53 @@ export function RagPipelineManager({
           )}
 
           {debugTelemetry && (
-            <div className="space-y-4 border-t border-border pt-4" data-testid="admin-rag-debug-results">
+            <div
+              className="border-border space-y-4 border-t pt-4"
+              data-testid="admin-rag-debug-results"
+            >
               {/* Telemetry Summary Cards */}
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 text-xs">
+              <div className="grid grid-cols-2 gap-3 text-xs sm:grid-cols-5">
                 <div className="bg-muted/40 border-border/70 rounded-lg border p-2.5">
-                  <div className="text-muted-foreground text-[10px] uppercase font-semibold">
+                  <div className="text-muted-foreground text-[10px] font-semibold uppercase">
                     {isAr ? "إجمالي الزمن" : "Total Latency"}
                   </div>
-                  <div className="text-foreground font-mono text-base font-bold mt-1">
+                  <div className="text-foreground mt-1 font-mono text-base font-bold">
                     {debugTelemetry.latencies.totalMs} ms
                   </div>
                 </div>
 
                 <div className="bg-muted/40 border-border/70 rounded-lg border p-2.5">
-                  <div className="text-muted-foreground text-[10px] uppercase font-semibold">
+                  <div className="text-muted-foreground text-[10px] font-semibold uppercase">
                     {isAr ? "المسار المعتمد" : "Route"}
                   </div>
-                  <div className="text-foreground font-semibold truncate mt-1" title={debugTelemetry.routeLabel}>
+                  <div
+                    className="text-foreground mt-1 truncate font-semibold"
+                    title={debugTelemetry.routeLabel}
+                  >
                     {debugTelemetry.routeId}
                   </div>
                 </div>
 
                 <div className="bg-muted/40 border-border/70 rounded-lg border p-2.5">
-                  <div className="text-muted-foreground text-[10px] uppercase font-semibold">
+                  <div className="text-muted-foreground text-[10px] font-semibold uppercase">
                     {isAr ? "رموز السياق" : "Tokens"}
                   </div>
-                  <div className="text-foreground font-mono text-base font-bold mt-1">
+                  <div className="text-foreground mt-1 font-mono text-base font-bold">
                     {debugTelemetry.tokenCount} tok
                   </div>
                 </div>
 
                 <div className="bg-muted/40 border-border/70 rounded-lg border p-2.5">
-                  <div className="text-muted-foreground text-[10px] uppercase font-semibold">
+                  <div className="text-muted-foreground text-[10px] font-semibold uppercase">
                     {isAr ? "المرشحون / المختارون" : "Candidates / Chunks"}
                   </div>
-                  <div className="text-foreground font-mono text-base font-bold mt-1">
+                  <div className="text-foreground mt-1 font-mono text-base font-bold">
                     {debugTelemetry.rerankedCount} / {debugTelemetry.selectedChunksCount}
                   </div>
                 </div>
 
-                <div className="bg-muted/40 border-border/70 rounded-lg border p-2.5 col-span-2 sm:col-span-1">
-                  <div className="text-muted-foreground text-[10px] uppercase font-semibold">
+                <div className="bg-muted/40 border-border/70 col-span-2 rounded-lg border p-2.5 sm:col-span-1">
+                  <div className="text-muted-foreground text-[10px] font-semibold uppercase">
                     {isAr ? "حالة الإسناد" : "Grounding"}
                   </div>
                   <div className="mt-1 flex items-center gap-1.5 font-semibold">
@@ -1047,41 +1053,41 @@ export function RagPipelineManager({
               </div>
 
               {/* Latencies Waterfall Preview */}
-              <div className="bg-muted/30 border-border/60 rounded-lg border p-3 space-y-2 text-xs">
-                <div className="flex items-center justify-between text-muted-foreground font-semibold">
+              <div className="bg-muted/30 border-border/60 space-y-2 rounded-lg border p-3 text-xs">
+                <div className="text-muted-foreground flex items-center justify-between font-semibold">
                   <span>{isAr ? "مخطط أزمنة المراحل" : "Stage Latencies Breakdown"}</span>
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(true)}
-                    className="text-primary hover:underline flex items-center gap-1 text-[11px] font-medium"
+                    className="text-primary flex items-center gap-1 text-[11px] font-medium hover:underline"
                     data-testid="admin-open-modal-btn"
                   >
                     🔍 {isAr ? "عرض نافذة التتبع التفصيلية" : "Open Full Trace Modal"}
                   </button>
                 </div>
 
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 font-mono text-[11px] text-center pt-1">
-                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                <div className="grid grid-cols-3 gap-2 pt-1 text-center font-mono text-[11px] sm:grid-cols-6">
+                  <div className="bg-background/80 border-border/50 rounded border p-1.5">
                     <div className="text-muted-foreground text-[10px]">Routing</div>
                     <div className="font-bold">{debugTelemetry.latencies.routingMs}ms</div>
                   </div>
-                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                  <div className="bg-background/80 border-border/50 rounded border p-1.5">
                     <div className="text-muted-foreground text-[10px]">Rewrite</div>
                     <div className="font-bold">{debugTelemetry.latencies.rewriteMs}ms</div>
                   </div>
-                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                  <div className="bg-background/80 border-border/50 rounded border p-1.5">
                     <div className="text-muted-foreground text-[10px]">Retrieval</div>
                     <div className="font-bold">{debugTelemetry.latencies.retrievalMs}ms</div>
                   </div>
-                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                  <div className="bg-background/80 border-border/50 rounded border p-1.5">
                     <div className="text-muted-foreground text-[10px]">Rerank</div>
                     <div className="font-bold">{debugTelemetry.latencies.rerankingMs}ms</div>
                   </div>
-                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                  <div className="bg-background/80 border-border/50 rounded border p-1.5">
                     <div className="text-muted-foreground text-[10px]">Context</div>
                     <div className="font-bold">{debugTelemetry.latencies.contextMs}ms</div>
                   </div>
-                  <div className="bg-background/80 rounded p-1.5 border border-border/50">
+                  <div className="bg-background/80 border-border/50 rounded border p-1.5">
                     <div className="text-muted-foreground text-[10px]">Gen</div>
                     <div className="font-bold">{debugTelemetry.latencies.generationMs}ms</div>
                   </div>
@@ -1090,11 +1096,13 @@ export function RagPipelineManager({
 
               {/* Answer Preview */}
               {debugAnswer && (
-                <div className="bg-background border-border rounded-lg border p-3 text-xs space-y-1">
-                  <div className="text-muted-foreground font-semibold text-[10px] uppercase">
+                <div className="bg-background border-border space-y-1 rounded-lg border p-3 text-xs">
+                  <div className="text-muted-foreground text-[10px] font-semibold uppercase">
                     {isAr ? "الإجابة المولدة" : "Generated Answer"}
                   </div>
-                  <p className="text-foreground leading-relaxed whitespace-pre-wrap">{debugAnswer}</p>
+                  <p className="text-foreground leading-relaxed whitespace-pre-wrap">
+                    {debugAnswer}
+                  </p>
                 </div>
               )}
 

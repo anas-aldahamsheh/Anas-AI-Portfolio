@@ -16,41 +16,39 @@ import type {
 import type { AiCapability } from "@/ai/contracts/provider-registry";
 import type { GateVerdict } from "@/ai/contracts/evaluation";
 
-const CAPABILITY_METADATA: Record<
-  AiCapability,
-  { label: string; labelAr: string; notes: string }
-> = {
-  generation: {
-    label: "Answer Generation (LLM)",
-    labelAr: "توليد الإجابات (النموذج اللغوي)",
-    notes: "Powers AI Chat, Job Fit analysis, and AI Lab interactive experiences.",
-  },
-  embedding: {
-    label: "Knowledge Embedding (Dense Vector)",
-    labelAr: "تضمين المعرفة (المتجهات الكثيفة)",
-    notes: "Generates semantic vector embeddings for knowledge retrieval and indexing.",
-  },
-  reranking: {
-    label: "Neural Reranker",
-    labelAr: "إعادة الترتيب العصبي",
-    notes: "Cross-encoder scoring that elevates top semantic candidates before context assembly.",
-  },
-  router: {
-    label: "Query Intent Router",
-    labelAr: "موجه نية الاستعلام",
-    notes: "Classifies user queries into focused, broad, or project-scoped retrieval strategies.",
-  },
-  rewrite: {
-    label: "Query Expansion & Rewriter",
-    labelAr: "توسيع وإعادة صياغة الاستعلام",
-    notes: "Generates cross-lingual and contextual query variations to maximize recall.",
-  },
-  evaluator: {
-    label: "Evaluation & Quality Judge",
-    labelAr: "مُحكّم تقييم الجودة والأمان",
-    notes: "Scores faithfulness, hallucination resistance, and citation accuracy.",
-  },
-};
+const CAPABILITY_METADATA: Record<AiCapability, { label: string; labelAr: string; notes: string }> =
+  {
+    generation: {
+      label: "Answer Generation (LLM)",
+      labelAr: "توليد الإجابات (النموذج اللغوي)",
+      notes: "Powers AI Chat, Job Fit analysis, and AI Lab interactive experiences.",
+    },
+    embedding: {
+      label: "Knowledge Embedding (Dense Vector)",
+      labelAr: "تضمين المعرفة (المتجهات الكثيفة)",
+      notes: "Generates semantic vector embeddings for knowledge retrieval and indexing.",
+    },
+    reranking: {
+      label: "Neural Reranker",
+      labelAr: "إعادة الترتيب العصبي",
+      notes: "Cross-encoder scoring that elevates top semantic candidates before context assembly.",
+    },
+    router: {
+      label: "Query Intent Router",
+      labelAr: "موجه نية الاستعلام",
+      notes: "Classifies user queries into focused, broad, or project-scoped retrieval strategies.",
+    },
+    rewrite: {
+      label: "Query Expansion & Rewriter",
+      labelAr: "توسيع وإعادة صياغة الاستعلام",
+      notes: "Generates cross-lingual and contextual query variations to maximize recall.",
+    },
+    evaluator: {
+      label: "Evaluation & Quality Judge",
+      labelAr: "مُحكّم تقييم الجودة والأمان",
+      notes: "Scores faithfulness, hallucination resistance, and citation accuracy.",
+    },
+  };
 
 async function withTimeout<T>(promise: Promise<T>, ms = 300): Promise<T> {
   let timer: NodeJS.Timeout;
@@ -328,7 +326,11 @@ export class AiControlService {
               `Target generation model context window (${targetModel.contextWindow} tokens) is below the recommended 4096 tokens. Responses may be truncated.`,
             );
           }
-        } else if (input.capability === "reranking" || input.capability === "router" || input.capability === "rewrite") {
+        } else if (
+          input.capability === "reranking" ||
+          input.capability === "router" ||
+          input.capability === "rewrite"
+        ) {
           recommendedGateSuite = "retrieval";
         }
       }

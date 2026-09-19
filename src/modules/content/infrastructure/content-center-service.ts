@@ -18,9 +18,7 @@ import {
   CreateSectionInput,
   UpdateSectionInput,
 } from "../domain/content-center";
-import {
-  BASELINE_CONTENT_SUMMARY,
-} from "./baseline-content-data";
+import { BASELINE_CONTENT_SUMMARY } from "./baseline-content-data";
 import { sectionService } from "./section-service";
 import { logger } from "@/lib/observability/logger";
 
@@ -236,7 +234,14 @@ export class ContentCenterService {
         },
       ]);
 
-      await this.logAuditEvent("create", "page", newPageId, null, { slug: input.slug }, actorUserId);
+      await this.logAuditEvent(
+        "create",
+        "page",
+        newPageId,
+        null,
+        { slug: input.slug },
+        actorUserId,
+      );
       sectionService.invalidateCache(input.slug);
     } catch (err) {
       logger.info("Database insert skipped in local mock", {
@@ -268,10 +273,7 @@ export class ContentCenterService {
     actorUserId?: string,
   ): Promise<{ success: boolean; status: ContentPublishStatus }> {
     try {
-      await db
-        .update(pages)
-        .set({ status, updatedAt: new Date() })
-        .where(eq(pages.id, pageId));
+      await db.update(pages).set({ status, updatedAt: new Date() }).where(eq(pages.id, pageId));
 
       await this.logAuditEvent("update_status", "page", pageId, null, { status }, actorUserId);
       sectionService.invalidateCache();
@@ -324,7 +326,14 @@ export class ContentCenterService {
         },
       ]);
 
-      await this.logAuditEvent("create", "section", newSectionId, null, { type: input.sectionType }, actorUserId);
+      await this.logAuditEvent(
+        "create",
+        "section",
+        newSectionId,
+        null,
+        { type: input.sectionType },
+        actorUserId,
+      );
       sectionService.invalidateCache();
     } catch (err) {
       logger.info("Database insert skipped in local mock", {

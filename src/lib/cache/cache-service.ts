@@ -1,9 +1,4 @@
-import type {
-  CacheEntry,
-  CacheStats,
-  CacheKeySummary,
-  SystemCacheTag,
-} from "./cache-types";
+import type { CacheEntry, CacheStats, CacheKeySummary, SystemCacheTag } from "./cache-types";
 import { logger } from "@/lib/observability/logger";
 
 export class CacheService {
@@ -190,7 +185,10 @@ export class CacheService {
   /**
    * Lists active cached keys with optional tag filtering or search query
    */
-  public listKeys(options?: { tag?: string | undefined; search?: string | undefined }): CacheKeySummary[] {
+  public listKeys(options?: {
+    tag?: string | undefined;
+    search?: string | undefined;
+  }): CacheKeySummary[] {
     const now = Date.now();
     const results: CacheKeySummary[] = [];
 

@@ -12,7 +12,7 @@ export function SkipLink({ locale, targetId = "main-content" }: SkipLinkProps) {
   return (
     <a
       href={`#${targetId}`}
-      className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:font-medium focus:text-sm focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all"
+      className="focus:bg-primary focus:text-primary-foreground focus:ring-ring sr-only transition-all focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-50 focus:rounded-md focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:shadow-lg focus:ring-2 focus:ring-offset-2 focus:outline-none"
     >
       {label}
     </a>

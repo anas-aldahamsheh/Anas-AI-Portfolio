@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
       await db.insert(auditEvents).values({
         action: all ? "cache_flush_all" : "cache_invalidate",
         entityType: "cache",
-        entityId: all ? "all" : (tags ? tags.join(",") : (keys ? keys.join(",") : "custom")),
+        entityId: all ? "all" : tags ? tags.join(",") : keys ? keys.join(",") : "custom",
         userId: adminContext.user.id,
         previousState: null,
         newState: {
@@ -102,9 +102,6 @@ export async function POST(request: NextRequest) {
       stats: cacheService.getStats(),
     });
   } catch (err) {
-    return NextResponse.json(
-      { success: false, error: String(err) },
-      { status: 500 },
-    );
+    return NextResponse.json({ success: false, error: String(err) }, { status: 500 });
   }
 }

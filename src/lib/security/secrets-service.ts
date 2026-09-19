@@ -167,7 +167,10 @@ export class SecretsService {
     }
 
     // Fallback to environment variables if not stored in database
-    if (trimmedKey === "ai_provider_prov-google-gemini_api_key" || trimmedKey.toLowerCase().includes("gemini")) {
+    if (
+      trimmedKey === "ai_provider_prov-google-gemini_api_key" ||
+      trimmedKey.toLowerCase().includes("gemini")
+    ) {
       const envKey = process.env["GEMINI_API_KEY"] || process.env["GOOGLE_AI_API_KEY"];
       if (envKey) return envKey;
     }
@@ -237,7 +240,10 @@ export class SecretsService {
     }
 
     // Fallback to environment variables if not stored in database
-    if (trimmedKey === "ai_provider_prov-google-gemini_api_key" || trimmedKey.toLowerCase().includes("gemini")) {
+    if (
+      trimmedKey === "ai_provider_prov-google-gemini_api_key" ||
+      trimmedKey.toLowerCase().includes("gemini")
+    ) {
       const envKey = process.env["GEMINI_API_KEY"] || process.env["GOOGLE_AI_API_KEY"];
       if (envKey) {
         return {

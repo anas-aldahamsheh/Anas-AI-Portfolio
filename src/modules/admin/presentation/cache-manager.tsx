@@ -25,7 +25,13 @@ export interface CacheManagerProps {
   locale: string;
 }
 
-const KNOWN_TAGS: { key: SystemCacheTag; labelEn: string; labelAr: string; descEn: string; descAr: string }[] = [
+const KNOWN_TAGS: {
+  key: SystemCacheTag;
+  labelEn: string;
+  labelAr: string;
+  descEn: string;
+  descAr: string;
+}[] = [
   {
     key: "content",
     labelEn: "Content & Sections",
@@ -222,14 +228,14 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            <h1 className="text-foreground text-2xl font-bold tracking-tight">
               {isAr ? "ذاكرة التخزين المؤقت وتفريغها" : "Caching & Invalidation"}
             </h1>
-            <Badge variant="outline" className="text-xs font-mono">
+            <Badge variant="outline" className="font-mono text-xs">
               F043
             </Badge>
           </div>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-muted-foreground mt-1 text-sm">
             {isAr
               ? "استراتيجية الذاكرة المؤقتة متعددة الوسوم مع تفريغ فوري ومراقبة معدل الإصابة."
               : "Tag and key-based multi-tier caching with instant invalidation and hit rate telemetry."}
@@ -237,18 +243,13 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
         </div>
 
         <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={fetchLatest}
-            className="gap-1.5 text-xs"
-          >
+          <Button variant="outline" size="sm" onClick={fetchLatest} className="gap-1.5 text-xs">
             <RefreshCw className="h-3.5 w-3.5" />
             <span>{isAr ? "تحديث الآن" : "Refresh"}</span>
           </Button>
 
           {showFlushConfirm ? (
-            <div className="flex items-center gap-1.5 animate-in fade-in">
+            <div className="animate-in fade-in flex items-center gap-1.5">
               <Button
                 variant="destructive"
                 size="sm"
@@ -289,9 +290,9 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
       {/* Feedback banner */}
       {feedback && (
         <div
-          className={`flex items-center gap-2 p-3 text-xs rounded-lg border ${
+          className={`flex items-center gap-2 rounded-lg border p-3 text-xs ${
             feedback.type === "success"
-              ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400"
+              ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
               : "bg-destructive/10 border-destructive/20 text-destructive"
           }`}
         >
@@ -307,18 +308,18 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
       {/* KPI Cards */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         <Card>
-          <CardContent className="p-4 space-y-1">
-            <div className="flex items-center justify-between text-muted-foreground">
+          <CardContent className="space-y-1 p-4">
+            <div className="text-muted-foreground flex items-center justify-between">
               <span className="text-xs font-medium">{isAr ? "المفاتيح النشطة" : "Total Keys"}</span>
-              <Database className="h-4 w-4 text-primary" />
+              <Database className="text-primary h-4 w-4" />
             </div>
             <div className="text-2xl font-bold">{stats.totalKeys}</div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-4 space-y-1">
-            <div className="flex items-center justify-between text-muted-foreground">
+          <CardContent className="space-y-1 p-4">
+            <div className="text-muted-foreground flex items-center justify-between">
               <span className="text-xs font-medium">{isAr ? "معدل الإصابة" : "Hit Rate"}</span>
               <Activity className="h-4 w-4 text-emerald-500" />
             </div>
@@ -327,8 +328,8 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
         </Card>
 
         <Card>
-          <CardContent className="p-4 space-y-1">
-            <div className="flex items-center justify-between text-muted-foreground">
+          <CardContent className="space-y-1 p-4">
+            <div className="text-muted-foreground flex items-center justify-between">
               <span className="text-xs font-medium">{isAr ? "إصابات ناجحة" : "Total Hits"}</span>
               <Zap className="h-4 w-4 text-amber-500" />
             </div>
@@ -339,18 +340,20 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
         </Card>
 
         <Card>
-          <CardContent className="p-4 space-y-1">
-            <div className="flex items-center justify-between text-muted-foreground">
-              <span className="text-xs font-medium">{isAr ? "إخفاقات الذاكرة" : "Cache Misses"}</span>
+          <CardContent className="space-y-1 p-4">
+            <div className="text-muted-foreground flex items-center justify-between">
+              <span className="text-xs font-medium">
+                {isAr ? "إخفاقات الذاكرة" : "Cache Misses"}
+              </span>
               <Flame className="h-4 w-4 text-rose-500" />
             </div>
-            <div className="text-2xl font-bold text-muted-foreground">{stats.misses}</div>
+            <div className="text-muted-foreground text-2xl font-bold">{stats.misses}</div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-4 space-y-1">
-            <div className="flex items-center justify-between text-muted-foreground">
+          <CardContent className="space-y-1 p-4">
+            <div className="text-muted-foreground flex items-center justify-between">
               <span className="text-xs font-medium">{isAr ? "الوسوم النشطة" : "Active Tags"}</span>
               <Layers className="h-4 w-4 text-blue-500" />
             </div>
@@ -361,7 +364,7 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
 
       {/* Tag Invalidation Grid */}
       <div className="space-y-4">
-        <h2 className="text-base font-semibold text-foreground">
+        <h2 className="text-foreground text-base font-semibold">
           {isAr ? "تفريغ حسب الوسم المعماري" : "Tag-Based Cache Invalidation"}
         </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -370,35 +373,35 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
             const isInvalidating = invalidatingTag === tag.key;
 
             return (
-              <Card key={tag.key} className="transition-all hover:border-primary/30">
-                <CardContent className="p-4 flex flex-col justify-between h-full space-y-3">
+              <Card key={tag.key} className="hover:border-primary/30 transition-all">
+                <CardContent className="flex h-full flex-col justify-between space-y-3 p-4">
                   <div>
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-sm text-foreground">
+                      <span className="text-foreground text-sm font-semibold">
                         {isAr ? tag.labelAr : tag.labelEn}
                       </span>
                       <Badge variant={count > 0 ? "default" : "secondary"} className="text-xs">
                         {count} {isAr ? "عنصر" : "items"}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                    <p className="text-muted-foreground mt-1 text-xs leading-relaxed">
                       {isAr ? tag.descAr : tag.descEn}
                     </p>
                   </div>
 
-                  <div className="pt-2 border-t border-border flex items-center justify-between">
-                    <span className="font-mono text-xs text-muted-foreground">#{tag.key}</span>
+                  <div className="border-border flex items-center justify-between border-t pt-2">
+                    <span className="text-muted-foreground font-mono text-xs">#{tag.key}</span>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handleInvalidateTag(tag.key)}
                       disabled={isInvalidating || count === 0}
-                      className="gap-1.5 text-xs h-7"
+                      className="h-7 gap-1.5 text-xs"
                     >
                       {isInvalidating ? (
                         <RefreshCw className="h-3 w-3 animate-spin" />
                       ) : (
-                        <Trash2 className="h-3 w-3 text-muted-foreground" />
+                        <Trash2 className="text-muted-foreground h-3 w-3" />
                       )}
                       <span>{isAr ? "تفريغ الوسم" : "Purge Tag"}</span>
                     </Button>
@@ -412,26 +415,26 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
 
       {/* Keys Explorer Table */}
       <Card>
-        <CardHeader className="p-5 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <CardHeader className="border-border flex flex-col gap-4 border-b p-5 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="text-base font-semibold">
             {isAr ? "مستكشف المفاتيح المخزنة" : "Cached Keys Inspector"}
           </CardTitle>
 
           <div className="flex flex-wrap items-center gap-2">
             <div className="relative w-full sm:w-60">
-              <Search className="absolute start-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+              <Search className="text-muted-foreground absolute start-2.5 top-2.5 h-3.5 w-3.5" />
               <Input
                 placeholder={isAr ? "بحث في المفاتيح أو الوسوم..." : "Search keys or tags..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="ps-8 text-xs h-8"
+                className="h-8 ps-8 text-xs"
               />
             </div>
 
             <select
               value={selectedTag}
               onChange={(e) => setSelectedTag(e.target.value)}
-              className="h-8 rounded-md border border-input bg-background px-2.5 text-xs"
+              className="border-input bg-background h-8 rounded-md border px-2.5 text-xs"
             >
               <option value="all">{isAr ? "جميع الوسوم" : "All Tags"}</option>
               {KNOWN_TAGS.map((t) => (
@@ -445,42 +448,48 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
 
         <CardContent className="p-0">
           <div className="overflow-x-auto">
-            <table className="w-full text-xs text-start">
-              <thead className="bg-muted/50 text-muted-foreground border-b border-border">
+            <table className="w-full text-start text-xs">
+              <thead className="bg-muted/50 text-muted-foreground border-border border-b">
                 <tr>
-                  <th className="px-4 py-3 font-medium text-start">{isAr ? "المفتاح" : "Cache Key"}</th>
-                  <th className="px-4 py-3 font-medium text-start">{isAr ? "الوسوم" : "Tags"}</th>
-                  <th className="px-4 py-3 font-medium text-start">{isAr ? "الوقت المتبقي" : "TTL Remaining"}</th>
-                  <th className="px-4 py-3 font-medium text-start">{isAr ? "مرات الإصابة" : "Hits"}</th>
-                  <th className="px-4 py-3 font-medium text-end">{isAr ? "الإجراء" : "Action"}</th>
+                  <th className="px-4 py-3 text-start font-medium">
+                    {isAr ? "المفتاح" : "Cache Key"}
+                  </th>
+                  <th className="px-4 py-3 text-start font-medium">{isAr ? "الوسوم" : "Tags"}</th>
+                  <th className="px-4 py-3 text-start font-medium">
+                    {isAr ? "الوقت المتبقي" : "TTL Remaining"}
+                  </th>
+                  <th className="px-4 py-3 text-start font-medium">
+                    {isAr ? "مرات الإصابة" : "Hits"}
+                  </th>
+                  <th className="px-4 py-3 text-end font-medium">{isAr ? "الإجراء" : "Action"}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border">
+              <tbody className="divide-border divide-y">
                 {filteredKeys.length > 0 ? (
                   filteredKeys.map((item) => (
                     <tr key={item.key} className="hover:bg-muted/20 transition-colors">
-                      <td className="px-4 py-3 font-mono text-foreground max-w-xs truncate">
+                      <td className="text-foreground max-w-xs truncate px-4 py-3 font-mono">
                         {item.key}
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex flex-wrap gap-1">
                           {item.tags.map((t) => (
-                            <Badge key={t} variant="outline" className="text-[10px] py-0 px-1.5">
+                            <Badge key={t} variant="outline" className="px-1.5 py-0 text-[10px]">
                               {t}
                             </Badge>
                           ))}
                         </div>
                       </td>
-                      <td className="px-4 py-3 font-mono text-muted-foreground">
+                      <td className="text-muted-foreground px-4 py-3 font-mono">
                         {Math.ceil(item.ttlRemainingMs / 1000)}s
                       </td>
-                      <td className="px-4 py-3 font-semibold text-foreground">{item.hits}</td>
+                      <td className="text-foreground px-4 py-3 font-semibold">{item.hits}</td>
                       <td className="px-4 py-3 text-end">
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => handleInvalidateKey(item.key)}
-                          className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
+                          className="text-muted-foreground hover:text-destructive h-6 w-6 p-0"
                           title={isAr ? "حذف المفتاح" : "Delete key"}
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -490,7 +499,7 @@ export function CacheManager({ initialStats, initialKeys, locale }: CacheManager
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={5} className="p-8 text-center text-muted-foreground">
+                    <td colSpan={5} className="text-muted-foreground p-8 text-center">
                       {isAr
                         ? "لا توجد مفاتيح مخزنة تطابق معايير البحث."
                         : "No cached keys found matching the criteria."}

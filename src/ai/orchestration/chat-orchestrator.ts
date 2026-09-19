@@ -233,7 +233,9 @@ export class ChatOrchestrator {
       title: c.title,
       sourceType: c.sourceType,
       score: c.score !== undefined ? Number(c.score.toFixed(4)) : undefined,
-      snippet: c.content ? c.content.slice(0, 160) + (c.content.length > 160 ? "..." : "") : undefined,
+      snippet: c.content
+        ? c.content.slice(0, 160) + (c.content.length > 160 ? "..." : "")
+        : undefined,
     }));
 
     const validationState: RagDebugValidationState = {

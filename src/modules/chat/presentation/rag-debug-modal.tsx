@@ -95,7 +95,7 @@ export function RagDebugModal({ isOpen, onClose, telemetry }: RagDebugModalProps
         role="dialog"
         aria-modal="true"
         aria-label={t("chat.debug.title")}
-        className="bg-card border-border max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-2xl border shadow-2xl flex flex-col animate-in fade-in zoom-in-95 duration-200"
+        className="bg-card border-border animate-in fade-in zoom-in-95 flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border shadow-2xl duration-200"
         data-testid="rag-debug-modal-container"
       >
         {/* Header */}
@@ -115,7 +115,7 @@ export function RagDebugModal({ isOpen, onClose, telemetry }: RagDebugModalProps
               <div className="flex items-center gap-2">
                 <h3 className="text-foreground text-base font-semibold">{t("chat.debug.title")}</h3>
                 {telemetry.isAdminView && (
-                  <span className="bg-primary/15 text-primary rounded-md px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+                  <span className="bg-primary/15 text-primary rounded-md px-1.5 py-0.5 text-[10px] font-bold tracking-wider uppercase">
                     Admin Trace
                   </span>
                 )}
@@ -132,38 +132,57 @@ export function RagDebugModal({ isOpen, onClose, telemetry }: RagDebugModalProps
             data-testid="rag-debug-close-btn"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="flex-1 space-y-6 overflow-y-auto p-4 sm:p-6" data-testid="rag-debug-content">
+        <div
+          className="flex-1 space-y-6 overflow-y-auto p-4 sm:p-6"
+          data-testid="rag-debug-content"
+        >
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="bg-muted/40 border-border/70 rounded-xl border p-3">
-              <div className="text-muted-foreground text-[11px] font-medium">{t("chat.debug.latency")}</div>
+              <div className="text-muted-foreground text-[11px] font-medium">
+                {t("chat.debug.latency")}
+              </div>
               <div className="text-foreground mt-1 font-mono text-lg font-bold">
                 {latencies.totalMs} <span className="text-xs font-normal">ms</span>
               </div>
             </div>
 
             <div className="bg-muted/40 border-border/70 rounded-xl border p-3">
-              <div className="text-muted-foreground text-[11px] font-medium">{t("chat.debug.tokens")}</div>
+              <div className="text-muted-foreground text-[11px] font-medium">
+                {t("chat.debug.tokens")}
+              </div>
               <div className="text-foreground mt-1 font-mono text-lg font-bold">
                 {telemetry.tokenCount} <span className="text-xs font-normal">tok</span>
               </div>
             </div>
 
             <div className="bg-muted/40 border-border/70 rounded-xl border p-3">
-              <div className="text-muted-foreground text-[11px] font-medium">{t("chat.debug.route_id")}</div>
-              <div className="text-foreground mt-1 truncate text-xs font-semibold" title={telemetry.routeId}>
+              <div className="text-muted-foreground text-[11px] font-medium">
+                {t("chat.debug.route_id")}
+              </div>
+              <div
+                className="text-foreground mt-1 truncate text-xs font-semibold"
+                title={telemetry.routeId}
+              >
                 {telemetry.routeId}
               </div>
             </div>
 
             <div className="bg-muted/40 border-border/70 rounded-xl border p-3">
-              <div className="text-muted-foreground text-[11px] font-medium">{t("chat.debug.valid")}</div>
+              <div className="text-muted-foreground text-[11px] font-medium">
+                {t("chat.debug.valid")}
+              </div>
               <div className="mt-1 flex items-center gap-1.5">
                 <span
                   className={`inline-block h-2 w-2 rounded-full ${
@@ -181,13 +200,16 @@ export function RagDebugModal({ isOpen, onClose, telemetry }: RagDebugModalProps
 
           {/* Pipeline Stages Waterfall */}
           <div className="space-y-3" data-testid="rag-debug-stages-section">
-            <h4 className="text-foreground text-xs font-bold uppercase tracking-wider">
+            <h4 className="text-foreground text-xs font-bold tracking-wider uppercase">
               {t("chat.debug.stages")}
             </h4>
 
             <div className="bg-muted/30 border-border/60 space-y-3 rounded-xl border p-3.5 sm:p-4">
               {stages.map((stg) => {
-                const percent = Math.min(100, Math.max(4, Math.round((stg.durationMs / maxStageMs) * 100)));
+                const percent = Math.min(
+                  100,
+                  Math.max(4, Math.round((stg.durationMs / maxStageMs) * 100)),
+                );
                 return (
                   <div key={stg.id} className="space-y-1" data-testid={`rag-stage-${stg.id}`}>
                     <div className="flex items-center justify-between text-xs">
@@ -217,7 +239,7 @@ export function RagDebugModal({ isOpen, onClose, telemetry }: RagDebugModalProps
           {/* Inspected Sources & Chunks */}
           <div className="space-y-3" data-testid="rag-debug-sources-section">
             <div className="flex items-center justify-between">
-              <h4 className="text-foreground text-xs font-bold uppercase tracking-wider">
+              <h4 className="text-foreground text-xs font-bold tracking-wider uppercase">
                 {t("chat.debug.sources")}
               </h4>
               <span className="text-muted-foreground text-xs">
@@ -226,7 +248,7 @@ export function RagDebugModal({ isOpen, onClose, telemetry }: RagDebugModalProps
             </div>
 
             {telemetry.sources.length === 0 ? (
-              <div className="bg-muted/20 border-border/50 rounded-xl border p-4 text-center text-xs text-muted-foreground">
+              <div className="bg-muted/20 border-border/50 text-muted-foreground rounded-xl border p-4 text-center text-xs">
                 No sources required for this query.
               </div>
             ) : (
@@ -238,14 +260,14 @@ export function RagDebugModal({ isOpen, onClose, telemetry }: RagDebugModalProps
                     data-testid={`rag-source-item-${idx}`}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2 min-w-0">
+                      <div className="flex min-w-0 items-center gap-2">
                         <span className="bg-primary/10 text-primary shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px] font-bold">
                           #{idx + 1}
                         </span>
                         <span className="text-foreground truncate text-xs font-semibold">
                           {src.title}
                         </span>
-                        <span className="text-muted-foreground shrink-0 rounded bg-muted px-1.5 py-0.5 text-[10px] uppercase">
+                        <span className="text-muted-foreground bg-muted shrink-0 rounded px-1.5 py-0.5 text-[10px] uppercase">
                           {src.sourceType}
                         </span>
                       </div>
@@ -269,23 +291,26 @@ export function RagDebugModal({ isOpen, onClose, telemetry }: RagDebugModalProps
           </div>
 
           {/* Model & Operational Info */}
-          <div className="bg-muted/20 border-border/50 rounded-xl border p-3.5 text-xs text-muted-foreground space-y-1.5">
+          <div className="bg-muted/20 border-border/50 text-muted-foreground space-y-1.5 rounded-xl border p-3.5 text-xs">
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px]">
               <div>
                 <span className="text-foreground font-semibold">Model:</span> {telemetry.modelId}
               </div>
               <div>
-                <span className="text-foreground font-semibold">Provider:</span> {telemetry.providerType}
+                <span className="text-foreground font-semibold">Provider:</span>{" "}
+                {telemetry.providerType}
               </div>
               <div>
-                <span className="text-foreground font-semibold">Mode:</span> {telemetry.conversationMode}
+                <span className="text-foreground font-semibold">Mode:</span>{" "}
+                {telemetry.conversationMode}
               </div>
               <div>
-                <span className="text-foreground font-semibold">Language:</span> {telemetry.language} ({telemetry.direction})
+                <span className="text-foreground font-semibold">Language:</span>{" "}
+                {telemetry.language} ({telemetry.direction})
               </div>
             </div>
 
-            <p className="text-[11px] leading-relaxed italic border-t border-border/40 pt-2">
+            <p className="border-border/40 border-t pt-2 text-[11px] leading-relaxed italic">
               🔒 {t("chat.debug.safety_notice")}
             </p>
           </div>

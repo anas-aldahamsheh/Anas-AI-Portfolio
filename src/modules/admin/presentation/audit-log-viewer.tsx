@@ -32,11 +32,7 @@ export interface AuditLogViewerProps {
   locale: string;
 }
 
-export function AuditLogViewer({
-  initialEvents,
-  initialSummary,
-  locale,
-}: AuditLogViewerProps) {
+export function AuditLogViewer({ initialEvents, initialSummary, locale }: AuditLogViewerProps) {
   const isAr = locale === "ar";
   const [events, setEvents] = useState<AuditEventRecord[]>(initialEvents);
   const [summary, setSummary] = useState<AuditLogSummary>(initialSummary);
@@ -107,7 +103,7 @@ export function AuditLogViewer({
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <span className="bg-primary/10 text-primary rounded px-2.5 py-1 text-xs font-bold uppercase tracking-wider">
+            <span className="bg-primary/10 text-primary rounded px-2.5 py-1 text-xs font-bold tracking-wider uppercase">
               F041
             </span>
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
@@ -142,7 +138,7 @@ export function AuditLogViewer({
 
           <a href="/api/admin/audit/export?format=json" download>
             <Button variant="outline" size="sm" className="gap-2">
-              <Download className="h-4 w-4 text-primary" />
+              <Download className="text-primary h-4 w-4" />
               {isAr ? "تصدير JSON" : "Export JSON"}
             </Button>
           </a>
@@ -155,12 +151,12 @@ export function AuditLogViewer({
           <CardHeader className="pb-2">
             <CardDescription className="flex items-center justify-between text-xs">
               <span>{isAr ? "إجمالي الأحداث المسجلة" : "Total Audit Events"}</span>
-              <Clock className="h-4 w-4 text-muted-foreground" />
+              <Clock className="text-muted-foreground h-4 w-4" />
             </CardDescription>
             <CardTitle className="text-2xl font-bold">{summary.totalEvents}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-muted-foreground text-xs">
               {isAr ? "سجل كامل محمي ومختوم" : "Immutable ledger integrity"}
             </div>
           </CardContent>
@@ -169,7 +165,9 @@ export function AuditLogViewer({
         <Card>
           <CardHeader className="pb-2">
             <CardDescription className="flex items-center justify-between text-xs">
-              <span>{isAr ? "عمليات حساسة (أمان/نماذج/أسرار)" : "High-Impact Security Actions"}</span>
+              <span>
+                {isAr ? "عمليات حساسة (أمان/نماذج/أسرار)" : "High-Impact Security Actions"}
+              </span>
               <Shield className="h-4 w-4 text-amber-500" />
             </CardDescription>
             <CardTitle className="text-2xl font-bold text-amber-600 dark:text-amber-400">
@@ -177,7 +175,7 @@ export function AuditLogViewer({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-muted-foreground text-xs">
               {isAr ? "تغييرات أدوار/أسرار/نماذج" : "Role, secret, and model updates"}
             </div>
           </CardContent>
@@ -187,14 +185,14 @@ export function AuditLogViewer({
           <CardHeader className="pb-2">
             <CardDescription className="flex items-center justify-between text-xs">
               <span>{isAr ? "الكيانات المراقبة" : "Tracked Entity Types"}</span>
-              <Server className="h-4 w-4 text-muted-foreground" />
+              <Server className="text-muted-foreground h-4 w-4" />
             </CardDescription>
             <CardTitle className="text-2xl font-bold">
               {Object.keys(summary.entityTypesBreakdown).length}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-muted-foreground text-xs">
               {isAr ? "نماذج، توجيهات، سيرة ذاتية، محتوى" : "Models, prompts, CV, content"}
             </div>
           </CardContent>
@@ -219,10 +217,10 @@ export function AuditLogViewer({
       </div>
 
       {/* Filter Toolbar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 rounded-lg border p-4 bg-muted/10">
-        <div className="flex flex-1 items-center gap-3 w-full md:w-auto">
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute start-3 top-2.5 h-4 w-4 text-muted-foreground" />
+      <div className="bg-muted/10 flex flex-col items-center justify-between gap-4 rounded-lg border p-4 md:flex-row">
+        <div className="flex w-full flex-1 items-center gap-3 md:w-auto">
+          <div className="relative max-w-sm flex-1">
+            <Search className="text-muted-foreground absolute start-3 top-2.5 h-4 w-4" />
             <Input
               placeholder={isAr ? "بحث في سجل التدقيق..." : "Search audit trail..."}
               value={searchQuery}
@@ -270,7 +268,7 @@ export function AuditLogViewer({
           </div>
         </div>
 
-        <div className="text-xs text-muted-foreground whitespace-nowrap">
+        <div className="text-muted-foreground text-xs whitespace-nowrap">
           {isAr
             ? `عرض ${filteredEvents.length} من أصل ${events.length} حدث`
             : `Showing ${filteredEvents.length} of ${events.length} events`}
@@ -282,7 +280,7 @@ export function AuditLogViewer({
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="border-b bg-muted/40 text-xs font-semibold text-muted-foreground">
+              <thead className="bg-muted/40 text-muted-foreground border-b text-xs font-semibold">
                 <tr>
                   <th className="p-3 text-start">{isAr ? "الوقت والتاريخ" : "Timestamp"}</th>
                   <th className="p-3 text-start">{isAr ? "العملية" : "Action"}</th>
@@ -292,11 +290,11 @@ export function AuditLogViewer({
                   <th className="p-3 text-center">{isAr ? "الفروقات" : "State Diff"}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border">
+              <tbody className="divide-border divide-y">
                 {filteredEvents.length > 0 ? (
                   filteredEvents.map((evt) => (
                     <tr key={evt.id} className="hover:bg-muted/10 transition-colors">
-                      <td className="p-3 whitespace-nowrap text-xs text-muted-foreground font-mono">
+                      <td className="text-muted-foreground p-3 font-mono text-xs whitespace-nowrap">
                         {new Date(evt.createdAt).toLocaleString(isAr ? "ar-EG" : "en-US", {
                           dateStyle: "short",
                           timeStyle: "medium",
@@ -304,35 +302,38 @@ export function AuditLogViewer({
                       </td>
 
                       <td className="p-3 whitespace-nowrap">
-                        <Badge variant="outline" className={`text-xs ${getActionBadgeClass(evt.action)}`}>
+                        <Badge
+                          variant="outline"
+                          className={`text-xs ${getActionBadgeClass(evt.action)}`}
+                        >
                           {evt.action}
                         </Badge>
                       </td>
 
-                      <td className="p-3 whitespace-nowrap text-xs">
-                        <span className="font-semibold text-foreground">{evt.entityType}</span>
+                      <td className="p-3 text-xs whitespace-nowrap">
+                        <span className="text-foreground font-semibold">{evt.entityType}</span>
                         {evt.entityId && (
                           <span className="text-muted-foreground ms-1">({evt.entityId})</span>
                         )}
                       </td>
 
-                      <td className="p-3 whitespace-nowrap text-xs text-muted-foreground">
+                      <td className="text-muted-foreground p-3 text-xs whitespace-nowrap">
                         <div className="flex items-center gap-1.5">
-                          <User className="h-3.5 w-3.5 text-muted-foreground/60" />
+                          <User className="text-muted-foreground/60 h-3.5 w-3.5" />
                           <span>{evt.userEmail || evt.userId || "system"}</span>
                         </div>
                       </td>
 
-                      <td className="p-3 whitespace-nowrap text-xs text-muted-foreground font-mono">
+                      <td className="text-muted-foreground p-3 font-mono text-xs whitespace-nowrap">
                         {evt.ipAddress || "—"}
                       </td>
 
-                      <td className="p-3 whitespace-nowrap text-center">
+                      <td className="p-3 text-center whitespace-nowrap">
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => setSelectedEventForDiff(evt)}
-                          className="h-7 text-xs gap-1"
+                          className="h-7 gap-1 text-xs"
                         >
                           <Eye className="h-3.5 w-3.5" />
                           {isAr ? "معاينة" : "Diff"}
@@ -342,8 +343,10 @@ export function AuditLogViewer({
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={6} className="p-8 text-center text-sm text-muted-foreground">
-                      {isAr ? "لا توجد أحداث مطابقة لشروط البحث" : "No audit events match the selected filters."}
+                    <td colSpan={6} className="text-muted-foreground p-8 text-center text-sm">
+                      {isAr
+                        ? "لا توجد أحداث مطابقة لشروط البحث"
+                        : "No audit events match the selected filters."}
                     </td>
                   </tr>
                 )}
@@ -358,20 +361,23 @@ export function AuditLogViewer({
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-xs p-4"
+          className="bg-background/80 fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-xs"
         >
-          <div className="relative w-full max-w-3xl rounded-xl border bg-card p-6 shadow-2xl space-y-4">
+          <div className="bg-card relative w-full max-w-3xl space-y-4 rounded-xl border p-6 shadow-2xl">
             <div className="flex items-center justify-between border-b pb-3">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-base">
+                  <span className="text-base font-bold">
                     {isAr ? "فروقات حالة الحدث التدقيقي" : "Audit Event State Diff"}
                   </span>
-                  <Badge variant="outline" className={`text-xs ${getActionBadgeClass(selectedEventForDiff.action)}`}>
+                  <Badge
+                    variant="outline"
+                    className={`text-xs ${getActionBadgeClass(selectedEventForDiff.action)}`}
+                  >
                     {selectedEventForDiff.action}
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground font-mono">
+                <p className="text-muted-foreground font-mono text-xs">
                   ID: {selectedEventForDiff.id} • {selectedEventForDiff.createdAt}
                 </p>
               </div>
@@ -386,12 +392,12 @@ export function AuditLogViewer({
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-1.5">
-                <span className="text-xs font-semibold text-muted-foreground">
+                <span className="text-muted-foreground text-xs font-semibold">
                   {isAr ? "الحالة السابقة (Previous State)" : "Previous State"}
                 </span>
-                <pre className="p-3 rounded-lg border bg-muted/20 text-xs font-mono overflow-auto max-h-64">
+                <pre className="bg-muted/20 max-h-64 overflow-auto rounded-lg border p-3 font-mono text-xs">
                   {selectedEventForDiff.previousState
                     ? JSON.stringify(selectedEventForDiff.previousState, null, 2)
                     : isAr
@@ -401,10 +407,10 @@ export function AuditLogViewer({
               </div>
 
               <div className="space-y-1.5">
-                <span className="text-xs font-semibold text-muted-foreground">
+                <span className="text-muted-foreground text-xs font-semibold">
                   {isAr ? "الحالة الجديدة (New State - Redacted)" : "New State (Sanitized)"}
                 </span>
-                <pre className="p-3 rounded-lg border bg-muted/20 text-xs font-mono overflow-auto max-h-64 text-emerald-600 dark:text-emerald-400">
+                <pre className="bg-muted/20 max-h-64 overflow-auto rounded-lg border p-3 font-mono text-xs text-emerald-600 dark:text-emerald-400">
                   {selectedEventForDiff.newState
                     ? JSON.stringify(selectedEventForDiff.newState, null, 2)
                     : isAr
@@ -414,9 +420,10 @@ export function AuditLogViewer({
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-2 border-t text-xs text-muted-foreground">
+            <div className="text-muted-foreground flex items-center justify-between border-t pt-2 text-xs">
               <span>
-                {isAr ? "الممثل:" : "Actor:"} {selectedEventForDiff.userEmail || selectedEventForDiff.userId || "system"}
+                {isAr ? "الممثل:" : "Actor:"}{" "}
+                {selectedEventForDiff.userEmail || selectedEventForDiff.userId || "system"}
               </span>
               <span>
                 {isAr ? "عنوان IP:" : "IP:"} {selectedEventForDiff.ipAddress || "—"}

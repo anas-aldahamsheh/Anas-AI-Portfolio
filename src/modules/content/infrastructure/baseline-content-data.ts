@@ -14,7 +14,8 @@ export const BASELINE_ADMIN_PAGES: AdminPageItem[] = [
       },
       en: {
         title: "Home | Anas - AI Engineer & Systems Architect",
-        metaDescription: "Production portfolio featuring end-to-end generative AI and vector retrieval",
+        metaDescription:
+          "Production portfolio featuring end-to-end generative AI and vector retrieval",
       },
     },
     sectionsCount: 5,
@@ -33,7 +34,8 @@ export const BASELINE_ADMIN_PAGES: AdminPageItem[] = [
       },
       en: {
         title: "Engineering Projects",
-        metaDescription: "Explore production deep dives across NLP, computer vision, and distributed systems",
+        metaDescription:
+          "Explore production deep dives across NLP, computer vision, and distributed systems",
       },
     },
     sectionsCount: 3,
@@ -71,7 +73,8 @@ export const BASELINE_ADMIN_PAGES: AdminPageItem[] = [
       },
       en: {
         title: "Interactive AI Lab",
-        metaDescription: "Live benchmarks across vector retrieval, BM25, and cross-encoder rerankers",
+        metaDescription:
+          "Live benchmarks across vector retrieval, BM25, and cross-encoder rerankers",
       },
     },
     sectionsCount: 2,
@@ -109,7 +112,8 @@ export const BASELINE_ADMIN_PAGES: AdminPageItem[] = [
       },
       en: {
         title: "AI Job Fit Analyzer",
-        metaDescription: "Deterministic evidence matching between job descriptions and portfolio achievements",
+        metaDescription:
+          "Deterministic evidence matching between job descriptions and portfolio achievements",
       },
     },
     sectionsCount: 2,

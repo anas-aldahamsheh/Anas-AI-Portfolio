@@ -52,7 +52,8 @@ export const BASELINE_FEATURE_FLAGS: FeatureFlag[] = [
   {
     key: "ui.inline_admin_edit",
     isEnabled: true,
-    description: "Inline edit triggers adjacent to dynamic portfolio elements for authenticated admins.",
+    description:
+      "Inline edit triggers adjacent to dynamic portfolio elements for authenticated admins.",
     category: "ui",
     targetRolloutPercentage: 100,
     updatedAt: "2026-09-18T00:00:00.000Z",

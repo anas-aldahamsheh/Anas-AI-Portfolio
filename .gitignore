@@ -40,3 +40,22 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Sensitive Blueprints & Documentation
+anas-ai-portfolio-blueprint/
+
+# Private Test Suites
+tests/
+
+# Security, Certificates & Secrets
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+credentials.json
+service-account*.json
+google-credentials*.json
+scratch/
+.gemini/

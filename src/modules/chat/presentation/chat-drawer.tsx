@@ -2,7 +2,12 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useLocalization } from "@/modules/localization/presentation/localization-provider";
-import { ConversationMode, ScriptDirection, CitationMapping, RagDebugTelemetry } from "@/ai/contracts";
+import {
+  ConversationMode,
+  ScriptDirection,
+  CitationMapping,
+  RagDebugTelemetry,
+} from "@/ai/contracts";
 import { ChatMessage, ChatMessageItem } from "./chat-message";
 
 export interface ChatDrawerProps {
@@ -21,7 +26,11 @@ interface StreamEventCallbacks {
   onMeta: (direction: ScriptDirection) => void;
   onToken: (accumulated: string) => void;
   onCitations: (citations: CitationMapping[]) => void;
-  onDone: (answer: string, citations: CitationMapping[], telemetry?: RagDebugTelemetry | undefined) => void;
+  onDone: (
+    answer: string,
+    citations: CitationMapping[],
+    telemetry?: RagDebugTelemetry | undefined,
+  ) => void;
 }
 
 async function readChatEventStream(

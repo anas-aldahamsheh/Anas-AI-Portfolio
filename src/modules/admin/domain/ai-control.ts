@@ -61,7 +61,9 @@ export interface AiControlOverview {
 
 export const ValidateAiChangeRequestSchema = z.object({
   changeType: z.enum(["assignment", "rag_config", "runtime_policy"]),
-  capability: z.enum(["generation", "embedding", "reranking", "router", "rewrite", "evaluator"]).optional(),
+  capability: z
+    .enum(["generation", "embedding", "reranking", "router", "rewrite", "evaluator"])
+    .optional(),
   modelId: z.string().optional(),
   ragConfig: z
     .object({

@@ -10,10 +10,7 @@ import {
   type CreateAuditEventInput,
   sanitizeAuditPayload,
 } from "../domain/audit-log";
-import {
-  BASELINE_AUDIT_EVENTS,
-  BASELINE_AUDIT_SUMMARY,
-} from "./baseline-audit-data";
+import { BASELINE_AUDIT_EVENTS, BASELINE_AUDIT_SUMMARY } from "./baseline-audit-data";
 
 async function withTimeout<T>(promise: Promise<T>, ms = 300): Promise<T> {
   let timer: NodeJS.Timeout;
@@ -28,8 +25,12 @@ export class AuditLogService {
    * Records an immutable audit event with automatic secret redaction.
    */
   async logEvent(input: CreateAuditEventInput): Promise<string> {
-    const sanitizedPrev = input.previousState ? (sanitizeAuditPayload(input.previousState) as Record<string, unknown>) : null;
-    const sanitizedNext = input.newState ? (sanitizeAuditPayload(input.newState) as Record<string, unknown>) : null;
+    const sanitizedPrev = input.previousState
+      ? (sanitizeAuditPayload(input.previousState) as Record<string, unknown>)
+      : null;
+    const sanitizedNext = input.newState
+      ? (sanitizeAuditPayload(input.newState) as Record<string, unknown>)
+      : null;
 
     try {
       const inserted = await withTimeout(
@@ -185,7 +186,10 @@ export class AuditLogService {
   /**
    * Exports audit logs in JSON or CSV format.
    */
-  async exportEvents(query: AuditLogQuery = { limit: 100, offset: 0 }, format: "json" | "csv" = "json"): Promise<string> {
+  async exportEvents(
+    query: AuditLogQuery = { limit: 100, offset: 0 },
+    format: "json" | "csv" = "json",
+  ): Promise<string> {
     const { events } = await this.listEvents(query);
 
     if (format === "json") {
@@ -193,7 +197,16 @@ export class AuditLogService {
     }
 
     // CSV format
-    const headers = ["id", "createdAt", "action", "entityType", "entityId", "userId", "userEmail", "ipAddress"];
+    const headers = [
+      "id",
+      "createdAt",
+      "action",
+      "entityType",
+      "entityId",
+      "userId",
+      "userEmail",
+      "ipAddress",
+    ];
     const rows = events.map((e) => [
       e.id,
       `"${e.createdAt}"`,

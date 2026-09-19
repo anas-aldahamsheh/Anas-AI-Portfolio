@@ -54,7 +54,10 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
     { href: `/${locale}/admin/evaluation`, label: isArabic ? "تقييم الجودة" : "Evaluation" },
     { href: `/${locale}/admin/theme`, label: isArabic ? "المظهر" : "Theme" },
     { href: `/${locale}/admin/feature-flags`, label: isArabic ? "رايات الميزات" : "Feature Flags" },
-    { href: `/${locale}/admin/cache`, label: isArabic ? "ذاكرة التخزين المؤقت" : "Cache & Invalidation" },
+    {
+      href: `/${locale}/admin/cache`,
+      label: isArabic ? "ذاكرة التخزين المؤقت" : "Cache & Invalidation",
+    },
     { href: `/${locale}/admin/audit`, label: isArabic ? "سجل التدقيق" : "Audit Logs" },
   ];
 
@@ -101,7 +104,9 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
       </aside>
 
       {/* Main content area */}
-      <main id="main-content" className="flex-1 overflow-y-auto p-6 md:p-10">{children}</main>
+      <main id="main-content" className="flex-1 overflow-y-auto p-6 md:p-10">
+        {children}
+      </main>
     </div>
   );
 }

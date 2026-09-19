@@ -12,9 +12,7 @@ export async function generateMetadata({ params }: AdminCachePageProps): Promise
   const { locale } = await params;
   const isAr = locale === "ar";
   return {
-    title: isAr
-      ? "إدارة الذاكرة المؤقتة | لوحة التحكم"
-      : "Cache Management | Admin Control Plane",
+    title: isAr ? "إدارة الذاكرة المؤقتة | لوحة التحكم" : "Cache Management | Admin Control Plane",
     description: isAr
       ? "إدارة وتفريغ ذاكرة التخزين المؤقت متعددة الوسوم"
       : "Multi-tier cache management and tag invalidation console",
@@ -29,11 +27,7 @@ export default async function AdminCachePage({ params }: AdminCachePageProps) {
 
   return (
     <div className="space-y-6">
-      <CacheManager
-        initialStats={stats}
-        initialKeys={keys}
-        locale={locale}
-      />
+      <CacheManager initialStats={stats} initialKeys={keys} locale={locale} />
     </div>
   );
 }
