@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Phone, ShieldCheck } from "lucide-react";
+import { Phone, Sparkles } from "lucide-react";
 import type { NavigationItem } from "../domain/types";
 import type { SocialProfile } from "@/modules/social/domain/types";
 import { useLocalization } from "@/modules/localization/presentation/localization-provider";
@@ -48,12 +48,8 @@ function LinkedinIcon({ className }: { className?: string }) {
   );
 }
 
-export function Footer({ locale = "ar", items, brandTitle, copy }: FooterProps) {
+export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
   const { t } = useLocalization();
-
-  const navRunCenterLabel = copy?.navRunCenter || (locale === "ar" ? "مركز التشغيل" : "Run Center");
-  const navResultsLabel =
-    copy?.navResults || (locale === "ar" ? "النتائج والمشكلات" : "Results & Issues");
 
   const getLocalizedHref = (item: NavigationItem): string => {
     if (item.destinationType === "external") {
@@ -63,42 +59,38 @@ export function Footer({ locale = "ar", items, brandTitle, copy }: FooterProps) 
     return `/${locale}${cleanTarget === "/" ? "" : cleanTarget}`;
   };
 
+  const isArabic = locale === "ar";
+
   return (
     <footer className="border-border bg-card/95 text-card-foreground mt-auto border-t">
       <div className="mx-auto max-w-7xl px-4 py-10 md:px-8">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
-          {/* Brand & Creator Info */}
+          {/* Brand & Personal Positioning */}
           <div className="space-y-3">
             <div className="flex items-center gap-2.5">
-              <span className="bg-primary text-primary-foreground flex h-9 w-9 items-center justify-center rounded-md">
-                <ShieldCheck className="h-5 w-5" />
+              <span className="bg-primary text-primary-foreground flex h-9 w-9 items-center justify-center rounded-md shadow-xs">
+                <Sparkles className="h-5 w-5" />
               </span>
               <div>
                 <h3 className="text-foreground text-sm font-extrabold tracking-tight">
-                  {brandTitle ? (
-                    brandTitle
-                  ) : (
-                    <>
-                      Website QA <span className="text-primary">Agent</span>
-                    </>
-                  )}
+                  {brandTitle || (isArabic ? "أنس الدحامشة" : "Anas Aldahamsheh")}
                 </h3>
                 <p className="text-muted-foreground text-xs font-medium">
-                  {locale === "ar" ? "تطوير: أنس الدحامشة" : "Engineered by Anas Aldahamsheh"}
+                  {isArabic ? "مهندس ذكاء اصطناعي وبرمجيات" : "AI & Full-Stack Software Engineer"}
                 </p>
               </div>
             </div>
             <p className="text-muted-foreground text-xs leading-relaxed">
-              {locale === "ar"
-                ? "منظومة عملية متقدمة لفحص ومراقبة جودة المواقع، متابعة التقدم لحظياً، وتنظيم وتحليل النتائج الفنية بدقة."
-                : "A practical console for website quality scanning, live progress tracking, and organized technical review."}
+              {isArabic
+                ? "مهندس برمجيات متخصص في بناء وتطوير حلول الذكاء الاصطناعي التوليدي، أنظمة RAG المتقدمة، وتطبيقات الويب الإنتاجية عالية الأداء والقابلة للتوسع."
+                : "Specialized in architecting production-grade AI systems, advanced RAG architectures, and resilient, high-performance web platforms."}
             </p>
           </div>
 
           {/* Developer Contacts */}
           <div className="space-y-3">
             <h4 className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
-              {locale === "ar" ? "بيانات التواصل المباشر" : "Contact Developer"}
+              {isArabic ? "بيانات التواصل المباشر" : "Contact Developer"}
             </h4>
             <div className="flex flex-col items-start gap-2.5 text-xs">
               {/* Phone */}
@@ -149,7 +141,7 @@ export function Footer({ locale = "ar", items, brandTitle, copy }: FooterProps) 
           {/* Quick Links */}
           <div className="space-y-3">
             <h4 className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
-              {locale === "ar" ? "روابط سريعة" : "Navigation"}
+              {isArabic ? "روابط سريعة" : "Navigation"}
             </h4>
             <div className="flex flex-col gap-2 text-xs font-medium">
               {items && items.length > 0 ? (
@@ -164,18 +156,30 @@ export function Footer({ locale = "ar", items, brandTitle, copy }: FooterProps) 
                 ))
               ) : (
                 <>
-                  <a
-                    href="/Run%20Center"
+                  <Link
+                    href={`/${locale}/projects`}
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {navRunCenterLabel}
-                  </a>
-                  <a
-                    href="/results"
+                    {isArabic ? "المشاريع ودراسات الحالة" : "Projects & Deep Dives"}
+                  </Link>
+                  <Link
+                    href={`/${locale}/cv`}
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {navResultsLabel}
-                  </a>
+                    {isArabic ? "السيرة الذاتية المعتمدة" : "CV & Verified Resume"}
+                  </Link>
+                  <Link
+                    href={`/${locale}/chat`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {isArabic ? "المساعد الذكي (RAG)" : "Interactive AI Assistant"}
+                  </Link>
+                  <Link
+                    href={`/${locale}/job-fit`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {isArabic ? "محلل مطابقة الوظائف (ATS)" : "Job Fit & ATS Match"}
+                  </Link>
                 </>
               )}
             </div>
@@ -186,7 +190,7 @@ export function Footer({ locale = "ar", items, brandTitle, copy }: FooterProps) 
         <div className="border-border text-muted-foreground mt-8 border-t pt-5 text-center text-xs sm:text-start">
           <p>
             © 2026 <strong>Anas Aldahamsheh</strong>.{" "}
-            {locale === "ar" ? "جميع الحقوق محفوظة." : "All rights reserved."}
+            {isArabic ? "جميع الحقوق محفوظة." : "All rights reserved."}
           </p>
         </div>
       </div>
