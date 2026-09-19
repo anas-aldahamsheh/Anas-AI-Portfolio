@@ -828,7 +828,16 @@ export class ModelRegistryService {
       });
     }
 
-    const baseline = BASELINE_ASSIGNMENTS.filter((a) => a.environment === environment);
+    const hasGemini = Boolean(process.env["GEMINI_API_KEY"] || process.env["GOOGLE_AI_API_KEY"]);
+    const baseline = BASELINE_ASSIGNMENTS.filter((a) => a.environment === environment).map((a) => {
+      if (hasGemini) {
+        if (a.capability === "generation") return { ...a, modelId: "model-gemini-3-1-flash-lite" };
+        if (a.capability === "router") return { ...a, modelId: "model-router-gemini-3-1-flash-lite" };
+        if (a.capability === "rewrite") return { ...a, modelId: "model-rewrite-gemini-3-1-flash-lite" };
+        if (a.capability === "evaluator") return { ...a, modelId: "model-eval-gemini-3-1-flash-lite" };
+      }
+      return a;
+    });
     this.assignmentsCache.set(environment, baseline);
     return baseline;
   }

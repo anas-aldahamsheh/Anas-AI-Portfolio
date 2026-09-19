@@ -169,7 +169,7 @@ export class GroundedGenerator implements GenerationPort {
               ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
             },
             body: JSON.stringify({
-              model: activeAssignment.modelId,
+              model: activeAssignment.modelName || activeAssignment.modelId,
               messages: [
                 { role: "system", content: systemPrompt },
                 { role: "user", content: userPrompt },

@@ -102,7 +102,7 @@ export class QueryRewriter implements QueryRewriterPort {
               ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
             },
             body: JSON.stringify({
-              model: activeAssignment.modelId,
+              model: activeAssignment.modelName || activeAssignment.modelId,
               messages: [
                 { role: "system", content: rendered.systemPrompt },
                 { role: "user", content: rendered.userPrompt ?? original },
