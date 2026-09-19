@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Sparkles,
-  Bot,
   ShieldCheck,
   Zap,
   Code2,
@@ -57,40 +56,41 @@ export function ChatPageClient() {
   const starterPrompts = isAr
     ? [
         {
-          title: "أبرز المشاريع والمعمارية",
+          title: "أبرز مهارات الذكاء الاصطناعي",
           prompt:
-            "ما هي أبرز المشاريع الهندسية التي بناها أنس وما هي المعمارية والتقنيات المستخدمة؟",
+            "ما هي أقوى مهارات أنس في هندسة الذكاء الاصطناعي وتطوير مسارات الاسترجاع والتقييم؟",
           icon: Code2,
         },
         {
-          title: "التوافق مع متطلبات التوظيف",
+          title: "ملخص الملاءمة لأدوار الذكاء الاصطناعي",
           prompt:
-            "لخص لي خبرات أنس ومؤهلاته التقنية ومدى ملاءمته لأدوار Senior Full-Stack أو AI Engineer.",
+            "لخص لي خبرات أنس ومؤهلاته التقنية ومدى ملاءمته لأدوار AI Engineer أو Senior Full-Stack.",
           icon: Briefcase,
         },
         {
-          title: "آلية عمل منظومة الـ RAG",
-          prompt: "كيف تم بناء منظومة الـ RAG والبحث الدلالي والكاش في هذا البورتفوليو؟",
+          title: "المشاريع والأنظمة الإنتاجية",
+          prompt:
+            "ما هي أبرز الأنظمة والمشاريع البرمجية التي صممها وبناها أنس وما هي نتائجها وقراراتها المعمارية؟",
           icon: Zap,
         },
       ]
     : [
         {
-          title: "Key Projects & Architecture",
+          title: "Core AI Engineering Skills",
           prompt:
-            "What are Anas's primary engineering projects, and what architectural decisions were made?",
+            "What are Anas's primary AI engineering strengths, evaluation skills, and architectural capabilities?",
           icon: Code2,
         },
         {
           title: "Recruiter & Role Fit Summary",
           prompt:
-            "Summarize Anas's engineering experience, skills, and qualifications for Full-Stack or AI roles.",
+            "Summarize Anas's engineering experience, qualifications, and suitability for an AI Engineer role.",
           icon: Briefcase,
         },
         {
-          title: "RAG & Vector Search Pipeline",
+          title: "Production Systems Built",
           prompt:
-            "How does the hybrid RAG retrieval, vector search, and caching pipeline work in this platform?",
+            "What production AI systems, pipelines, or automation tools has Anas built, and what were the outcomes?",
           icon: Zap,
         },
       ];
@@ -106,20 +106,20 @@ export function ChatPageClient() {
                 <Sparkles className="h-5 w-5" />
               </span>
               <Badge variant="outline" className="text-xs">
-                {isAr ? "مدعوم بنموذج Gemini 3.1 Flash Lite" : "Powered by Gemini 3.1 Flash Lite"}
+                {isAr ? "مساعد التوظيف والخبرات" : "Recruiter Assistant"}
               </Badge>
               <Badge variant="secondary" className="text-xs">
-                RAG Grounded
+                {isAr ? "بيانات موثقة بالأدلة" : "Verified Career Evidence"}
               </Badge>
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl dark:text-neutral-100">
-              {t("chat.title") || (isAr ? "المساعد الذكي لملف الأعمال" : "Portfolio AI Assistant")}
+              {t("chat.title") || (isAr ? "اسأل عن أنس" : "Ask About Anas")}
             </h1>
             <p className="max-w-2xl text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
               {t("chat.subtitle") ||
                 (isAr
-                  ? "مساعد ذكي تفاعلي موثق بالأدلة والاستشهادات للإجابة عن مشاريع وخبرات ومعمارية أنس."
-                  : "Conversational AI grounded in verified portfolio facts, code, and career evidence.")}
+                  ? "مساعد تفاعلي موجه لمسؤولي التوظيف والمهندسين لاستكشاف خبرات ومشاريع أنس وملاءمته للأدوار التقنية."
+                  : "Interactive assistant for recruiters and engineering leads to explore Anas's background, production projects, and role suitability.")}
             </p>
           </div>
 
@@ -129,30 +129,34 @@ export function ChatPageClient() {
             className="flex shrink-0 items-center gap-2 font-medium"
           >
             <MessageSquare className="h-4 w-4" />
-            <span>{isAr ? "فتح نافذة المحادثة" : "Open Conversation"}</span>
+            <span>{isAr ? "بدء المحادثة" : "Start Conversation"}</span>
           </Button>
         </div>
 
-        {/* Feature Badges */}
+        {/* Recruiter Focus Points */}
         <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-neutral-200/60 pt-6 text-xs text-neutral-600 dark:border-neutral-800/60 dark:text-neutral-400">
           <div className="flex items-center gap-1.5">
-            <ShieldCheck className="h-4 w-4 text-emerald-500" />
+            <Briefcase className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
             <span>
-              {isAr ? "حقائق موثقة بلا تخريف (Zero Hallucination)" : "Strict Grounding Guarantee"}
+              {isAr ? "تقييم الملاءمة للأدوار الوظيفية" : "Role Fit & Competency Evaluation"}
             </span>
           </div>
           <span className="opacity-40">•</span>
           <div className="flex items-center gap-1.5">
-            <Zap className="h-4 w-4 text-amber-500" />
-            <span>{isAr ? "بحث فكتور دلالي عبر Qdrant" : "Vector Search with Qdrant"}</span>
+            <Code2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            <span>
+              {isAr
+                ? "تفاصيل المعمارية والقرارات الهندسية"
+                : "Architecture Decisions & Code Evidence"}
+            </span>
           </div>
           <span className="opacity-40">•</span>
           <div className="flex items-center gap-1.5">
-            <Bot className="h-4 w-4 text-blue-500" />
+            <ShieldCheck className="h-4 w-4 text-neutral-700 dark:text-neutral-300" />
             <span>
               {isAr
-                ? "3 أوضاع متخصصة (عام، توظيف، تقني)"
-                : "3 Modes: General, Recruiter, Technical"}
+                ? "إجابات مبنية حصراً على بيانات موثقة"
+                : "Strict Evidence Grounding (No Hallucinations)"}
             </span>
           </div>
         </div>
@@ -161,7 +165,7 @@ export function ChatPageClient() {
       {/* Suggested Starter Prompts */}
       <div className="mt-8 space-y-4">
         <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
-          {isAr ? "أسئلة مقترحة للبدء السريع" : "Quick Starter Inquiries"}
+          {isAr ? "أسئلة مقترحة لمسؤولي التوظيف" : "Recommended Recruiter Inquiries"}
         </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {starterPrompts.map((item, idx) => {

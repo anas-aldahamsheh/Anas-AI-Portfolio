@@ -13,17 +13,15 @@ export async function generateMetadata({ params }: ChatPageProps): Promise<Metad
   const supportedLocale = (locale === "en" ? "en" : "ar") as SupportedLocale;
   const dict = await localizedTextService.getDictionary(supportedLocale);
 
-  const title =
-    dict["chat.title"] ||
-    (supportedLocale === "ar" ? "المساعد الذكي لملف الأعمال" : "Portfolio AI Assistant");
+  const title = dict["chat.title"] || (supportedLocale === "ar" ? "اسأل عن أنس" : "Ask About Anas");
   const description =
     dict["chat.subtitle"] ||
     (supportedLocale === "ar"
-      ? "إجابات موثقة بالأدلة والاستشهادات عن مشاريع وخبرات أنس."
-      : "Evidence-grounded answers citing Anas's verified projects & skills.");
+      ? "مساعد تفاعلي موجه لمسؤولي التوظيف والمهندسين للإجابة عن خبرات ومشاريع أنس الدحامشة."
+      : "Interactive recruiter assistant providing evidence-grounded answers about Anas Al Dahamsheh's engineering track record.");
 
   return {
-    title: `${title} | Anas Portfolio`,
+    title: `${title} | Anas Al Dahamsheh`,
     description,
   };
 }
@@ -35,7 +33,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
     <Suspense
       fallback={
         <div className="container mx-auto px-4 py-16 text-center text-sm text-neutral-500">
-          Loading AI Assistant...
+          Loading...
         </div>
       }
     >

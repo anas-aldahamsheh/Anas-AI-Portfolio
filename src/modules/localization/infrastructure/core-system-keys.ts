@@ -97,6 +97,51 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     },
   },
   {
+    key: "nav.experience",
+    category: "navigation",
+    description: "Navigation link to professional experience",
+    translations: {
+      ar: "الخبرات",
+      en: "Experience",
+    },
+  },
+  {
+    key: "nav.about",
+    category: "navigation",
+    description: "Navigation link to about section",
+    translations: {
+      ar: "عن أنس",
+      en: "About",
+    },
+  },
+  {
+    key: "nav.contact",
+    category: "navigation",
+    description: "Navigation link to contact section",
+    translations: {
+      ar: "تواصل معي",
+      en: "Contact",
+    },
+  },
+  {
+    key: "nav.ask_about_anas",
+    category: "navigation",
+    description: "Navigation link to Ask About Anas AI Assistant",
+    translations: {
+      ar: "اسأل عن أنس",
+      en: "Ask About Anas",
+    },
+  },
+  {
+    key: "nav.technical_demos",
+    category: "navigation",
+    description: "Navigation link to technical demos",
+    translations: {
+      ar: "تجارب تقنية",
+      en: "Technical Demos",
+    },
+  },
+  {
     key: "nav.github",
     category: "navigation",
     description: "Navigation link to GitHub profile",
@@ -211,8 +256,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "home",
     description: "Main heading of the portfolio platform",
     translations: {
-      ar: "منصة المحفظة الهندسية والذكاء الاصطناعي",
-      en: "AI Engineering Portfolio Platform",
+      ar: "أنس الدحامشة | مهندس ذكاء اصطناعي وبرمجيات",
+      en: "Anas Al Dahamsheh | AI & Software Engineer",
     },
   },
   {
@@ -220,8 +265,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "home",
     description: "Main subtitle of the portfolio platform",
     translations: {
-      ar: "منظومة إنتاجية متكاملة لاستعراض المشاريع البرمجية وحلول الذكاء الاصطناعي المعقدة.",
-      en: "A production-ready platform designed for recruiters and engineering leaders with immediate open access.",
+      ar: "أبني أنظمة ذكاء اصطناعي إنتاجية، مسارات تقييم واختبار النماذج، أدوات الأتمتة، وتطبيقات الويب القابلة للتوسع.",
+      en: "I build production-grade AI systems, evaluation pipelines, automation tools, and scalable web applications.",
     },
   },
 
@@ -1302,14 +1347,14 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     },
   },
 
-  // Portfolio AI Chat (F031)
+  // Portfolio AI Chat (F031) - Recruiter Focus
   {
     key: "chat.trigger.label",
     category: "chat",
     description: "Floating chat trigger button label",
     translations: {
-      ar: "محادثة المساعد الذكي",
-      en: "Chat with Portfolio AI",
+      ar: "اسأل عن أنس",
+      en: "Ask About Anas",
     },
   },
   {
@@ -1317,8 +1362,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "chat",
     description: "Accessible ARIA label for chat trigger",
     translations: {
-      ar: "فتح نافذة المحادثة مع الذكاء الاصطناعي",
-      en: "Open AI conversation drawer",
+      ar: "فتح نافذة اسأل عن أنس",
+      en: "Open Ask About Anas assistant",
     },
   },
   {
@@ -1326,8 +1371,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "chat",
     description: "Main header for the AI chat panel",
     translations: {
-      ar: "المساعد الذكي لملف الأعمال",
-      en: "Portfolio AI Assistant",
+      ar: "اسأل عن أنس",
+      en: "Ask About Anas",
     },
   },
   {
@@ -1335,8 +1380,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "chat",
     description: "Subtitle for the AI chat panel",
     translations: {
-      ar: "إجابات موثقة بالأدلة والاستشهادات عن مشاريع وخبرات أنس",
-      en: "Evidence-grounded answers citing Anas's verified projects & skills",
+      ar: "مساعد تفاعلي موجه لمسؤولي التوظيف والمهندسين لاستكشاف خبرات ومشاريع أنس وملاءمته للأدوار التقنية.",
+      en: "Recruiter & engineering assistant to explore Anas's background, production projects, and role suitability.",
     },
   },
   {
@@ -1344,8 +1389,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "chat",
     description: "Chat input field placeholder",
     translations: {
-      ar: "اسأل عن المشاريع، المهارات، أو المعمارية...",
-      en: "Ask about projects, architecture, or skills...",
+      ar: "اسأل عن مهارات أنس، مشاريعه، أو ملاءمته لدور هندسي...",
+      en: "Ask about Anas's skills, projects, or role suitability...",
     },
   },
   {
@@ -1461,8 +1506,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "chat",
     description: "Empty chat state title",
     translations: {
-      ar: "كيف يمكنني مساعدتك اليوم؟",
-      en: "How can I help you today?",
+      ar: "اسأل عن أنس الدحامشة",
+      en: "Ask About Anas Al Dahamsheh",
     },
   },
   {
@@ -1470,8 +1515,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "chat",
     description: "Empty chat state subtitle",
     translations: {
-      ar: "اختر موضوعاً مقترحاً أو اكتب سؤالك للاطلاع على الأدلة الموثقة في ملف الأعمال.",
-      en: "Pick a suggested topic or ask a question to explore verified portfolio evidence.",
+      ar: "مساعد توظيف تفاعلي يجيب عن مهارات وخبرات ومشاريع أنس الهندسية استناداً إلى أدلة موثقة.",
+      en: "An interactive recruiter assistant providing evidence-grounded answers about Anas's skills, production projects, and engineering experience.",
     },
   },
   {
@@ -1479,8 +1524,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "chat",
     description: "Suggested prompt chip: Skills",
     translations: {
-      ar: "ما هي أبرز مهارات أنس في الذكاء الاصطناعي؟",
-      en: "What are Anas's primary AI & ML engineering skills?",
+      ar: "ما هي أقوى مهارات أنس في هندسة الذكاء الاصطناعي؟",
+      en: "What are Anas's strongest AI engineering skills?",
     },
   },
   {
@@ -1488,8 +1533,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "chat",
     description: "Suggested prompt chip: Projects",
     translations: {
-      ar: "حدثني عن المعمارية التقنية لمشاريع أنس",
-      en: "Tell me about the technical architecture of Anas's key projects",
+      ar: "ما هي المشاريع والأنظمة الإنتاجية التي بناها أنس؟",
+      en: "What production AI systems has Anas built?",
     },
   },
   {
@@ -1497,8 +1542,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "chat",
     description: "Suggested prompt chip: Experience",
     translations: {
-      ar: "ملخص خبرات وإنجازات أنس المهنية",
-      en: "Summarize Anas's professional engineering track record",
+      ar: "لخص لي خبرات أنس ومؤهلاته لمسؤولي التوظيف",
+      en: "Summarize Anas's qualifications for an AI Engineer role",
     },
   },
   {

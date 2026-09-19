@@ -28,14 +28,13 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
   const userRole = session?.role || "GUEST";
 
   // Retrieve dynamic navigation items, dictionary, and social profiles concurrently
-  const [headerItems, footerItems, dictionary, githubProfile, linkedinProfile] =
-    await Promise.all([
-      navigationService.getNavigationItems("header", userRole),
-      navigationService.getNavigationItems("footer", userRole),
-      localizedTextService.getDictionary(supportedLocale),
-      socialService.getProfile("github", supportedLocale),
-      socialService.getProfile("linkedin", supportedLocale),
-    ]);
+  const [headerItems, footerItems, dictionary, githubProfile, linkedinProfile] = await Promise.all([
+    navigationService.getNavigationItems("header", userRole),
+    navigationService.getNavigationItems("footer", userRole),
+    localizedTextService.getDictionary(supportedLocale),
+    socialService.getProfile("github", supportedLocale),
+    socialService.getProfile("linkedin", supportedLocale),
+  ]);
 
   return (
     <LocalizationProvider locale={supportedLocale} dictionary={dictionary}>

@@ -68,7 +68,7 @@ export function Navbar({ locale, items, brandTitle, githubProfile, linkedinProfi
     return pathname.startsWith(href);
   };
 
-  const resolvedBrandTitle = brandTitle || t("home.title");
+  const resolvedBrandTitle = brandTitle || (locale === "ar" ? "أنس الدحامشة" : "Anas Al Dahamsheh");
 
   return (
     <>
@@ -85,11 +85,16 @@ export function Navbar({ locale, items, brandTitle, githubProfile, linkedinProfi
           {/* Brand Link */}
           <Link
             href={`/${locale}`}
-            className="flex items-center gap-2 font-semibold tracking-tight text-neutral-900 transition-colors hover:text-neutral-700 dark:text-neutral-100 dark:hover:text-neutral-300"
+            className="flex items-center gap-2 tracking-tight transition-opacity hover:opacity-80"
           >
-            <span className="max-w-[200px] truncate text-sm font-bold sm:max-w-none sm:text-base">
-              {resolvedBrandTitle}
-            </span>
+            <div className="flex flex-col">
+              <span className="text-sm leading-tight font-bold text-neutral-900 sm:text-base dark:text-neutral-100">
+                {resolvedBrandTitle}
+              </span>
+              <span className="text-[11px] leading-tight font-medium text-neutral-500 dark:text-neutral-400">
+                {locale === "ar" ? "مهندس ذكاء اصطناعي" : "AI Engineer"}
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation Links */}
