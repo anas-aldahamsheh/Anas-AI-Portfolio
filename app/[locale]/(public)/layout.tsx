@@ -22,18 +22,20 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
   const { locale } = await params;
   const supportedLocale = (locale === "en" ? "en" : "ar") as SupportedLocale;
 
-  // Retrieve dynamic navigation items, dictionary, admin session, and social profiles concurrently
-  const [headerItems, footerItems, dictionary, session, githubProfile, linkedinProfile] =
+  // Retrieve active session to determine user permissions
+  const session = await getCurrentSession();
+  const isAdmin = session?.role === "ADMIN";
+  const userRole = session?.role || "GUEST";
+
+  // Retrieve dynamic navigation items, dictionary, and social profiles concurrently
+  const [headerItems, footerItems, dictionary, githubProfile, linkedinProfile] =
     await Promise.all([
-      navigationService.getNavigationItems("header"),
-      navigationService.getNavigationItems("footer"),
+      navigationService.getNavigationItems("header", userRole),
+      navigationService.getNavigationItems("footer", userRole),
       localizedTextService.getDictionary(supportedLocale),
-      getCurrentSession(),
       socialService.getProfile("github", supportedLocale),
       socialService.getProfile("linkedin", supportedLocale),
     ]);
-
-  const isAdmin = session?.role === "ADMIN";
 
   return (
     <LocalizationProvider locale={supportedLocale} dictionary={dictionary}>
