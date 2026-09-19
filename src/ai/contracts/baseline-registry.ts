@@ -11,6 +11,15 @@ export const BASELINE_PROVIDERS: AiProvider[] = [
     updatedAt: "2026-01-01T00:00:00.000Z",
   },
   {
+    id: "prov-google-gemini",
+    name: "Google Gemini (gemini-3.1-flash-lite)",
+    providerType: "openai_compatible",
+    baseUrl: "https://generativelanguage.googleapis.com/v1beta/openai",
+    isEnabled: true,
+    createdAt: "2026-01-01T00:00:00.000Z",
+    updatedAt: "2026-01-01T00:00:00.000Z",
+  },
+  {
     id: "prov-anthropic",
     name: "Anthropic Direct Cloud",
     providerType: "anthropic",
@@ -132,13 +141,62 @@ export const BASELINE_MODELS: AiModel[] = [
     createdAt: "2026-01-01T00:00:00.000Z",
     updatedAt: "2026-01-01T00:00:00.000Z",
   },
+  // Gemini 3.1 Flash Lite Models
+  {
+    id: "model-gemini-3-1-flash-lite",
+    providerId: "prov-google-gemini",
+    modelId: "gemini-3.1-flash-lite",
+    capability: "generation",
+    isEnabled: true,
+    contextWindow: 1048576,
+    maxOutputTokens: 8192,
+    createdAt: "2026-01-01T00:00:00.000Z",
+    updatedAt: "2026-01-01T00:00:00.000Z",
+  },
+  {
+    id: "model-router-gemini-3-1-flash-lite",
+    providerId: "prov-google-gemini",
+    modelId: "gemini-3.1-flash-lite",
+    capability: "router",
+    isEnabled: true,
+    contextWindow: 1048576,
+    maxOutputTokens: 2048,
+    createdAt: "2026-01-01T00:00:00.000Z",
+    updatedAt: "2026-01-01T00:00:00.000Z",
+  },
+  {
+    id: "model-rewrite-gemini-3-1-flash-lite",
+    providerId: "prov-google-gemini",
+    modelId: "gemini-3.1-flash-lite",
+    capability: "rewrite",
+    isEnabled: true,
+    contextWindow: 1048576,
+    maxOutputTokens: 2048,
+    createdAt: "2026-01-01T00:00:00.000Z",
+    updatedAt: "2026-01-01T00:00:00.000Z",
+  },
+  {
+    id: "model-eval-gemini-3-1-flash-lite",
+    providerId: "prov-google-gemini",
+    modelId: "gemini-3.1-flash-lite",
+    capability: "evaluator",
+    isEnabled: true,
+    contextWindow: 1048576,
+    maxOutputTokens: 4096,
+    createdAt: "2026-01-01T00:00:00.000Z",
+    updatedAt: "2026-01-01T00:00:00.000Z",
+  },
 ];
+
+const hasGeminiConfigured =
+  typeof process !== "undefined" &&
+  Boolean(process.env?.["GEMINI_API_KEY"] || process.env?.["GOOGLE_AI_API_KEY"]);
 
 export const BASELINE_ASSIGNMENTS: AiModelAssignment[] = [
   {
     id: "assign-prod-generation",
     capability: "generation",
-    modelId: "model-gpt-4o-mini",
+    modelId: hasGeminiConfigured ? "model-gemini-3-1-flash-lite" : "model-gpt-4o-mini",
     environment: "production",
     isActive: true,
     updatedAt: "2026-01-01T00:00:00.000Z",
@@ -162,7 +220,7 @@ export const BASELINE_ASSIGNMENTS: AiModelAssignment[] = [
   {
     id: "assign-prod-router",
     capability: "router",
-    modelId: "model-router-gpt-4o-mini",
+    modelId: hasGeminiConfigured ? "model-router-gemini-3-1-flash-lite" : "model-router-gpt-4o-mini",
     environment: "production",
     isActive: true,
     updatedAt: "2026-01-01T00:00:00.000Z",
@@ -170,7 +228,7 @@ export const BASELINE_ASSIGNMENTS: AiModelAssignment[] = [
   {
     id: "assign-prod-rewrite",
     capability: "rewrite",
-    modelId: "model-rewrite-gpt-4o-mini",
+    modelId: hasGeminiConfigured ? "model-rewrite-gemini-3-1-flash-lite" : "model-rewrite-gpt-4o-mini",
     environment: "production",
     isActive: true,
     updatedAt: "2026-01-01T00:00:00.000Z",
@@ -178,7 +236,7 @@ export const BASELINE_ASSIGNMENTS: AiModelAssignment[] = [
   {
     id: "assign-prod-evaluator",
     capability: "evaluator",
-    modelId: "model-eval-gpt-4o-mini",
+    modelId: hasGeminiConfigured ? "model-eval-gemini-3-1-flash-lite" : "model-eval-gpt-4o-mini",
     environment: "production",
     isActive: true,
     updatedAt: "2026-01-01T00:00:00.000Z",

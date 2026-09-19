@@ -55,6 +55,10 @@ export const envSchema = z.object({
   // 8. Observability
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
   OTEL_EXPORTER_OTLP_ENDPOINT: z.string().url().optional().or(z.literal("")),
+
+  // 9. AI Providers
+  GEMINI_API_KEY: z.string().optional().or(z.literal("")),
+  GOOGLE_AI_API_KEY: z.string().optional().or(z.literal("")),
 });
 
 export type Env = z.infer<typeof envSchema>;

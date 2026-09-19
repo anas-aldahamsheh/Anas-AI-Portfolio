@@ -142,32 +142,40 @@ export class SecretsService {
         .where(eq(secretReferences.key, trimmedKey))
         .limit(1);
 
-      if (rows.length === 0 || !rows[0]) {
-        return null;
+      if (rows.length > 0 && rows[0]) {
+        const row = rows[0];
+        const payload: EncryptedPayload = {
+          encryptedValue: row.encryptedValue,
+          iv: row.iv,
+          tag: row.tag,
+        };
+
+        const decrypted = decryptString(payload);
+        this.memoryCache.set(trimmedKey, {
+          payload,
+          masked: maskSecretValue(decrypted),
+          updatedAt: row.updatedAt.toISOString(),
+        });
+
+        return decrypted;
       }
-
-      const row = rows[0];
-      const payload: EncryptedPayload = {
-        encryptedValue: row.encryptedValue,
-        iv: row.iv,
-        tag: row.tag,
-      };
-
-      const decrypted = decryptString(payload);
-      this.memoryCache.set(trimmedKey, {
-        payload,
-        masked: maskSecretValue(decrypted),
-        updatedAt: row.updatedAt.toISOString(),
-      });
-
-      return decrypted;
     } catch (err) {
       logger.warn("Failed to load secret from database", {
         module: "secrets",
         metadata: { key: trimmedKey, error: String(err) },
       });
-      return null;
     }
+
+    // Fallback to environment variables if not stored in database
+    if (trimmedKey === "ai_provider_prov-google-gemini_api_key" || trimmedKey.toLowerCase().includes("gemini")) {
+      const envKey = process.env["GEMINI_API_KEY"] || process.env["GOOGLE_AI_API_KEY"];
+      if (envKey) return envKey;
+    }
+    if (process.env[trimmedKey]) {
+      return process.env[trimmedKey]!;
+    }
+
+    return null;
   }
 
   /**
@@ -226,6 +234,27 @@ export class SecretsService {
         module: "secrets",
         metadata: { key: trimmedKey, error: String(err) },
       });
+    }
+
+    // Fallback to environment variables if not stored in database
+    if (trimmedKey === "ai_provider_prov-google-gemini_api_key" || trimmedKey.toLowerCase().includes("gemini")) {
+      const envKey = process.env["GEMINI_API_KEY"] || process.env["GOOGLE_AI_API_KEY"];
+      if (envKey) {
+        return {
+          key: trimmedKey,
+          exists: true,
+          maskedPreview: maskSecretValue(envKey),
+          updatedAt: new Date().toISOString(),
+        };
+      }
+    }
+    if (process.env[trimmedKey]) {
+      return {
+        key: trimmedKey,
+        exists: true,
+        maskedPreview: maskSecretValue(process.env[trimmedKey]!),
+        updatedAt: new Date().toISOString(),
+      };
     }
 
     return {
