@@ -191,14 +191,14 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
                   </div>
                 </div>
 
-                {/* ZONE 3: CTA BUTTON (Rounded pill with animated arrow) */}
+                {/* ZONE 3: CTA BUTTON (Fixed equal size matching user requirement) */}
                 <div className="shrink-0 pt-2 md:pt-0">
                   <Link
                     href={item.href}
-                    className="inline-flex h-11 sm:h-12 items-center justify-center gap-2 rounded-full px-5 sm:px-6 text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#EEF5FF] text-[#2F6FED] border border-[#D0E2FF] hover:bg-[#E0EEFF] shadow-2xs hover:shadow-xs dark:bg-white/[0.04] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.08] dark:hover:border-indigo-500/40 dark:hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED]"
+                    className="inline-flex h-11 sm:h-12 w-[220px] sm:w-[235px] items-center justify-center gap-2 rounded-full px-4 text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#EEF5FF] text-[#2F6FED] border border-[#D0E2FF] hover:bg-[#E0EEFF] shadow-2xs hover:shadow-xs dark:bg-white/[0.04] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.08] dark:hover:border-indigo-500/40 dark:hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED]"
                   >
                     <span>{item.cta}</span>
-                    <ArrowIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
+                    <ArrowIcon className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
                   </Link>
                 </div>
               </article>
