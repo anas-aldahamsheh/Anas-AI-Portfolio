@@ -433,6 +433,7 @@ export function ChatDrawer({
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           <path d="M8 10h.01M12 10h.01M16 10h.01" strokeWidth={2.6} />
         </svg>
+        <span className="sr-only">{t("chat.trigger.label")}</span>
       </button>
 
       {/* Slide-over Drawer / Dialog */}
