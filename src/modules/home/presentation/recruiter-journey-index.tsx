@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import {
   User,
@@ -18,6 +19,16 @@ export interface RecruiterJourneyIndexProps {
 export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
   const isArabic = locale === "ar";
   const ArrowIcon = isArabic ? ArrowLeft : ArrowRight;
+  const heroRef = useRef<HTMLElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!heroRef.current) return;
+    const rect = heroRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    heroRef.current.style.setProperty("--mouse-x", `${x}px`);
+    heroRef.current.style.setProperty("--mouse-y", `${y}px`);
+  };
 
   const sections = [
     {
@@ -117,18 +128,47 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
         ==================================================
       */}
       <section
-        className="relative w-full bg-white overflow-hidden transition-colors duration-300 dark:bg-[#07101F]"
+        ref={heroRef}
+        onMouseMove={handleMouseMove}
+        className="group/hero relative w-full bg-white overflow-hidden transition-colors duration-300 dark:bg-[#07101F]"
         aria-label={isArabic ? "المقدمة" : "Hero"}
+        style={{ "--mouse-x": "50%", "--mouse-y": "50%" } as React.CSSProperties}
       >
-        {/* Soft Sky Blue / Cyan Aura on Left matching image with subtle ambient motion */}
+        {/* Interactive Mouse Spotlight Glow - Light Mode */}
         <div
-          className="hero-ambient-glow-left pointer-events-none absolute -top-24 -start-20 h-[500px] w-[600px] rounded-full bg-gradient-to-br from-[#BAE6FD]/70 via-[#E0F2FE]/60 to-transparent blur-[100px] dark:from-[#0284c7]/20 dark:via-[#0369a1]/10 dark:to-transparent"
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover/hero:opacity-100 dark:hidden"
+          style={{
+            background:
+              "radial-gradient(650px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.24), rgba(168, 85, 247, 0.18), transparent 70%)",
+          }}
           aria-hidden="true"
         />
 
-        {/* Soft Dreamy Purple / Lavender Aura on Right matching image with subtle ambient motion */}
+        {/* Interactive Mouse Spotlight Glow - Dark Mode */}
         <div
-          className="hero-ambient-glow-right pointer-events-none absolute -top-20 -end-20 h-[520px] w-[620px] rounded-full bg-gradient-to-bl from-[#DDD6FE]/75 via-[#EDE9FE]/60 to-transparent blur-[110px] dark:from-[#7c3aed]/20 dark:via-[#6d28d9]/10 dark:to-transparent"
+          className="pointer-events-none absolute inset-0 hidden opacity-0 transition-opacity duration-700 group-hover/hero:opacity-100 dark:block"
+          style={{
+            background:
+              "radial-gradient(650px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(14, 165, 233, 0.28), rgba(147, 51, 234, 0.24), transparent 70%)",
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Living Aurora Glow Aura on Left */}
+        <div
+          className="hero-aurora-left pointer-events-none absolute -top-24 -start-20 h-[520px] w-[640px] rounded-full bg-gradient-to-br from-[#BAE6FD]/85 via-[#E0F2FE]/70 to-transparent blur-[100px] dark:from-[#0284c7]/30 dark:via-[#0369a1]/18 dark:to-transparent"
+          aria-hidden="true"
+        />
+
+        {/* Living Aurora Glow Aura on Right */}
+        <div
+          className="hero-aurora-right pointer-events-none absolute -top-20 -end-20 h-[540px] w-[660px] rounded-full bg-gradient-to-bl from-[#DDD6FE]/90 via-[#EDE9FE]/70 to-transparent blur-[110px] dark:from-[#7c3aed]/30 dark:via-[#6d28d9]/18 dark:to-transparent"
+          aria-hidden="true"
+        />
+
+        {/* Soft Ambient Floating Center Orb */}
+        <div
+          className="hero-aurora-center pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 h-[350px] w-[500px] rounded-full bg-gradient-to-r from-[#BAE6FD]/40 to-[#DDD6FE]/40 blur-[120px] dark:from-[#0284c7]/15 dark:to-[#7c3aed]/15"
           aria-hidden="true"
         />
 
@@ -146,13 +186,13 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
 
         {/* Content Container matching reference image layout */}
         <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-14 sm:py-18 lg:py-22 text-start">
-          {/* Masked container for name upward reveal */}
-          <div className="overflow-hidden pb-1 -mb-1">
-            <h1 className="hero-name-reveal text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight text-[#0B1530] leading-[1.1] dark:text-[#F8FAFC]">
+          {/* Masked container with dramatic cinematic text reveal & luxury gradient shimmer */}
+          <div className="overflow-hidden pb-1.5 -mb-1.5">
+            <h1 className="hero-name-cinematic text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight leading-[1.15] bg-gradient-to-r from-[#0B1530] via-[#2F6FED] to-[#0B1530] bg-[length:200%_auto] bg-clip-text text-transparent dark:from-[#FFFFFF] dark:via-[#A78BFA] dark:to-[#FFFFFF]">
               {isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
             </h1>
           </div>
-          <p className="hero-subtitle-reveal mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] font-normal text-[#5A6882] leading-relaxed max-w-2xl dark:text-[#9AA8C0]">
+          <p className="hero-subtitle-cinematic mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] font-normal text-[#5A6882] leading-relaxed max-w-2xl dark:text-[#9AA8C0]">
             {isArabic
               ? "مهندس ذكاء اصطناعي ومطور برمجيات شامل (Full-Stack)"
               : "AI Engineer & Full-Stack Developer"}

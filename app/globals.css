@@ -124,93 +124,129 @@ input[type="tel"] {
 }
 
 /* ==================================================
-   Hero Section Animations
-   - Smooth masked upward reveal for name (550ms, cubic-bezier(0.22, 1, 0.36, 1))
-   - Lighter fade-up for subtitle with 130ms delay (480ms)
-   - Extremely subtle ambient motion for background auras (11-12s alternate)
-   - Zero layout shift, GPU-accelerated (transform & opacity only)
+   Hero Section Animations (High-Impact Luxury Motion)
+   - Cinematic blur-to-sharp upward reveal (850ms, cubic-bezier(0.16, 1, 0.3, 1))
+   - Continuous luxury gradient shimmer on name
+   - Staggered subtitle entrance (800ms)
+   - Living organic aurora float for background auras
+   - Interactive mouse spotlight
    ================================================== */
-:root {
-  --hero-name-y: 12px;
-  --hero-sub-y: 8px;
-}
-
-@media (min-width: 640px) {
-  :root {
-    --hero-name-y: 18px;
-    --hero-sub-y: 10px;
-  }
-}
-
-@keyframes hero-name-reveal {
+@keyframes hero-entrance-name {
   0% {
     opacity: 0;
-    transform: translate3d(0, var(--hero-name-y), 0);
+    filter: blur(14px);
+    transform: translate3d(0, 30px, 0);
   }
   100% {
     opacity: 1;
+    filter: blur(0);
     transform: translate3d(0, 0, 0);
   }
 }
 
-@keyframes hero-subtitle-reveal {
+@keyframes hero-entrance-subtitle {
   0% {
     opacity: 0;
-    transform: translate3d(0, var(--hero-sub-y), 0);
+    filter: blur(10px);
+    transform: translate3d(0, 20px, 0);
   }
   100% {
     opacity: 1;
+    filter: blur(0);
     transform: translate3d(0, 0, 0);
   }
 }
 
-@keyframes hero-ambient-left {
+@keyframes hero-text-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes hero-aurora-left {
   0% {
     transform: translate3d(0, 0, 0) scale(1);
   }
+  50% {
+    transform: translate3d(40px, -25px, 0) scale(1.1);
+  }
   100% {
-    transform: translate3d(14px, 8px, 0) scale(1.015);
+    transform: translate3d(-20px, 20px, 0) scale(0.96);
   }
 }
 
-@keyframes hero-ambient-right {
+@keyframes hero-aurora-right {
   0% {
     transform: translate3d(0, 0, 0) scale(1);
   }
+  50% {
+    transform: translate3d(-40px, 30px, 0) scale(0.94);
+  }
   100% {
-    transform: translate3d(-12px, 10px, 0) scale(1.012);
+    transform: translate3d(25px, -25px, 0) scale(1.08);
   }
 }
 
-.hero-name-reveal {
-  opacity: 0;
-  animation: hero-name-reveal 550ms cubic-bezier(0.22, 1, 0.36, 1) 0ms forwards;
-  will-change: transform, opacity;
+@keyframes hero-aurora-center {
+  0% {
+    transform: translate3d(-50%, 0, 0) scale(0.95);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(-46%, -18px, 0) scale(1.12);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(-54%, 18px, 0) scale(0.97);
+    opacity: 0.55;
+  }
 }
 
-.hero-subtitle-reveal {
+.hero-name-cinematic {
   opacity: 0;
-  animation: hero-subtitle-reveal 480ms cubic-bezier(0.22, 1, 0.36, 1) 130ms forwards;
-  will-change: transform, opacity;
+  animation:
+    hero-entrance-name 850ms cubic-bezier(0.16, 1, 0.3, 1) 0ms forwards,
+    hero-text-shimmer 8s ease-in-out infinite 850ms;
+  will-change: transform, opacity, filter, background-position;
 }
 
-.hero-ambient-glow-left {
-  animation: hero-ambient-left 11s ease-in-out infinite alternate;
+.hero-subtitle-cinematic {
+  animation: hero-entrance-subtitle 800ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+
+.hero-aurora-left {
+  animation: hero-aurora-left 9s ease-in-out infinite alternate;
   will-change: transform;
 }
 
-.hero-ambient-glow-right {
-  animation: hero-ambient-right 12s ease-in-out infinite alternate;
+.hero-aurora-right {
+  animation: hero-aurora-right 11s ease-in-out infinite alternate;
   will-change: transform;
+}
+
+.hero-aurora-center {
+  animation: hero-aurora-center 13s ease-in-out infinite alternate;
+  will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-name-reveal,
-  .hero-subtitle-reveal,
-  .hero-ambient-glow-left,
-  .hero-ambient-glow-right {
+  .hero-name-cinematic,
+  .hero-subtitle-cinematic,
+  .hero-aurora-left,
+  .hero-aurora-right,
+  .hero-aurora-center {
     animation: none !important;
     transform: none !important;
+    filter: none !important;
     opacity: 1 !important;
+    background-position: 0% 50% !important;
   }
 }
