@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { DEVELOPER_PROFILE } from "@/lib/config/developer-profile";
 
 export type CvBoxType = "profile" | "skills_grid" | "info_card" | "custom";
 
@@ -48,8 +49,8 @@ export const DEFAULT_CV_BOXES: CvBoxItem[] = [
     title: "Executive Profile",
     description:
       "AI & Software Engineer with a B.S. in Computer Engineering. Experienced in architecting production RAG systems, LLM evaluation pipelines, autonomous agent workflows, and scalable full-stack web applications with rigorous benchmarking and sub-second latency.",
-    email: "anashusam268@gmail.com",
-    phone: "+962 789 495 167",
+    email: DEVELOPER_PROFILE.email.address,
+    phone: DEVELOPER_PROFILE.phone.display,
     showAiChat: true,
     orderIndex: 1,
   },

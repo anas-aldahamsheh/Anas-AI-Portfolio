@@ -4,6 +4,7 @@ import { Mail, Phone, ExternalLink, Download, MessageSquare } from "lucide-react
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
+import { DEVELOPER_PROFILE } from "@/lib/config/developer-profile";
 
 interface ContactPageProps {
   params: Promise<{ locale: string }>;
@@ -56,8 +57,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
   const contactChannels = [
     {
       title: isAr ? "البريد الإلكتروني" : "Email",
-      value: "anashusam268@gmail.com",
-      href: "mailto:anashusam268@gmail.com",
+      value: DEVELOPER_PROFILE.email.address,
+      href: DEVELOPER_PROFILE.email.href,
       description: isAr
         ? "للاستفسارات الرسمية، التوظيف، والتعاون التقني"
         : "Best for job inquiries, discussions, and formal notes",
@@ -66,8 +67,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
     },
     {
       title: isAr ? "رقم الهاتف والواتساب" : "Direct Phone / WhatsApp",
-      value: "+962 789 495 167",
-      href: "tel:+962789495167",
+      value: DEVELOPER_PROFILE.phone.display,
+      href: DEVELOPER_PROFILE.phone.href,
       description: isAr
         ? "للتواصل السريع والمكالمات الهاتفية المباشرة"
         : "Direct line for quick inquiries or telephone discussions",
@@ -76,8 +77,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
     },
     {
       title: "LinkedIn",
-      value: "linkedin.com/in/anas-aldahamsheh",
-      href: "https://www.linkedin.com/in/anas-aldahamsheh",
+      value: DEVELOPER_PROFILE.linkedin.display,
+      href: DEVELOPER_PROFILE.linkedin.url,
       description: isAr
         ? "الملف المهني وتفاصيل الشبكة التقنية"
         : "Professional network, endorsements, and direct messaging",
@@ -86,8 +87,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
     },
     {
       title: "GitHub",
-      value: "github.com/anas-aldahamsheh",
-      href: "https://github.com/anas-aldahamsheh",
+      value: DEVELOPER_PROFILE.github.display,
+      href: DEVELOPER_PROFILE.github.url,
       description: isAr
         ? "المستودعات البرمجية والمشاريع المفتوحة"
         : "Source code, architectural implementations, and commits",

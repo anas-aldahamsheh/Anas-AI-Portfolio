@@ -5,6 +5,7 @@ import { Phone, Sparkles } from "lucide-react";
 import type { NavigationItem } from "../domain/types";
 import type { SocialProfile } from "@/modules/social/domain/types";
 import { useLocalization } from "@/modules/localization/presentation/localization-provider";
+import { DEVELOPER_PROFILE } from "@/lib/config/developer-profile";
 
 export type DashboardLocale = "en" | "ar";
 
@@ -48,7 +49,13 @@ function LinkedinIcon({ className }: { className?: string }) {
   );
 }
 
-export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
+export function Footer({
+  locale = "ar",
+  items,
+  brandTitle,
+  githubProfile,
+  linkedinProfile,
+}: FooterProps) {
   const { t } = useLocalization();
 
   const getLocalizedHref = (item: NavigationItem): string => {
@@ -60,6 +67,16 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
   };
 
   const isArabic = locale === "ar";
+
+  const resolvedGithubUrl = githubProfile?.url || DEVELOPER_PROFILE.github.url;
+  const resolvedGithubDisplay = githubProfile?.handle
+    ? `github.com/${githubProfile.handle}`
+    : DEVELOPER_PROFILE.github.display;
+
+  const resolvedLinkedinUrl = linkedinProfile?.url || DEVELOPER_PROFILE.linkedin.url;
+  const resolvedLinkedinDisplay = linkedinProfile?.handle
+    ? `linkedin.com/in/${linkedinProfile.handle}`
+    : DEVELOPER_PROFILE.linkedin.display;
 
   return (
     <footer className="border-border bg-card/95 text-card-foreground mt-auto border-t">
@@ -73,10 +90,10 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
               </span>
               <div>
                 <h3 className="text-foreground text-sm font-extrabold tracking-tight">
-                  {brandTitle || (isArabic ? "أنس الدحامشة" : "Anas Aldahamsheh")}
+                  {brandTitle || (isArabic ? DEVELOPER_PROFILE.fullName.ar : DEVELOPER_PROFILE.fullName.en)}
                 </h3>
                 <p className="text-muted-foreground text-xs font-medium">
-                  {isArabic ? "مهندس ذكاء اصطناعي وبرمجيات" : "AI & Full-Stack Software Engineer"}
+                  {isArabic ? DEVELOPER_PROFILE.headline.ar : DEVELOPER_PROFILE.headline.en}
                 </p>
               </div>
             </div>
@@ -95,20 +112,20 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
             <div className="flex flex-col items-start gap-2.5 text-xs">
               {/* Phone */}
               <a
-                href="tel:+962789495167"
+                href={DEVELOPER_PROFILE.phone.href}
                 className="group text-foreground hover:text-primary inline-flex items-center gap-2.5 font-medium transition-colors"
               >
                 <div className="bg-primary/10 text-primary group-hover:bg-primary/20 flex h-7 w-7 items-center justify-center rounded-md transition">
                   <Phone className="h-3.5 w-3.5 shrink-0" />
                 </div>
                 <span dir="ltr" className="font-mono text-xs">
-                  +962 789 495 167
+                  {DEVELOPER_PROFILE.phone.display}
                 </span>
               </a>
 
               {/* LinkedIn */}
               <a
-                href="https://www.linkedin.com/in/anas-aldahamsheh"
+                href={resolvedLinkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group text-foreground hover:text-primary inline-flex items-center gap-2.5 font-medium transition-colors"
@@ -117,13 +134,13 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
                   <LinkedinIcon className="h-3.5 w-3.5 shrink-0" />
                 </div>
                 <span dir="ltr" className="font-mono text-xs">
-                  linkedin.com/in/anas-aldahamsheh
+                  {resolvedLinkedinDisplay}
                 </span>
               </a>
 
               {/* GitHub */}
               <a
-                href="https://github.com/anas-aldahamsheh"
+                href={resolvedGithubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group text-foreground hover:text-primary inline-flex items-center gap-2.5 font-medium transition-colors"
@@ -132,7 +149,7 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
                   <GithubIcon className="h-3.5 w-3.5 shrink-0" />
                 </div>
                 <span dir="ltr" className="font-mono text-xs">
-                  github.com/anas-aldahamsheh
+                  {resolvedGithubDisplay}
                 </span>
               </a>
             </div>

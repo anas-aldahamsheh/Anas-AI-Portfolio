@@ -1,3 +1,4 @@
+import { DEVELOPER_PROFILE } from "@/lib/config/developer-profile";
 import type { Project, ProjectCategory, ProjectTag } from "./types";
 
 export const BASELINE_CATEGORIES: ProjectCategory[] = [
@@ -26,7 +27,7 @@ export const BASELINE_PROJECTS_EN: Project[] = [
     orderIndex: 1,
     isFeatured: true,
     coverImageUrl: "/images/projects/rag-engine.svg",
-    repoUrl: "https://github.com/anas-ai-engineer/multimodal-rag-engine",
+    repoUrl: `${DEVELOPER_PROFILE.github.url}/multimodal-rag-engine`,
     demoUrl: "https://rag-demo.anas-ai.dev",
     title: "Autonomous Multimodal RAG Engine",
     summary:
@@ -59,7 +60,7 @@ export const BASELINE_PROJECTS_EN: Project[] = [
     orderIndex: 2,
     isFeatured: true,
     coverImageUrl: "/images/projects/policy-router.svg",
-    repoUrl: "https://github.com/anas-ai-engineer/edge-policy-router",
+    repoUrl: `${DEVELOPER_PROFILE.github.url}/edge-policy-router`,
     demoUrl: null,
     title: "Enterprise Edge Gateway & Policy Router",
     summary:
@@ -92,7 +93,7 @@ export const BASELINE_PROJECTS_EN: Project[] = [
     orderIndex: 3,
     isFeatured: false,
     coverImageUrl: "/images/projects/speech-stream.svg",
-    repoUrl: "https://github.com/anas-ai-engineer/neural-speech-stream",
+    repoUrl: `${DEVELOPER_PROFILE.github.url}/neural-speech-stream`,
     demoUrl: "https://voice-demo.anas-ai.dev",
     title: "Real-Time Neural Speech & Synthesis Pipeline",
     summary:
@@ -125,7 +126,7 @@ export const BASELINE_PROJECTS_EN: Project[] = [
     orderIndex: 4,
     isFeatured: false,
     coverImageUrl: "/images/projects/bilingual-platform.svg",
-    repoUrl: "https://github.com/anas-ai-engineer/bilingual-design-studio",
+    repoUrl: `${DEVELOPER_PROFILE.github.url}/bilingual-design-studio`,
     demoUrl: null,
     title: "Adaptive Bilingual Design System & Component Studio",
     summary:
@@ -161,7 +162,7 @@ export const BASELINE_PROJECTS_AR: Project[] = [
     orderIndex: 1,
     isFeatured: true,
     coverImageUrl: "/images/projects/rag-engine.svg",
-    repoUrl: "https://github.com/anas-ai-engineer/multimodal-rag-engine",
+    repoUrl: `${DEVELOPER_PROFILE.github.url}/multimodal-rag-engine`,
     demoUrl: "https://rag-demo.anas-ai.dev",
     title: "محرك استرجاع متعدد الوسائط مؤتمت (RAG)",
     summary:
@@ -194,7 +195,7 @@ export const BASELINE_PROJECTS_AR: Project[] = [
     orderIndex: 2,
     isFeatured: true,
     coverImageUrl: "/images/projects/policy-router.svg",
-    repoUrl: "https://github.com/anas-ai-engineer/edge-policy-router",
+    repoUrl: `${DEVELOPER_PROFILE.github.url}/edge-policy-router`,
     demoUrl: null,
     title: "بوابة الطرفية المؤسسية وموجّه السياسات",
     summary:
@@ -226,7 +227,7 @@ export const BASELINE_PROJECTS_AR: Project[] = [
     orderIndex: 3,
     isFeatured: false,
     coverImageUrl: "/images/projects/speech-stream.svg",
-    repoUrl: "https://github.com/anas-ai-engineer/neural-speech-stream",
+    repoUrl: `${DEVELOPER_PROFILE.github.url}/neural-speech-stream`,
     demoUrl: "https://voice-demo.anas-ai.dev",
     title: "منظومة معالجة وتوليد الصوت العصبي الحي",
     summary:
@@ -259,7 +260,7 @@ export const BASELINE_PROJECTS_AR: Project[] = [
     orderIndex: 4,
     isFeatured: false,
     coverImageUrl: "/images/projects/bilingual-platform.svg",
-    repoUrl: "https://github.com/anas-ai-engineer/bilingual-design-studio",
+    repoUrl: `${DEVELOPER_PROFILE.github.url}/bilingual-design-studio`,
     demoUrl: null,
     title: "نظام تصميم ثنائي اللغة متكيف وأستوديو المكونات",
     summary:
