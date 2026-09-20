@@ -45,6 +45,17 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
             items={headerItems}
             githubProfile={githubProfile}
             linkedinProfile={linkedinProfile}
+            currentUser={
+              session
+                ? {
+                    id: session.user.id,
+                    name: session.user.name,
+                    email: session.user.email,
+                    image: session.user.image,
+                    role: session.role,
+                  }
+                : null
+            }
           />
           <main id="main-content" className="flex-1">
             {children}

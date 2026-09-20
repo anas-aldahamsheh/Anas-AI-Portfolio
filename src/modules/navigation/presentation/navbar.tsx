@@ -19,6 +19,7 @@ import {
   BASELINE_LINKEDIN_PROFILE,
 } from "@/modules/social/domain/types";
 import { GitHubPopover, LinkedInPopover } from "@/modules/social/presentation";
+import { UserNav } from "@/modules/auth/presentation/user-nav";
 
 export interface NavbarProps {
   locale: string;
@@ -26,9 +27,23 @@ export interface NavbarProps {
   brandTitle?: string | undefined;
   githubProfile?: SocialProfile | undefined;
   linkedinProfile?: SocialProfile | undefined;
+  currentUser?: {
+    id: string;
+    email: string;
+    name?: string | null | undefined;
+    image?: string | null | undefined;
+    role?: string | undefined;
+  } | null | undefined;
 }
 
-export function Navbar({ locale, items, brandTitle, githubProfile, linkedinProfile }: NavbarProps) {
+export function Navbar({
+  locale,
+  items,
+  brandTitle,
+  githubProfile,
+  linkedinProfile,
+  currentUser,
+}: NavbarProps) {
   const pathname = usePathname();
   const { t } = useLocalization();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -141,6 +156,7 @@ export function Navbar({ locale, items, brandTitle, githubProfile, linkedinProfi
             />
             <LanguageSelect currentLocale={locale} />
             <ThemeToggle locale={locale} />
+            <UserNav locale={locale} initialUser={currentUser} />
 
             {/* Mobile Menu Hamburger Button */}
             <Button
@@ -210,6 +226,10 @@ export function Navbar({ locale, items, brandTitle, githubProfile, linkedinProfi
                   </Link>
                 );
               })}
+
+              <div className="mt-3 border-t border-neutral-100 pt-3 dark:border-neutral-800">
+                <UserNav locale={locale} initialUser={currentUser} className="w-full justify-center" />
+              </div>
             </nav>
           </div>
         </PresenceTransition>
