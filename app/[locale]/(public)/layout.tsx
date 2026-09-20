@@ -39,7 +39,7 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
   return (
     <LocalizationProvider locale={supportedLocale} dictionary={dictionary}>
       <AdminEditProvider isAdmin={isAdmin}>
-        <div className="bg-background text-foreground flex min-h-screen flex-col">
+        <div className="bg-background text-foreground flex min-h-screen flex-col dark:bg-[#07101F] transition-colors duration-300">
           <Navbar
             locale={supportedLocale}
             items={headerItems}

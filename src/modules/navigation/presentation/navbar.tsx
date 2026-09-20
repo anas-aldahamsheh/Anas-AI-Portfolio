@@ -7,18 +7,11 @@ import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/modules/theme/presentation/theme-toggle";
 import { LanguageSelect } from "@/modules/localization/presentation/language-select";
 import { useLocalization } from "@/modules/localization/presentation/localization-provider";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PresenceTransition } from "@/components/motion";
 import type { NavigationItem } from "../domain/types";
-import { NavIcon } from "./nav-icon";
 import { cn } from "@/lib/utils";
-import {
-  type SocialProfile,
-  BASELINE_GITHUB_PROFILE,
-  BASELINE_LINKEDIN_PROFILE,
-} from "@/modules/social/domain/types";
-import { GitHubPopover, LinkedInPopover } from "@/modules/social/presentation";
+import type { SocialProfile } from "@/modules/social/domain/types";
 import { UserNav } from "@/modules/auth/presentation/user-nav";
 
 export interface NavbarProps {
@@ -40,8 +33,6 @@ export function Navbar({
   locale,
   items,
   brandTitle,
-  githubProfile,
-  linkedinProfile,
   currentUser,
 }: NavbarProps) {
   const pathname = usePathname();
@@ -85,39 +76,49 @@ export function Navbar({
 
   const resolvedBrandTitle = brandTitle || (locale === "ar" ? "أنس الدحامشة" : "Anas Al Dahamsheh");
 
+  // Keep public destinations strictly matched to the approved navigation items
+  const publicNavItems = items.filter((item) => item.id !== "nav-admin" && item.isVisible);
+
   return (
     <>
       {/* WCAG 2.2 AA Skip Link */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:start-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-neutral-900 focus:px-4 focus:py-2 focus:text-sm focus:text-neutral-50 focus:shadow-md focus:ring-2 focus:ring-neutral-400 focus:outline-none dark:focus:bg-neutral-100 dark:focus:text-neutral-900"
+        className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-neutral-900 focus:px-4 focus:py-2 focus:text-sm focus:text-neutral-50 focus:shadow-md focus:ring-2 focus:ring-[#2F6FED] focus:outline-none dark:focus:bg-white dark:focus:text-neutral-900"
       >
         {locale === "ar" ? "الانتقال إلى المحتوى الرئيسي" : "Skip to main content"}
       </a>
 
-      <header className="sticky top-0 z-40 w-full border-b border-neutral-200/80 bg-white/80 backdrop-blur-md dark:border-neutral-800/80 dark:bg-neutral-950/80">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          {/* Brand Link */}
+      {/* 
+        ==================================================
+        FLOATING CAPSULE NAVBAR
+        Height: ~60px, rounded-[28px], max-w-[1420px], top-3 sm:top-4
+        Left: Brand | Center: Navigation | Right: [ AR ] [ Theme Toggle ] [ Sign In ]
+        ==================================================
+      */}
+      <div className="sticky top-3 sm:top-4.5 z-40 w-full px-3 sm:px-6 pointer-events-none">
+        <header className="pointer-events-auto mx-auto flex h-[58px] sm:h-[62px] max-w-[1420px] items-center justify-between rounded-[28px] border border-neutral-200/80 bg-white/90 px-4 sm:px-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)] backdrop-blur-md transition-colors duration-300 dark:border-white/[0.08] dark:bg-[#07101F]/90 dark:shadow-[0_0_20px_rgba(0,0,0,0.25)]">
+          {/* LEFT: Brand Identity */}
           <Link
             href={`/${locale}`}
-            className="flex items-center gap-2 tracking-tight transition-opacity hover:opacity-80"
+            className="flex items-center gap-2.5 transition-opacity hover:opacity-85 text-start"
           >
             <div className="flex flex-col">
-              <span className="text-sm leading-tight font-bold text-neutral-900 sm:text-base dark:text-neutral-100">
+              <span className="text-sm sm:text-[15px] leading-tight font-bold tracking-tight text-[#0B1530] dark:text-[#F6F8FC]">
                 {resolvedBrandTitle}
               </span>
-              <span className="text-[11px] leading-tight font-medium text-neutral-500 dark:text-neutral-400">
+              <span className="text-[11px] sm:text-xs leading-tight font-medium text-[#6C7893] dark:text-[#9AA8C0]">
                 {locale === "ar" ? "مهندس ذكاء اصطناعي" : "AI Engineer"}
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* CENTER: Navigation Links */}
           <nav
             aria-label={locale === "ar" ? "التنقل الرئيسي" : "Main Navigation"}
-            className="hidden items-center gap-1 md:flex lg:gap-2"
+            className="hidden items-center gap-1 md:flex lg:gap-1.5"
           >
-            {items.map((item) => {
+            {publicNavItems.map((item) => {
               const active = isItemActive(item);
               const label = t(item.labelKey);
 
@@ -129,40 +130,47 @@ export function Navbar({
                   rel={item.openInNewTab ? "noopener noreferrer" : undefined}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors lg:text-sm",
+                    "px-3.5 py-1.5 text-xs lg:text-[13px] font-medium transition-all duration-200 rounded-full",
                     active
-                      ? "bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100"
-                      : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-100",
+                      ? "bg-[#EEF5FF] text-[#1E40AF] font-semibold dark:bg-indigo-950/70 dark:text-indigo-200 dark:border dark:border-indigo-500/30 dark:shadow-[0_0_12px_rgba(99,102,241,0.2)]"
+                      : "text-[#6C7893] hover:text-[#0B1530] hover:bg-neutral-100/70 dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC] dark:hover:bg-white/[0.06]",
                   )}
                 >
-                  <NavIcon name={item.iconKey} className="h-4 w-4 opacity-70" />
                   <span>{label}</span>
-                  {item.badge && (
-                    <Badge variant="secondary" size="sm" className="ms-1 px-1.5 py-0 text-[10px]">
-                      {item.badge}
-                    </Badge>
-                  )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right Controls: GitHub Popover, LinkedIn Popover, Language Selector, Theme Toggle, Mobile Menu Trigger */}
+          {/* 
+            RIGHT: Control Cluster
+            Exact desktop order: [ AR ] -> [ Theme Toggle Icon ] -> [ Sign In ]
+            AR -> Theme: ~6-10px (gap-2 = 8px)
+            Theme -> Sign In: ~8-12px (ms-0.5)
+          */}
           <div className="flex items-center gap-2">
-            <GitHubPopover profile={githubProfile || BASELINE_GITHUB_PROFILE} locale={locale} />
-            <LinkedInPopover
-              profile={linkedinProfile || BASELINE_LINKEDIN_PROFILE}
-              locale={locale}
+            {/* 1. Language Toggle (AR / EN) */}
+            <LanguageSelect
+              currentLocale={locale}
+              className="h-9 w-9 rounded-full border border-neutral-200/80 bg-white/80 text-xs font-bold text-neutral-800 shadow-2xs hover:bg-neutral-100 dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:bg-white/[0.08]"
             />
-            <LanguageSelect currentLocale={locale} />
-            <ThemeToggle locale={locale} />
-            <UserNav locale={locale} initialUser={currentUser} />
+
+            {/* 2. Theme Toggle Icon (Moon in Light Mode / Sun in Dark Mode) */}
+            <ThemeToggle
+              locale={locale}
+              className="h-9 w-9 rounded-full border border-[#E4EAF3] bg-white/80 text-neutral-700 shadow-2xs hover:bg-neutral-100 dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:bg-white/[0.08]"
+            />
+
+            {/* 3. Sign In Button / Authenticated User Dropdown */}
+            <div className="ms-0.5 hidden md:block">
+              <UserNav locale={locale} initialUser={currentUser} />
+            </div>
 
             {/* Mobile Menu Hamburger Button */}
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="h-9 w-9 rounded-full md:hidden text-neutral-700 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-white/[0.08]"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={
                 isMobileMenuOpen
@@ -183,19 +191,19 @@ export function Navbar({
               )}
             </Button>
           </div>
-        </div>
+        </header>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Navigation Drawer Dropdown */}
         <PresenceTransition isVisible={isMobileMenuOpen}>
           <div
             id="mobile-nav-menu"
             role="dialog"
             aria-modal="true"
             aria-label={locale === "ar" ? "قائمة التنقل للهواتف" : "Mobile navigation menu"}
-            className="border-b border-neutral-200 bg-white px-4 py-4 shadow-lg md:hidden dark:border-neutral-800 dark:bg-neutral-950"
+            className="pointer-events-auto mx-auto mt-2 max-w-[1420px] rounded-2xl border border-neutral-200/80 bg-white/95 p-4 shadow-xl backdrop-blur-md md:hidden dark:border-white/[0.08] dark:bg-[#07101F]/95"
           >
-            <nav className="flex flex-col gap-1">
-              {items.map((item) => {
+            <nav className="flex flex-col gap-1.5 text-start">
+              {publicNavItems.map((item) => {
                 const active = isItemActive(item);
                 const label = t(item.labelKey);
 
@@ -208,32 +216,24 @@ export function Navbar({
                     aria-current={active ? "page" : undefined}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={cn(
-                      "flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                      "flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
                       active
-                        ? "bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100"
-                        : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-100",
+                        ? "bg-[#EEF5FF] text-[#1E40AF] font-semibold dark:bg-indigo-950/70 dark:text-indigo-200"
+                        : "text-[#6C7893] hover:bg-neutral-100/80 hover:text-[#0B1530] dark:text-[#9AA8C0] dark:hover:bg-white/[0.06] dark:hover:text-[#F6F8FC]",
                     )}
                   >
-                    <div className="flex items-center gap-2.5">
-                      <NavIcon name={item.iconKey} className="h-4 w-4 opacity-70" />
-                      <span>{label}</span>
-                    </div>
-                    {item.badge && (
-                      <Badge variant="secondary" size="sm" className="px-1.5 py-0 text-[10px]">
-                        {item.badge}
-                      </Badge>
-                    )}
+                    <span>{label}</span>
                   </Link>
                 );
               })}
 
-              <div className="mt-3 border-t border-neutral-100 pt-3 dark:border-neutral-800">
+              <div className="mt-2 border-t border-neutral-100 pt-3 dark:border-white/[0.08]">
                 <UserNav locale={locale} initialUser={currentUser} className="w-full justify-center" />
               </div>
             </nav>
           </div>
         </PresenceTransition>
-      </header>
+      </div>
     </>
   );
 }

@@ -1,13 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Phone, Sparkles } from "lucide-react";
+import { Phone } from "lucide-react";
 import type { NavigationItem } from "../domain/types";
 import type { SocialProfile } from "@/modules/social/domain/types";
-import { useLocalization } from "@/modules/localization/presentation/localization-provider";
 import { DEVELOPER_PROFILE } from "@/lib/config/developer-profile";
-
-export type DashboardLocale = "en" | "ar";
 
 export interface FooterProps {
   locale?: string;
@@ -51,21 +48,10 @@ function LinkedinIcon({ className }: { className?: string }) {
 
 export function Footer({
   locale = "ar",
-  items,
   brandTitle,
   githubProfile,
   linkedinProfile,
 }: FooterProps) {
-  const { t } = useLocalization();
-
-  const getLocalizedHref = (item: NavigationItem): string => {
-    if (item.destinationType === "external") {
-      return item.target;
-    }
-    const cleanTarget = item.target.startsWith("/") ? item.target : `/${item.target}`;
-    return `/${locale}${cleanTarget === "/" ? "" : cleanTarget}`;
-  };
-
   const isArabic = locale === "ar";
 
   const resolvedGithubUrl = githubProfile?.url || DEVELOPER_PROFILE.github.url;
@@ -78,44 +64,48 @@ export function Footer({
     ? `linkedin.com/in/${linkedinProfile.handle}`
     : DEVELOPER_PROFILE.linkedin.display;
 
+  const navLinks = [
+    { href: `/${locale}`, label: isArabic ? "نظرة عامة" : "Overview" },
+    { href: `/${locale}/cv`, label: isArabic ? "نبذة والسيرة الذاتية" : "About & Resume" },
+    { href: `/${locale}/experience`, label: isArabic ? "الخبرات العملية" : "Experience" },
+    { href: `/${locale}/projects`, label: isArabic ? "المشاريع" : "Projects" },
+    { href: `/${locale}/certificates`, label: isArabic ? "الدورات والشهادات" : "Certificates" },
+    { href: `/${locale}/contact`, label: isArabic ? "التواصل" : "Contact" },
+  ];
+
   return (
-    <footer className="border-border bg-card/95 text-card-foreground mt-auto border-t">
-      <div className="mx-auto max-w-7xl px-4 py-10 md:px-8">
-        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
-          {/* Brand & Personal Positioning */}
+    <footer className="mt-auto border-t border-[#E5EAF2] bg-transparent text-[#0B1530] transition-colors duration-300 dark:border-white/[0.08] dark:text-[#F6F8FC]">
+      <div className="mx-auto max-w-[1420px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3 text-start">
+          {/* COLUMN 1: Brand & Personal Positioning */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2.5">
-              <span className="bg-primary text-primary-foreground flex h-9 w-9 items-center justify-center rounded-md shadow-xs">
-                <Sparkles className="h-5 w-5" />
-              </span>
-              <div>
-                <h3 className="text-foreground text-sm font-extrabold tracking-tight">
-                  {brandTitle || (isArabic ? DEVELOPER_PROFILE.fullName.ar : DEVELOPER_PROFILE.fullName.en)}
-                </h3>
-                <p className="text-muted-foreground text-xs font-medium">
-                  {isArabic ? DEVELOPER_PROFILE.headline.ar : DEVELOPER_PROFILE.headline.en}
-                </p>
-              </div>
+            <div>
+              <h3 className="text-base font-bold tracking-tight text-[#0B1530] dark:text-[#F6F8FC]">
+                {brandTitle || (isArabic ? DEVELOPER_PROFILE.fullName.ar : DEVELOPER_PROFILE.fullName.en)}
+              </h3>
+              <p className="text-xs font-semibold text-[#2F6FED] dark:text-indigo-400 mt-1">
+                {isArabic ? DEVELOPER_PROFILE.headline.ar : "AI & Full-Stack Software Engineer"}
+              </p>
             </div>
-            <p className="text-muted-foreground text-xs leading-relaxed">
+            <p className="text-xs leading-relaxed text-[#6C7893] dark:text-[#9AA8C0] max-w-sm">
               {isArabic
                 ? "مهندس برمجيات متخصص في بناء وتطوير حلول الذكاء الاصطناعي التوليدي، أنظمة RAG المتقدمة، وتطبيقات الويب الإنتاجية عالية الأداء والقابلة للتوسع."
                 : "Specialized in architecting production-grade AI systems, advanced RAG architectures, and resilient, high-performance web platforms."}
             </p>
           </div>
 
-          {/* Developer Contacts */}
-          <div className="space-y-3">
-            <h4 className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+          {/* COLUMN 2: Contact Developer */}
+          <div className="space-y-3.5">
+            <h4 className="text-xs font-bold tracking-wider uppercase text-[#0B1530] dark:text-[#F6F8FC]">
               {isArabic ? "بيانات التواصل المباشر" : "Contact Developer"}
             </h4>
             <div className="flex flex-col items-start gap-2.5 text-xs">
               {/* Phone */}
               <a
                 href={DEVELOPER_PROFILE.phone.href}
-                className="group text-foreground hover:text-primary inline-flex items-center gap-2.5 font-medium transition-colors"
+                className="group text-[#6C7893] hover:text-[#2F6FED] inline-flex items-center gap-2.5 font-medium transition-colors dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC]"
               >
-                <div className="bg-primary/10 text-primary group-hover:bg-primary/20 flex h-7 w-7 items-center justify-center rounded-md transition">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-neutral-100 text-neutral-600 group-hover:bg-blue-50 group-hover:text-[#2F6FED] transition-colors dark:bg-white/[0.04] dark:text-neutral-300 dark:group-hover:bg-white/[0.08] dark:group-hover:text-white">
                   <Phone className="h-3.5 w-3.5 shrink-0" />
                 </div>
                 <span dir="ltr" className="font-mono text-xs">
@@ -128,9 +118,9 @@ export function Footer({
                 href={resolvedLinkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group text-foreground hover:text-primary inline-flex items-center gap-2.5 font-medium transition-colors"
+                className="group text-[#6C7893] hover:text-[#2F6FED] inline-flex items-center gap-2.5 font-medium transition-colors dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC]"
               >
-                <div className="bg-primary/10 text-primary group-hover:bg-primary/20 flex h-7 w-7 items-center justify-center rounded-md transition">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-neutral-100 text-neutral-600 group-hover:bg-blue-50 group-hover:text-[#2F6FED] transition-colors dark:bg-white/[0.04] dark:text-neutral-300 dark:group-hover:bg-white/[0.08] dark:group-hover:text-white">
                   <LinkedinIcon className="h-3.5 w-3.5 shrink-0" />
                 </div>
                 <span dir="ltr" className="font-mono text-xs">
@@ -143,9 +133,9 @@ export function Footer({
                 href={resolvedGithubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group text-foreground hover:text-primary inline-flex items-center gap-2.5 font-medium transition-colors"
+                className="group text-[#6C7893] hover:text-[#2F6FED] inline-flex items-center gap-2.5 font-medium transition-colors dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC]"
               >
-                <div className="bg-primary/10 text-primary group-hover:bg-primary/20 flex h-7 w-7 items-center justify-center rounded-md transition">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-neutral-100 text-neutral-600 group-hover:bg-blue-50 group-hover:text-[#2F6FED] transition-colors dark:bg-white/[0.04] dark:text-neutral-300 dark:group-hover:bg-white/[0.08] dark:group-hover:text-white">
                   <GithubIcon className="h-3.5 w-3.5 shrink-0" />
                 </div>
                 <span dir="ltr" className="font-mono text-xs">
@@ -155,71 +145,29 @@ export function Footer({
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-3">
-            <h4 className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
-              {isArabic ? "روابط سريعة" : "Navigation"}
+          {/* COLUMN 3: Navigation */}
+          <div className="space-y-3.5">
+            <h4 className="text-xs font-bold tracking-wider uppercase text-[#0B1530] dark:text-[#F6F8FC]">
+              {isArabic ? "التنقل" : "Navigation"}
             </h4>
             <div className="flex flex-col gap-2 text-xs font-medium">
-              {items && items.length > 0 ? (
-                items.slice(0, 6).map((item) => (
-                  <Link
-                    key={item.id}
-                    href={getLocalizedHref(item)}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {t(item.labelKey)}
-                  </Link>
-                ))
-              ) : (
-                <>
-                  <Link
-                    href={`/${locale}`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {isArabic ? "نظرة عامة" : "Overview"}
-                  </Link>
-                  <Link
-                    href={`/${locale}/cv`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {isArabic ? "نبذة والسيرة الذاتية" : "About & Resume"}
-                  </Link>
-                  <Link
-                    href={`/${locale}/experience`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {isArabic ? "الخبرات العملية" : "Experience"}
-                  </Link>
-                  <Link
-                    href={`/${locale}/projects`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {isArabic ? "المشاريع ودراسات الحالة" : "Projects & Deep Dives"}
-                  </Link>
-                  <Link
-                    href={`/${locale}/certificates`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {isArabic ? "الدورات والشهادات" : "Certificates & Courses"}
-                  </Link>
-                  <Link
-                    href={`/${locale}/contact`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {isArabic ? "تواصل معي" : "Contact"}
-                  </Link>
-                </>
-              )}
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-[#6C7893] hover:text-[#2F6FED] transition-colors dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC]"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Bottom copyright line */}
-        <div className="border-border text-muted-foreground mt-8 border-t pt-5 text-center text-xs sm:text-start">
+        <div className="mt-12 border-t border-[#E5EAF2] pt-6 text-center text-xs text-[#6C7893] sm:text-start dark:border-white/[0.08] dark:text-[#9AA8C0]">
           <p>
-            © 2026 <strong>Anas Aldahamsheh</strong>.{" "}
-            {isArabic ? "جميع الحقوق محفوظة." : "All rights reserved."}
+            © 2026 Anas Aldahamsheh. {isArabic ? "جميع الحقوق محفوظة." : "All rights reserved."}
           </p>
         </div>
       </div>

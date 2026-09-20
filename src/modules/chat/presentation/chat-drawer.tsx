@@ -410,18 +410,18 @@ export function ChatDrawer({
 
   return (
     <>
-      {/* Floating Trigger Button - Exactly matching Image 2 */}
+      {/* Floating Trigger Button - Circular Icon-Only matching approved references */}
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className={`fixed end-6 bottom-6 z-40 flex items-center gap-2.5 rounded-full px-5 py-3 text-sm font-semibold text-white bg-neutral-950 dark:bg-neutral-900 border border-neutral-800 dark:border-neutral-700/80 shadow-2xl shadow-black/40 hover:bg-neutral-900 dark:hover:bg-neutral-800 hover:border-neutral-600 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-neutral-400 ${
+        className={`fixed end-6 bottom-6 z-40 flex h-13 w-13 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#2F6FED] text-white shadow-[0_4px_20px_rgba(47,111,237,0.35)] hover:bg-[#255ec9] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-indigo-600 dark:shadow-[0_0_20px_rgba(79,70,229,0.4)] dark:hover:bg-indigo-500 ${
           isOpen ? "hidden" : "flex"
         }`}
         aria-label={t("chat.trigger.aria")}
         data-testid="chat-trigger-button"
       >
         <svg
-          className="h-5 w-5 shrink-0"
+          className="h-6 w-6"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -433,7 +433,6 @@ export function ChatDrawer({
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           <path d="M8 10h.01M12 10h.01M16 10h.01" strokeWidth={2.6} />
         </svg>
-        <span className="tracking-tight">{t("chat.trigger.label")}</span>
       </button>
 
       {/* Slide-over Drawer / Dialog */}

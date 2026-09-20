@@ -32,7 +32,7 @@ export function ThemeToggle({ locale = "ar", className = "" }: ThemeToggleProps)
     <button
       type="button"
       onClick={toggleTheme}
-      className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200/80 bg-white text-neutral-700 shadow-xs transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-neutral-100 cursor-pointer ${className}`.trim()}
+      className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E4EAF3] bg-white text-[#0B1530] shadow-2xs transition-all duration-200 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:bg-white/[0.08] cursor-pointer ${className}`.trim()}
       aria-label={label}
       title={label}
     >

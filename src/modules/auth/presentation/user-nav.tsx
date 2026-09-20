@@ -103,12 +103,12 @@ export function UserNav({ locale, initialUser, className = "" }: UserNavProps) {
     return (
       <Link
         href={`/${locale}/sign-in`}
-        className={`inline-flex h-9 items-center gap-1.5 rounded-lg border border-neutral-200/80 bg-white px-2.5 text-xs font-semibold text-neutral-800 shadow-xs transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800 cursor-pointer ${className}`.trim()}
+        className={`inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-900 bg-neutral-900 px-3.5 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-neutral-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 dark:border-neutral-200 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 cursor-pointer ${className}`.trim()}
         title={isArabic ? "تسجيل الدخول" : "Sign In"}
         aria-label={isArabic ? "تسجيل الدخول" : "Sign In"}
       >
-        <LogIn className="h-3.5 w-3.5 text-neutral-600 dark:text-neutral-300" />
-        <span className="hidden sm:inline font-medium">
+        <LogIn className="h-3.5 w-3.5" />
+        <span className="font-semibold">
           {isArabic ? "تسجيل الدخول" : "Sign In"}
         </span>
       </Link>
@@ -128,7 +128,7 @@ export function UserNav({ locale, initialUser, className = "" }: UserNavProps) {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup="menu"
-        className={`inline-flex h-9 items-center gap-1.5 rounded-lg border border-neutral-200/80 bg-white px-2 text-xs font-semibold text-neutral-800 shadow-xs transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800 cursor-pointer ${className}`.trim()}
+        className={`inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-200/80 bg-white px-2.5 text-xs font-semibold text-neutral-800 shadow-xs transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800 cursor-pointer ${className}`.trim()}
         title={displayName}
         aria-label={isArabic ? `حساب المستخدم: ${displayName}` : `User account: ${displayName}`}
       >
