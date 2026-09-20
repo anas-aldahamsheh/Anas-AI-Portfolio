@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Award, ExternalLink, Eye, Calendar } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Award, Eye, Calendar } from "lucide-react";
 import type { CertificateItem } from "../domain/types";
 
 export interface CertificateCardProps {
@@ -52,22 +51,6 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
           </div>
         )}
 
-        {/* Floating Badges */}
-        <div className="absolute start-3 top-3 flex flex-wrap items-center gap-1.5">
-          {certificate.isFeatured && (
-            <Badge variant="default" size="sm" className="shadow-xs">
-              {isArabic ? "مميزة" : "Featured"}
-            </Badge>
-          )}
-          <Badge
-            variant="secondary"
-            size="sm"
-            className="bg-white/90 font-medium text-neutral-800 backdrop-blur-xs dark:bg-neutral-900/90 dark:text-neutral-200"
-          >
-            {issuer}
-          </Badge>
-        </div>
-
         {/* Date overlay */}
         <div className="absolute end-3 bottom-2.5">
           <span className="inline-flex items-center gap-1 rounded-md bg-black/60 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur-xs">
@@ -79,6 +62,10 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
 
       {/* Body Content */}
       <div className="flex flex-1 flex-col p-5">
+        <div className="mb-1.5 text-xs font-semibold text-primary">
+          {issuer}
+        </div>
+
         <h3 className="text-base font-bold tracking-tight text-neutral-900 transition-colors group-hover:text-primary sm:text-lg dark:text-neutral-100">
           {title}
         </h3>
@@ -112,21 +99,6 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
             <Eye className="h-3.5 w-3.5" />
             <span>{isArabic ? "عرض تفاصيل الشهادة" : "View Details"}</span>
           </span>
-
-          {certificate.credentialUrl && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(certificate.credentialUrl, "_blank", "noopener,noreferrer");
-              }}
-              className="inline-flex items-center gap-1 text-xs font-medium text-neutral-500 hover:text-neutral-900 hover:underline dark:text-neutral-400 dark:hover:text-neutral-100"
-              title={isArabic ? "التحقق من الرابط الرسمي" : "Verify credential online"}
-            >
-              <ExternalLink className="h-3 w-3" />
-              <span>{isArabic ? "الاعتماد" : "Verify"}</span>
-            </button>
-          )}
         </div>
       </div>
     </div>

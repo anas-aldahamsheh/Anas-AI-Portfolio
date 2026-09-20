@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, Award, ExternalLink, Calendar, CheckCircle2, Maximize2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { X, Award, Calendar, CheckCircle2, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { CertificateItem } from "../domain/types";
 
@@ -110,18 +109,13 @@ export function CertificateDetailModal({
           {/* Title & Metadata */}
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              <Badge variant="default" size="sm">
+              <span className="rounded-md bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
                 {issuer}
-              </Badge>
+              </span>
               <span className="inline-flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400">
                 <Calendar className="h-3.5 w-3.5" />
                 <span>{certificate.issueDate}</span>
               </span>
-              {certificate.credentialId && (
-                <span className="font-mono text-xs text-neutral-500 dark:text-neutral-400">
-                  ID: {certificate.credentialId}
-                </span>
-              )}
             </div>
 
             <h2 id="certificate-modal-title" className="text-xl font-bold text-neutral-900 sm:text-2xl dark:text-neutral-100">
@@ -161,25 +155,7 @@ export function CertificateDetailModal({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-neutral-200/80 bg-neutral-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900/50">
-          <div>
-            {certificate.credentialUrl ? (
-              <a
-                href={certificate.credentialUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-semibold text-primary hover:underline"
-              >
-                <ExternalLink className="h-3.5 w-3.5" />
-                <span>{isArabic ? "التحقق من الاعتماد الرسمي عبر الإنترنت" : "Verify Official Credential Online"}</span>
-              </a>
-            ) : (
-              <span className="text-xs text-neutral-400">
-                {isArabic ? "وثيقة موثقة معتمدة" : "Verified Credential"}
-              </span>
-            )}
-          </div>
-
+        <div className="flex items-center justify-end border-t border-neutral-200/80 bg-neutral-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900/50">
           <Button variant="outline" size="sm" onClick={onClose}>
             <span>{isArabic ? "إغلاق" : "Close"}</span>
           </Button>
