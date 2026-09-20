@@ -52,6 +52,15 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     },
   },
   {
+    key: "nav.certificates",
+    category: "navigation",
+    description: "Navigation link to Certificates & Courses page",
+    translations: {
+      ar: "الدورات والشهادات",
+      en: "Certificates",
+    },
+  },
+  {
     key: "nav.ai_chat",
     category: "navigation",
     description: "Navigation link to AI assistant",

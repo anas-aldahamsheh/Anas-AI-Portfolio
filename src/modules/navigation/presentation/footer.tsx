@@ -168,6 +168,12 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
                   >
                     {isArabic ? "نبذة والسيرة الذاتية" : "About & Resume"}
                   </Link>
+                  <Link
+                    href={`/${locale}/certificates`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {isArabic ? "الدورات والشهادات" : "Certificates & Courses"}
+                  </Link>
                   <button
                     type="button"
                     onClick={() => {

@@ -12,6 +12,7 @@ import {
   Mail,
   Clock,
   Home,
+  Award,
 } from "lucide-react";
 
 interface NavIconProps {
@@ -33,6 +34,11 @@ export function NavIcon({ name, className = "h-4 w-4", size = 16 }: NavIconProps
     case "cv":
     case "resume":
       return <FileText className={className} size={size} aria-hidden="true" />;
+    case "award":
+    case "certificate":
+    case "certificates":
+    case "courses":
+      return <Award className={className} size={size} aria-hidden="true" />;
     case "briefcase":
     case "experience":
       return <Briefcase className={className} size={size} aria-hidden="true" />;

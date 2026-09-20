@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09141f" />
+      <stop offset="50%" stop-color="#0d2438" />
+      <stop offset="100%" stop-color="#050b12" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="50%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="16" fill="url(#bgGrad)" />
+  <circle cx="400" cy="220" r="280" fill="url(#glow)" />
+
+  <!-- Outer Border -->
+  <rect x="24" y="24" width="752" height="452" rx="12" fill="none" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.6" />
+  <rect x="36" y="36" width="728" height="428" rx="8" fill="none" stroke="url(#accentGrad)" stroke-width="2" opacity="0.8" />
+
+  <!-- Organization Badge -->
+  <g transform="translate(400, 95)">
+    <rect x="-130" y="-18" width="260" height="36" rx="18" fill="#0f2942" stroke="#1e4e79" stroke-width="1" />
+    <text text-anchor="middle" y="6" fill="#6ee7b7" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="2">DEEPLEARNING.AI &amp; OPENAI</text>
+  </g>
+
+  <!-- Certificate Heading -->
+  <text text-anchor="middle" x="400" y="165" fill="#f8fafc" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" letter-spacing="3" text-transform="uppercase" opacity="0.75">SPECIALIZED ENGINEERING CERTIFICATE</text>
+
+  <!-- Course Title -->
+  <text text-anchor="middle" x="400" y="215" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="800">Agentic AI &amp; Autonomous Workflows</text>
+
+  <!-- Awarded to -->
+  <text text-anchor="middle" x="400" y="260" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="13">Awarded to</text>
+  <text text-anchor="middle" x="400" y="295" fill="url(#accentGrad)" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800">Anas Al Dahamsheh</text>
+
+  <!-- Skills / Subtitle -->
+  <text text-anchor="middle" x="400" y="340" fill="#cbd5e1" font-family="system-ui, -apple-system, sans-serif" font-size="13">Tool-Calling • Multi-Agent Loops • Reflection Patterns • Deterministic Guardrails</text>
+
+  <!-- Footer Seal and Details -->
+  <g transform="translate(160, 415)">
+    <text text-anchor="start" x="0" y="0" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="11">ISSUE DATE</text>
+    <text text-anchor="start" x="0" y="18" fill="#e2e8f0" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600">November 2024</text>
+  </g>
+
+  <g transform="translate(400, 415)">
+    <circle cx="0" cy="5" r="22" fill="#0f2942" stroke="url(#accentGrad)" stroke-width="2" />
+    <polygon points="0,-7 5,3 -5,3" fill="#10b981" />
+    <polygon points="0,17 5,7 -5,7" fill="#10b981" />
+  </g>
+
+  <g transform="translate(640, 415)">
+    <text text-anchor="end" x="0" y="0" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="11">CREDENTIAL ID</text>
+    <text text-anchor="end" x="0" y="18" fill="#e2e8f0" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600">DLAI-AGENTIC-2024-4420</text>
+  </g>
+</svg>

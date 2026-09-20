@@ -38,6 +38,18 @@ export const DEFAULT_NAVIGATION_ITEMS: NavigationItem[] = [
     placement: "both",
   },
   {
+    id: "nav-certificates",
+    destinationType: "internal",
+    target: "/certificates",
+    labelKey: "nav.certificates",
+    iconKey: "award",
+    orderIndex: 35,
+    isVisible: true,
+    openInNewTab: false,
+    authVisibility: "all",
+    placement: "both",
+  },
+  {
     id: "nav-about",
     destinationType: "internal",
     target: "/about",

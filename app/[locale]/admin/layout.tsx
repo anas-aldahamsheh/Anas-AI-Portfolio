@@ -48,6 +48,10 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
     { href: `/${locale}/admin/sections`, label: isArabic ? "الأقسام" : "Sections" },
     { href: `/${locale}/admin/projects`, label: isArabic ? "المشاريع" : "Projects" },
     { href: `/${locale}/admin/cv`, label: isArabic ? "السيرة الذاتية" : "CV" },
+    {
+      href: `/${locale}/admin/certificates`,
+      label: isArabic ? "الشهادات والدورات" : "Certificates & Courses",
+    },
     { href: `/${locale}/admin/ai`, label: isArabic ? "الذكاء الاصطناعي" : "AI Plane" },
     { href: `/${locale}/admin/prompts`, label: isArabic ? "التوجيهات الذكية" : "Prompts" },
     { href: `/${locale}/admin/rag`, label: isArabic ? "فهرسة المعرفة (RAG)" : "RAG Pipeline" },
