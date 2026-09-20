@@ -124,7 +124,7 @@ export function ProjectCard({ project, locale }: ProjectCardProps) {
                   <SocialIcon name="github" className="h-4 w-4" />
                 </a>
               )}
-              {project.demoUrl && (
+              {project.demoUrl && project.isDemoEnabled !== false && (
                 <a
                   href={project.demoUrl}
                   target="_blank"

@@ -24,6 +24,7 @@ import { EditableRegion } from "@/modules/admin/presentation";
 import { SocialIcon } from "@/modules/social/presentation";
 import type { Project } from "../domain/types";
 import { ProjectCard } from "./project-card";
+import { ProjectDemoAdminControl } from "./project-demo-admin-control";
 
 export interface ProjectDeepDiveProps {
   project: Project;
@@ -102,6 +103,10 @@ const NARRATIVE_SECTIONS: NarrativeSectionConfig[] = [
 export function ProjectDeepDive({ project, relatedProjects = [], locale }: ProjectDeepDiveProps) {
   const { t } = useLocalization();
   const [imageFailed, setImageFailed] = useState(false);
+  const [isDemoActive, setIsDemoActive] = useState<boolean>(
+    project.isDemoEnabled ?? Boolean(project.demoUrl),
+  );
+  const [currentDemoUrl, setCurrentDemoUrl] = useState<string>(project.demoUrl ?? "");
 
   // Localization labels
   const backLabel = t("project.detail.back_to_projects") || "Back to Projects";
@@ -231,9 +236,9 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
                 <span>{sourceCodeLabel}</span>
               </a>
             )}
-            {project.demoUrl && (
+            {Boolean(isDemoActive && currentDemoUrl) && (
               <a
-                href={project.demoUrl}
+                href={currentDemoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border border-neutral-300 bg-white px-3.5 py-2 text-sm font-medium text-neutral-800 shadow-xs transition-colors hover:bg-neutral-50 hover:text-neutral-950 focus:ring-2 focus:ring-neutral-400 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
@@ -242,6 +247,20 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
                 <span>{liveDemoLabel}</span>
               </a>
             )}
+
+            {/* Admin Live Demo toggle and URL controller */}
+            <ProjectDemoAdminControl
+              projectId={project.id}
+              projectSlug={project.slug}
+              projectTitle={project.title}
+              initialIsEnabled={isDemoActive}
+              initialDemoUrl={currentDemoUrl}
+              locale={locale}
+              onDemoChange={(enabled, newUrl) => {
+                setIsDemoActive(enabled);
+                setCurrentDemoUrl(newUrl);
+              }}
+            />
           </div>
 
           <Link

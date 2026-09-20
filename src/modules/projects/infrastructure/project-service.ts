@@ -8,7 +8,7 @@ import {
   projectTags,
   projectTagLinks,
 } from "@/lib/db/schema/projects";
-import { auditEvents } from "@/lib/db/schema/admin";
+import { auditEvents, systemSettings } from "@/lib/db/schema/admin";
 import { logger } from "@/lib/observability/logger";
 import type {
   Project,
@@ -17,6 +17,7 @@ import type {
   ProjectFilterParams,
   ProjectListResult,
   PublishStatus,
+  ProjectDemoConfig,
 } from "../domain/types";
 import { BASELINE_CATEGORIES, BASELINE_TAGS, getBaselineProjects } from "../domain/baseline";
 
@@ -24,6 +25,28 @@ export class ProjectService {
   private cache: Map<string, ProjectListResult> = new Map();
   private cacheTimestamps: Map<string, number> = new Map();
   private readonly CACHE_TTL_MS = 60 * 1000;
+  private readonly DB_TIMEOUT_MS = 250;
+  private demoSettingsCache: Record<string, ProjectDemoConfig> = {};
+  private demoSettingsTimestamp = 0;
+
+  /**
+   * Helper to bound database query latency against offline or slow DB connections.
+   */
+  private async queryWithTimeout<T>(promise: Promise<T>, timeoutMs = this.DB_TIMEOUT_MS): Promise<T> {
+    let timer: NodeJS.Timeout;
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      timer = setTimeout(
+        () => reject(new Error(`Database operation timed out after ${timeoutMs}ms`)),
+        timeoutMs,
+      );
+    });
+
+    try {
+      return await Promise.race([promise, timeoutPromise]);
+    } finally {
+      clearTimeout(timer!);
+    }
+  }
 
   public invalidateCache(): void {
     this.cache.clear();
@@ -48,39 +71,41 @@ export class ProjectService {
       const statusFilter = params.status ?? "PUBLISHED";
 
       // Query projects and translations from database
-      const rows = await db
-        .select({
-          id: projects.id,
-          slug: projects.slug,
-          status: projects.status,
-          orderIndex: projects.orderIndex,
-          isFeatured: projects.isFeatured,
-          coverImageUrl: projects.coverImageUrl,
-          repoUrl: projects.repoUrl,
-          demoUrl: projects.demoUrl,
-          createdAt: projects.createdAt,
-          updatedAt: projects.updatedAt,
-          transTitle: projectTranslations.title,
-          transSummary: projectTranslations.summary,
-          problem: projectTranslations.problem,
-          constraints: projectTranslations.constraints,
-          solution: projectTranslations.solution,
-          architecture: projectTranslations.architecture,
-          implementation: projectTranslations.implementation,
-          challenges: projectTranslations.challenges,
-          decisionsTradeoffs: projectTranslations.decisionsTradeoffs,
-          results: projectTranslations.results,
-        })
-        .from(projects)
-        .leftJoin(
-          projectTranslations,
-          and(
-            eq(projectTranslations.projectId, projects.id),
-            eq(projectTranslations.localeCode, locale),
-          ),
-        )
-        .where(eq(projects.status, statusFilter))
-        .orderBy(asc(projects.orderIndex), desc(projects.createdAt));
+      const rows = await this.queryWithTimeout(
+        db
+          .select({
+            id: projects.id,
+            slug: projects.slug,
+            status: projects.status,
+            orderIndex: projects.orderIndex,
+            isFeatured: projects.isFeatured,
+            coverImageUrl: projects.coverImageUrl,
+            repoUrl: projects.repoUrl,
+            demoUrl: projects.demoUrl,
+            createdAt: projects.createdAt,
+            updatedAt: projects.updatedAt,
+            transTitle: projectTranslations.title,
+            transSummary: projectTranslations.summary,
+            problem: projectTranslations.problem,
+            constraints: projectTranslations.constraints,
+            solution: projectTranslations.solution,
+            architecture: projectTranslations.architecture,
+            implementation: projectTranslations.implementation,
+            challenges: projectTranslations.challenges,
+            decisionsTradeoffs: projectTranslations.decisionsTradeoffs,
+            results: projectTranslations.results,
+          })
+          .from(projects)
+          .leftJoin(
+            projectTranslations,
+            and(
+              eq(projectTranslations.projectId, projects.id),
+              eq(projectTranslations.localeCode, locale),
+            ),
+          )
+          .where(eq(projects.status, statusFilter))
+          .orderBy(asc(projects.orderIndex), desc(projects.createdAt)),
+      );
 
       if (rows.length > 0) {
         // Fetch categories and tags for the retrieved projects
@@ -139,10 +164,11 @@ export class ProjectService {
           updatedAt: r.updatedAt.toISOString(),
         }));
 
+        const projectsWithDemo = await this.attachDemoSettings(allProjects);
         const categories = await this.getCategories();
         const tags = await this.getTags();
 
-        const filtered = this.applyFiltersAndSort(allProjects, params, locale);
+        const filtered = this.applyFiltersAndSort(projectsWithDemo, params, locale);
         const result: ProjectListResult = {
           projects: filtered,
           categories,
@@ -162,7 +188,7 @@ export class ProjectService {
     }
 
     // Baseline fallback
-    const baselineProjects = getBaselineProjects(locale);
+    const baselineProjects = await this.attachDemoSettings(getBaselineProjects(locale));
     const filtered = this.applyFiltersAndSort(baselineProjects, params, locale);
     const result: ProjectListResult = {
       projects: filtered,
@@ -193,7 +219,7 @@ export class ProjectService {
     if (match) return match;
 
     // Baseline fallback
-    const baselines = getBaselineProjects(locale);
+    const baselines = await this.attachDemoSettings(getBaselineProjects(locale));
     return baselines.find((p) => p.slug === slug) ?? null;
   }
 
@@ -380,6 +406,183 @@ export class ProjectService {
     }
 
     return result;
+  }
+
+  /**
+   * Merges persisted demo settings overrides into an array of projects.
+   */
+  private async attachDemoSettings(items: Project[]): Promise<Project[]> {
+    const allSettings = await this.getAllDemoSettings();
+    return items.map((p) => {
+      const override = allSettings[p.slug] || allSettings[p.id];
+      if (override) {
+        return {
+          ...p,
+          isDemoEnabled: override.isEnabled,
+          demoUrl: override.demoUrl || null,
+        };
+      }
+      return {
+        ...p,
+        isDemoEnabled: Boolean(p.demoUrl),
+      };
+    });
+  }
+
+  /**
+   * Retrieves all project demo overrides from systemSettings (with in-memory fallback/cache).
+   */
+  async getAllDemoSettings(): Promise<Record<string, ProjectDemoConfig>> {
+    const now = Date.now();
+    if (
+      this.demoSettingsTimestamp > 0 &&
+      now - this.demoSettingsTimestamp < this.CACHE_TTL_MS
+    ) {
+      return this.demoSettingsCache;
+    }
+
+    try {
+      const rows = await this.queryWithTimeout(
+        db
+          .select()
+          .from(systemSettings)
+          .where(eq(systemSettings.key, "project_demo_settings"))
+          .limit(1),
+      );
+
+      if (rows.length > 0 && rows[0]?.value) {
+        const stored = rows[0].value as Record<string, ProjectDemoConfig>;
+        this.demoSettingsCache = { ...this.demoSettingsCache, ...stored };
+        this.demoSettingsTimestamp = now;
+        return this.demoSettingsCache;
+      }
+    } catch (err) {
+      logger.warn(
+        "Failed to load project_demo_settings from database, using cached/runtime settings",
+        {
+          module: "projects",
+          metadata: { error: String(err) },
+        },
+      );
+    }
+
+    this.demoSettingsTimestamp = now;
+    return this.demoSettingsCache;
+  }
+
+  /**
+   * Retrieves demo config for a project by slug or ID.
+   */
+  async getDemoConfig(slugOrId: string): Promise<ProjectDemoConfig> {
+    const all = await this.getAllDemoSettings();
+    const config = all[slugOrId];
+    if (config) {
+      return config;
+    }
+
+    // Default based on baseline or current project
+    const project = await this.getProjectBySlug(slugOrId);
+    if (project) {
+      return {
+        isEnabled: project.isDemoEnabled ?? Boolean(project.demoUrl),
+        demoUrl: project.demoUrl ?? "",
+      };
+    }
+
+    return {
+      isEnabled: false,
+      demoUrl: "",
+    };
+  }
+
+  /**
+   * Updates demo config for a project by slug or ID.
+   */
+  async updateDemoConfig(
+    slugOrId: string,
+    config: ProjectDemoConfig,
+    adminUserId?: string,
+  ): Promise<ProjectDemoConfig> {
+    const current = await this.getAllDemoSettings();
+    const updatedRecord: ProjectDemoConfig = {
+      isEnabled: Boolean(config.isEnabled),
+      demoUrl: config.demoUrl.trim(),
+    };
+
+    const updatedMap = {
+      ...current,
+      [slugOrId]: updatedRecord,
+    };
+
+    this.demoSettingsCache = updatedMap;
+    this.demoSettingsTimestamp = Date.now();
+
+    // 1. Persist to systemSettings
+    try {
+      await this.queryWithTimeout(
+        db
+          .insert(systemSettings)
+          .values({
+            key: "project_demo_settings",
+            value: updatedMap,
+            description: "Per-project Live Demo toggle and URL configurations",
+            updatedAt: new Date(),
+          })
+          .onConflictDoUpdate({
+            target: systemSettings.key,
+            set: {
+              value: updatedMap,
+              updatedAt: new Date(),
+            },
+          }),
+      );
+    } catch (err) {
+      logger.warn(
+        "Failed to persist project_demo_settings to database, preserved in memory",
+        {
+          module: "projects",
+          metadata: { error: String(err) },
+        },
+      );
+    }
+
+    // 2. If project exists in DB table, sync demo_url as well
+    try {
+      await this.queryWithTimeout(
+        db
+          .update(projects)
+          .set({
+            demoUrl: config.isEnabled ? config.demoUrl.trim() || null : null,
+            updatedAt: new Date(),
+          })
+          .where(eq(projects.slug, slugOrId)),
+      );
+    } catch {
+      // Ignored if DB table not reachable
+    }
+
+    // 3. Record audit event
+    if (adminUserId) {
+      try {
+        await this.queryWithTimeout(
+          db.insert(auditEvents).values({
+            userId: adminUserId,
+            action: "project_demo_updated",
+            entityType: "project",
+            entityId: slugOrId,
+            newState: updatedRecord,
+          }),
+        );
+      } catch (auditErr) {
+        logger.warn("Failed to write audit event for project demo update", {
+          module: "projects",
+          metadata: { error: String(auditErr) },
+        });
+      }
+    }
+
+    this.invalidateCache();
+    return updatedRecord;
   }
 }
 

@@ -6,3 +6,5 @@ export { ProjectCatalog } from "./project-catalog";
 export type { ProjectCatalogProps } from "./project-catalog";
 export { ProjectDeepDive } from "./project-deep-dive";
 export type { ProjectDeepDiveProps } from "./project-deep-dive";
+export { ProjectDemoAdminControl } from "./project-demo-admin-control";
+export type { ProjectDemoAdminControlProps } from "./project-demo-admin-control";

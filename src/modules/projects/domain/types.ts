@@ -23,6 +23,7 @@ export interface Project {
   coverImageUrl?: string | null | undefined;
   repoUrl?: string | null | undefined;
   demoUrl?: string | null | undefined;
+  isDemoEnabled?: boolean | undefined;
   title: string;
   summary: string;
   problem?: string | null | undefined;
@@ -70,6 +71,16 @@ export const projectUpdateSchema = z.object({
 });
 
 export type ProjectUpdateInput = z.infer<typeof projectUpdateSchema>;
+
+export interface ProjectDemoConfig {
+  isEnabled: boolean;
+  demoUrl: string;
+}
+
+export const projectDemoConfigSchema = z.object({
+  isEnabled: z.boolean(),
+  demoUrl: z.string().trim(),
+});
 
 export {
   BASELINE_CATEGORIES,
