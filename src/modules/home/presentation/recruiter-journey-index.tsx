@@ -120,15 +120,15 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
         className="relative w-full bg-white overflow-hidden transition-colors duration-300 dark:bg-[#07101F]"
         aria-label={isArabic ? "المقدمة" : "Hero"}
       >
-        {/* Soft Sky Blue / Cyan Aura on Left matching image */}
+        {/* Soft Sky Blue / Cyan Aura on Left matching image with subtle ambient motion */}
         <div
-          className="pointer-events-none absolute -top-24 -start-20 h-[500px] w-[600px] rounded-full bg-gradient-to-br from-[#BAE6FD]/70 via-[#E0F2FE]/60 to-transparent blur-[100px] dark:from-[#0284c7]/20 dark:via-[#0369a1]/10 dark:to-transparent"
+          className="hero-ambient-glow-left pointer-events-none absolute -top-24 -start-20 h-[500px] w-[600px] rounded-full bg-gradient-to-br from-[#BAE6FD]/70 via-[#E0F2FE]/60 to-transparent blur-[100px] dark:from-[#0284c7]/20 dark:via-[#0369a1]/10 dark:to-transparent"
           aria-hidden="true"
         />
 
-        {/* Soft Dreamy Purple / Lavender Aura on Right matching image */}
+        {/* Soft Dreamy Purple / Lavender Aura on Right matching image with subtle ambient motion */}
         <div
-          className="pointer-events-none absolute -top-20 -end-20 h-[520px] w-[620px] rounded-full bg-gradient-to-bl from-[#DDD6FE]/75 via-[#EDE9FE]/60 to-transparent blur-[110px] dark:from-[#7c3aed]/20 dark:via-[#6d28d9]/10 dark:to-transparent"
+          className="hero-ambient-glow-right pointer-events-none absolute -top-20 -end-20 h-[520px] w-[620px] rounded-full bg-gradient-to-bl from-[#DDD6FE]/75 via-[#EDE9FE]/60 to-transparent blur-[110px] dark:from-[#7c3aed]/20 dark:via-[#6d28d9]/10 dark:to-transparent"
           aria-hidden="true"
         />
 
@@ -146,10 +146,13 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
 
         {/* Content Container matching reference image layout */}
         <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-14 sm:py-18 lg:py-22 text-start">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight text-[#0B1530] leading-[1.1] dark:text-[#F8FAFC]">
-            {isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
-          </h1>
-          <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] font-normal text-[#5A6882] leading-relaxed max-w-2xl dark:text-[#9AA8C0]">
+          {/* Masked container for name upward reveal */}
+          <div className="overflow-hidden pb-1 -mb-1">
+            <h1 className="hero-name-reveal text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight text-[#0B1530] leading-[1.1] dark:text-[#F8FAFC]">
+              {isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
+            </h1>
+          </div>
+          <p className="hero-subtitle-reveal mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] font-normal text-[#5A6882] leading-relaxed max-w-2xl dark:text-[#9AA8C0]">
             {isArabic
               ? "مهندس ذكاء اصطناعي ومطور برمجيات شامل (Full-Stack)"
               : "AI Engineer & Full-Stack Developer"}
