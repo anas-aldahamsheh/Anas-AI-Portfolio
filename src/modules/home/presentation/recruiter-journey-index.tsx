@@ -77,7 +77,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
   return (
     <div className="w-full space-y-4">
       {/* Brand Header */}
-      <header className="space-y-2 pb-8 sm:pb-12 border-b border-neutral-200/60 dark:border-neutral-800/60 text-start">
+      <header className="space-y-3 pb-8 sm:pb-12 border-b border-neutral-200/60 dark:border-neutral-800/60 text-start">
         <h1 className="text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-5xl dark:text-neutral-50">
           {isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
         </h1>
@@ -85,6 +85,11 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
           {isArabic
             ? "مهندس ذكاء اصطناعي ومطور برمجيات شامل (Full-Stack)"
             : "AI Engineer & Full-Stack Developer"}
+        </p>
+        <p className="text-sm sm:text-base leading-relaxed text-neutral-600 dark:text-neutral-300 max-w-2xl pt-1">
+          {isArabic
+            ? "دليلك السريع للتعرف عليّ، استكشاف خبراتي العملية، مشاهدة مشاريعي الحية، وبدء التواصل."
+            : "Your executive briefing to discover who I am, explore my experience, see live systems, and get in touch."}
         </p>
       </header>
 
