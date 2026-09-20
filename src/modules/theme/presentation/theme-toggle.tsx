@@ -16,7 +16,9 @@ export function ThemeToggle({ locale = "ar", className = "" }: ThemeToggleProps)
   const isDark = resolvedTheme === "dark";
   const isArabic = locale === "ar";
 
-  const toggleTheme = () => {
+  const toggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     setTheme(isDark ? "light" : "dark");
   };
 
@@ -35,6 +37,7 @@ export function ThemeToggle({ locale = "ar", className = "" }: ThemeToggleProps)
       className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E4EAF3] bg-white text-[#0B1530] shadow-2xs transition-all duration-200 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:bg-white/[0.08] cursor-pointer ${className}`.trim()}
       aria-label={label}
       title={label}
+      data-testid="theme-toggle-button"
     >
       {isDark ? (
         /* Sun icon when in dark mode (click switches to light) */

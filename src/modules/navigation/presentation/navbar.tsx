@@ -130,13 +130,18 @@ export function Navbar({
                   rel={item.openInNewTab ? "noopener noreferrer" : undefined}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "px-3.5 py-1.5 text-xs lg:text-[13px] font-medium transition-all duration-200 rounded-full",
+                    "px-3.5 py-1.5 text-xs lg:text-[13px] font-medium transition-all duration-200 rounded-full flex items-center gap-1",
                     active
                       ? "bg-[#EEF5FF] text-[#1E40AF] font-semibold dark:bg-indigo-950/70 dark:text-indigo-200 dark:border dark:border-indigo-500/30 dark:shadow-[0_0_12px_rgba(99,102,241,0.2)]"
                       : "text-[#6C7893] hover:text-[#0B1530] hover:bg-neutral-100/70 dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC] dark:hover:bg-white/[0.06]",
                   )}
                 >
                   <span>{label}</span>
+                  {item.badge && (
+                    <span className="ms-1 px-1.5 py-0 text-[10px] rounded-full bg-neutral-100 text-neutral-600 dark:bg-white/[0.08] dark:text-neutral-300">
+                      {item.badge}
+                    </span>
+                  )}
                 </Link>
               );
             })}
@@ -223,6 +228,11 @@ export function Navbar({
                     )}
                   >
                     <span>{label}</span>
+                    {item.badge && (
+                      <span className="ms-1 px-1.5 py-0 text-[10px] rounded-full bg-neutral-100 text-neutral-600 dark:bg-white/[0.08] dark:text-neutral-300">
+                        {item.badge}
+                      </span>
+                    )}
                   </Link>
                 );
               })}

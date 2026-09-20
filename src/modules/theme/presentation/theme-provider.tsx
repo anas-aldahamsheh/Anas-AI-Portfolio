@@ -5,7 +5,6 @@ import React, {
   useContext,
   useEffect,
   useState,
-  useTransition,
   useSyncExternalStore,
 } from "react";
 import {
@@ -61,7 +60,6 @@ export function ThemeProvider({ children, initialTheme = "system" }: ThemeProvid
     getSystemDarkServerSnapshot,
   );
 
-  const [, startTransition] = useTransition();
 
   const resolvedTheme: ResolvedTheme = resolveTheme(theme, systemPrefersDark);
 
@@ -80,16 +78,24 @@ export function ThemeProvider({ children, initialTheme = "system" }: ThemeProvid
   }, [resolvedTheme]);
 
   const setTheme = (newTheme: Theme) => {
-    startTransition(() => {
-      setThemeState(newTheme);
+    setThemeState(newTheme);
 
-      if (typeof window !== "undefined") {
-        try {
-          localStorage.setItem(THEME_STORAGE_KEY, newTheme);
-          document.cookie = serializeThemeCookie(newTheme);
-        } catch {}
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, newTheme);
+        document.cookie = serializeThemeCookie(newTheme);
+      } catch {}
+
+      const root = document.documentElement;
+      const targetResolved = resolveTheme(newTheme, systemPrefersDark);
+      if (targetResolved === "dark") {
+        root.classList.add("dark");
+        root.style.colorScheme = "dark";
+      } else {
+        root.classList.remove("dark");
+        root.style.colorScheme = "light";
       }
-    });
+    }
   };
 
   return (
