@@ -2,14 +2,6 @@
 
 import { useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Languages } from "lucide-react";
 
 export interface LanguageSelectProps {
   currentLocale: string;
@@ -17,23 +9,28 @@ export interface LanguageSelectProps {
   className?: string;
 }
 
+/**
+ * Compact square language toggle button.
+ * Directly switches between Arabic (AR) and English (EN) without dropdown select.
+ */
 export function LanguageSelect({
   currentLocale,
-  ariaLabel = "Select language",
+  ariaLabel,
   className,
 }: LanguageSelectProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
-  const handleValueChange = (newLocale: string) => {
-    if (newLocale === currentLocale) return;
+  const isArabic = currentLocale === "ar";
+  const targetLocale = isArabic ? "en" : "ar";
 
+  const handleToggle = () => {
     const segments = pathname.split("/").filter(Boolean);
     if (segments.length > 0 && (segments[0] === "ar" || segments[0] === "en")) {
-      segments[0] = newLocale;
+      segments[0] = targetLocale;
     } else {
-      segments.unshift(newLocale);
+      segments.unshift(targetLocale);
     }
     const newPath = `/${segments.join("/")}`;
 
@@ -42,28 +39,24 @@ export function LanguageSelect({
     });
   };
 
+  const buttonLabel = isArabic ? "EN" : "AR";
+  const tooltipLabel =
+    ariaLabel ||
+    (isArabic ? "التبديل إلى الإنجليزية (English)" : "Switch to Arabic (العربية)");
+
   return (
-    <div className="flex items-center">
-      <Select
-        value={currentLocale}
-        onValueChange={handleValueChange}
-        disabled={isPending}
-        dir={currentLocale === "ar" ? "rtl" : "ltr"}
-      >
-        <SelectTrigger
-          aria-label={ariaLabel}
-          className={className || "h-9 w-[135px] text-xs font-medium"}
-        >
-          <div className="flex items-center gap-1.5">
-            <Languages className="h-3.5 w-3.5 shrink-0 opacity-70" aria-hidden="true" />
-            <SelectValue />
-          </div>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="ar">العربية (AR)</SelectItem>
-          <SelectItem value="en">English (EN)</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
+    <button
+      type="button"
+      onClick={handleToggle}
+      disabled={isPending}
+      className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200/80 bg-white text-xs font-bold text-neutral-800 shadow-xs transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 disabled:opacity-40 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:hover:text-neutral-100 cursor-pointer ${
+        className || ""
+      }`.trim()}
+      aria-label={tooltipLabel}
+      title={tooltipLabel}
+      data-testid="language-toggle-button"
+    >
+      <span className="tracking-wider">{buttonLabel}</span>
+    </button>
   );
 }
