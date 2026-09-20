@@ -10,6 +10,7 @@ import type { Theme } from "@/modules/theme/domain/theme";
 
 import { MotionProvider } from "@/modules/motion/presentation/motion-provider";
 import { SkipLink, AnnouncerProvider } from "@/modules/accessibility/presentation";
+import { fontInter, fontIBMPlexSansArabic } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -63,7 +64,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
     <html
       lang={locale}
       dir={dir}
-      className={serverTheme === "dark" ? "dark" : ""}
+      className={`${fontInter.variable} ${fontIBMPlexSansArabic.variable} ${serverTheme === "dark" ? "dark" : ""}`.trim()}
       suppressHydrationWarning
     >
       <head>

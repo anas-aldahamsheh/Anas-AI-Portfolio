@@ -146,10 +146,10 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
 
         {/* Content Container matching reference image layout */}
         <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-14 sm:py-18 lg:py-22 text-start">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black tracking-tight text-[#0B1530] leading-[1.1] dark:text-[#F8FAFC]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight text-[#0B1530] leading-[1.1] dark:text-[#F8FAFC]">
             {isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
           </h1>
-          <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] font-normal sm:font-medium tracking-tight text-[#5A6882] leading-relaxed max-w-2xl dark:text-[#9AA8C0]">
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] font-normal text-[#5A6882] leading-relaxed max-w-2xl dark:text-[#9AA8C0]">
             {isArabic
               ? "مهندس ذكاء اصطناعي ومطور برمجيات شامل (Full-Stack)"
               : "AI Engineer & Full-Stack Developer"}
@@ -189,7 +189,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
 
                   {/* ZONE 2: CONTENT (Category, Headline, Description) */}
                   <div className="space-y-1.5 flex-1 min-w-0">
-                    <div className="text-xs font-semibold uppercase tracking-wider text-[#6C7893] dark:text-[#9AA8C0]">
+                    <div className="text-xs font-medium uppercase tracking-wider text-[#6C7893] dark:text-[#9AA8C0]">
                       {item.category}
                     </div>
 
@@ -197,7 +197,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
                       {item.title}
                     </h2>
 
-                    <p className="text-sm sm:text-[15px] leading-relaxed text-[#6C7893] dark:text-[#9AA8C0] max-w-2xl lg:max-w-3xl">
+                    <p className="text-sm sm:text-[15px] font-normal leading-relaxed text-[#6C7893] dark:text-[#9AA8C0] max-w-2xl lg:max-w-3xl">
                       {item.description}
                     </p>
                   </div>

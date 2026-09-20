@@ -259,7 +259,7 @@ export function JobFitAnalyzer() {
               <div className="flex items-center gap-4">
                 <div className="border-primary/30 bg-primary/10 relative flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border-2">
                   <span
-                    className="text-primary text-2xl font-black"
+                    className="text-primary text-2xl font-bold"
                     data-testid="match-score-display"
                   >
                     {result.summary.matchScore}%

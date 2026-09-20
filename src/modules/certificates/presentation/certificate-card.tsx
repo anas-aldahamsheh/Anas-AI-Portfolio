@@ -62,7 +62,7 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
 
       {/* Body Content */}
       <div className="flex flex-1 flex-col p-5">
-        <div className="mb-1.5 text-xs font-semibold text-primary">
+        <div className="mb-1.5 text-xs font-medium text-primary">
           {issuer}
         </div>
 

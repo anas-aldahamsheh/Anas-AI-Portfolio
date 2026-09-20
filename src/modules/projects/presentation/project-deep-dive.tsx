@@ -213,7 +213,7 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
           }}
         >
           <div className="space-y-3">
-            <h1 className="text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl dark:text-neutral-50">
+            <h1 className="text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl dark:text-neutral-50">
               {project.title}
             </h1>
             <p className="text-lg leading-relaxed text-neutral-600 sm:text-xl dark:text-neutral-300">

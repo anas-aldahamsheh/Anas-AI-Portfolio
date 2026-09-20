@@ -22,7 +22,7 @@ export function MetricsBlock({ content }: MetricsBlockProps) {
         <StaggerItem key={idx}>
           <Card className="h-full border border-neutral-200/80 bg-white/50 backdrop-blur-xs dark:border-neutral-800/80 dark:bg-neutral-950/50">
             <CardContent className="flex flex-col items-center justify-center p-6 text-center">
-              <span className="text-3xl font-extrabold tracking-tight text-neutral-950 sm:text-4xl dark:text-neutral-50">
+              <span className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-neutral-50">
                 {item.value}
               </span>
               <span className="mt-1 text-sm font-semibold text-neutral-800 dark:text-neutral-200">
