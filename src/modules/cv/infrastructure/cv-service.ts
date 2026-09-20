@@ -1,9 +1,16 @@
 import { eq, desc } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { cvVersions, cvPublications } from "@/lib/db/schema/cv";
-import { auditEvents } from "@/lib/db/schema/admin";
+import { auditEvents, systemSettings } from "@/lib/db/schema/admin";
 import { logger } from "@/lib/observability/logger";
-import { validatePdfBytes, type CvVersion, type PublishedCv } from "../domain/cv";
+import {
+  validatePdfBytes,
+  type CvVersion,
+  type PublishedCv,
+  type CvBoxItem,
+  DEFAULT_CV_BOXES,
+  cvBoxesConfigSchema,
+} from "../domain/cv";
 import { cvStorageService } from "./storage-service";
 
 export const BASELINE_PUBLISHED_CV: PublishedCv = {
@@ -22,10 +29,32 @@ export class CvService {
   private cachedPublishedCv: PublishedCv | null = null;
   private cacheTimestamp = 0;
   private readonly CACHE_TTL_MS = 60 * 1000; // 1 minute in-memory TTL
+  private readonly DB_TIMEOUT_MS = 250;
+  private cachedBoxes: CvBoxItem[] | null = null;
+
+  /**
+   * Helper to bound database query latency against offline or slow DB connections.
+   */
+  private async queryWithTimeout<T>(promise: Promise<T>, timeoutMs = this.DB_TIMEOUT_MS): Promise<T> {
+    let timer: NodeJS.Timeout;
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      timer = setTimeout(
+        () => reject(new Error(`Database operation timed out after ${timeoutMs}ms`)),
+        timeoutMs,
+      );
+    });
+
+    try {
+      return await Promise.race([promise, timeoutPromise]);
+    } finally {
+      clearTimeout(timer!);
+    }
+  }
 
   public invalidateCache(): void {
     this.cachedPublishedCv = null;
     this.cacheTimestamp = 0;
+    this.cachedBoxes = null;
   }
 
   /**
@@ -38,22 +67,24 @@ export class CvService {
     }
 
     try {
-      const rows = await db
-        .select({
-          pubId: cvPublications.id,
-          versionId: cvVersions.id,
-          versionNumber: cvVersions.versionNumber,
-          fileUrl: cvVersions.fileUrl,
-          fileName: cvVersions.fileName,
-          fileSize: cvVersions.fileSize,
-          mimeType: cvVersions.mimeType,
-          changelog: cvVersions.changelog,
-          publishedAt: cvPublications.publishedAt,
-        })
-        .from(cvPublications)
-        .innerJoin(cvVersions, eq(cvPublications.cvVersionId, cvVersions.id))
-        .where(eq(cvPublications.isCurrent, true))
-        .limit(1);
+      const rows = await this.queryWithTimeout(
+        db
+          .select({
+            pubId: cvPublications.id,
+            versionId: cvVersions.id,
+            versionNumber: cvVersions.versionNumber,
+            fileUrl: cvVersions.fileUrl,
+            fileName: cvVersions.fileName,
+            fileSize: cvVersions.fileSize,
+            mimeType: cvVersions.mimeType,
+            changelog: cvVersions.changelog,
+            publishedAt: cvPublications.publishedAt,
+          })
+          .from(cvPublications)
+          .innerJoin(cvVersions, eq(cvPublications.cvVersionId, cvVersions.id))
+          .where(eq(cvPublications.isCurrent, true))
+          .limit(1),
+      );
 
       const activeRow = rows[0];
       if (activeRow) {
@@ -90,7 +121,9 @@ export class CvService {
    */
   async listVersions(): Promise<CvVersion[]> {
     try {
-      const rows = await db.select().from(cvVersions).orderBy(desc(cvVersions.versionNumber));
+      const rows = await this.queryWithTimeout(
+        db.select().from(cvVersions).orderBy(desc(cvVersions.versionNumber)),
+      );
 
       return rows.map((r) => ({
         id: r.id,
@@ -251,6 +284,101 @@ export class CvService {
    */
   async rollbackVersion(versionId: string, adminUserId: string): Promise<boolean> {
     return this.publishVersion(versionId, adminUserId);
+  }
+
+  /**
+   * Retrieves CV profile & competency boxes from systemSettings with baseline fallback.
+   */
+  async getCvBoxes(): Promise<CvBoxItem[]> {
+    if (this.cachedBoxes) {
+      return this.cachedBoxes;
+    }
+
+    try {
+      const rows = await this.queryWithTimeout(
+        db
+          .select()
+          .from(systemSettings)
+          .where(eq(systemSettings.key, "cv_profile_boxes"))
+          .limit(1),
+      );
+
+      if (rows.length > 0 && rows[0]?.value) {
+        const parsed = cvBoxesConfigSchema.safeParse(rows[0].value);
+        if (parsed.success && parsed.data.boxes.length > 0) {
+          const sorted = [...parsed.data.boxes].sort((a, b) => a.orderIndex - b.orderIndex);
+          this.cachedBoxes = sorted;
+          return sorted;
+        }
+      }
+    } catch (err) {
+      logger.warn("Failed to load cv_profile_boxes from database, using defaults", {
+        module: "cv",
+        metadata: { error: String(err) },
+      });
+    }
+
+    this.cachedBoxes = DEFAULT_CV_BOXES;
+    return DEFAULT_CV_BOXES;
+  }
+
+  /**
+   * Authoritatively persists updated CV profile & competency boxes.
+   */
+  async updateCvBoxes(boxes: CvBoxItem[], adminUserId?: string): Promise<CvBoxItem[]> {
+    const validated = cvBoxesConfigSchema.parse({
+      boxes,
+      updatedAt: new Date().toISOString(),
+    });
+
+    const sorted = [...validated.boxes].sort((a, b) => a.orderIndex - b.orderIndex);
+    this.cachedBoxes = sorted;
+
+    try {
+      await this.queryWithTimeout(
+        db
+          .insert(systemSettings)
+          .values({
+            key: "cv_profile_boxes",
+            value: { boxes: sorted, updatedAt: new Date().toISOString() },
+            description: "Dynamic CV profile & competency boxes managed via admin",
+            updatedAt: new Date(),
+          })
+          .onConflictDoUpdate({
+            target: systemSettings.key,
+            set: {
+              value: { boxes: sorted, updatedAt: new Date().toISOString() },
+              updatedAt: new Date(),
+            },
+          }),
+      );
+    } catch (err) {
+      logger.warn("Failed to persist cv_profile_boxes to database, retained in memory", {
+        module: "cv",
+        metadata: { error: String(err) },
+      });
+    }
+
+    if (adminUserId) {
+      try {
+        await this.queryWithTimeout(
+          db.insert(auditEvents).values({
+            userId: adminUserId,
+            action: "cv_boxes_updated",
+            entityType: "cv_boxes",
+            entityId: "cv_profile_boxes",
+            newState: { boxesCount: sorted.length },
+          }),
+        );
+      } catch (auditErr) {
+        logger.warn("Failed to record audit event for cv boxes update", {
+          module: "cv",
+          metadata: { error: String(auditErr) },
+        });
+      }
+    }
+
+    return sorted;
   }
 }
 

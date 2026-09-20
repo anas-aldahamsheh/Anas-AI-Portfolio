@@ -12,23 +12,66 @@ import {
   Code2,
   CheckCircle2,
   FileText,
+  Cpu,
+  ShieldCheck,
+  Layers,
+  Globe,
+  Terminal,
+  Database,
+  Rocket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { FadeIn } from "@/components/motion";
 import { useLocalization } from "@/modules/localization/presentation/localization-provider";
 import { EditableRegion } from "@/modules/admin/presentation";
-import { formatFileSize, type PublishedCv, type CvVersion } from "../domain/cv";
-import { CvFallbackCard } from "./cv-fallback-card";
+import {
+  formatFileSize,
+  type PublishedCv,
+  type CvVersion,
+  type CvBoxItem,
+  DEFAULT_CV_BOXES,
+} from "../domain/cv";
 import { CvAdminControls } from "./cv-admin-controls";
+import { CvDocumentViewer } from "./cv-document-viewer";
 
 export interface CvViewerProps {
   cv: PublishedCv;
   versions?: CvVersion[] | undefined;
   locale?: string | undefined;
+  boxes?: CvBoxItem[] | undefined;
 }
 
-export function CvViewer({ cv, versions = [], locale }: CvViewerProps) {
+function getBoxIcon(name?: string) {
+  switch (name) {
+    case "sparkles":
+      return Sparkles;
+    case "code":
+      return Code2;
+    case "briefcase":
+      return Briefcase;
+    case "graduation":
+      return GraduationCap;
+    case "cpu":
+      return Cpu;
+    case "shield":
+      return ShieldCheck;
+    case "layers":
+      return Layers;
+    case "globe":
+      return Globe;
+    case "terminal":
+      return Terminal;
+    case "database":
+      return Database;
+    case "rocket":
+      return Rocket;
+    default:
+      return Sparkles;
+  }
+}
+
+export function CvViewer({ cv, versions = [], locale, boxes }: CvViewerProps) {
   const { t } = useLocalization();
   const isAr = locale === "ar";
 
@@ -124,172 +167,171 @@ export function CvViewer({ cv, versions = [], locale }: CvViewerProps) {
         {/* Admin Controls (visible only when admin edit mode is ON) */}
         <CvAdminControls currentCv={cv} versions={versions} />
 
-        {/* Structured Recruiter Executive Summary (Instant scanning without PDF delay) */}
-        <div className="mt-8 space-y-6">
-          {/* Executive Overview */}
-          <div className="rounded-xl border border-neutral-200/80 bg-white/70 p-6 shadow-2xs dark:border-neutral-800/80 dark:bg-neutral-900/60">
-            <h2 className="text-base font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
-              {isAr ? "الملف التنفيذي | Executive Profile" : "Executive Profile"}
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-              {isAr
-                ? "مهندس ذكاء اصطناعي وبرمجيات حاصل على درجة البكالوريوس في هندسة الحاسوب. متخصص في بناء أنظمة الاسترجاع المعزز بالتوليد (RAG)، مسارات تقييم النماذج اللغوية (LLM Evaluation)، الوكلاء الأذكياء، وتطبيقات الويب المتكاملة عالية الأداء والموثوقية."
-                : "AI & Software Engineer with a B.S. in Computer Engineering. Experienced in architecting production RAG systems, LLM evaluation pipelines, autonomous agent workflows, and scalable full-stack web applications with rigorous benchmarking and sub-second latency."}
-            </p>
+        {/* Dynamic CV Profile & Competency Boxes (Full Admin Control) */}
+        {(() => {
+          const activeBoxes = (boxes && boxes.length > 0 ? boxes : DEFAULT_CV_BOXES)
+            .slice()
+            .sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0));
 
-            {/* Quick Contact Line */}
-            <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-neutral-600 dark:text-neutral-400">
-              <a
-                href="mailto:anashusam268@gmail.com"
-                className="inline-flex items-center gap-1.5 transition-colors hover:text-neutral-900 dark:hover:text-neutral-100"
-              >
-                <Mail className="h-3.5 w-3.5 text-neutral-500" />
-                <span>anashusam268@gmail.com</span>
-              </a>
-              <span className="opacity-30">•</span>
-              <a
-                href="tel:+962789495167"
-                className="inline-flex items-center gap-1.5 transition-colors hover:text-neutral-900 dark:hover:text-neutral-100"
-              >
-                <Phone className="h-3.5 w-3.5 text-neutral-500" />
-                <span dir="ltr">+962 789 495 167</span>
-              </a>
-              <span className="opacity-30">•</span>
-              <Link
-                href={`/${locale}/chat`}
-                className="inline-flex items-center gap-1.5 font-medium text-blue-600 hover:underline dark:text-blue-400"
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                <span>{isAr ? "اسأل عن أنس عبر المساعد" : "Ask About Anas via AI"}</span>
-              </Link>
-            </div>
-          </div>
+          if (activeBoxes.length === 0) return null;
 
-          {/* Key Competency Pillars */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-xl border border-neutral-200/80 bg-white/50 p-5 dark:border-neutral-800/80 dark:bg-neutral-900/40">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
-                  <Sparkles className="h-4 w-4" />
-                </div>
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                  {isAr ? "الذكاء الاصطناعي و RAG" : "AI & RAG Engineering"}
-                </h3>
-              </div>
-              <ul className="mt-3 space-y-1.5 text-xs text-neutral-600 dark:text-neutral-400">
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>Hybrid Search (Dense + BM25)</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>Qdrant Cloud & pgvector</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>Cross-Encoder Reranking & Citations</span>
-                </li>
-              </ul>
-            </div>
+          // Split profile boxes (full top width) vs other boxes (grid)
+          const profileBoxes = activeBoxes.filter((b) => b.type === "profile");
+          const otherBoxes = activeBoxes.filter((b) => b.type !== "profile");
 
-            <div className="rounded-xl border border-neutral-200/80 bg-white/50 p-5 dark:border-neutral-800/80 dark:bg-neutral-900/40">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
-                  <Code2 className="h-4 w-4" />
-                </div>
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                  {isAr ? "التقييم والاختبار المعياري" : "LLM Evaluation & Quality"}
-                </h3>
-              </div>
-              <ul className="mt-3 space-y-1.5 text-xs text-neutral-600 dark:text-neutral-400">
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>Deterministic Benchmark Suites</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>Grounding & Hallucination Defense</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>Automated Testing with Vitest</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="rounded-xl border border-neutral-200/80 bg-white/50 p-5 dark:border-neutral-800/80 dark:bg-neutral-900/40">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
-                  <Briefcase className="h-4 w-4" />
-                </div>
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                  {isAr ? "تطبيقات الويب السحابية" : "Full-Stack Architecture"}
-                </h3>
-              </div>
-              <ul className="mt-3 space-y-1.5 text-xs text-neutral-600 dark:text-neutral-400">
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>Next.js 15 App Router & React 19</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>TypeScript & Server Actions</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                  <span>PostgreSQL (Neon), Better Auth, WCAG 2.2</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Education & Experience Summary */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="rounded-xl border border-neutral-200/80 bg-white/50 p-5 text-start dark:border-neutral-800/80 dark:bg-neutral-900/40">
-              <div className="flex items-center gap-2 text-neutral-900 dark:text-neutral-100">
-                <GraduationCap className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
-                <h3 className="text-sm font-bold">{isAr ? "التعليم الأكاديمي" : "Education"}</h3>
-              </div>
-              <div className="mt-2 text-xs">
-                <p className="font-semibold text-neutral-900 dark:text-neutral-100">
-                  {isAr ? "بكالوريوس هندسة الحاسوب" : "B.S. in Computer Engineering"}
-                </p>
-                <p className="mt-0.5 text-neutral-500 dark:text-neutral-400">
-                  {isAr
-                    ? "التركيز على النظم المدمجة، الخوارزميات، وهندسة البرمجيات"
-                    : "Focused on computer systems, software architecture, and algorithms"}
-                </p>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-neutral-200/80 bg-white/50 p-5 text-start dark:border-neutral-800/80 dark:bg-neutral-900/40">
-              <div className="flex items-center gap-2 text-neutral-900 dark:text-neutral-100">
-                <Briefcase className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
-                <h3 className="text-sm font-bold">
-                  {isAr ? "المسار المهني" : "Experience Timeline"}
-                </h3>
-              </div>
-              <div className="mt-2 flex items-center justify-between text-xs">
-                <div>
-                  <p className="font-semibold text-neutral-900 dark:text-neutral-100">
-                    {isAr ? "مهندس أنظمة الذكاء الاصطناعي" : "AI & Software Systems Engineer"}
-                  </p>
-                  <p className="mt-0.5 text-neutral-500 dark:text-neutral-400">
-                    {isAr
-                      ? "مشاريع إنتاجية، مسارات RAG، تقييم النماذج"
-                      : "Production systems, RAG pipelines, evaluations"}
-                  </p>
-                </div>
-                <Link
-                  href={`/${locale}/experience`}
-                  className="shrink-0 text-xs font-medium text-neutral-900 underline hover:text-neutral-700 dark:text-neutral-100 dark:hover:text-neutral-300"
+          return (
+            <div className="mt-8 space-y-6">
+              {/* Profile / Executive Boxes */}
+              {profileBoxes.map((box) => (
+                <div
+                  key={box.id}
+                  className="rounded-xl border border-neutral-200/80 bg-white/70 p-6 shadow-2xs dark:border-neutral-800/80 dark:bg-neutral-900/60"
                 >
-                  {isAr ? "التفاصيل كاملة ←" : "Full Timeline →"}
-                </Link>
-              </div>
+                  <div className="flex items-center gap-2.5">
+                    {box.icon && (
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
+                        {(() => {
+                          const IconComp = getBoxIcon(box.icon);
+                          return <IconComp className="h-4 w-4" />;
+                        })()}
+                      </div>
+                    )}
+                    <div>
+                      <h2 className="text-base font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+                        {box.title}
+                      </h2>
+                      {box.subtitle && (
+                        <p className="text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                          {box.subtitle}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {box.description && (
+                    <p className="mt-3 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+                      {box.description}
+                    </p>
+                  )}
+
+                  {/* Contact / Links Row */}
+                  {(box.email || box.phone || box.showAiChat || box.linkUrl) && (
+                    <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-neutral-600 dark:text-neutral-400">
+                      {box.email && (
+                        <a
+                          href={`mailto:${box.email}`}
+                          className="inline-flex items-center gap-1.5 transition-colors hover:text-neutral-900 dark:hover:text-neutral-100"
+                        >
+                          <Mail className="h-3.5 w-3.5 text-neutral-500" />
+                          <span>{box.email}</span>
+                        </a>
+                      )}
+                      {box.email && (box.phone || box.showAiChat || box.linkUrl) && (
+                        <span className="opacity-30">•</span>
+                      )}
+
+                      {box.phone && (
+                        <a
+                          href={`tel:${box.phone.replace(/\s+/g, "")}`}
+                          className="inline-flex items-center gap-1.5 transition-colors hover:text-neutral-900 dark:hover:text-neutral-100"
+                        >
+                          <Phone className="h-3.5 w-3.5 text-neutral-500" />
+                          <span dir="ltr">{box.phone}</span>
+                        </a>
+                      )}
+                      {box.phone && (box.showAiChat || box.linkUrl) && (
+                        <span className="opacity-30">•</span>
+                      )}
+
+                      {box.showAiChat && (
+                        <Link
+                          href={`/${locale}/chat`}
+                          className="inline-flex items-center gap-1.5 font-medium text-blue-600 hover:underline dark:text-blue-400"
+                        >
+                          <Sparkles className="h-3.5 w-3.5" />
+                          <span>{isAr ? "اسأل عن أنس عبر المساعد" : "Ask About Anas via AI"}</span>
+                        </Link>
+                      )}
+
+                      {box.linkUrl && (
+                        <Link
+                          href={box.linkUrl.startsWith("/") ? `/${locale}${box.linkUrl}` : box.linkUrl}
+                          className="inline-flex items-center gap-1.5 font-medium text-neutral-900 underline hover:text-neutral-700 dark:text-neutral-100 dark:hover:text-neutral-300"
+                        >
+                          <span>{box.linkLabel || box.linkUrl}</span>
+                        </Link>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {/* Grid of Competency, Education, Experience, & Custom Boxes */}
+              {otherBoxes.length > 0 && (
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {otherBoxes.map((box) => {
+                    const IconComp = getBoxIcon(box.icon);
+                    const colClass =
+                      box.colSpan === 3
+                        ? "sm:col-span-2 lg:col-span-3"
+                        : box.colSpan === 2
+                        ? "sm:col-span-2 lg:col-span-2"
+                        : "col-span-1";
+
+                    return (
+                      <div
+                        key={box.id}
+                        className={`rounded-xl border border-neutral-200/80 bg-white/50 p-5 text-start dark:border-neutral-800/80 dark:bg-neutral-900/40 ${colClass}`}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2.5">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
+                              <IconComp className="h-4 w-4" />
+                            </div>
+                            <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                              {box.title}
+                            </h3>
+                          </div>
+                          {box.linkUrl && (
+                            <Link
+                              href={box.linkUrl.startsWith("/") ? `/${locale}${box.linkUrl}` : box.linkUrl}
+                              className="shrink-0 text-xs font-medium text-neutral-900 underline hover:text-neutral-700 dark:text-neutral-100 dark:hover:text-neutral-300"
+                            >
+                              {box.linkLabel || (isAr ? "المزيد ←" : "More →")}
+                            </Link>
+                          )}
+                        </div>
+
+                        {box.subtitle && (
+                          <p className="mt-2 text-xs font-semibold text-neutral-900 dark:text-neutral-100">
+                            {box.subtitle}
+                          </p>
+                        )}
+
+                        {box.description && (
+                          <p className="mt-1 text-xs text-neutral-600 dark:text-neutral-400">
+                            {box.description}
+                          </p>
+                        )}
+
+                        {box.items && box.items.length > 0 && (
+                          <ul className="mt-3 space-y-1.5 text-xs text-neutral-600 dark:text-neutral-400">
+                            {box.items.map((item, idx) => (
+                              <li key={idx} className="flex items-center gap-1.5">
+                                <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
-          </div>
-        </div>
+          );
+        })()}
 
         {/* Verified Document Section */}
         <div className="mt-10">
@@ -300,40 +342,15 @@ export function CvViewer({ cv, versions = [], locale }: CvViewerProps) {
                 {isAr ? "المستند الرسمي المعتمد (PDF)" : "Official Verified PDF Document"}
               </h2>
             </div>
-            <div className="flex items-center gap-2">
-              <Link href={downloadUrl}>
-                <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-                  <Download className="h-3.5 w-3.5" />
-                  <span>{isAr ? "تنزيل" : "Download"}</span>
-                </Button>
-              </Link>
-              <Link href={viewUrl} target="_blank" rel="noopener noreferrer">
-                <Button variant="ghost" size="sm" className="gap-1.5 text-xs">
-                  <ExternalLink className="h-3.5 w-3.5" />
-                  <span>{isAr ? "نافذة جديدة" : "Open"}</span>
-                </Button>
-              </Link>
-            </div>
           </div>
 
-          {/* Desktop Embedded PDF Viewer */}
-          <div className="hidden w-full overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 shadow-xs md:block dark:border-neutral-800 dark:bg-neutral-900">
-            <object
-              data={viewUrl}
-              type="application/pdf"
-              aria-label={t("cv.title") || "Curriculum Vitae PDF"}
-              className="h-[750px] w-full"
-            >
-              {/* Fallback if browser PDF plugin is disabled or unavailable */}
-              <div className="p-8">
-                <CvFallbackCard cv={cv} />
-              </div>
-            </object>
-          </div>
-
-          {/* Mobile Fallback Card (prevents tiny unusable iframe trapping) */}
-          <div className="block md:hidden">
-            <CvFallbackCard cv={cv} />
+          {/* Custom PDF Canvas Viewer: No native browser toolbar, zero wasted margin, multi-page controls */}
+          <div className="w-full">
+            <CvDocumentViewer
+              fileUrl={viewUrl}
+              fileName={cv.fileName}
+              locale={locale}
+            />
           </div>
         </div>
       </FadeIn>

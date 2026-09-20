@@ -61,3 +61,5 @@ export function formatFileSize(bytes: number): string {
   const val = (bytes / Math.pow(1024, i)).toFixed(i > 0 ? 1 : 0);
   return `${val} ${units[i]}`;
 }
+
+export * from "./cv-boxes";

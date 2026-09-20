@@ -32,13 +32,21 @@ export default async function CvPage({ params }: CvPageProps) {
   const { locale } = await params;
   const supportedLocale = (locale === "en" ? "en" : "ar") as SupportedLocale;
 
-  const [publishedCv, session] = await Promise.all([
+  const [publishedCv, boxes, session] = await Promise.all([
     cvService.getPublishedCv(),
+    cvService.getCvBoxes(),
     getCurrentSession(),
   ]);
 
   const isAdmin = session?.role === "ADMIN";
   const versions = isAdmin ? await cvService.listVersions() : [];
 
-  return <CvViewer cv={publishedCv} versions={versions} locale={supportedLocale} />;
+  return (
+    <CvViewer
+      cv={publishedCv}
+      versions={versions}
+      locale={supportedLocale}
+      boxes={boxes}
+    />
+  );
 }
