@@ -14,104 +14,104 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
   const sections = [
     {
       id: "about",
+      category: isArabic ? "نبذة والسيرة الذاتية" : "About & Resume",
       title: isArabic
-        ? "من هو أنس؟ العقلية الهندسية والسيرة الذاتية"
-        : "Who is Anas? The Engineering Mindset & Resume",
+        ? "القصة وراء رحلتي الهندسية"
+        : "The Story Behind My Engineering Journey",
       description: isArabic
-        ? "مهندس ذكاء اصطناعي وبرمجيات شغوف ببناء أنظمة برمجية متينة ومبتكرة تحل مشكلات واقعية بأعلى معايير الكفاءة."
-        : "AI & Full-Stack Engineer dedicated to crafting resilient, deterministic systems that solve complex real-world challenges.",
+        ? "استكشف خلفيتي، تعليمي، نقاط قوتي التقنية، وسيرتي الذاتية للحصول على رؤية شاملة عن هويتي كمهندس."
+        : "Explore my background, education, technical strengths, and resume for a complete view of who I am as an engineer.",
       href: `/${locale}/cv`,
-      cta: isArabic ? "تعرّف عليّ واطلع على السيرة الذاتية" : "Explore Background & Resume",
+      cta: isArabic ? "اكتشف مسيرتي الشخصية" : "Discover My Profile",
     },
     {
       id: "experience",
+      category: isArabic ? "الخبرات العملية" : "Experience",
       title: isArabic
-        ? "الخبرة في الميدان: أثر ملموس وقيمة حقيقية لفرق العمل"
-        : "Field Experience: Real Impact in Production Teams",
+        ? "مسار مهني بُني من خلال العمل الميداني الحقيقي"
+        : "A Career Built Through Hands-On Work",
       description: isArabic
-        ? "مسيرة عملية في تصميم وتطوير حلول برمجية متكاملة رفعت كفاءة الأداء وخدمت آلاف المستخدمين بنجاح."
-        : "Hands-on track record engineering commercial software solutions that scale seamlessly and drive measurable value.",
+        ? "استكشف الشركات التي عملت معها، الأدوار التي شغلتها، والخبرات التي اكتسبتها على طول الطريق."
+        : "Explore the companies I’ve worked with, the roles I’ve held, and the experience I’ve gained along the way.",
       href: `/${locale}/experience`,
-      cta: isArabic ? "استعرض الخبرات العملية والمسار المهني" : "View Experience & Track Record",
+      cta: isArabic ? "استعرض رحلتي المهنية" : "View My Journey",
     },
     {
       id: "projects",
+      category: isArabic ? "المشاريع" : "Projects",
       title: isArabic
-        ? "تطبيقات وأنظمة حية تثبت قدراتي التقنية"
-        : "Live Applications & Systems Proving Technical Depth",
+        ? "شاهد ما قمت ببنائه على أرض الواقع"
+        : "See What I’ve Actually Built",
       description: isArabic
-        ? "من وكلاء الذكاء الاصطناعي وخطوط RAG الهجينة إلى تطبيقات الويب عالية السرعة والموثوقية."
-        : "From autonomous AI agents and multi-stage RAG pipelines to sub-millisecond, responsive web applications.",
+        ? "استكشف أنظمة الذكاء الاصطناعي، أدوات الأتمتة، والمشاريع البرمجية التي تحوّل الأفكار والتحديات التقنية إلى حلول واقعية تعمل بكفاءة."
+        : "Explore AI systems, automation tools, and software projects that turn ideas and technical challenges into working solutions.",
       href: `/${locale}/projects`,
-      cta: isArabic ? "شاهد المشاريع ودراسات الحالة الحية" : "Explore Live Projects & Systems",
+      cta: isArabic ? "استكشف أعمالي ومشاريعي" : "Explore My Work",
     },
     {
       id: "certificates",
+      category: isArabic ? "الدورات والشهادات" : "Certificates",
       title: isArabic
-        ? "اعتمادات وشهادات عالمية تؤكد التميز والتعلّم المستمر"
-        : "Verified Certifications & Continuous Mastery",
+        ? "تعلّم دائم.. وبناء مستمر."
+        : "Always Learning. Always Building.",
       description: isArabic
-        ? "تخصصات معمقة واعتمادات رسمية من كبرى المنصات الدولية لضمان مواكبة أحدث المعايير البرمجية."
-        : "Industry-recognized credentials and deep-dive specializations keeping engineering practices at the global cutting edge.",
+        ? "استكشف الدورات والشهادات المهنية التي تواصل توسيع معرفتي وقدراتي التقنية."
+        : "Explore the courses and professional certifications that continue to expand my knowledge and technical capabilities.",
       href: `/${locale}/certificates`,
-      cta: isArabic ? "تصفح الشهادات والاعتمادات المعتمدة" : "Browse Verified Credentials",
+      cta: isArabic ? "تصفح مسار التعلّم والشهادات" : "Explore My Learning",
     },
     {
       id: "contact",
+      category: isArabic ? "التواصل" : "Contact",
       title: isArabic
-        ? "جاهز لنصنع فارقاً حقيقياً في مشروعك القادم؟"
-        : "Ready to Create Real Value for Your Next Big Project?",
+        ? "لنصنع شيئاً ذا قيمة حقيقية معاً"
+        : "Let’s Build Something Valuable",
       description: isArabic
-        ? "متاح حالياً للمشاريع الاستراتيجية والفرص الوظيفية المؤثرة. يسعدني دائماً بدء حوار مثمر وبناء."
-        : "Currently open to high-impact engineering roles and technical collaborations. Let's connect and build together.",
+        ? "متاح لفرص هندسة الذكاء الاصطناعي، المشاريع البرمجية، التعاون التقني، والتحديات ذات الأثر الحقيقي."
+        : "Open to AI engineering opportunities, software projects, technical collaborations, and meaningful challenges.",
       href: `/${locale}/contact`,
-      cta: isArabic ? "تواصل معي مباشرة لنبدأ" : "Get in Touch Directly",
+      cta: isArabic ? "لنتواصل الآن" : "Let’s Connect",
     },
   ];
 
   return (
-    <div className="mx-auto w-full max-w-3xl py-4 sm:py-8">
-      {/* Editorial Header */}
-      <header className="space-y-3 pb-8 sm:pb-12 border-b border-neutral-200/60 dark:border-neutral-800/60">
-        <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>
-            {isArabic
-              ? "متاح للفرص والمشاريع التقنية المؤثرة"
-              : "Available for High-Impact Roles & Projects"}
-          </span>
-        </div>
-
+    <div className="w-full space-y-4">
+      {/* Brand Header */}
+      <header className="space-y-2 pb-8 sm:pb-12 border-b border-neutral-200/60 dark:border-neutral-800/60 text-start">
         <h1 className="text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-5xl dark:text-neutral-50">
           {isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
         </h1>
-
-        <p className="text-base sm:text-lg leading-relaxed text-neutral-600 dark:text-neutral-300 max-w-2xl">
+        <p className="text-base sm:text-xl font-medium text-neutral-500 dark:text-neutral-400">
           {isArabic
-            ? "دليلك السريع للتعرف عليّ، استكشاف خبراتي العملية، مشاهدة مشاريعي الحية، وبدء التواصل."
-            : "Your executive briefing to discover who I am, explore my experience, see live systems, and get in touch."}
+            ? "مهندس ذكاء اصطناعي ومطور برمجيات شامل (Full-Stack)"
+            : "AI Engineer & Full-Stack Developer"}
         </p>
       </header>
 
-      {/* Editorial Sections: Marketing Header -> Few Words -> Button */}
-      <div className="divide-y divide-neutral-200/60 dark:divide-neutral-800/60">
+      {/* Editorial Sections */}
+      <div className="divide-y divide-neutral-200/60 dark:divide-neutral-800/60 text-start">
         {sections.map((item) => (
-          <section key={item.id} className="py-10 sm:py-12 space-y-3.5">
-            {/* Marketing Header */}
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+          <section key={item.id} className="py-8 sm:py-12 space-y-3">
+            {/* Section Eyebrow */}
+            <div className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary">
+              {item.category}
+            </div>
+
+            {/* Section Heading */}
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
               {item.title}
             </h2>
 
-            {/* A few impactful words */}
-            <p className="text-base leading-relaxed text-neutral-600 dark:text-neutral-300 max-w-2xl">
+            {/* Section Description */}
+            <p className="text-sm sm:text-base leading-relaxed text-neutral-600 dark:text-neutral-300 max-w-3xl">
               {item.description}
             </p>
 
-            {/* Direct Action Button */}
+            {/* Direct Button */}
             <div className="pt-2">
               <Link
                 href={item.href}
-                className="group inline-flex items-center gap-2 rounded-xl bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition-all hover:bg-neutral-800 hover:shadow-md dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 cursor-pointer"
+                className="group inline-flex items-center gap-2 rounded-xl bg-neutral-900 px-5 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-xs transition-all hover:bg-neutral-800 hover:shadow-md dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 cursor-pointer"
               >
                 <span>{item.cta}</span>
                 <ArrowIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />

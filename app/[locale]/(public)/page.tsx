@@ -14,11 +14,9 @@ export default async function PublicHomePage({ params }: PublicPageProps) {
   return (
     <main
       dir={dir}
-      className="flex min-h-screen flex-col items-center justify-start px-4 py-8 sm:px-6 md:px-8 lg:px-12"
+      className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8"
     >
-      <div className="w-full max-w-4xl space-y-6">
-        <RecruiterJourneyIndex locale={supportedLocale} />
-      </div>
+      <RecruiterJourneyIndex locale={supportedLocale} />
     </main>
   );
 }
