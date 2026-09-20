@@ -188,12 +188,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
                     </div>
 
                     <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0B1530] dark:text-[#F6F8FC]">
-                      <Link
-                        href={item.href}
-                        className="hover:underline focus:outline-none focus:ring-2 focus:ring-[#2F6FED] rounded-md"
-                      >
-                        {item.title}
-                      </Link>
+                      {item.title}
                     </h2>
 
                     <p className="text-sm sm:text-[15px] leading-relaxed text-[#6C7893] dark:text-[#9AA8C0] max-w-2xl lg:max-w-3xl">
