@@ -157,16 +157,22 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
               ) : (
                 <>
                   <Link
-                    href={`/${locale}/projects`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {isArabic ? "المشاريع ودراسات الحالة" : "Projects & Deep Dives"}
-                  </Link>
-                  <Link
                     href={`/${locale}/cv`}
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     {isArabic ? "نبذة والسيرة الذاتية" : "About & Resume"}
+                  </Link>
+                  <Link
+                    href={`/${locale}/experience`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {isArabic ? "الخبرات العملية" : "Experience"}
+                  </Link>
+                  <Link
+                    href={`/${locale}/projects`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {isArabic ? "المشاريع ودراسات الحالة" : "Projects & Deep Dives"}
                   </Link>
                   <Link
                     href={`/${locale}/certificates`}
@@ -174,22 +180,11 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
                   >
                     {isArabic ? "الدورات والشهادات" : "Certificates & Courses"}
                   </Link>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (typeof window !== "undefined") {
-                        window.dispatchEvent(new CustomEvent("open-chat"));
-                      }
-                    }}
-                    className="text-muted-foreground hover:text-primary text-start transition-colors cursor-pointer"
-                  >
-                    {isArabic ? "اسأل عن أنس" : "Ask About Anas"}
-                  </button>
                   <Link
-                    href={`/${locale}/job-fit`}
+                    href={`/${locale}/contact`}
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {isArabic ? "محلل مطابقة الوظائف (ATS)" : "Job Fit & ATS Match"}
+                    {isArabic ? "تواصل معي" : "Contact"}
                   </Link>
                 </>
               )}
