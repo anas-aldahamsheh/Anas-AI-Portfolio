@@ -117,7 +117,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
         ==================================================
       */}
       <section
-        className="relative w-full border-b border-[#E5EAF2] bg-white overflow-hidden transition-colors duration-300 dark:border-white/[0.08] dark:bg-[#07101F]"
+        className="relative w-full bg-white overflow-hidden transition-colors duration-300 dark:bg-[#07101F]"
         aria-label={isArabic ? "المقدمة" : "Hero"}
       >
         {/* Soft Sky Blue / Cyan Aura on Left matching image */}
@@ -135,6 +135,12 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
         {/* Base horizontal wash from soft cyan to transparent center to soft lavender */}
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#EBF6FE]/80 via-transparent to-[#F3EEFE]/80 dark:from-[#0B1728]/70 dark:via-transparent dark:to-[#150E2A]/70"
+          aria-hidden="true"
+        />
+
+        {/* Soft bottom fade so hero seamlessly blends into the rest of the page without any sharp cutoff */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-b from-transparent to-white dark:to-[#07101F]"
           aria-hidden="true"
         />
 
@@ -159,7 +165,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
       */}
       <div className="mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-8 sm:py-12 lg:py-16">
         <div
-          className="w-full divide-y divide-[#E5EAF2] border-t border-b border-[#E5EAF2] dark:divide-white/[0.08] dark:border-white/[0.08]"
+          className="w-full divide-y divide-[#E5EAF2] border-b border-[#E5EAF2] dark:divide-white/[0.08] dark:border-white/[0.08]"
           role="navigation"
           aria-label={isArabic ? "وجهات الاستكشاف" : "Destination Sections"}
         >
