@@ -175,7 +175,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
               : "You can also ask the conversational RAG assistant anytime to get immediate, evidence-grounded answers about Anas's qualifications, architecture decisions, and code."}
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <Link href={`/${supportedLocale}/chat`}>
+            <Link href={`/${supportedLocale}?chat=open`}>
               <Button variant="primary" size="sm">
                 <span>
                   {isAr ? "فتح المساعد الذكي (Ask About Anas)" : "Ask About Anas (RAG Assistant)"}

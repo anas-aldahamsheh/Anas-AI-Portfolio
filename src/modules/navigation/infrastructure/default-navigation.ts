@@ -68,7 +68,7 @@ export const DEFAULT_NAVIGATION_ITEMS: NavigationItem[] = [
     labelKey: "nav.ask_about_anas",
     iconKey: "sparkles",
     orderIndex: 60,
-    isVisible: true,
+    isVisible: false,
     openInNewTab: false,
     authVisibility: "all",
     placement: "both",

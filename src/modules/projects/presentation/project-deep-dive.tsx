@@ -123,7 +123,7 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
     t("project.detail.scope_badge") || "Scoped Retrieval: Project Evidence Only";
   const relatedProjectsTitle = t("project.detail.related_projects") || "Related Projects";
 
-  const askAiHref = `/${locale}/chat?project=${project.slug}&projectId=${project.id}`;
+  const askAiHref = `/${locale}?chat=open&project=${project.slug}&projectId=${project.id}`;
 
   // Filter sections that have non-empty content
   const activeSections = NARRATIVE_SECTIONS.filter((sec) => {

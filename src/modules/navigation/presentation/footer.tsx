@@ -168,12 +168,17 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
                   >
                     {isArabic ? "نبذة والسيرة الذاتية" : "About & Resume"}
                   </Link>
-                  <Link
-                    href={`/${locale}/chat`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (typeof window !== "undefined") {
+                        window.dispatchEvent(new CustomEvent("open-chat"));
+                      }
+                    }}
+                    className="text-muted-foreground hover:text-primary text-start transition-colors cursor-pointer"
                   >
-                    {isArabic ? "المساعد الذكي (RAG)" : "Interactive AI Assistant"}
-                  </Link>
+                    {isArabic ? "اسأل عن أنس" : "Ask About Anas"}
+                  </button>
                   <Link
                     href={`/${locale}/job-fit`}
                     className="text-muted-foreground hover:text-primary transition-colors"

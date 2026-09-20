@@ -227,7 +227,7 @@ export function getDefaultHomeSections(locale: SupportedLocale): SectionData[] {
                   ? "مساعد محادثة ذكي يستند إلى قاعدة بيانات RAG دقيقة للإجابة عن مهارات أنس، مشاريعه، وخبراته الوظيفية."
                   : "Conversational RAG assistant grounded in Anas's verified skills, project decisions, and career milestones.",
                 badge: "Interactive",
-                url: "/chat",
+                url: "/?chat=open",
                 icon: "sparkles",
               },
               {

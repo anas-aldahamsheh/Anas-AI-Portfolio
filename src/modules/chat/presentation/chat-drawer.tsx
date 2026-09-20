@@ -174,7 +174,7 @@ export function ChatDrawer({
     setActiveScopeTitle(projectScopeTitle);
   }
 
-  // Listen to open-project-chat event dispatched from project deep dive or elsewhere
+  // Listen to open-project-chat and open-chat events dispatched across the app
   useEffect(() => {
     function handleOpenProjectChat(e: Event) {
       const customEvent = e as CustomEvent<{
@@ -194,8 +194,72 @@ export function ChatDrawer({
         }
       }
     }
+
+    function handleOpenChat(e: Event) {
+      const customEvent = e as CustomEvent<{
+        projectId?: string;
+        projectTitle?: string;
+        prompt?: string;
+        mode?: ConversationMode;
+      }>;
+      const detail = customEvent.detail;
+      if (detail) {
+        if (detail.projectId) {
+          setActiveScopeId(detail.projectId);
+          setActiveScopeTitle(detail.projectTitle || detail.projectId);
+        }
+        if (detail.prompt) {
+          setInputVal(detail.prompt);
+        }
+        if (detail.mode) {
+          setMode(detail.mode);
+        }
+      }
+      setIsOpen(true);
+    }
+
     window.addEventListener("open-project-chat", handleOpenProjectChat);
-    return () => window.removeEventListener("open-project-chat", handleOpenProjectChat);
+    window.addEventListener("open-chat", handleOpenChat);
+    return () => {
+      window.removeEventListener("open-project-chat", handleOpenProjectChat);
+      window.removeEventListener("open-chat", handleOpenChat);
+    };
+  }, []);
+
+  // Listen to URL search params on mount (?chat=open, ?chat=1, ?prompt=..., ?project=...)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const shouldOpen =
+        params.get("chat") === "open" ||
+        params.get("chat") === "1" ||
+        params.get("openChat") === "true";
+      const projSlug = params.get("project");
+      const projId = params.get("projectId");
+      const prompt = params.get("prompt");
+
+      if (shouldOpen || projSlug || projId || prompt) {
+        if (projId || projSlug) {
+          setActiveScopeId(projId || projSlug || undefined);
+          setActiveScopeTitle(projSlug || projId || undefined);
+        }
+        if (prompt) {
+          setInputVal(prompt);
+        }
+        setIsOpen(true);
+
+        if (shouldOpen) {
+          params.delete("chat");
+          params.delete("openChat");
+          const remaining = params.toString();
+          const cleanUrl = `${window.location.pathname}${remaining ? `?${remaining}` : ""}${window.location.hash}`;
+          window.history.replaceState({}, "", cleanUrl);
+        }
+      }
+    } catch {
+      // Ignore URL parsing errors
+    }
   }, []);
 
   // Handle Escape key to close
@@ -346,31 +410,30 @@ export function ChatDrawer({
 
   return (
     <>
-      {/* Floating Trigger Button */}
+      {/* Floating Trigger Button - Exactly matching Image 2 */}
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className={`bg-primary text-primary-foreground hover:shadow-primary/25 focus:ring-primary/50 fixed end-6 bottom-6 z-40 flex items-center gap-2.5 rounded-full px-4 py-3 text-sm font-medium shadow-lg transition-all duration-200 hover:scale-105 focus:ring-2 focus:outline-none active:scale-95 ${
+        className={`fixed end-6 bottom-6 z-40 flex items-center gap-2.5 rounded-full px-5 py-3 text-sm font-semibold text-white bg-neutral-950 dark:bg-neutral-900 border border-neutral-800 dark:border-neutral-700/80 shadow-2xl shadow-black/40 hover:bg-neutral-900 dark:hover:bg-neutral-800 hover:border-neutral-600 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-neutral-400 ${
           isOpen ? "hidden" : "flex"
         }`}
         aria-label={t("chat.trigger.aria")}
         data-testid="chat-trigger-button"
       >
         <svg
-          className="h-5 w-5"
-          fill="none"
+          className="h-5 w-5 shrink-0"
           viewBox="0 0 24 24"
+          fill="none"
           stroke="currentColor"
-          strokeWidth={2}
+          strokeWidth={2.2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
           aria-hidden="true"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-          />
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          <path d="M8 10h.01M12 10h.01M16 10h.01" strokeWidth={2.6} />
         </svg>
-        <span className="hidden sm:inline">{t("chat.trigger.label")}</span>
+        <span className="tracking-tight">{t("chat.trigger.label")}</span>
       </button>
 
       {/* Slide-over Drawer / Dialog */}
