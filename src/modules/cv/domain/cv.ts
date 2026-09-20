@@ -63,3 +63,4 @@ export function formatFileSize(bytes: number): string {
 }
 
 export * from "./cv-boxes";
+export * from "./cv-about";

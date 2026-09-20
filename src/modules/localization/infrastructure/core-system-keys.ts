@@ -45,10 +45,10 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
   {
     key: "nav.cv",
     category: "navigation",
-    description: "Navigation link to CV viewer",
+    description: "Navigation link to About & Resume page",
     translations: {
-      ar: "السيرة الذاتية",
-      en: "CV & Resume",
+      ar: "نبذة والسيرة الذاتية",
+      en: "About & Resume",
     },
   },
   {
@@ -406,8 +406,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "cv",
     description: "Title of CV page",
     translations: {
-      ar: "السيرة الذاتية المهنية",
-      en: "Curriculum Vitae",
+      ar: "نبذة والسيرة الذاتية",
+      en: "About & Resume",
     },
   },
   {
@@ -415,8 +415,8 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     category: "cv",
     description: "Subtitle of CV page",
     translations: {
-      ar: "عرض وتحميل أحدث نسخة معتمدة من السيرة الذاتية لمهندس البرمجيات والذكاء الاصطناعي.",
-      en: "View and download the latest verified resume for Software & AI Engineering.",
+      ar: "الخلفية المهنية وفلسفة هندسة البرمجيات والنسخة المعتمدة من السيرة الذاتية.",
+      en: "Executive background, engineering philosophy, and verified resume for AI & Software Engineering.",
     },
   },
   {

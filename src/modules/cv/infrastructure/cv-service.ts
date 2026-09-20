@@ -10,6 +10,9 @@ import {
   type CvBoxItem,
   DEFAULT_CV_BOXES,
   cvBoxesConfigSchema,
+  type CvAboutConfig,
+  DEFAULT_CV_ABOUT,
+  cvAboutConfigSchema,
 } from "../domain/cv";
 import { cvStorageService } from "./storage-service";
 
@@ -31,6 +34,7 @@ export class CvService {
   private readonly CACHE_TTL_MS = 60 * 1000; // 1 minute in-memory TTL
   private readonly DB_TIMEOUT_MS = 250;
   private cachedBoxes: CvBoxItem[] | null = null;
+  private cachedAbout: CvAboutConfig | null = null;
 
   /**
    * Helper to bound database query latency against offline or slow DB connections.
@@ -379,6 +383,99 @@ export class CvService {
     }
 
     return sorted;
+  }
+
+  /**
+   * Retrieves the About Me narrative profile configuration (bilingual).
+   */
+  async getAboutConfig(): Promise<CvAboutConfig> {
+    if (this.cachedAbout) {
+      return this.cachedAbout;
+    }
+
+    try {
+      const rows = await this.queryWithTimeout(
+        db
+          .select({ value: systemSettings.value })
+          .from(systemSettings)
+          .where(eq(systemSettings.key, "cv_about_section"))
+          .limit(1),
+      );
+
+      if (rows.length > 0 && rows[0]?.value) {
+        const parsed = cvAboutConfigSchema.safeParse(rows[0].value);
+        if (parsed.success) {
+          this.cachedAbout = parsed.data;
+          return parsed.data;
+        }
+      }
+    } catch (err) {
+      logger.warn("Failed to load cv_about_section from database, using defaults", {
+        module: "cv",
+        metadata: { error: String(err) },
+      });
+    }
+
+    this.cachedAbout = DEFAULT_CV_ABOUT;
+    return DEFAULT_CV_ABOUT;
+  }
+
+  /**
+   * Authoritatively updates the About Me narrative profile configuration.
+   */
+  async updateAboutConfig(config: CvAboutConfig, adminUserId?: string): Promise<CvAboutConfig> {
+    const validated = cvAboutConfigSchema.parse({
+      ...config,
+      updatedAt: new Date().toISOString(),
+    });
+
+    this.cachedAbout = validated;
+
+    try {
+      await this.queryWithTimeout(
+        db
+          .insert(systemSettings)
+          .values({
+            key: "cv_about_section",
+            value: validated,
+            description: "About Me narrative profile section on CV page",
+            updatedAt: new Date(),
+          })
+          .onConflictDoUpdate({
+            target: systemSettings.key,
+            set: {
+              value: validated,
+              updatedAt: new Date(),
+            },
+          }),
+      );
+    } catch (err) {
+      logger.warn("Failed to persist cv_about_section to database, retained in memory", {
+        module: "cv",
+        metadata: { error: String(err) },
+      });
+    }
+
+    if (adminUserId) {
+      try {
+        await this.queryWithTimeout(
+          db.insert(auditEvents).values({
+            userId: adminUserId,
+            action: "cv_about_updated",
+            entityType: "cv_about",
+            entityId: "cv_about_section",
+            newState: { updatedAt: validated.updatedAt },
+          }),
+        );
+      } catch (auditErr) {
+        logger.warn("Failed to record audit event for cv about update", {
+          module: "cv",
+          metadata: { error: String(auditErr) },
+        });
+      }
+    }
+
+    return validated;
   }
 }
 

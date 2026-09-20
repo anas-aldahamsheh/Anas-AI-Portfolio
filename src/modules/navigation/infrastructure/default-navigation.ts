@@ -44,7 +44,7 @@ export const DEFAULT_NAVIGATION_ITEMS: NavigationItem[] = [
     labelKey: "nav.about",
     iconKey: "user",
     orderIndex: 40,
-    isVisible: true,
+    isVisible: false,
     openInNewTab: false,
     authVisibility: "all",
     placement: "both",
