@@ -91,13 +91,13 @@ export function Navbar({
 
       {/* 
         ==================================================
-        FLOATING CAPSULE NAVBAR
-        Height: ~60px, rounded-[28px], max-w-[1420px], top-3 sm:top-4
+        FULL-WIDTH HEADER (Edge-to-Edge)
+        Width: 100% full width, height: 64px (h-16), border-b
         Left: Brand | Center: Navigation | Right: [ AR ] [ Theme Toggle ] [ Sign In ]
         ==================================================
       */}
-      <div className="sticky top-3 sm:top-4.5 z-40 w-full px-3 sm:px-6 pointer-events-none">
-        <header className="pointer-events-auto mx-auto flex h-[58px] sm:h-[62px] max-w-[1420px] items-center justify-between rounded-[28px] border border-neutral-200/80 bg-white/90 px-4 sm:px-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)] backdrop-blur-md transition-colors duration-300 dark:border-white/[0.08] dark:bg-[#07101F]/90 dark:shadow-[0_0_20px_rgba(0,0,0,0.25)]">
+      <header className="sticky top-0 z-40 w-full border-b border-neutral-200/80 bg-white/85 backdrop-blur-md transition-colors duration-300 dark:border-white/[0.08] dark:bg-[#07101F]/85">
+        <div className="mx-auto flex h-16 max-w-[1420px] items-center justify-between px-4 sm:px-6 lg:px-10">
           {/* LEFT: Brand Identity */}
           <Link
             href={`/${locale}`}
@@ -150,8 +150,8 @@ export function Navbar({
           {/* 
             RIGHT: Control Cluster
             Exact desktop order: [ AR ] -> [ Theme Toggle Icon ] -> [ Sign In ]
-            AR -> Theme: ~6-10px (gap-2 = 8px)
-            Theme -> Sign In: ~8-12px (ms-0.5)
+            AR -> Theme: ~6-10px
+            Theme -> Sign In: ~8-12px
           */}
           <div className="flex items-center gap-2">
             {/* 1. Language Toggle (AR / EN) */}
@@ -196,7 +196,7 @@ export function Navbar({
               )}
             </Button>
           </div>
-        </header>
+        </div>
 
         {/* Mobile Navigation Drawer Dropdown */}
         <PresenceTransition isVisible={isMobileMenuOpen}>
@@ -205,45 +205,47 @@ export function Navbar({
             role="dialog"
             aria-modal="true"
             aria-label={locale === "ar" ? "قائمة التنقل للهواتف" : "Mobile navigation menu"}
-            className="pointer-events-auto mx-auto mt-2 max-w-[1420px] rounded-2xl border border-neutral-200/80 bg-white/95 p-4 shadow-xl backdrop-blur-md md:hidden dark:border-white/[0.08] dark:bg-[#07101F]/95"
+            className="w-full border-t border-neutral-200/80 bg-white/95 px-4 py-4 shadow-xl backdrop-blur-md md:hidden dark:border-white/[0.08] dark:bg-[#07101F]/95"
           >
-            <nav className="flex flex-col gap-1.5 text-start">
-              {publicNavItems.map((item) => {
-                const active = isItemActive(item);
-                const label = t(item.labelKey);
+            <div className="mx-auto max-w-[1420px]">
+              <nav className="flex flex-col gap-1.5 text-start">
+                {publicNavItems.map((item) => {
+                  const active = isItemActive(item);
+                  const label = t(item.labelKey);
 
-                return (
-                  <Link
-                    key={item.id}
-                    href={getLocalizedHref(item)}
-                    target={item.openInNewTab ? "_blank" : undefined}
-                    rel={item.openInNewTab ? "noopener noreferrer" : undefined}
-                    aria-current={active ? "page" : undefined}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      "flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
-                      active
-                        ? "bg-[#EEF5FF] text-[#1E40AF] font-semibold dark:bg-indigo-950/70 dark:text-indigo-200"
-                        : "text-[#6C7893] hover:bg-neutral-100/80 hover:text-[#0B1530] dark:text-[#9AA8C0] dark:hover:bg-white/[0.06] dark:hover:text-[#F6F8FC]",
-                    )}
-                  >
-                    <span>{label}</span>
-                    {item.badge && (
-                      <span className="ms-1 px-1.5 py-0 text-[10px] rounded-full bg-neutral-100 text-neutral-600 dark:bg-white/[0.08] dark:text-neutral-300">
-                        {item.badge}
-                      </span>
-                    )}
-                  </Link>
-                );
-              })}
+                  return (
+                    <Link
+                      key={item.id}
+                      href={getLocalizedHref(item)}
+                      target={item.openInNewTab ? "_blank" : undefined}
+                      rel={item.openInNewTab ? "noopener noreferrer" : undefined}
+                      aria-current={active ? "page" : undefined}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={cn(
+                        "flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
+                        active
+                          ? "bg-[#EEF5FF] text-[#1E40AF] font-semibold dark:bg-indigo-950/70 dark:text-indigo-200"
+                          : "text-[#6C7893] hover:bg-neutral-100/80 hover:text-[#0B1530] dark:text-[#9AA8C0] dark:hover:bg-white/[0.06] dark:hover:text-[#F6F8FC]",
+                      )}
+                    >
+                      <span>{label}</span>
+                      {item.badge && (
+                        <span className="ms-1 px-1.5 py-0 text-[10px] rounded-full bg-neutral-100 text-neutral-600 dark:bg-white/[0.08] dark:text-neutral-300">
+                          {item.badge}
+                        </span>
+                      )}
+                    </Link>
+                  );
+                })}
 
-              <div className="mt-2 border-t border-neutral-100 pt-3 dark:border-white/[0.08]">
-                <UserNav locale={locale} initialUser={currentUser} className="w-full justify-center" />
-              </div>
-            </nav>
+                <div className="mt-2 border-t border-neutral-100 pt-3 dark:border-white/[0.08]">
+                  <UserNav locale={locale} initialUser={currentUser} className="w-full justify-center" />
+                </div>
+              </nav>
+            </div>
           </div>
         </PresenceTransition>
-      </div>
+      </header>
     </>
   );
 }

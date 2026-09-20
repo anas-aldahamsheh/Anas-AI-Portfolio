@@ -101,34 +101,34 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
     <div className="w-full">
       {/* 
         ==================================================
-        HERO SECTION
-        Desktop height ~200-270px, exactly two locked lines:
-        1. Anas Al Dahamsheh
-        2. AI Engineer & Full-Stack Developer
-        Atmospheric background fading naturally into page.
+        FULL-WIDTH HERO SECTION (Edge-to-Edge matching Image 3)
+        Full bleed width across the entire viewport (100vw),
+        with subtle atmospheric gradient and ambient glow layers.
+        Adapts seamlessly to Light and Dark Mode.
         ==================================================
       */}
       <section
-        className="relative mb-6 sm:mb-8 overflow-hidden rounded-3xl border border-[#E4EAF3] bg-gradient-to-b from-[#F8FAFF] via-[#F4F8FF] to-white px-6 py-12 sm:px-10 sm:py-16 md:px-12 md:py-20 transition-colors duration-300 dark:border-white/[0.08] dark:bg-gradient-to-b dark:from-[#08111F] dark:via-[#07101F] dark:to-[#050B16]"
+        className="relative w-full border-b border-[#E5EAF2] bg-gradient-to-r from-[#EBF5FF] via-[#F4F8FF] to-[#FAF5FF] overflow-hidden transition-colors duration-300 dark:border-white/[0.08] dark:bg-gradient-to-r dark:from-[#0B1528] dark:via-[#07101F] dark:to-[#050B16]"
         aria-label={isArabic ? "المقدمة" : "Hero"}
       >
-        {/* Atmospheric ambient glow layers */}
+        {/* Ambient atmospheric layers */}
         <div
-          className="pointer-events-none absolute -top-24 end-0 h-96 w-96 rounded-full bg-[#DDEEFF]/50 blur-3xl dark:bg-indigo-900/20"
+          className="pointer-events-none absolute -top-32 start-0 h-96 w-[550px] rounded-full bg-[#DDEEFF]/60 blur-3xl dark:bg-indigo-900/25"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute -bottom-24 start-0 h-80 w-80 rounded-full bg-[#EEE9FF]/50 blur-3xl dark:bg-blue-900/20"
-          aria-hidden="true"
-        />
-
-        {/* Abstract subtle horizon/wave visual motif */}
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/70 to-transparent dark:from-[#050B16]/70 dark:to-transparent"
+          className="pointer-events-none absolute -bottom-32 end-0 h-96 w-[500px] rounded-full bg-[#EEE9FF]/60 blur-3xl dark:bg-blue-900/25"
           aria-hidden="true"
         />
 
-        <div className="relative z-10 max-w-4xl text-start">
+        {/* Subtle radial pattern matching Image 3 */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(#2F6FED_1px,transparent_1px)] [background-size:28px_28px] opacity-[0.035] dark:opacity-[0.05]"
+          aria-hidden="true"
+        />
+
+        {/* Centered Content Container */}
+        <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-16 sm:py-20 lg:py-24 text-start">
           <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-black tracking-tight text-[#0B1530] leading-[1.1] dark:text-[#F6F8FC]">
             {isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
           </h1>
@@ -143,67 +143,68 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
       {/* 
         ==================================================
         5 NAVIGATION DESTINATION ROWS
-        Flat editorial layout, thin dividers, 3-zone structure:
-        [ ICON ]  [ CONTENT: Category / Headline / Desc ]  [ CTA ]
+        Centered within max-w-[1420px] content grid.
         ==================================================
       */}
-      <div
-        className="w-full divide-y divide-[#E5EAF2] border-t border-b border-[#E5EAF2] dark:divide-white/[0.08] dark:border-white/[0.08]"
-        role="navigation"
-        aria-label={isArabic ? "وجهات الاستكشاف" : "Destination Sections"}
-      >
-        {sections.map((item) => {
-          const SectionIcon = item.icon;
+      <div className="mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-8 sm:py-12 lg:py-16">
+        <div
+          className="w-full divide-y divide-[#E5EAF2] border-t border-b border-[#E5EAF2] dark:divide-white/[0.08] dark:border-white/[0.08]"
+          role="navigation"
+          aria-label={isArabic ? "وجهات الاستكشاف" : "Destination Sections"}
+        >
+          {sections.map((item) => {
+            const SectionIcon = item.icon;
 
-          return (
-            <article
-              key={item.id}
-              className="group relative flex flex-col md:flex-row md:items-center justify-between gap-6 py-6 sm:py-7 lg:py-8 px-4 -mx-4 rounded-2xl transition-colors duration-200 hover:bg-[#F8FAFF]/80 dark:hover:bg-white/[0.02]"
-            >
-              {/* Left Zone + Center Zone Container */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6 flex-1 text-start">
-                {/* ZONE 1: ICON BLOCK (56-64px rounded square) */}
-                <div
-                  className={`flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl border transition-transform duration-200 group-hover:scale-105 ${item.lightIconColor} ${item.darkIconColor}`}
-                  aria-hidden="true"
-                >
-                  <SectionIcon className="h-6 w-6 sm:h-7 sm:w-7" />
-                </div>
-
-                {/* ZONE 2: CONTENT (Category, Headline, Description) */}
-                <div className="space-y-1.5 flex-1 min-w-0">
-                  <div className="text-xs font-semibold uppercase tracking-wider text-[#6C7893] dark:text-[#9AA8C0]">
-                    {item.category}
+            return (
+              <article
+                key={item.id}
+                className="group relative flex flex-col md:flex-row md:items-center justify-between gap-6 py-6 sm:py-7 lg:py-8 px-4 -mx-4 rounded-2xl transition-colors duration-200 hover:bg-[#F8FAFF]/80 dark:hover:bg-white/[0.02]"
+              >
+                {/* Left Zone + Center Zone Container */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6 flex-1 text-start">
+                  {/* ZONE 1: ICON BLOCK (56-64px rounded square) */}
+                  <div
+                    className={`flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl border transition-transform duration-200 group-hover:scale-105 ${item.lightIconColor} ${item.darkIconColor}`}
+                    aria-hidden="true"
+                  >
+                    <SectionIcon className="h-6 w-6 sm:h-7 sm:w-7" />
                   </div>
 
-                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0B1530] dark:text-[#F6F8FC]">
-                    <Link
-                      href={item.href}
-                      className="hover:underline focus:outline-none focus:ring-2 focus:ring-[#2F6FED] rounded-md"
-                    >
-                      {item.title}
-                    </Link>
-                  </h2>
+                  {/* ZONE 2: CONTENT (Category, Headline, Description) */}
+                  <div className="space-y-1.5 flex-1 min-w-0">
+                    <div className="text-xs font-semibold uppercase tracking-wider text-[#6C7893] dark:text-[#9AA8C0]">
+                      {item.category}
+                    </div>
 
-                  <p className="text-sm sm:text-[15px] leading-relaxed text-[#6C7893] dark:text-[#9AA8C0] max-w-2xl lg:max-w-3xl">
-                    {item.description}
-                  </p>
+                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0B1530] dark:text-[#F6F8FC]">
+                      <Link
+                        href={item.href}
+                        className="hover:underline focus:outline-none focus:ring-2 focus:ring-[#2F6FED] rounded-md"
+                      >
+                        {item.title}
+                      </Link>
+                    </h2>
+
+                    <p className="text-sm sm:text-[15px] leading-relaxed text-[#6C7893] dark:text-[#9AA8C0] max-w-2xl lg:max-w-3xl">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* ZONE 3: CTA BUTTON (Rounded pill with animated arrow) */}
-              <div className="shrink-0 pt-2 md:pt-0">
-                <Link
-                  href={item.href}
-                  className="inline-flex h-11 sm:h-12 items-center justify-center gap-2 rounded-full px-5 sm:px-6 text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#EEF5FF] text-[#2F6FED] border border-[#D0E2FF] hover:bg-[#E0EEFF] shadow-2xs hover:shadow-xs dark:bg-white/[0.04] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.08] dark:hover:border-indigo-500/40 dark:hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED]"
-                >
-                  <span>{item.cta}</span>
-                  <ArrowIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
-                </Link>
-              </div>
-            </article>
-          );
-        })}
+                {/* ZONE 3: CTA BUTTON (Rounded pill with animated arrow) */}
+                <div className="shrink-0 pt-2 md:pt-0">
+                  <Link
+                    href={item.href}
+                    className="inline-flex h-11 sm:h-12 items-center justify-center gap-2 rounded-full px-5 sm:px-6 text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#EEF5FF] text-[#2F6FED] border border-[#D0E2FF] hover:bg-[#E0EEFF] shadow-2xs hover:shadow-xs dark:bg-white/[0.04] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.08] dark:hover:border-indigo-500/40 dark:hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED]"
+                  >
+                    <span>{item.cta}</span>
+                    <ArrowIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

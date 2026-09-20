@@ -12,10 +12,7 @@ export default async function PublicHomePage({ params }: PublicPageProps) {
   const { dir } = await getTranslations(supportedLocale);
 
   return (
-    <div
-      dir={dir}
-      className="mx-auto w-full max-w-[1420px] px-4 sm:px-6 lg:px-10 py-6 sm:py-8 lg:py-10"
-    >
+    <div dir={dir} className="w-full">
       <RecruiterJourneyIndex locale={supportedLocale} />
     </div>
   );
