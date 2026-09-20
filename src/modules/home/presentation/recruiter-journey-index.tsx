@@ -107,32 +107,43 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
         Adapts seamlessly to Light and Dark Mode.
         ==================================================
       */}
+      {/* 
+        ==================================================
+        FULL-WIDTH HERO SECTION (Matching Reference Image)
+        Ethereal cyan aura on the left, clean white in the center,
+        and soft lavender/purple aura on the right.
+        Dark mode adapts with deep navy and subtle cyan/violet glows.
+        Same layout, spacing, and typography rhythm as reference banner.
+        ==================================================
+      */}
       <section
-        className="relative w-full border-b border-[#E5EAF2] bg-gradient-to-r from-[#EBF5FF] via-[#F4F8FF] to-[#FAF5FF] overflow-hidden transition-colors duration-300 dark:border-white/[0.08] dark:bg-gradient-to-r dark:from-[#0B1528] dark:via-[#07101F] dark:to-[#050B16]"
+        className="relative w-full border-b border-[#E5EAF2] bg-white overflow-hidden transition-colors duration-300 dark:border-white/[0.08] dark:bg-[#07101F]"
         aria-label={isArabic ? "المقدمة" : "Hero"}
       >
-        {/* Ambient atmospheric layers */}
+        {/* Soft Sky Blue / Cyan Aura on Left matching image */}
         <div
-          className="pointer-events-none absolute -top-32 start-0 h-96 w-[550px] rounded-full bg-[#DDEEFF]/60 blur-3xl dark:bg-indigo-900/25"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -bottom-32 end-0 h-96 w-[500px] rounded-full bg-[#EEE9FF]/60 blur-3xl dark:bg-blue-900/25"
+          className="pointer-events-none absolute -top-24 -start-20 h-[500px] w-[600px] rounded-full bg-gradient-to-br from-[#BAE6FD]/70 via-[#E0F2FE]/60 to-transparent blur-[100px] dark:from-[#0284c7]/20 dark:via-[#0369a1]/10 dark:to-transparent"
           aria-hidden="true"
         />
 
-        {/* Subtle radial pattern matching Image 3 */}
+        {/* Soft Dreamy Purple / Lavender Aura on Right matching image */}
         <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(#2F6FED_1px,transparent_1px)] [background-size:28px_28px] opacity-[0.035] dark:opacity-[0.05]"
+          className="pointer-events-none absolute -top-20 -end-20 h-[520px] w-[620px] rounded-full bg-gradient-to-bl from-[#DDD6FE]/75 via-[#EDE9FE]/60 to-transparent blur-[110px] dark:from-[#7c3aed]/20 dark:via-[#6d28d9]/10 dark:to-transparent"
           aria-hidden="true"
         />
 
-        {/* Centered Content Container */}
-        <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-16 sm:py-20 lg:py-24 text-start">
-          <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-black tracking-tight text-[#0B1530] leading-[1.1] dark:text-[#F6F8FC]">
+        {/* Base horizontal wash from soft cyan to transparent center to soft lavender */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#EBF6FE]/80 via-transparent to-[#F3EEFE]/80 dark:from-[#0B1728]/70 dark:via-transparent dark:to-[#150E2A]/70"
+          aria-hidden="true"
+        />
+
+        {/* Content Container matching reference image layout */}
+        <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-14 sm:py-18 lg:py-22 text-start">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black tracking-tight text-[#0B1530] leading-[1.1] dark:text-[#F8FAFC]">
             {isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
           </h1>
-          <p className="mt-3 sm:mt-4 text-xl sm:text-2xl lg:text-[26px] font-medium tracking-tight text-[#6C7893] dark:text-[#9AA8C0]">
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] font-normal sm:font-medium tracking-tight text-[#5A6882] leading-relaxed max-w-2xl dark:text-[#9AA8C0]">
             {isArabic
               ? "مهندس ذكاء اصطناعي ومطور برمجيات شامل (Full-Stack)"
               : "AI Engineer & Full-Stack Developer"}
