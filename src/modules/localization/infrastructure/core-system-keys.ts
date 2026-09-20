@@ -34,6 +34,15 @@ export const CORE_SYSTEM_KEYS: CoreSystemKeyDefinition[] = [
     },
   },
   {
+    key: "nav.overview",
+    category: "navigation",
+    description: "Main navigation link to Overview / Hero page",
+    translations: {
+      ar: "نظرة عامة",
+      en: "Overview",
+    },
+  },
+  {
     key: "nav.projects",
     category: "navigation",
     description: "Navigation link to projects catalog",

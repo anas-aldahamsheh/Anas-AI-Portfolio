@@ -2,6 +2,18 @@ import type { NavigationItem } from "../domain/types";
 
 export const DEFAULT_NAVIGATION_ITEMS: NavigationItem[] = [
   {
+    id: "nav-overview",
+    destinationType: "internal",
+    target: "/",
+    labelKey: "nav.overview",
+    iconKey: "home",
+    orderIndex: 5,
+    isVisible: true,
+    openInNewTab: false,
+    authVisibility: "all",
+    placement: "both",
+  },
+  {
     id: "nav-cv",
     destinationType: "internal",
     target: "/cv",

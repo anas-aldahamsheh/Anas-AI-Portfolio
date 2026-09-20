@@ -145,7 +145,7 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
             </h4>
             <div className="flex flex-col gap-2 text-xs font-medium">
               {items && items.length > 0 ? (
-                items.slice(0, 5).map((item) => (
+                items.slice(0, 6).map((item) => (
                   <Link
                     key={item.id}
                     href={getLocalizedHref(item)}
@@ -156,6 +156,12 @@ export function Footer({ locale = "ar", items, brandTitle }: FooterProps) {
                 ))
               ) : (
                 <>
+                  <Link
+                    href={`/${locale}`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {isArabic ? "نظرة عامة" : "Overview"}
+                  </Link>
                   <Link
                     href={`/${locale}/cv`}
                     className="text-muted-foreground hover:text-primary transition-colors"
