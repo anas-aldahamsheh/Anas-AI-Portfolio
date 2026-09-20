@@ -12,12 +12,19 @@ import { ProjectFilters } from "./project-filters";
 
 export interface ProjectCatalogProps {
   initialProjects: Project[];
-  categories: ProjectCategory[];
-  tags: ProjectTag[];
+  categories?: ProjectCategory[];
+  tags?: ProjectTag[];
   locale: string;
+  showFilters?: boolean;
 }
 
-export function ProjectCatalog({ initialProjects, categories, tags, locale }: ProjectCatalogProps) {
+export function ProjectCatalog({
+  initialProjects,
+  categories = [],
+  tags = [],
+  locale,
+  showFilters = false,
+}: ProjectCatalogProps) {
   const { t } = useLocalization();
 
   const [search, setSearch] = useState("");
@@ -36,6 +43,16 @@ export function ProjectCatalog({ initialProjects, categories, tags, locale }: Pr
 
   const filteredProjects = useMemo(() => {
     let result = [...initialProjects];
+
+    if (!showFilters) {
+      result.sort((a, b) => {
+        if (a.orderIndex !== b.orderIndex) {
+          return a.orderIndex - b.orderIndex;
+        }
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
+      return result;
+    }
 
     // Featured only
     if (featuredOnly) {
@@ -89,7 +106,16 @@ export function ProjectCatalog({ initialProjects, categories, tags, locale }: Pr
     }
 
     return result;
-  }, [initialProjects, search, selectedCategory, selectedTag, featuredOnly, sortBy, locale]);
+  }, [
+    initialProjects,
+    search,
+    selectedCategory,
+    selectedTag,
+    featuredOnly,
+    sortBy,
+    locale,
+    showFilters,
+  ]);
 
   const countText =
     t("projects.count", { count: filteredProjects.length }) ||
@@ -102,27 +128,31 @@ export function ProjectCatalog({ initialProjects, categories, tags, locale }: Pr
 
   return (
     <div className="space-y-8">
-      {/* Search & Filter Controls */}
-      <ProjectFilters
-        search={search}
-        onSearchChange={setSearch}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        selectedTag={selectedTag}
-        onTagChange={setSelectedTag}
-        featuredOnly={featuredOnly}
-        onFeaturedToggle={setFeaturedOnly}
-        sortBy={sortBy}
-        onSortChange={setSortBy}
-        categories={categories}
-        tags={tags}
-        onReset={resetFilters}
-      />
+      {/* Search & Filter Controls - Only rendered if showFilters is true */}
+      {showFilters && (
+        <>
+          <ProjectFilters
+            search={search}
+            onSearchChange={setSearch}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            selectedTag={selectedTag}
+            onTagChange={setSelectedTag}
+            featuredOnly={featuredOnly}
+            onFeaturedToggle={setFeaturedOnly}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            categories={categories}
+            tags={tags}
+            onReset={resetFilters}
+          />
 
-      {/* Results Header / Live count */}
-      <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
-        <span aria-live="polite">{countText}</span>
-      </div>
+          {/* Results Header / Live count */}
+          <div className="flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400">
+            <span aria-live="polite">{countText}</span>
+          </div>
+        </>
+      )}
 
       {/* Projects Grid or Empty State */}
       {filteredProjects.length === 0 ? (
@@ -132,16 +162,18 @@ export function ProjectCatalog({ initialProjects, categories, tags, locale }: Pr
             title={emptyTitle}
             description={emptyDescription}
             action={
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={resetFilters}
-                className="gap-2"
-              >
-                <RotateCcw className="h-4 w-4" />
-                <span>{resetLabel}</span>
-              </Button>
+              showFilters ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={resetFilters}
+                  className="gap-2"
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  <span>{resetLabel}</span>
+                </Button>
+              ) : undefined
             }
           />
         </FadeIn>

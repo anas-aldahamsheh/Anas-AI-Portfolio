@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: ProjectsPageProps): Promise<M
       : "Production systems, agentic architectures, and open-source contributions.");
 
   return {
-    title: `${title} | Anas Portfolio`,
+    title: `${title} | Anas Al Dahamsheh`,
     description,
   };
 }
@@ -58,12 +58,13 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
         </p>
       </div>
 
-      {/* Catalog Content */}
+      {/* Catalog Content - Pure Grid of Project Cards */}
       <ProjectCatalog
         initialProjects={catalogResult.projects}
         categories={catalogResult.categories}
         tags={catalogResult.tags}
         locale={supportedLocale}
+        showFilters={false}
       />
     </div>
   );
