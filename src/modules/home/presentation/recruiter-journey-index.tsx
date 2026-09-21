@@ -24,8 +24,8 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
   const fullTitle = isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh";
   const fullSub1 = isArabic ? "مهندس ذكاء اصطناعي" : "AI Engineer";
   const fullSub2 = isArabic
-    ? " ومطور برمجيات شامل (Full-Stack)"
-    : " & Full-Stack Developer";
+    ? "ومطور برمجيات شامل (Full-Stack)"
+    : "& Full-Stack Developer";
 
   const [mounted, setMounted] = useState(false);
   const [titleText, setTitleText] = useState("");
@@ -293,7 +293,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
             )}
           </div>
           <p
-            aria-label={`${fullSub1}${fullSub2}`}
+            aria-label={`${fullSub1} ${fullSub2}`}
             className="font-manrope font-medium mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] leading-relaxed max-w-2xl min-h-[1.5em] text-[#64748B] dark:text-[#A7B3C7]"
           >
             {mounted ? (
@@ -303,6 +303,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
                     {sub1Text}
                   </span>
                 )}
+                {sub2Text && <span className="inline-block" aria-hidden="true">&nbsp;</span>}
                 {sub2Text && (
                   <span className="text-[#64748B] dark:text-[#A7B3C7]">
                     {sub2Text}
@@ -321,6 +322,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
                 <span className="bg-gradient-to-r from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] bg-clip-text text-transparent font-semibold">
                   {fullSub1}
                 </span>
+                <span className="inline-block" aria-hidden="true">&nbsp;</span>
                 <span className="text-[#64748B] dark:text-[#A7B3C7]">
                   {fullSub2}
                 </span>
