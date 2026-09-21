@@ -150,16 +150,29 @@ export function Footer({
             <h4 className="text-xs font-bold tracking-wider uppercase text-[#0B1530] dark:text-[#F6F8FC]">
               {isArabic ? "التنقل" : "Navigation"}
             </h4>
-            <div className="flex flex-col gap-2 text-xs font-medium">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-[#6C7893] hover:text-[#2F6FED] transition-colors dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC]"
-                >
-                  {link.label}
-                </Link>
-              ))}
+            <div className="grid grid-cols-2 gap-x-6 sm:gap-x-8 gap-y-2.5 text-xs font-medium">
+              <div className="flex flex-col gap-2.5">
+                {navLinks.slice(0, 3).map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-[#6C7893] hover:text-[#2F6FED] transition-colors dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC]"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+              <div className="flex flex-col gap-2.5">
+                {navLinks.slice(3).map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-[#6C7893] hover:text-[#2F6FED] transition-colors dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC]"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>

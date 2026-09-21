@@ -102,10 +102,10 @@ export function Navbar({
           {/* LEFT: Brand Identity */}
           <Link
             href={`/${locale}`}
-            className="flex items-center transition-opacity hover:opacity-85 text-start"
+            className="flex items-center transition-opacity hover:opacity-85 text-start shrink-0"
             aria-label={`${resolvedBrandTitle} - ${locale === "ar" ? "مهندس ذكاء اصطناعي" : "AI Engineer"}`}
           >
-            <BrandLogo className="h-9 sm:h-10 w-auto" />
+            <BrandLogo className="h-8 sm:h-9 w-auto" />
           </Link>
 
           {/* CENTER: Navigation Links */}
