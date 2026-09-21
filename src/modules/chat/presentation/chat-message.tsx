@@ -49,15 +49,15 @@ export function ChatMessage({ message }: ChatMessageProps) {
         return (
           <div
             key={idx}
-            className="border-border/60 bg-muted/90 my-2 overflow-hidden rounded-lg border"
+            className="my-2.5 overflow-hidden rounded-xl border border-slate-200/80 bg-slate-900/95 text-slate-100 shadow-sm dark:border-white/10 dark:bg-black/60"
             dir="ltr"
           >
             {hasLang && (
-              <div className="text-muted-foreground border-border/40 bg-muted border-b px-3 py-1 font-mono text-[10px] uppercase">
-                {firstLine}
+              <div className="flex items-center justify-between border-b border-white/10 bg-white/5 px-3 py-1.5 font-mono text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+                <span>{firstLine}</span>
               </div>
             )}
-            <pre className="text-foreground/90 overflow-x-auto p-3 font-mono text-xs">
+            <pre className="overflow-x-auto p-3 font-mono text-xs leading-relaxed text-slate-200">
               <code>{codeText}</code>
             </pre>
           </div>
@@ -69,7 +69,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
       const subParts = seg.split(citeTokenRegex);
 
       return (
-        <span key={idx} className="leading-relaxed whitespace-pre-wrap">
+        <span key={idx} className="leading-relaxed whitespace-pre-wrap font-manrope">
           {subParts.map((sub, sIdx) => {
             const citeMatch = sub.match(/\[cit:([a-zA-Z0-9_\-.:]+)\]/);
             if (citeMatch && citeMatch[1]) {
@@ -98,15 +98,15 @@ export function ChatMessage({ message }: ChatMessageProps) {
       data-testid={`chat-message-${message.role}`}
     >
       <div
-        className={`px-4 py-3 text-sm shadow-sm transition-all ${
+        className={`px-4 py-3 text-sm transition-all font-manrope ${
           isUser
-            ? "bg-primary text-primary-foreground max-w-[85%] rounded-2xl rounded-tr-sm"
-            : "bg-card/90 text-card-foreground border-border/70 max-w-[92%] rounded-2xl rounded-tl-sm border"
+            ? "max-w-[85%] rounded-2xl rounded-tr-xs bg-gradient-to-r from-[#173B6C] to-[#2F6FED] text-white shadow-md shadow-indigo-950/15 dark:from-[#4F46E5] dark:to-[#0891B2]"
+            : "max-w-[92%] rounded-2xl rounded-tl-xs border border-slate-200/90 bg-white/95 text-slate-800 shadow-xs backdrop-blur-sm dark:border-white/[0.08] dark:bg-white/[0.05] dark:text-slate-100"
         }`}
       >
         {renderFormattedContent(message.content, message.citations)}
         {message.isStreaming && (
-          <span className="bg-primary ms-1 inline-block h-3.5 w-1.5 animate-pulse align-middle" />
+          <span className="ms-1 inline-block h-3.5 w-1.5 animate-pulse align-middle rounded-xs bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] shadow-xs" />
         )}
       </div>
 
@@ -115,12 +115,12 @@ export function ChatMessage({ message }: ChatMessageProps) {
           <button
             type="button"
             onClick={() => setIsDebugOpen(true)}
-            className="text-muted-foreground hover:text-foreground hover:bg-muted/80 flex items-center gap-1.5 rounded-md px-2 py-1 text-[11px] font-medium transition-colors"
+            className="flex items-center gap-1.5 rounded-lg border border-slate-200/70 bg-slate-50/80 px-2.5 py-1 font-manrope text-[11px] font-medium text-slate-500 transition-colors hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400 dark:hover:bg-white/[0.08] dark:hover:text-white cursor-pointer"
             data-testid="rag-debug-trigger-button"
             title={t("chat.debug.button")}
           >
             <svg
-              className="text-primary h-3.5 w-3.5"
+              className="h-3.5 w-3.5 text-[#2F6FED] dark:text-[#67E8F9]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -133,7 +133,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
               />
             </svg>
             <span>{t("chat.debug.button")}</span>
-            <span className="text-muted-foreground/80 font-mono text-[10px]">
+            <span className="font-mono text-[10px] text-slate-400 dark:text-slate-500">
               ({message.telemetry.latencies.totalMs}ms)
             </span>
           </button>

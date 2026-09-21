@@ -102,20 +102,20 @@ export function ChatPageClient() {
         <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-neutral-900 text-neutral-50 dark:bg-neutral-100 dark:text-neutral-900">
-                <Sparkles className="h-5 w-5" />
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#173B6C]/10 via-[#2F6FED]/15 to-[#0891B2]/10 text-[#173B6C] ring-1 ring-[#173B6C]/15 dark:from-[#4F46E5]/20 dark:to-[#0891B2]/20 dark:text-[#67E8F9] dark:ring-white/10">
+                <Sparkles className="h-4.5 w-4.5" />
               </span>
-              <Badge variant="outline" className="text-xs">
+              <Badge variant="outline" className="font-manrope text-xs">
                 {isAr ? "مساعد التوظيف والخبرات" : "Recruiter Assistant"}
               </Badge>
-              <Badge variant="secondary" className="text-xs">
+              <Badge variant="secondary" className="font-manrope text-xs">
                 {isAr ? "بيانات موثقة بالأدلة" : "Verified Career Evidence"}
               </Badge>
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl dark:text-neutral-100">
+            <h1 className="font-space-grotesk text-2xl font-bold tracking-tight text-[#173B6C] sm:text-3xl dark:text-[#F4F7FF]">
               {t("chat.title") || (isAr ? "اسأل عن أنس" : "Ask About Anas")}
             </h1>
-            <p className="max-w-2xl text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+            <p className="max-w-2xl font-manrope text-sm leading-relaxed text-slate-600 dark:text-slate-400">
               {t("chat.subtitle") ||
                 (isAr
                   ? "مساعد تفاعلي موجه لمسؤولي التوظيف والمهندسين لاستكشاف خبرات ومشاريع أنس وملاءمته للأدوار التقنية."
@@ -126,7 +126,7 @@ export function ChatPageClient() {
           <Button
             onClick={() => handleLaunchChat()}
             size="lg"
-            className="flex shrink-0 items-center gap-2 font-medium"
+            className="flex shrink-0 items-center gap-2 font-manrope font-semibold bg-gradient-to-r from-[#173B6C] via-[#2F6FED] to-[#0891B2] text-white shadow-md shadow-blue-500/20 hover:opacity-95 dark:from-[#4F46E5] dark:via-[#6366F1] dark:to-[#0891B2]"
           >
             <MessageSquare className="h-4 w-4" />
             <span>{isAr ? "بدء المحادثة" : "Start Conversation"}</span>
@@ -134,16 +134,16 @@ export function ChatPageClient() {
         </div>
 
         {/* Recruiter Focus Points */}
-        <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-neutral-200/60 pt-6 text-xs text-neutral-600 dark:border-neutral-800/60 dark:text-neutral-400">
+        <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-slate-200/70 pt-6 font-manrope text-xs text-slate-600 dark:border-white/[0.08] dark:text-slate-400">
           <div className="flex items-center gap-1.5">
-            <Briefcase className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+            <Briefcase className="h-4 w-4 text-[#2F6FED] dark:text-cyan-400" />
             <span>
               {isAr ? "تقييم الملاءمة للأدوار الوظيفية" : "Role Fit & Competency Evaluation"}
             </span>
           </div>
           <span className="opacity-40">•</span>
           <div className="flex items-center gap-1.5">
-            <Code2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            <Code2 className="h-4 w-4 text-[#173B6C] dark:text-indigo-400" />
             <span>
               {isAr
                 ? "تفاصيل المعمارية والقرارات الهندسية"
@@ -152,7 +152,7 @@ export function ChatPageClient() {
           </div>
           <span className="opacity-40">•</span>
           <div className="flex items-center gap-1.5">
-            <ShieldCheck className="h-4 w-4 text-neutral-700 dark:text-neutral-300" />
+            <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
             <span>
               {isAr
                 ? "إجابات مبنية حصراً على بيانات موثقة"
@@ -164,7 +164,7 @@ export function ChatPageClient() {
 
       {/* Suggested Starter Prompts */}
       <div className="mt-8 space-y-4">
-        <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+        <h2 className="font-space-grotesk text-base font-bold text-[#173B6C] dark:text-[#F4F7FF]">
           {isAr ? "أسئلة مقترحة لمسؤولي التوظيف" : "Recommended Recruiter Inquiries"}
         </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -175,20 +175,20 @@ export function ChatPageClient() {
                 key={idx}
                 type="button"
                 onClick={() => handleLaunchChat(item.prompt)}
-                className="group flex flex-col items-start justify-between rounded-xl border border-neutral-200/80 bg-white p-5 text-start shadow-xs transition-all hover:border-neutral-300 hover:shadow-sm dark:border-neutral-800/80 dark:bg-neutral-900/50 dark:hover:border-neutral-700"
+                className="group flex flex-col items-start justify-between rounded-xl border border-slate-200/80 bg-white/90 p-5 text-start shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-[#2F6FED]/60 hover:shadow-md hover:shadow-blue-500/5 dark:border-white/[0.08] dark:bg-white/[0.03] dark:hover:border-cyan-400/40 dark:hover:bg-white/[0.06] cursor-pointer"
               >
                 <div className="space-y-2">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-md bg-neutral-100 text-neutral-800 transition-colors group-hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 dark:group-hover:bg-neutral-700">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-[#173B6C] transition-colors group-hover:bg-indigo-100 dark:bg-indigo-950/50 dark:text-cyan-300">
                     <IconComponent className="h-4 w-4" />
                   </span>
-                  <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                  <h3 className="font-space-grotesk text-sm font-bold text-slate-900 dark:text-white">
                     {item.title}
                   </h3>
-                  <p className="text-xs leading-relaxed text-neutral-500 dark:text-neutral-400">
+                  <p className="font-manrope text-xs leading-relaxed text-slate-600 dark:text-slate-400">
                     {item.prompt}
                   </p>
                 </div>
-                <div className="mt-4 flex items-center gap-1 text-xs font-medium text-neutral-900 group-hover:underline dark:text-neutral-100">
+                <div className="mt-4 flex items-center gap-1 font-manrope text-xs font-semibold text-[#2F6FED] group-hover:underline dark:text-cyan-400">
                   <span>{isAr ? "اسأل الآن" : "Ask Now"}</span>
                   <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
                 </div>

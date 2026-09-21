@@ -50,14 +50,14 @@ export function ChatCitationBadge({ citation }: ChatCitationBadgeProps) {
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="bg-primary/10 hover:bg-primary/20 text-primary border-primary/25 focus:ring-primary/40 inline-flex items-center gap-1 rounded-full border px-1.5 py-0.5 text-xs font-medium transition-colors focus:ring-2 focus:outline-none"
+        className="inline-flex items-center gap-1 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-2 py-0.5 font-manrope text-[11px] font-semibold text-[#173B6C] shadow-2xs transition-all hover:bg-indigo-100 hover:border-indigo-300 focus:outline-none focus:ring-2 focus:ring-[#2F6FED]/40 dark:border-indigo-500/30 dark:bg-indigo-950/40 dark:text-[#67E8F9] dark:hover:bg-indigo-900/50 cursor-pointer"
         aria-expanded={isOpen}
         aria-haspopup="dialog"
         title={citation.title}
         data-testid={`citation-badge-${citation.citationId}`}
       >
         <svg
-          className="text-primary/70 h-3 w-3"
+          className="h-3 w-3 text-[#2F6FED] dark:text-[#67E8F9]"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -77,39 +77,39 @@ export function ChatCitationBadge({ citation }: ChatCitationBadgeProps) {
         <div
           role="dialog"
           aria-label={citation.title}
-          className="bg-card/95 border-border animate-in fade-in zoom-in-95 absolute start-0 bottom-full z-50 mb-2 w-72 rounded-xl border p-3 text-start shadow-xl backdrop-blur-md duration-150"
+          className="absolute start-0 bottom-full z-50 mb-2 w-76 rounded-2xl border border-slate-200/90 bg-white/95 p-3.5 text-start shadow-xl backdrop-blur-xl duration-150 animate-in fade-in zoom-in-95 dark:border-white/10 dark:bg-[#07101F]/95 font-manrope"
           data-testid={`citation-popover-${citation.citationId}`}
         >
-          <div className="mb-1.5 flex items-start justify-between gap-2">
-            <span className="bg-muted text-muted-foreground inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase">
+          <div className="mb-2 flex items-start justify-between gap-2">
+            <span className="inline-flex items-center rounded-lg bg-indigo-50 px-2 py-0.5 text-[10px] font-bold tracking-wider text-[#173B6C] uppercase dark:bg-indigo-950/60 dark:text-cyan-300">
               {citation.sourceType}
             </span>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="text-muted-foreground hover:text-foreground hover:bg-accent focus:ring-ring rounded p-1 text-xs focus:ring-1 focus:outline-none"
+              className="rounded-lg p-1 text-xs text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/10 dark:hover:text-white cursor-pointer"
               aria-label={t("chat.close")}
             >
               ✕
             </button>
           </div>
 
-          <h4 className="text-foreground mb-1 line-clamp-2 text-xs leading-snug font-semibold">
+          <h4 className="mb-1 line-clamp-2 font-space-grotesk text-xs font-bold leading-snug text-slate-900 dark:text-white">
             {citation.title}
           </h4>
 
           {citation.headingHierarchy && citation.headingHierarchy.length > 0 && (
-            <p className="text-muted-foreground mb-2 flex items-center gap-1 text-[11px]">
-              <span className="text-foreground/70 font-medium">{t("chat.citations.section")}:</span>
+            <p className="mb-2 flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
+              <span className="font-medium text-slate-700 dark:text-slate-300">{t("chat.citations.section")}:</span>
               <span>{citation.headingHierarchy.join(" › ")}</span>
             </p>
           )}
 
           {sourceUrl && (
-            <div className="border-border/50 mt-1 border-t pt-2">
+            <div className="mt-2 border-t border-slate-200/80 pt-2 dark:border-white/[0.08]">
               <Link
                 href={sourceUrl}
-                className="text-primary inline-flex items-center gap-1 text-xs font-medium hover:underline focus:outline-none"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[#2F6FED] hover:underline focus:outline-none dark:text-cyan-400"
                 onClick={() => setIsOpen(false)}
               >
                 <span>{t("chat.citations.open")}</span>

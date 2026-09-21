@@ -414,7 +414,7 @@ export function ChatDrawer({
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className={`fixed end-6 bottom-6 z-40 flex h-13 w-13 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#2F6FED] text-white shadow-[0_4px_20px_rgba(47,111,237,0.35)] hover:bg-[#255ec9] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-indigo-600 dark:shadow-[0_0_20px_rgba(79,70,229,0.4)] dark:hover:bg-indigo-500 ${
+        className={`fixed end-6 bottom-6 z-40 flex h-13 w-13 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-gradient-to-tr from-[#173B6C] via-[#2F6FED] to-[#0891B2] text-white shadow-[0_4px_20px_rgba(47,111,237,0.35)] hover:shadow-[0_6px_25px_rgba(47,111,237,0.45)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400 dark:from-[#4F46E5] dark:via-[#6366F1] dark:to-[#0891B2] dark:shadow-[0_0_25px_rgba(79,70,229,0.5)] ${
           isOpen ? "hidden" : "flex"
         }`}
         aria-label={t("chat.trigger.aria")}
@@ -439,7 +439,7 @@ export function ChatDrawer({
       {/* Slide-over Drawer / Dialog */}
       {isOpen && (
         <div
-          className="bg-background/50 animate-in fade-in fixed inset-0 z-50 flex justify-end backdrop-blur-sm duration-200"
+          className="fixed inset-0 z-50 flex justify-end bg-slate-950/45 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
           data-testid="chat-drawer-backdrop"
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsOpen(false);
@@ -449,39 +449,45 @@ export function ChatDrawer({
             role="dialog"
             aria-modal="true"
             aria-label={t("chat.title")}
-            className="bg-card border-border animate-in slide-in-from-right flex h-full w-full flex-col border-s shadow-2xl duration-300 sm:w-[460px]"
+            className="relative flex h-full w-full flex-col overflow-hidden border-s border-slate-200/80 bg-white/95 shadow-2xl backdrop-blur-2xl duration-300 sm:w-[460px] dark:border-white/10 dark:bg-[#07101F]/95 animate-in slide-in-from-right"
             data-testid="chat-drawer-container"
           >
+            {/* Ambient Aurora Accents */}
+            <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-gradient-to-br from-[#4F46E5]/15 to-[#0891B2]/15 blur-3xl" />
+            <div className="pointer-events-none absolute top-1/2 -left-20 h-56 w-56 rounded-full bg-gradient-to-tr from-[#2F6FED]/10 to-transparent blur-3xl" />
+
             {/* Header */}
-            <div className="border-border bg-muted/30 flex flex-col gap-2 border-b p-4">
+            <div className="relative z-10 flex flex-col gap-3 border-b border-slate-200/80 bg-white/70 px-4 py-3.5 backdrop-blur-md dark:border-white/[0.08] dark:bg-white/[0.02]">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-full">
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#173B6C]/10 via-[#2F6FED]/15 to-[#0891B2]/10 text-[#173B6C] ring-1 ring-[#173B6C]/15 shadow-xs dark:from-[#4F46E5]/20 dark:to-[#0891B2]/20 dark:text-[#67E8F9] dark:ring-white/10">
+                    <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        strokeWidth={2}
+                        strokeWidth={2.2}
                         d="M13 10V3L4 14h7v7l9-11h-7z"
                       />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-foreground text-sm font-semibold">{t("chat.title")}</h3>
+                    <h3 className="font-space-grotesk text-sm font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF]">
+                      {t("chat.title")}
+                    </h3>
                     {activeScopeTitle && (
-                      <p className="text-primary max-w-[200px] truncate text-[11px] font-medium">
+                      <p className="font-manrope max-w-[200px] truncate text-[11px] font-medium text-[#2F6FED] dark:text-[#67E8F9]">
                         {activeScopeTitle}
                       </p>
                     )}
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   {messages.length > 0 && (
                     <button
                       type="button"
                       onClick={clearChat}
-                      className="text-muted-foreground hover:text-foreground hover:bg-muted rounded px-2 py-1 text-xs transition-colors"
+                      className="rounded-lg px-2.5 py-1 font-manrope text-xs font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-[#173B6C] dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
                       title={t("chat.clear")}
                     >
                       {t("chat.clear")}
@@ -490,7 +496,7 @@ export function ChatDrawer({
                   <button
                     type="button"
                     onClick={() => setIsOpen(false)}
-                    className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors"
+                    className="cursor-pointer rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/10 dark:hover:text-white"
                     aria-label={t("chat.close")}
                     data-testid="chat-close-button"
                   >
@@ -509,17 +515,17 @@ export function ChatDrawer({
               {/* Active Project Scope Badge */}
               {activeScopeId && (
                 <div
-                  className="bg-primary/10 border-primary/25 flex items-center justify-between gap-2 rounded-lg border px-3 py-1.5 text-xs"
+                  className="flex items-center justify-between gap-2 rounded-xl border border-indigo-200/80 bg-gradient-to-r from-indigo-50/90 to-blue-50/80 px-3 py-1.5 text-xs text-indigo-950 shadow-xs dark:border-indigo-500/30 dark:from-indigo-950/40 dark:to-blue-950/40 dark:text-indigo-200"
                   data-testid="chat-scope-badge-container"
                 >
                   <div className="flex items-center gap-1.5 overflow-hidden">
-                    <span className="bg-primary text-primary-foreground flex h-4 w-4 shrink-0 items-center justify-center rounded text-[10px] font-bold">
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#173B6C] text-[10px] font-bold text-white dark:bg-indigo-500">
                       P
                     </span>
-                    <span className="text-foreground truncate font-semibold">
+                    <span className="truncate font-semibold font-manrope">
                       {activeScopeTitle || activeScopeId}
                     </span>
-                    <span className="text-muted-foreground hidden text-[10px] sm:inline">
+                    <span className="hidden text-[10px] text-indigo-700/80 dark:text-indigo-300 sm:inline">
                       • {t("chat.scope.badge")}
                     </span>
                   </div>
@@ -529,7 +535,7 @@ export function ChatDrawer({
                       setActiveScopeId(undefined);
                       setActiveScopeTitle(undefined);
                     }}
-                    className="text-muted-foreground hover:text-foreground shrink-0 rounded px-1.5 py-0.5 text-[11px] font-medium transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+                    className="cursor-pointer shrink-0 rounded px-1.5 py-0.5 text-[11px] font-medium text-slate-500 transition-colors hover:bg-indigo-100 hover:text-indigo-900 dark:hover:bg-indigo-900/50 dark:hover:text-white"
                     data-testid="exit-scope-button"
                     title={t("chat.scope.exit")}
                   >
@@ -540,7 +546,7 @@ export function ChatDrawer({
 
               {/* Mode Selector Tabs */}
               <div
-                className="bg-muted/60 flex items-center gap-1 rounded-lg p-1 text-xs"
+                className="flex items-center gap-1 rounded-xl border border-slate-200/70 bg-slate-100/90 p-1 text-xs dark:border-white/[0.08] dark:bg-white/[0.04]"
                 data-testid="chat-mode-selector"
               >
                 {availableModes.map((m) => (
@@ -549,10 +555,10 @@ export function ChatDrawer({
                     type="button"
                     onClick={() => setMode(m.slug)}
                     title={m.description || undefined}
-                    className={`flex-1 rounded-md py-1 font-medium transition-all ${
+                    className={`flex-1 rounded-lg py-1.5 font-manrope text-xs transition-all duration-200 cursor-pointer ${
                       mode === m.slug
-                        ? "bg-card text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "bg-card text-[#173B6C] dark:text-white font-bold shadow-xs ring-1 ring-black/5 dark:ring-white/10"
+                        : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white font-medium"
                     }`}
                     data-testid={`mode-tab-${m.slug}`}
                   >
@@ -564,12 +570,12 @@ export function ChatDrawer({
 
             {/* Messages Thread Container */}
             <div
-              className="flex-1 space-y-2 overflow-y-auto p-4"
+              className="relative z-10 flex-1 space-y-2 overflow-y-auto p-4"
               data-testid="chat-messages-container"
             >
               {messages.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center px-4 py-8 text-center">
-                  <div className="bg-primary/10 text-primary mb-3 flex h-12 w-12 items-center justify-center rounded-2xl">
+                  <div className="relative mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#173B6C]/10 via-[#2F6FED]/15 to-[#0891B2]/15 text-[#173B6C] ring-1 ring-[#173B6C]/20 shadow-md shadow-indigo-500/10 dark:from-[#4F46E5]/25 dark:to-[#0891B2]/25 dark:text-[#67E8F9] dark:ring-white/15">
                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path
                         strokeLinecap="round"
@@ -579,23 +585,36 @@ export function ChatDrawer({
                       />
                     </svg>
                   </div>
-                  <h4 className="text-foreground mb-1 text-sm font-semibold">
+                  <h4 className="mb-2 font-space-grotesk text-base sm:text-lg font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF]">
                     {t("chat.empty.title")}
                   </h4>
-                  <p className="text-muted-foreground mb-6 max-w-xs text-xs leading-relaxed">
+                  <p className="mb-6 max-w-xs font-manrope text-xs leading-relaxed text-slate-500 dark:text-slate-400">
                     {t("chat.empty.subtitle")}
                   </p>
 
-                  <div className="w-full space-y-2">
+                  <div className="w-full space-y-2.5">
                     {suggestedPrompts.map((prompt, idx) => (
                       <button
                         key={idx}
                         type="button"
                         onClick={() => handleSendMessage(prompt)}
-                        className="text-foreground bg-muted/40 hover:bg-muted border-border/50 w-full rounded-xl border p-2.5 text-start text-xs transition-all duration-150"
+                        className="group flex w-full items-center justify-between gap-3 rounded-xl border border-slate-200/90 bg-white/85 p-3 text-start font-manrope text-xs font-medium text-slate-700 shadow-xs backdrop-blur-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#2F6FED]/60 hover:bg-gradient-to-r hover:from-blue-50/60 hover:to-indigo-50/40 hover:text-[#173B6C] hover:shadow-md hover:shadow-blue-500/5 dark:border-white/[0.08] dark:bg-white/[0.03] dark:text-slate-200 dark:hover:border-cyan-400/40 dark:hover:bg-white/[0.07] dark:hover:text-white dark:hover:shadow-cyan-500/5 cursor-pointer"
                         data-testid={`suggested-prompt-${idx}`}
                       >
-                        {prompt}
+                        <span className="leading-snug">{prompt}</span>
+                        <svg
+                          className="h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[#2F6FED] rtl:rotate-180 rtl:group-hover:-translate-x-1 dark:group-hover:text-cyan-400"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
                       </button>
                     ))}
                   </div>
@@ -605,12 +624,12 @@ export function ChatDrawer({
               )}
 
               {errorMessage && (
-                <div className="text-destructive bg-destructive/10 border-destructive/20 my-2 flex items-center justify-between rounded-xl border p-3 text-xs">
+                <div className="my-2 flex items-center justify-between rounded-xl border border-rose-200 bg-rose-50/90 p-3 text-xs text-rose-800 dark:border-rose-900/50 dark:bg-rose-950/40 dark:text-rose-200 font-manrope">
                   <span>{errorMessage}</span>
                   <button
                     type="button"
                     onClick={() => handleSendMessage()}
-                    className="hover:text-destructive/80 ms-2 font-semibold underline"
+                    className="ms-2 font-semibold underline hover:text-rose-900 dark:hover:text-white cursor-pointer"
                   >
                     {t("chat.retry")}
                   </button>
@@ -621,7 +640,7 @@ export function ChatDrawer({
             </div>
 
             {/* Input Footer */}
-            <div className="border-border bg-card border-t p-3">
+            <div className="relative z-10 border-t border-slate-200/80 bg-white/90 p-3.5 backdrop-blur-xl dark:border-white/[0.08] dark:bg-[#07101F]/90">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -629,49 +648,54 @@ export function ChatDrawer({
                 }}
                 className="relative"
               >
-                <textarea
-                  ref={inputRef}
-                  value={inputVal}
-                  onChange={(e) => setInputVal(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSendMessage();
-                    }
-                  }}
-                  rows={2}
-                  placeholder={t("chat.placeholder")}
-                  className="bg-muted/50 border-border focus:ring-primary/40 text-foreground placeholder:text-muted-foreground w-full resize-none rounded-xl border p-2.5 pe-12 text-sm focus:ring-2 focus:outline-none"
-                  disabled={isLoading}
-                  data-testid="chat-input"
-                />
+                <div className="relative rounded-2xl border border-slate-200/90 bg-slate-50/80 shadow-inner transition-all duration-200 focus-within:border-[#2F6FED] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#2F6FED]/20 dark:border-white/10 dark:bg-white/[0.03] dark:focus-within:border-cyan-400/60 dark:focus-within:bg-[#0A1326] dark:focus-within:ring-cyan-500/20">
+                  <textarea
+                    ref={inputRef}
+                    value={inputVal}
+                    onChange={(e) => setInputVal(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSendMessage();
+                      }
+                    }}
+                    rows={2}
+                    placeholder={t("chat.placeholder")}
+                    className="w-full resize-none bg-transparent p-3 pe-12 font-manrope text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none dark:text-slate-100 dark:placeholder:text-slate-500"
+                    disabled={isLoading}
+                    data-testid="chat-input"
+                  />
 
-                <button
-                  type="submit"
-                  disabled={!inputVal.trim() || isLoading}
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 absolute end-2.5 bottom-2.5 rounded-lg p-2 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
-                  aria-label={t("chat.send")}
-                  data-testid="chat-send-button"
-                >
-                  <svg
-                    className="h-4 w-4 rtl:rotate-180"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                  <button
+                    type="submit"
+                    disabled={!inputVal.trim() || isLoading}
+                    className="absolute end-2 bottom-2 flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-r from-[#173B6C] via-[#2F6FED] to-[#0891B2] text-white shadow-md shadow-blue-500/25 transition-all duration-150 hover:opacity-95 hover:scale-105 active:scale-95 disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed dark:from-[#4F46E5] dark:via-[#6366F1] dark:to-[#0891B2]"
+                    aria-label={t("chat.send")}
+                    data-testid="chat-send-button"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      className="h-4 w-4 rtl:rotate-180"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2.2}
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </form>
 
-              <p className="text-muted-foreground mt-2 line-clamp-1 text-center text-[10px]">
-                {t("chat.disclaimer")}
-              </p>
+              <div className="mt-2.5 flex items-center justify-center gap-1.5 text-center font-manrope text-[11px] text-slate-400 dark:text-slate-500">
+                <svg className="h-3 w-3 shrink-0 text-[#2F6FED]/70 dark:text-cyan-400/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <span className="line-clamp-1">{t("chat.disclaimer")}</span>
+              </div>
             </div>
           </div>
         </div>
