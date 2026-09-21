@@ -271,7 +271,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
           <div className="relative inline-block min-h-[1.25em]">
             <h1
               aria-label={fullTitle}
-              className="font-sora font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] text-[#173B6C] dark:text-[#F4F7FF]"
+              className="font-space-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] text-[#173B6C] dark:text-[#F4F7FF]"
             >
               {mounted ? (
                 <span className="inline-flex items-baseline">

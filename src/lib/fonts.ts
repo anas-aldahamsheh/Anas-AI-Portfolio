@@ -1,4 +1,4 @@
-import { Inter, IBM_Plex_Sans_Arabic, Sora, Manrope } from "next/font/google";
+import { Inter, IBM_Plex_Sans_Arabic, Sora, Manrope, Space_Grotesk } from "next/font/google";
 
 export const fontInter = Inter({
   subsets: ["latin"],
@@ -21,10 +21,18 @@ export const fontSora = Sora({
   variable: "--font-sora",
 });
 
+export const fontSpaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  display: "swap",
+  variable: "--font-space-grotesk",
+});
+
 export const fontManrope = Manrope({
   subsets: ["latin"],
   weight: ["500", "600"],
   display: "swap",
   variable: "--font-manrope",
 });
+
 
