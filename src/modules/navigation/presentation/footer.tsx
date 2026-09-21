@@ -84,7 +84,7 @@ export function Footer({
                 {brandTitle || (isArabic ? DEVELOPER_PROFILE.fullName.ar : DEVELOPER_PROFILE.fullName.en)}
               </h3>
               <p className="text-xs font-semibold text-[#2F6FED] dark:text-indigo-400 mt-1">
-                {isArabic ? DEVELOPER_PROFILE.headline.ar : "AI & Full-Stack Software Engineer"}
+                {isArabic ? DEVELOPER_PROFILE.headline.ar : DEVELOPER_PROFILE.headline.en}
               </p>
             </div>
             <p className="text-xs leading-relaxed text-[#6C7893] dark:text-[#9AA8C0] max-w-sm">

@@ -10,7 +10,7 @@ export const DEVELOPER_PROFILE = {
     ar: "أنس الدحامشة",
   },
   headline: {
-    en: "AI & Full-Stack Software Engineer",
+    en: "AI Engineer & Full-Stack Developer",
     ar: "مهندس ذكاء اصطناعي وبرمجيات",
   },
   phone: {
