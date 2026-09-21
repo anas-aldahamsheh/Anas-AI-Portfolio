@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import {
   User,
@@ -20,6 +20,88 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
   const isArabic = locale === "ar";
   const ArrowIcon = isArabic ? ArrowLeft : ArrowRight;
   const heroRef = useRef<HTMLElement>(null);
+
+  const fullTitle = isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh";
+  const fullSub1 = isArabic ? "مهندس ذكاء اصطناعي" : "AI Engineer";
+  const fullSub2 = isArabic
+    ? " ومطور برمجيات شامل (Full-Stack)"
+    : " & Full-Stack Developer";
+
+  const [mounted, setMounted] = useState(false);
+  const [titleText, setTitleText] = useState("");
+  const [sub1Text, setSub1Text] = useState("");
+  const [sub2Text, setSub2Text] = useState("");
+  const [cursorPhase, setCursorPhase] = useState<"title" | "sub" | "none">("title");
+  const [isTitleDone, setIsTitleDone] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    let timeoutId: NodeJS.Timeout;
+    let isCancelled = false;
+
+    setTitleText("");
+    setSub1Text("");
+    setSub2Text("");
+    setIsTitleDone(false);
+    setCursorPhase("title");
+
+    const streamTitle = (idx: number) => {
+      if (isCancelled) return;
+      if (idx <= fullTitle.length) {
+        setTitleText(fullTitle.slice(0, idx));
+        if (idx < fullTitle.length) {
+          const delay = 40 + Math.floor(Math.random() * 16);
+          timeoutId = setTimeout(() => streamTitle(idx + 1), delay);
+        } else {
+          setIsTitleDone(true);
+          timeoutId = setTimeout(() => {
+            if (isCancelled) return;
+            setCursorPhase("sub");
+            streamSub1(1);
+          }, 240);
+        }
+      }
+    };
+
+    const streamSub1 = (idx: number) => {
+      if (isCancelled) return;
+      if (idx <= fullSub1.length) {
+        setSub1Text(fullSub1.slice(0, idx));
+        if (idx < fullSub1.length) {
+          const delay = 35 + Math.floor(Math.random() * 14);
+          timeoutId = setTimeout(() => streamSub1(idx + 1), delay);
+        } else {
+          timeoutId = setTimeout(() => {
+            if (isCancelled) return;
+            streamSub2(1);
+          }, 60);
+        }
+      }
+    };
+
+    const streamSub2 = (idx: number) => {
+      if (isCancelled) return;
+      if (idx <= fullSub2.length) {
+        setSub2Text(fullSub2.slice(0, idx));
+        if (idx < fullSub2.length) {
+          const delay = 28 + Math.floor(Math.random() * 12);
+          timeoutId = setTimeout(() => streamSub2(idx + 1), delay);
+        } else {
+          timeoutId = setTimeout(() => {
+            if (isCancelled) return;
+            setCursorPhase("none");
+          }, 1200);
+        }
+      }
+    };
+
+    timeoutId = setTimeout(() => streamTitle(1), 160);
+
+    return () => {
+      isCancelled = true;
+      clearTimeout(timeoutId);
+    };
+  }, [fullTitle, fullSub1, fullSub2]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!heroRef.current) return;
@@ -186,20 +268,62 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
 
         {/* Content Container matching reference image layout */}
         <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-14 sm:py-18 lg:py-22 text-start">
-          <div>
-            <h1 className="hero-name-cinematic text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight leading-[1.15] text-[#102A56] dark:text-[#F5F7FF]">
-              {isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
+          <div className="relative inline-block min-h-[1.25em]">
+            <h1
+              aria-label={fullTitle}
+              className="font-sora font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] text-[#173B6C] dark:text-[#F4F7FF]"
+            >
+              {mounted ? (
+                <span className="inline-flex items-baseline">
+                  <span>{titleText}</span>
+                  {cursorPhase === "title" && (
+                    <span
+                      className="ms-1.5 inline-block w-[3px] sm:w-[3.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_10px_rgba(79,70,229,0.7)] align-baseline"
+                      style={{ height: "0.82em" }}
+                      aria-hidden="true"
+                    />
+                  )}
+                </span>
+              ) : (
+                <span>{fullTitle}</span>
+              )}
             </h1>
+            {isTitleDone && (
+              <div className="hero-name-shimmer-sweep pointer-events-none" aria-hidden="true" />
+            )}
           </div>
-          <p className="hero-subtitle-cinematic mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] font-normal leading-relaxed max-w-2xl text-[#60708F] dark:text-[#94A7C6]">
-            {isArabic ? (
-              <>
-                <span className="text-[#2563EB] dark:text-[#60A5FA]">مهندس ذكاء اصطناعي</span>{" "}
-                ومطور برمجيات شامل (Full-Stack)
-              </>
+          <p
+            aria-label={`${fullSub1}${fullSub2}`}
+            className="font-manrope font-medium mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] leading-relaxed max-w-2xl min-h-[1.5em] text-[#64748B] dark:text-[#A7B3C7]"
+          >
+            {mounted ? (
+              <span className="inline-flex flex-wrap items-baseline">
+                {sub1Text && (
+                  <span className="bg-gradient-to-r from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] bg-clip-text text-transparent font-semibold">
+                    {sub1Text}
+                  </span>
+                )}
+                {sub2Text && (
+                  <span className="text-[#64748B] dark:text-[#A7B3C7]">
+                    {sub2Text}
+                  </span>
+                )}
+                {cursorPhase === "sub" && (
+                  <span
+                    className="ms-1 inline-block w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)] align-baseline"
+                    style={{ height: "0.8em" }}
+                    aria-hidden="true"
+                  />
+                )}
+              </span>
             ) : (
               <>
-                <span className="text-[#2563EB] dark:text-[#60A5FA]">AI Engineer</span> & Full-Stack Developer
+                <span className="bg-gradient-to-r from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] bg-clip-text text-transparent font-semibold">
+                  {fullSub1}
+                </span>
+                <span className="text-[#64748B] dark:text-[#A7B3C7]">
+                  {fullSub2}
+                </span>
               </>
             )}
           </p>

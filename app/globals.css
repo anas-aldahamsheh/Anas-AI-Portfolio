@@ -52,6 +52,16 @@
 @theme {
   --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-arabic: var(--font-ibm-plex-arabic), "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-sora: var(--font-sora), "Sora", sans-serif;
+  --font-manrope: var(--font-manrope), "Manrope", sans-serif;
+}
+
+.font-sora {
+  font-family: var(--font-sora), "Sora", var(--font-ibm-plex-arabic), sans-serif;
+}
+
+.font-manrope {
+  font-family: var(--font-manrope), "Manrope", var(--font-ibm-plex-arabic), sans-serif;
 }
 
 body {
@@ -208,16 +218,134 @@ input[type="tel"] {
   }
 }
 
-.hero-name-cinematic {
+@keyframes hero-split-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translate3d(0, 25px, 0) rotateX(18deg);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translate3d(0, 0, 0) rotateX(0deg);
+  }
+}
+
+@keyframes hero-shimmer-sweep {
+  0% {
+    transform: translate3d(-100%, 0, 0) skewX(-20deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(240%, 0, 0) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes hero-subtitle-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translate3d(0, 16px, 0);
+    letter-spacing: 0.04em;
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translate3d(0, 0, 0);
+    letter-spacing: 0em;
+  }
+}
+
+@keyframes hero-subtitle-reveal-rtl {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translate3d(0, 16px, 0);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-split-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: baseline;
+  perspective: 800px;
+}
+
+.hero-char-item {
+  display: inline-block;
   opacity: 0;
-  animation: hero-entrance-name 700ms cubic-bezier(0.22, 1, 0.36, 1) 0ms forwards;
+  filter: blur(8px);
+  transform: translate3d(0, 25px, 0) rotateX(18deg);
+  transform-origin: 50% 100%;
+  animation: hero-split-reveal 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+}
+
+.hero-name-shimmer-sweep {
+  position: absolute;
+  inset: -6px -10px;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 6px;
+  z-index: 2;
+}
+
+.hero-name-shimmer-sweep::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(79, 70, 229, 0.15) 30%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(8, 145, 178, 0.2) 70%,
+    transparent 100%
+  );
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0) skewX(-20deg);
+  animation: hero-shimmer-sweep 1150ms cubic-bezier(0.22, 1, 0.36, 1) 1050ms 1 normal forwards;
+  will-change: transform, opacity;
+}
+
+.dark .hero-name-shimmer-sweep::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(139, 140, 255, 0.2) 30%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(103, 232, 249, 0.25) 70%,
+    transparent 100%
+  );
 }
 
 .hero-subtitle-cinematic {
   opacity: 0;
-  animation: hero-entrance-subtitle 600ms cubic-bezier(0.22, 1, 0.36, 1) 120ms forwards;
-  will-change: transform, opacity, filter;
+  letter-spacing: 0.04em;
+  transform: translate3d(0, 16px, 0);
+  animation: hero-subtitle-reveal 750ms cubic-bezier(0.22, 1, 0.36, 1) 750ms forwards;
+  will-change: transform, opacity, letter-spacing, filter;
+}
+
+[dir="rtl"] .hero-subtitle-cinematic {
+  letter-spacing: normal !important;
+  animation-name: hero-subtitle-reveal-rtl;
 }
 
 .hero-aurora-left {
@@ -236,8 +364,6 @@ input[type="tel"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-name-cinematic,
-  .hero-subtitle-cinematic,
   .hero-aurora-left,
   .hero-aurora-right,
   .hero-aurora-center {
