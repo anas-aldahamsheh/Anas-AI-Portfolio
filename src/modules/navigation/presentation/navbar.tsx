@@ -13,6 +13,7 @@ import type { NavigationItem } from "../domain/types";
 import { cn } from "@/lib/utils";
 import type { SocialProfile } from "@/modules/social/domain/types";
 import { UserNav } from "@/modules/auth/presentation/user-nav";
+import { BrandLogo } from "./brand-logo";
 
 export interface NavbarProps {
   locale: string;
@@ -101,16 +102,10 @@ export function Navbar({
           {/* LEFT: Brand Identity */}
           <Link
             href={`/${locale}`}
-            className="flex items-center gap-2.5 transition-opacity hover:opacity-85 text-start"
+            className="flex items-center transition-opacity hover:opacity-85 text-start"
+            aria-label={`${resolvedBrandTitle} - ${locale === "ar" ? "مهندس ذكاء اصطناعي" : "AI Engineer"}`}
           >
-            <div className="flex flex-col">
-              <span className="text-sm sm:text-[15px] leading-tight font-bold tracking-tight text-[#0B1530] dark:text-[#F6F8FC]">
-                {resolvedBrandTitle}
-              </span>
-              <span className="text-[11px] sm:text-xs leading-tight font-medium text-[#6C7893] dark:text-[#9AA8C0]">
-                {locale === "ar" ? "مهندس ذكاء اصطناعي" : "AI Engineer"}
-              </span>
-            </div>
+            <BrandLogo className="h-9 sm:h-10 w-auto" />
           </Link>
 
           {/* CENTER: Navigation Links */}
