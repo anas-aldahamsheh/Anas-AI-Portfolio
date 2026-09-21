@@ -134,8 +134,8 @@ input[type="tel"] {
 @keyframes hero-entrance-name {
   0% {
     opacity: 0;
-    filter: blur(14px);
-    transform: translate3d(0, 30px, 0);
+    filter: blur(6px);
+    transform: translate3d(0, 20px, 0);
   }
   100% {
     opacity: 1;
@@ -147,8 +147,8 @@ input[type="tel"] {
 @keyframes hero-entrance-subtitle {
   0% {
     opacity: 0;
-    filter: blur(10px);
-    transform: translate3d(0, 20px, 0);
+    filter: blur(4px);
+    transform: translate3d(0, 12px, 0);
   }
   100% {
     opacity: 1;
@@ -210,15 +210,13 @@ input[type="tel"] {
 
 .hero-name-cinematic {
   opacity: 0;
-  animation:
-    hero-entrance-name 850ms cubic-bezier(0.16, 1, 0.3, 1) 0ms forwards,
-    hero-text-shimmer 8s ease-in-out infinite 850ms;
-  will-change: transform, opacity, filter, background-position;
+  animation: hero-entrance-name 700ms cubic-bezier(0.22, 1, 0.36, 1) 0ms forwards;
+  will-change: transform, opacity, filter;
 }
 
 .hero-subtitle-cinematic {
-  animation: hero-entrance-subtitle 800ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
   opacity: 0;
+  animation: hero-entrance-subtitle 600ms cubic-bezier(0.22, 1, 0.36, 1) 120ms forwards;
   will-change: transform, opacity, filter;
 }
 

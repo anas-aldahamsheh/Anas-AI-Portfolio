@@ -186,16 +186,22 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
 
         {/* Content Container matching reference image layout */}
         <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-14 sm:py-18 lg:py-22 text-start">
-          {/* Masked container with dramatic cinematic text reveal & luxury gradient shimmer */}
-          <div className="overflow-hidden pb-1.5 -mb-1.5">
-            <h1 className="hero-name-cinematic text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight leading-[1.15] bg-gradient-to-r from-[#0B1530] via-[#2F6FED] to-[#0B1530] bg-[length:200%_auto] bg-clip-text text-transparent dark:from-[#FFFFFF] dark:via-[#A78BFA] dark:to-[#FFFFFF]">
+          <div>
+            <h1 className="hero-name-cinematic text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight leading-[1.15] text-[#102A56] dark:text-[#F5F7FF]">
               {isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
             </h1>
           </div>
-          <p className="hero-subtitle-cinematic mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] font-normal text-[#5A6882] leading-relaxed max-w-2xl dark:text-[#9AA8C0]">
-            {isArabic
-              ? "مهندس ذكاء اصطناعي ومطور برمجيات شامل (Full-Stack)"
-              : "AI Engineer & Full-Stack Developer"}
+          <p className="hero-subtitle-cinematic mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] font-normal leading-relaxed max-w-2xl text-[#60708F] dark:text-[#94A7C6]">
+            {isArabic ? (
+              <>
+                <span className="text-[#2563EB] dark:text-[#60A5FA]">مهندس ذكاء اصطناعي</span>{" "}
+                ومطور برمجيات شامل (Full-Stack)
+              </>
+            ) : (
+              <>
+                <span className="text-[#2563EB] dark:text-[#60A5FA]">AI Engineer</span> & Full-Stack Developer
+              </>
+            )}
           </p>
         </div>
       </section>
