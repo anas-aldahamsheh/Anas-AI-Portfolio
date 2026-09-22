@@ -151,6 +151,7 @@ export function ChatDrawer({
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -165,6 +166,13 @@ export function ChatDrawer({
       setTimeout(() => inputRef.current?.focus(), 150);
     }
   }, [isOpen]);
+
+  // Cleanup abort controller on unmount
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
+  }, []);
 
   // Adjust state when prop changes without effect
   const [prevProjectScopeId, setPrevProjectScopeId] = useState(projectScopeId);
@@ -278,6 +286,13 @@ export function ChatDrawer({
     const text = (textToSend ?? inputVal).trim();
     if (!text || isLoading) return;
 
+    // Abort previous pending stream if any
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     setErrorMessage(null);
     setInputVal("");
 
@@ -308,6 +323,7 @@ export function ChatDrawer({
         headers: {
           "Content-Type": "application/json",
         },
+        signal: controller.signal,
         body: JSON.stringify({
           message: text,
           mode,
@@ -386,7 +402,11 @@ export function ChatDrawer({
           );
         }
       }
-    } catch {
+    } catch (err: unknown) {
+      // If user started a new chat or cancelled, quietly exit without showing error
+      if (err instanceof Error && err.name === "AbortError") {
+        return;
+      }
       setErrorMessage(t("chat.error.general"));
       // Remove failed assistant message placeholder
       setMessages((prev) => prev.filter((m) => m.id !== assistantMessageId));
@@ -395,9 +415,19 @@ export function ChatDrawer({
     }
   };
 
-  const clearChat = () => {
+  // Robust New Chat handler: aborts in-flight generation, cleans state, and refocuses input
+  const handleNewChat = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
     setMessages([]);
+    setInputVal("");
     setErrorMessage(null);
+    setIsLoading(false);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 60);
   };
 
   const suggestedPrompts = activeScopeId
@@ -483,16 +513,26 @@ export function ChatDrawer({
                 </div>
 
                 <div className="flex items-center gap-1.5">
-                  {messages.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={clearChat}
-                      className="rounded-lg px-2.5 py-1 font-manrope text-xs font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-[#173B6C] dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
-                      title={t("chat.clear")}
+                  <button
+                    type="button"
+                    onClick={handleNewChat}
+                    className="flex items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white/80 px-2.5 py-1.5 font-manrope text-xs font-semibold text-[#173B6C] shadow-2xs transition-all duration-150 hover:border-[#2F6FED]/60 hover:bg-gradient-to-r hover:from-blue-50/70 hover:to-indigo-50/50 hover:text-[#2F6FED] hover:shadow-xs active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-[#67E8F9] dark:hover:border-cyan-400/50 dark:hover:bg-white/[0.08] dark:hover:text-white cursor-pointer"
+                    title={t("chat.clear")}
+                    aria-label={t("chat.clear")}
+                    data-testid="chat-new-button"
+                  >
+                    <svg
+                      className="h-3.5 w-3.5 shrink-0 text-[#2F6FED] dark:text-[#67E8F9]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.4}
                     >
-                      {t("chat.clear")}
-                    </button>
-                  )}
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>{t("chat.clear")}</span>
+                  </button>
+
                   <button
                     type="button"
                     onClick={() => setIsOpen(false)}
@@ -620,7 +660,26 @@ export function ChatDrawer({
                   </div>
                 </div>
               ) : (
-                messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)
+                <>
+                  {messages.map((msg) => (
+                    <ChatMessage key={msg.id} message={msg} />
+                  ))}
+                  {messages.length > 0 && !isLoading && (
+                    <div className="flex justify-center pt-3 pb-1">
+                      <button
+                        type="button"
+                        onClick={handleNewChat}
+                        className="flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/80 px-3.5 py-1.5 font-manrope text-xs font-medium text-slate-500 shadow-2xs transition-all hover:border-[#2F6FED]/50 hover:bg-white hover:text-[#173B6C] hover:shadow-xs active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 dark:hover:border-cyan-400/50 dark:hover:bg-white/[0.08] dark:hover:text-white cursor-pointer"
+                        data-testid="chat-new-inline-button"
+                      >
+                        <svg className="h-3.5 w-3.5 text-[#2F6FED] dark:text-[#67E8F9]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span>{t("chat.clear")}</span>
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
 
               {errorMessage && (
