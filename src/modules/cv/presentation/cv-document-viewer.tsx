@@ -60,7 +60,7 @@ export function CvDocumentViewer({
   const [pdfDoc, setPdfDoc] = useState<any>(null);
   const [numPages, setNumPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [scale, setScale] = useState<number>(1.2);
+  const [scale, setScale] = useState<number>(1.0);
   const [rotation, setRotation] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isRendering, setIsRendering] = useState<boolean>(false);
@@ -148,11 +148,11 @@ export function CvDocumentViewer({
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        // Compute fit-to-width scale
+        // Compute standard natural 100% scale (or fit to mobile viewport if narrower)
         const containerWidth = containerRef.current.clientWidth || 800;
         const unscaledViewport = page.getViewport({ scale: 1, rotation });
-        const fitScale = (containerWidth - 32) / unscaledViewport.width;
-        const effectiveScale = Math.max(0.75, Math.min(2.5, fitScale * scale));
+        const baseScale = Math.min(1.0, (containerWidth - 32) / unscaledViewport.width);
+        const effectiveScale = Math.max(0.5, Math.min(2.5, baseScale * scale));
 
         // High-DPI crisp rendering
         const pixelRatio = window.devicePixelRatio || 1;
@@ -199,9 +199,9 @@ export function CvDocumentViewer({
     }
   };
 
-  const handleZoomIn = () => setScale((prev) => Math.min(2.2, prev + 0.15));
-  const handleZoomOut = () => setScale((prev) => Math.max(0.75, prev - 0.15));
-  const handleResetZoom = () => setScale(1.2);
+  const handleZoomIn = () => setScale((prev) => Math.min(2.0, Math.round((prev + 0.1) * 10) / 10));
+  const handleZoomOut = () => setScale((prev) => Math.max(0.6, Math.round((prev - 0.1) * 10) / 10));
+  const handleResetZoom = () => setScale(1.0);
   const handleRotate = () => setRotation((prev) => (prev + 90) % 360);
 
   return (
@@ -287,8 +287,8 @@ export function CvDocumentViewer({
           <button
             type="button"
             onClick={handleResetZoom}
-            title={isArabic ? "إعادة التعيين" : "Reset zoom"}
-            className="text-muted-foreground hover:text-foreground font-mono text-xs transition-colors"
+            title={isArabic ? "إعادة التعيين إلى 100%" : "Reset zoom to 100%"}
+            className="font-mono text-xs font-semibold px-2.5 py-0.5 rounded-full border border-[#E5EAF2] bg-white text-[#173B6C] hover:bg-[#EEF5FF] hover:text-[#2F6FED] transition-colors cursor-pointer shadow-2xs dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-[#F4F7FF]"
           >
             {Math.round(scale * 100)}%
           </button>
