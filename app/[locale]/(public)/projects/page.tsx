@@ -50,7 +50,7 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
       {/* Header Section */}
       <div className="mb-10 max-w-2xl space-y-3">
-        <h1 className="text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl dark:text-neutral-50">
+        <h1 className="text-3xl font-extrabold tracking-tight text-[#173B6C] sm:text-4xl dark:text-neutral-50">
           {heading}
         </h1>
         <p className="text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-neutral-400">

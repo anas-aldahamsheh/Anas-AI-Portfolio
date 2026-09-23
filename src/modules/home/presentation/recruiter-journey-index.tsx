@@ -368,7 +368,7 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
                       {item.category}
                     </div>
 
-                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0B1530] dark:text-[#F6F8FC]">
+                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#173B6C] dark:text-[#F6F8FC]">
                       {item.title}
                     </h2>
 

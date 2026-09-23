@@ -80,7 +80,7 @@ export function Footer({
           {/* COLUMN 1: Brand & Personal Positioning */}
           <div className="space-y-3">
             <div>
-              <h3 className="text-base font-bold tracking-tight text-[#0B1530] dark:text-[#F6F8FC]">
+              <h3 className="text-base font-bold tracking-tight text-[#173B6C] dark:text-[#F6F8FC]">
                 {brandTitle || (isArabic ? DEVELOPER_PROFILE.fullName.ar : DEVELOPER_PROFILE.fullName.en)}
               </h3>
               <p className="text-xs font-semibold text-[#2F6FED] dark:text-indigo-400 mt-1">
@@ -96,7 +96,7 @@ export function Footer({
 
           {/* COLUMN 2: Contact Developer */}
           <div className="space-y-3.5">
-            <h4 className="text-xs font-bold tracking-wider uppercase text-[#0B1530] dark:text-[#F6F8FC]">
+            <h4 className="text-xs font-bold tracking-wider uppercase text-[#173B6C] dark:text-[#F6F8FC]">
               {isArabic ? "بيانات التواصل المباشر" : "Contact Developer"}
             </h4>
             <div className="flex flex-col items-start gap-2.5 text-xs">
@@ -147,7 +147,7 @@ export function Footer({
 
           {/* COLUMN 3: Navigation */}
           <div className="space-y-3.5">
-            <h4 className="text-xs font-bold tracking-wider uppercase text-[#0B1530] dark:text-[#F6F8FC]">
+            <h4 className="text-xs font-bold tracking-wider uppercase text-[#173B6C] dark:text-[#F6F8FC]">
               {isArabic ? "التنقل" : "Navigation"}
             </h4>
             <div className="grid grid-cols-2 gap-x-6 sm:gap-x-8 gap-y-2.5 text-xs font-medium">

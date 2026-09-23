@@ -79,7 +79,7 @@ export function CvViewer({
           <div className="flex flex-col justify-between gap-4 border-b border-neutral-200 pb-6 md:flex-row md:items-end dark:border-neutral-800">
             <div className="space-y-2 text-start">
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl dark:text-neutral-100">
+                <h1 className="text-2xl font-bold tracking-tight text-[#173B6C] sm:text-3xl dark:text-neutral-100">
                   {t("cv.title") || (isAr ? "نبذة والسيرة الذاتية" : "About & Resume")}
                 </h1>
                 <Badge variant="secondary" size="sm">
@@ -143,7 +143,7 @@ export function CvViewer({
               <User className="h-3.5 w-3.5" />
               <span>{activeAbout.badge || (isAr ? "نبذة عني" : "About Me")}</span>
             </div>
-            <h2 className="text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl dark:text-neutral-100">
+            <h2 className="text-2xl font-bold tracking-tight text-[#173B6C] sm:text-3xl dark:text-neutral-100">
               {activeAbout.name}
             </h2>
             <p className="text-sm font-semibold text-neutral-700 sm:text-base dark:text-neutral-300">
@@ -163,7 +163,7 @@ export function CvViewer({
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <FileText className="h-4 w-4 text-neutral-500" />
-              <h2 className="text-sm font-bold tracking-tight text-neutral-900 sm:text-base dark:text-neutral-100">
+              <h2 className="text-sm font-bold tracking-tight text-[#173B6C] sm:text-base dark:text-neutral-100">
                 {isAr ? "المستند الرسمي المعتمد (PDF)" : "Official Verified PDF Document"}
               </h2>
             </div>
@@ -182,7 +182,7 @@ export function CvViewer({
         {/* Bottom CTA Banner (Image 2: Below the CV document viewer) */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 rounded-xl border border-neutral-200/80 bg-white/70 p-6 sm:flex-row dark:border-neutral-800 dark:bg-neutral-900/40">
           <div className="text-start">
-            <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100">
+            <h3 className="text-base font-bold text-[#173B6C] dark:text-neutral-100">
               {isAr ? "مهتم بالتعرف أكثر على أعمالي أو العمل معاً؟" : "Interested in working together?"}
             </h3>
             <p className="text-xs text-neutral-600 sm:text-sm dark:text-neutral-400">

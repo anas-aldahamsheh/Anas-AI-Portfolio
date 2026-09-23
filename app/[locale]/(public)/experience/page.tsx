@@ -144,7 +144,7 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
             <Briefcase className="h-3.5 w-3.5" />
             <span>{isAr ? "المسيرة المهنية" : "Career Track Record"}</span>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl dark:text-neutral-100">
+          <h1 className="text-3xl font-bold tracking-tight text-[#173B6C] sm:text-4xl dark:text-neutral-100">
             {isAr ? "الخبرة والإنجازات الهندسية" : "Engineering Experience"}
           </h1>
           <p className="max-w-2xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-neutral-400">
@@ -179,7 +179,7 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
                 {/* Header row */}
                 <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-baseline">
                   <div>
-                    <h2 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-lg font-bold text-[#173B6C] dark:text-neutral-100">
                       {isAr ? exp.role.ar : exp.role.en}
                     </h2>
                     <p className="text-xs font-medium text-neutral-500 sm:text-sm dark:text-neutral-400">

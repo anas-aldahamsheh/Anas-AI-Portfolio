@@ -43,7 +43,7 @@ export function SectionRenderer({ section, locale, className }: SectionRendererP
             <div className="space-y-1 text-start">
               <h2
                 id={headingId}
-                className="text-xl font-bold tracking-tight text-neutral-900 sm:text-2xl dark:text-neutral-100"
+                className="text-xl font-bold tracking-tight text-[#173B6C] sm:text-2xl dark:text-neutral-100"
               >
                 {section.title}
               </h2>

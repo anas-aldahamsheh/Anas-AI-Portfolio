@@ -66,7 +66,7 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
           {issuer}
         </div>
 
-        <h3 className="text-base font-bold tracking-tight text-neutral-900 transition-colors group-hover:text-primary sm:text-lg dark:text-neutral-100">
+        <h3 className="text-base font-bold tracking-tight text-[#173B6C] transition-colors group-hover:text-primary sm:text-lg dark:text-neutral-100">
           {title}
         </h3>
 

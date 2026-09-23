@@ -118,7 +118,7 @@ export function CertificateDetailModal({
               </span>
             </div>
 
-            <h2 id="certificate-modal-title" className="text-xl font-bold text-neutral-900 sm:text-2xl dark:text-neutral-100">
+            <h2 id="certificate-modal-title" className="text-xl font-bold text-[#173B6C] sm:text-2xl dark:text-neutral-100">
               {title}
             </h2>
           </div>

@@ -213,7 +213,7 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
           }}
         >
           <div className="space-y-3">
-            <h1 className="text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl dark:text-neutral-50">
+            <h1 className="text-3xl font-bold tracking-tight text-[#173B6C] sm:text-4xl lg:text-5xl dark:text-neutral-50">
               {project.title}
             </h1>
             <p className="text-lg leading-relaxed text-neutral-600 sm:text-xl dark:text-neutral-300">
@@ -333,7 +333,7 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200/80 bg-neutral-100 text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
                       <SectionIcon className="h-4.5 w-4.5" aria-hidden="true" />
                     </div>
-                    <h2 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-xl font-bold tracking-tight text-[#173B6C] dark:text-neutral-100">
                       {heading}
                     </h2>
                   </div>
@@ -381,7 +381,7 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
               <span>{scopeBadgeText}</span>
             </div>
 
-            <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+            <h3 className="text-lg font-bold text-[#173B6C] dark:text-neutral-100">
               {askAiTitle}
             </h3>
 
@@ -439,7 +439,7 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
         >
           <h2
             id="related-projects-heading"
-            className="mb-8 text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100"
+            className="mb-8 text-2xl font-bold tracking-tight text-[#173B6C] dark:text-neutral-100"
           >
             {relatedProjectsTitle}
           </h2>

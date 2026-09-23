@@ -18,24 +18,24 @@ export function HeadingBlock({ config, content }: HeadingBlockProps) {
     switch (level) {
       case "h1":
         return (
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-neutral-50">
+          <h1 className="text-3xl font-bold tracking-tight text-[#173B6C] sm:text-4xl dark:text-neutral-50">
             {text}
           </h1>
         );
       case "h3":
         return (
-          <h3 className="text-lg font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+          <h3 className="text-lg font-semibold tracking-tight text-[#173B6C] dark:text-neutral-100">
             {text}
           </h3>
         );
       case "h4":
         return (
-          <h4 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">{text}</h4>
+          <h4 className="text-base font-semibold text-[#173B6C] dark:text-neutral-100">{text}</h4>
         );
       case "h2":
       default:
         return (
-          <h2 className="text-xl font-bold tracking-tight text-neutral-900 sm:text-2xl dark:text-neutral-100">
+          <h2 className="text-xl font-bold tracking-tight text-[#173B6C] sm:text-2xl dark:text-neutral-100">
             {text}
           </h2>
         );

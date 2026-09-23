@@ -65,7 +65,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
             <User className="h-3.5 w-3.5" />
             <span>{isAr ? "نبذة عني" : "About Me"}</span>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl dark:text-neutral-100">
+          <h1 className="text-3xl font-bold tracking-tight text-[#173B6C] sm:text-4xl dark:text-neutral-100">
             {isAr ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
           </h1>
           <p className="text-base font-semibold text-neutral-700 sm:text-lg dark:text-neutral-300">
@@ -99,7 +99,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
       {/* Engineering Pillars */}
       <div className="mt-12">
-        <h2 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h2 className="text-xl font-bold tracking-tight text-[#173B6C] dark:text-neutral-100">
           {isAr ? "النهج والمبادئ الهندسية" : "Core Engineering Principles"}
         </h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -114,7 +114,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
                     <Icon className="h-4 w-4" />
                   </div>
-                  <h3 className="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+                  <h3 className="text-sm font-bold text-[#173B6C] dark:text-neutral-100">
                     {pillar.title}
                   </h3>
                 </div>
@@ -131,7 +131,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <FadeIn delay={0.2}>
         <div className="mt-12 flex flex-col items-center justify-between gap-4 rounded-xl border border-neutral-200/80 bg-neutral-50 p-6 sm:flex-row dark:border-neutral-800 dark:bg-neutral-900/40">
           <div>
-            <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100">
+            <h3 className="text-base font-bold text-[#173B6C] dark:text-neutral-100">
               {isAr ? "مهتم بالتعرف أكثر على أعمالي؟" : "Interested in working together?"}
             </h3>
             <p className="text-xs text-neutral-600 sm:text-sm dark:text-neutral-400">

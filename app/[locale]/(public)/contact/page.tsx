@@ -106,7 +106,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
             <Mail className="h-3.5 w-3.5" />
             <span>{isAr ? "بيانات الاتصال" : "Direct Contact"}</span>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl dark:text-neutral-100">
+          <h1 className="text-3xl font-bold tracking-tight text-[#173B6C] sm:text-4xl dark:text-neutral-100">
             {isAr ? "تواصل معي مباشرة" : "Let's Connect"}
           </h1>
           <p className="max-w-2xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-neutral-400">
@@ -131,7 +131,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
                     <Icon className="h-4 w-4" />
                   </div>
-                  <h2 className="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+                  <h2 className="text-sm font-bold text-[#173B6C] dark:text-neutral-100">
                     {channel.title}
                   </h2>
                 </div>

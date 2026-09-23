@@ -105,7 +105,7 @@ export function Navbar({
             className="flex items-center transition-opacity hover:opacity-85 text-start shrink-0"
             aria-label={`${resolvedBrandTitle} - ${locale === "ar" ? "مهندس ذكاء اصطناعي" : "AI Engineer"}`}
           >
-            <BrandLogo className="h-8 sm:h-9 w-auto" />
+            <BrandLogo className="h-8 sm:h-9 lg:h-10 w-auto" />
           </Link>
 
           {/* CENTER: Navigation Links */}
@@ -128,7 +128,7 @@ export function Navbar({
                     "px-3.5 py-1.5 text-xs lg:text-[13px] font-medium transition-all duration-200 rounded-full flex items-center gap-1",
                     active
                       ? "bg-[#EEF5FF] text-[#1E40AF] font-semibold dark:bg-indigo-950/70 dark:text-indigo-200 dark:border dark:border-indigo-500/30 dark:shadow-[0_0_12px_rgba(99,102,241,0.2)]"
-                      : "text-[#6C7893] hover:text-[#0B1530] hover:bg-neutral-100/70 dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC] dark:hover:bg-white/[0.06]",
+                      : "text-[#6C7893] hover:text-[#173B6C] hover:bg-neutral-100/70 dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC] dark:hover:bg-white/[0.06]",
                   )}
                 >
                   <span>{label}</span>
@@ -220,7 +220,7 @@ export function Navbar({
                         "flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
                         active
                           ? "bg-[#EEF5FF] text-[#1E40AF] font-semibold dark:bg-indigo-950/70 dark:text-indigo-200"
-                          : "text-[#6C7893] hover:bg-neutral-100/80 hover:text-[#0B1530] dark:text-[#9AA8C0] dark:hover:bg-white/[0.06] dark:hover:text-[#F6F8FC]",
+                          : "text-[#6C7893] hover:bg-neutral-100/80 hover:text-[#173B6C] dark:text-[#9AA8C0] dark:hover:bg-white/[0.06] dark:hover:text-[#F6F8FC]",
                       )}
                     >
                       <span>{label}</span>

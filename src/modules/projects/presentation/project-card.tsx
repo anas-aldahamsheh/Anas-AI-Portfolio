@@ -85,7 +85,7 @@ export function ProjectCard({ project, locale }: ProjectCardProps) {
         {/* Content Body */}
         <div className="flex flex-1 flex-col p-5">
           <Link href={deepDiveHref} className="group/link focus:outline-none">
-            <h3 className="line-clamp-2 text-base font-bold text-neutral-900 transition-colors group-hover/link:text-neutral-600 dark:text-neutral-100 dark:group-hover/link:text-neutral-300">
+            <h3 className="line-clamp-2 text-base font-bold text-[#173B6C] transition-colors group-hover/link:text-[#2F6FED] dark:text-neutral-100 dark:group-hover/link:text-neutral-300">
               {project.title}
             </h3>
           </Link>

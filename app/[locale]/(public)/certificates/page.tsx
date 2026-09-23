@@ -65,7 +65,7 @@ export default async function CertificatesPage({ params }: CertificatesPageProps
             <span>{isArabic ? "الاعتمادات والدورات" : "Credentials & Continuous Learning"}</span>
           </div>
 
-          <h1 className="text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl dark:text-neutral-50">
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#173B6C] sm:text-4xl dark:text-neutral-50">
             {heading}
           </h1>
 

@@ -49,7 +49,7 @@ export function LanguageSelect({
       type="button"
       onClick={handleToggle}
       disabled={isPending}
-      className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E4EAF3] bg-white text-xs font-bold text-[#0B1530] shadow-2xs transition-all duration-200 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED] disabled:opacity-40 dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:bg-white/[0.08] cursor-pointer ${
+      className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E4EAF3] bg-white text-xs font-bold text-[#173B6C] shadow-2xs transition-all duration-200 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED] disabled:opacity-40 dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:bg-white/[0.08] cursor-pointer ${
         className || ""
       }`.trim()}
       aria-label={tooltipLabel}
