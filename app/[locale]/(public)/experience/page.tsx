@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Briefcase, ArrowRight, CheckCircle2, Download, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/motion";
+import { PageHeroBanner } from "@/components/layout/page-hero-banner";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 
 interface ExperienceItem {
@@ -136,130 +135,137 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
   const isAr = supportedLocale === "ar";
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      {/* Header */}
-      <FadeIn delay={0.05}>
-        <div className="space-y-3 text-start">
-          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
+    <div className="w-full">
+      {/* Overview-Harmonized Aurora Hero Banner */}
+      <PageHeroBanner
+        badge={
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
             <Briefcase className="h-3.5 w-3.5" />
             <span>{isAr ? "المسيرة المهنية" : "Career Track Record"}</span>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#173B6C] sm:text-4xl dark:text-neutral-100">
-            {isAr ? "الخبرة والإنجازات الهندسية" : "Engineering Experience"}
-          </h1>
-          <p className="max-w-2xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-neutral-400">
-            {isAr
-              ? "سجل موثق من الإنجاز العملي في هندسة أنظمة الذكاء الاصطناعي، خطوط أنابيب RAG، والبرمجيات عالية الأداء والاعتمادية."
-              : "A focused track record of building production AI systems, evaluation pipelines, and high-performance, resilient software."}
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3 pt-2">
-            <Link href={`/${supportedLocale}/cv`}>
-              <Button variant="primary" size="sm" className="gap-2">
-                <Download className="h-4 w-4" />
-                <span>{isAr ? "تحميل السيرة الذاتية (PDF)" : "Download Resume (PDF)"}</span>
-              </Button>
+        }
+        title={isAr ? "الخبرة والإنجازات الهندسية" : "Engineering Experience"}
+        subtitle={
+          isAr
+            ? "سجل موثق من الإنجاز العملي في هندسة أنظمة الذكاء الاصطناعي، خطوط أنابيب RAG، والبرمجيات عالية الأداء والاعتمادية."
+            : "A focused track record of building production AI systems, evaluation pipelines, and high-performance, resilient software."
+        }
+        actions={
+          <>
+            <Link
+              href={`/${supportedLocale}/cv`}
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#173B6C] text-white hover:bg-[#1E4B8A] shadow-xs hover:shadow-sm dark:bg-indigo-600 dark:hover:bg-indigo-500"
+            >
+              <Download className="h-4 w-4" />
+              <span>{isAr ? "تحميل السيرة الذاتية (PDF)" : "Download Resume (PDF)"}</span>
             </Link>
-            <Link href={`/${supportedLocale}/contact`}>
-              <Button variant="outline" size="sm" className="gap-2">
-                <Mail className="h-4 w-4" />
-                <span>{isAr ? "تواصل معي" : "Get in Touch"}</span>
-              </Button>
+            <Link
+              href={`/${supportedLocale}/contact`}
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#EEF5FF] text-[#2F6FED] border border-[#D0E2FF] hover:bg-[#E0EEFF] shadow-2xs hover:shadow-xs dark:bg-white/[0.04] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.08]"
+            >
+              <Mail className="h-4 w-4" />
+              <span>{isAr ? "تواصل معي" : "Get in Touch"}</span>
             </Link>
-          </div>
-        </div>
-      </FadeIn>
+          </>
+        }
+      />
 
-      {/* Experience Timeline */}
-      <div className="mt-12 space-y-10">
-        <StaggerContainer className="space-y-8">
-          {EXPERIENCES.map((exp) => (
-            <StaggerItem key={exp.id}>
-              <div className="relative rounded-xl border border-neutral-200/80 bg-white p-6 shadow-xs transition-all hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:border-neutral-700">
-                {/* Header row */}
-                <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-baseline">
-                  <div>
-                    <h2 className="text-lg font-bold text-[#173B6C] dark:text-neutral-100">
-                      {isAr ? exp.role.ar : exp.role.en}
-                    </h2>
-                    <p className="text-xs font-medium text-neutral-500 sm:text-sm dark:text-neutral-400">
-                      {isAr ? exp.company.ar : exp.company.en} •{" "}
-                      {isAr ? exp.location.ar : exp.location.en}
-                    </p>
-                  </div>
-                  <Badge variant="outline" className="w-fit text-xs font-medium">
-                    {isAr ? exp.period.ar : exp.period.en}
-                  </Badge>
-                </div>
-
-                {/* Summary */}
-                <p className="mt-3 text-xs leading-relaxed text-neutral-600 sm:text-sm dark:text-neutral-300">
-                  {isAr ? exp.summary.ar : exp.summary.en}
-                </p>
-
-                {/* Measurable Achievements */}
-                <div className="mt-4 space-y-2">
-                  <h3 className="text-xs font-bold tracking-wider text-neutral-500 uppercase dark:text-neutral-400">
-                    {isAr ? "أبرز الإنجازات والنتائج" : "Key Outcomes & Impact"}
-                  </h3>
-                  <ul className="space-y-2 text-xs sm:text-sm">
-                    {(isAr ? exp.achievements.ar : exp.achievements.en).map((achievement, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-start gap-2.5 text-neutral-700 dark:text-neutral-300"
-                      >
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400 dark:text-neutral-500" />
-                        <span>{achievement}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Tech Stack Pills */}
-                <div className="mt-5 flex flex-wrap items-center gap-1.5 border-t border-neutral-100 pt-3 dark:border-neutral-800">
-                  {exp.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-md border border-neutral-200/80 bg-neutral-50 px-2 py-0.5 font-mono text-[11px] text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
-                    >
-                      {tech}
+      {/* Main Experience Timeline Container */}
+      <div className="mx-auto w-full max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10">
+        <div className="space-y-10">
+          <StaggerContainer className="space-y-8">
+            {EXPERIENCES.map((exp) => (
+              <StaggerItem key={exp.id}>
+                <div className="relative rounded-2xl border border-[#E5EAF2] bg-white/85 p-6 shadow-xs backdrop-blur-md transition-all hover:border-[#D0E2FF] hover:shadow-md sm:p-8 dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-white/[0.15]">
+                  {/* Header row */}
+                  <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-baseline">
+                    <div className="space-y-1">
+                      <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF]">
+                        {isAr ? exp.role.ar : exp.role.en}
+                      </h2>
+                      <p className="text-xs font-semibold text-[#2F6FED] sm:text-sm dark:text-indigo-400">
+                        {isAr ? exp.company.ar : exp.company.en} •{" "}
+                        {isAr ? exp.location.ar : exp.location.en}
+                      </p>
+                    </div>
+                    <span className="w-fit rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#1E40AF] dark:border-indigo-500/30 dark:bg-indigo-950/70 dark:text-indigo-200">
+                      {isAr ? exp.period.ar : exp.period.en}
                     </span>
-                  ))}
-                </div>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </div>
+                  </div>
 
-      {/* CTA Footer */}
-      <FadeIn delay={0.2}>
-        <div className="mt-14 rounded-xl border border-neutral-200/80 bg-neutral-50 p-6 text-center dark:border-neutral-800 dark:bg-neutral-900/40">
-          <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100">
-            {isAr
-              ? "هل تبحث عن مهندس ذكاء اصطناعي لفريقك؟"
-              : "Looking for an AI Engineer to join your team?"}
-          </h3>
-          <p className="mt-1 text-xs text-neutral-600 sm:text-sm dark:text-neutral-400">
-            {isAr
-              ? "يسعدني مناقشة كيف يمكن لخبراتي في أنظمة RAG، نماذج اللغات الكبيرة، وهندسة البرمجيات أن تضيف قيمة حقيقية لمشاريعكم."
-              : "I'd be glad to discuss how my expertise in RAG architectures, LLM evaluation, and full-stack systems can deliver value to your engineering team."}
-          </p>
-          <div className="mt-4 flex justify-center gap-3">
-            <Link href={`/${supportedLocale}/contact`}>
-              <Button variant="primary" size="sm" className="gap-2">
+                  {/* Summary */}
+                  <p className="mt-4 text-xs sm:text-sm leading-relaxed text-[#6C7893] dark:text-[#9AA8C0]">
+                    {isAr ? exp.summary.ar : exp.summary.en}
+                  </p>
+
+                  {/* Measurable Achievements */}
+                  <div className="mt-5 space-y-2.5">
+                    <h3 className="text-xs font-bold tracking-wider text-[#173B6C]/80 uppercase dark:text-indigo-300/90">
+                      {isAr ? "أبرز الإنجازات والنتائج" : "Key Outcomes & Impact"}
+                    </h3>
+                    <ul className="space-y-2 text-xs sm:text-sm">
+                      {(isAr ? exp.achievements.ar : exp.achievements.en).map((achievement, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-start gap-2.5 text-[#6C7893] dark:text-[#9AA8C0]"
+                        >
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#2F6FED] dark:text-indigo-400" />
+                          <span className="leading-relaxed">{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Tech Stack Pills */}
+                  <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-[#E5EAF2] pt-4 dark:border-white/[0.08]">
+                    {exp.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full border border-[#E5EAF2] bg-[#F8FAFF] px-3 py-1 font-mono text-xs font-medium text-[#173B6C] transition-colors hover:border-[#D0E2FF] hover:text-[#2F6FED] dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-neutral-300 dark:hover:border-indigo-500/40"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+
+        {/* CTA Footer matching Overview Destination Card 5 */}
+        <FadeIn delay={0.2}>
+          <div className="mt-14 flex flex-col items-center justify-between gap-6 rounded-2xl border border-[#E5EAF2] bg-gradient-to-r from-[#F8FAFF] via-white to-[#F3EEFE]/50 p-6 sm:p-8 shadow-xs backdrop-blur-md transition-all hover:border-[#D0E2FF] hover:shadow-md sm:flex-row dark:border-white/[0.08] dark:bg-gradient-to-r dark:from-white/[0.03] dark:via-white/[0.01] dark:to-indigo-950/20">
+            <div className="text-start space-y-1">
+              <h3 className="text-base sm:text-lg font-bold text-[#173B6C] dark:text-[#F4F7FF]">
+                {isAr
+                  ? "هل تبحث عن مهندس ذكاء اصطناعي لفريقك؟"
+                  : "Looking for an AI Engineer to join your team?"}
+              </h3>
+              <p className="text-xs sm:text-sm text-[#6C7893] dark:text-[#9AA8C0] max-w-xl">
+                {isAr
+                  ? "يسعدني مناقشة كيف يمكن لخبراتي في أنظمة RAG، نماذج اللغات الكبيرة، وهندسة البرمجيات أن تضيف قيمة حقيقية لمشاريعكم."
+                  : "I'd be glad to discuss how my expertise in RAG architectures, LLM evaluation, and full-stack systems can deliver value to your engineering team."}
+              </p>
+            </div>
+            <div className="flex shrink-0 items-center gap-3">
+              <Link
+                href={`/${supportedLocale}/projects`}
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-full px-4 text-xs sm:text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-white text-[#173B6C] border border-[#E5EAF2] hover:bg-neutral-50 shadow-2xs dark:bg-white/[0.06] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.1]"
+              >
+                <span>{isAr ? "استكشف المشاريع" : "View Projects"}</span>
+              </Link>
+              <Link
+                href={`/${supportedLocale}/contact`}
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-xs sm:text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#EEF5FF] text-[#2F6FED] border border-[#D0E2FF] hover:bg-[#E0EEFF] shadow-2xs hover:shadow-xs dark:bg-white/[0.04] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.08]"
+              >
                 <span>{isAr ? "تواصل معي الآن" : "Let's Connect"}</span>
                 <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
-              </Button>
-            </Link>
-            <Link href={`/${supportedLocale}/projects`}>
-              <Button variant="outline" size="sm">
-                <span>{isAr ? "استكشف المشاريع" : "View Projects"}</span>
-              </Button>
-            </Link>
+              </Link>
+            </div>
           </div>
-        </div>
-      </FadeIn>
+        </FadeIn>
+      </div>
     </div>
   );
 }

@@ -21,7 +21,7 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
   return (
     <div
       onClick={() => onSelect(certificate)}
-      className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-neutral-200/80 bg-white shadow-xs backdrop-blur-xs transition-all duration-200 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md dark:border-neutral-800/80 dark:bg-neutral-900/60 dark:hover:border-neutral-700"
+      className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-[#E5EAF2] bg-white/85 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#D0E2FF] hover:shadow-lg dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-white/[0.15]"
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
@@ -45,7 +45,7 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-neutral-100 via-neutral-200/50 to-neutral-300/30 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900/50">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-neutral-200/60 bg-white/80 text-neutral-600 shadow-xs dark:border-neutral-700/60 dark:bg-neutral-800 dark:text-neutral-300">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#D0E2FF] bg-[#EEF5FF] text-[#2F6FED] shadow-2xs dark:border-white/[0.1] dark:bg-white/[0.06] dark:text-indigo-300">
               <Award className="h-6 w-6 opacity-80" aria-hidden="true" />
             </div>
           </div>
@@ -53,7 +53,7 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
 
         {/* Date overlay */}
         <div className="absolute end-3 bottom-2.5">
-          <span className="inline-flex items-center gap-1 rounded-md bg-black/60 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur-xs">
+          <span className="inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md">
             <Calendar className="h-3 w-3" />
             <span>{certificate.issueDate}</span>
           </span>
@@ -62,15 +62,17 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
 
       {/* Body Content */}
       <div className="flex flex-1 flex-col p-5">
-        <div className="mb-1.5 text-xs font-medium text-primary">
-          {issuer}
+        <div className="mb-2">
+          <span className="inline-flex items-center rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-2.5 py-0.5 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
+            {issuer}
+          </span>
         </div>
 
-        <h3 className="text-base font-bold tracking-tight text-[#173B6C] transition-colors group-hover:text-primary sm:text-lg dark:text-neutral-100">
+        <h3 className="text-base font-bold tracking-tight text-[#173B6C] transition-colors group-hover:text-[#2F6FED] sm:text-lg dark:text-[#F4F7FF] dark:group-hover:text-indigo-300">
           {title}
         </h3>
 
-        <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-neutral-600 sm:text-sm dark:text-neutral-400">
+        <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[#6C7893] sm:text-sm dark:text-[#9AA8C0]">
           {description}
         </p>
 
@@ -80,13 +82,13 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
             {certificate.skills.slice(0, 4).map((skill) => (
               <span
                 key={skill}
-                className="rounded-md border border-neutral-200/80 bg-neutral-50 px-2 py-0.5 font-mono text-[11px] text-neutral-700 dark:border-neutral-800 dark:bg-neutral-850 dark:text-neutral-300"
+                className="rounded-full border border-[#D0E2FF]/80 bg-[#F4F8FF] px-2.5 py-0.5 font-mono text-[11px] font-medium text-[#1E40AF] dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-indigo-200"
               >
                 {skill}
               </span>
             ))}
             {certificate.skills.length > 4 && (
-              <span className="text-[11px] font-medium text-neutral-400">
+              <span className="text-[11px] font-medium text-[#6C7893] dark:text-[#9AA8C0]">
                 +{certificate.skills.length - 4}
               </span>
             )}
@@ -94,8 +96,8 @@ export function CertificateCard({ certificate, locale, onSelect }: CertificateCa
         )}
 
         {/* Card Footer Actions */}
-        <div className="mt-5 flex items-center justify-between border-t border-neutral-100 pt-3 dark:border-neutral-800/80">
-          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-900 group-hover:text-primary dark:text-neutral-100">
+        <div className="mt-5 flex items-center justify-between border-t border-[#E5EAF2] pt-3 dark:border-white/[0.06]">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#173B6C] transition-colors group-hover:text-[#2F6FED] dark:text-[#F4F7FF] dark:group-hover:text-indigo-300">
             <Eye className="h-3.5 w-3.5" />
             <span>{isArabic ? "عرض تفاصيل الشهادة" : "View Details"}</span>
           </span>

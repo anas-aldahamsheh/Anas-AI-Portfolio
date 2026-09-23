@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { FolderGit2 } from "lucide-react";
 import { projectService } from "@/modules/projects/infrastructure/project-service";
 import { ProjectCatalog } from "@/modules/projects/presentation";
 import { localizedTextService } from "@/modules/localization/infrastructure/localized-text-service";
+import { PageHeroBanner } from "@/components/layout/page-hero-banner";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 
 interface ProjectsPageProps {
@@ -47,25 +49,29 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
       : "Production systems, agentic architectures, and open-source contributions built with high reliability.");
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-      {/* Header Section */}
-      <div className="mb-10 max-w-2xl space-y-3">
-        <h1 className="text-3xl font-extrabold tracking-tight text-[#173B6C] sm:text-4xl dark:text-neutral-50">
-          {heading}
-        </h1>
-        <p className="text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-neutral-400">
-          {subtitle}
-        </p>
-      </div>
-
-      {/* Catalog Content - Pure Grid of Project Cards */}
-      <ProjectCatalog
-        initialProjects={catalogResult.projects}
-        categories={catalogResult.categories}
-        tags={catalogResult.tags}
-        locale={supportedLocale}
-        showFilters={false}
+    <div className="w-full">
+      {/* Overview-Harmonized Aurora Hero Banner */}
+      <PageHeroBanner
+        badge={
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
+            <FolderGit2 className="h-3.5 w-3.5" />
+            <span>{supportedLocale === "ar" ? "معرض المشاريع والأنظمة" : "Projects & Systems Showcase"}</span>
+          </div>
+        }
+        title={heading}
+        subtitle={subtitle}
       />
+
+      {/* Main Catalog Content Container */}
+      <div className="mx-auto w-full max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10">
+        <ProjectCatalog
+          initialProjects={catalogResult.projects}
+          categories={catalogResult.categories}
+          tags={catalogResult.tags}
+          locale={supportedLocale}
+          showFilters={false}
+        />
+      </div>
     </div>
   );
 }

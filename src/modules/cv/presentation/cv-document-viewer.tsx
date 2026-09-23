@@ -207,10 +207,10 @@ export function CvDocumentViewer({
   return (
     <div
       ref={containerRef}
-      className="border-border bg-card text-card-foreground relative w-full overflow-hidden rounded-2xl border shadow-sm transition-all"
+      className="relative w-full overflow-hidden rounded-2xl border border-[#E5EAF2] bg-white/90 text-neutral-900 shadow-sm backdrop-blur-md transition-all dark:border-white/[0.08] dark:bg-[#07101F]/85 dark:text-neutral-100"
     >
-      {/* Custom Header Toolbar — Clean & Integrated (NO browser generic controls) */}
-      <div className="border-border bg-muted/40 flex flex-wrap items-center justify-between gap-3 border-b p-3 sm:px-4">
+      {/* Custom Header Toolbar — Clean & Integrated matching Overview identity */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E5EAF2] bg-[#F8FAFF]/90 p-3 sm:px-4 backdrop-blur-xs dark:border-white/[0.08] dark:bg-white/[0.03]">
         {/* Left: Page Navigation Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2">
           <Button
@@ -220,16 +220,16 @@ export function CvDocumentViewer({
             onClick={handlePrevPage}
             disabled={currentPage <= 1 || isLoading}
             aria-label={isArabic ? "الصفحة السابقة" : "Previous page"}
-            className="h-8 w-8 p-0"
+            className="h-8 w-8 p-0 rounded-lg border-[#E5EAF2] dark:border-white/[0.1] hover:bg-neutral-100 dark:hover:bg-white/[0.08]"
           >
             <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
           </Button>
 
-          <span className="text-foreground min-w-[70px] text-center font-mono text-xs font-semibold select-none sm:text-sm">
+          <span className="min-w-[70px] text-center font-mono text-xs font-semibold select-none sm:text-sm text-[#173B6C] dark:text-[#F4F7FF]">
             {numPages > 0 ? (
               <>
-                <span className="text-primary">{currentPage}</span>
-                <span className="text-muted-foreground mx-1">/</span>
+                <span className="text-[#2F6FED] dark:text-indigo-400 font-bold">{currentPage}</span>
+                <span className="text-[#6C7893] dark:text-[#9AA8C0] mx-1">/</span>
                 <span>{numPages}</span>
               </>
             ) : (
@@ -244,7 +244,7 @@ export function CvDocumentViewer({
             onClick={handleNextPage}
             disabled={currentPage >= numPages || isLoading}
             aria-label={isArabic ? "الصفحة التالية" : "Next page"}
-            className="h-8 w-8 p-0"
+            className="h-8 w-8 p-0 rounded-lg border-[#E5EAF2] dark:border-white/[0.1] hover:bg-neutral-100 dark:hover:bg-white/[0.08]"
           >
             <ChevronRight className="h-4 w-4 rtl:rotate-180" />
           </Button>
@@ -257,10 +257,10 @@ export function CvDocumentViewer({
                   key={pageIdx}
                   type="button"
                   onClick={() => setCurrentPage(pageIdx)}
-                  className={`flex h-6 min-w-[24px] items-center justify-center rounded px-1.5 text-[11px] font-bold transition-all ${
+                  className={`flex h-6 min-w-[24px] items-center justify-center rounded-full px-2 text-[11px] font-bold transition-all ${
                     currentPage === pageIdx
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      ? "bg-[#EEF5FF] text-[#1E40AF] border border-[#D0E2FF] shadow-2xs dark:bg-indigo-950/70 dark:text-indigo-200 dark:border-indigo-500/30"
+                      : "text-[#6C7893] hover:bg-neutral-100 hover:text-[#173B6C] dark:text-[#9AA8C0] dark:hover:bg-white/[0.06] dark:hover:text-[#F4F7FF]"
                   }`}
                 >
                   {pageIdx}
@@ -317,13 +317,13 @@ export function CvDocumentViewer({
             <RotateCw className="h-3.5 w-3.5" />
           </Button>
 
-          <div className="bg-border mx-1 hidden h-4 w-px sm:block" />
+          <div className="mx-1 hidden h-4 w-px bg-[#E5EAF2] sm:block dark:bg-white/[0.1]" />
 
           {/* Direct Actions */}
           <a
             href={`${fileUrl}?download=1`}
             download={fileName || "cv.pdf"}
-            className="border-input text-foreground hover:bg-muted inline-flex h-8 items-center gap-1.5 rounded-md border px-2.5 text-xs font-medium transition-colors"
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#E5EAF2] bg-white px-2.5 text-xs font-medium text-[#173B6C] transition-colors hover:bg-neutral-100 dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:bg-white/[0.08]"
             title={isArabic ? "تنزيل ملف الـ PDF" : "Download PDF file"}
           >
             <Download className="h-3.5 w-3.5" />
@@ -334,7 +334,7 @@ export function CvDocumentViewer({
             href={fileUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="border-input text-muted-foreground hover:text-foreground hover:bg-muted inline-flex h-8 w-8 items-center justify-center rounded-md border transition-colors"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#E5EAF2] bg-white text-[#6C7893] transition-colors hover:bg-neutral-100 hover:text-[#173B6C] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-300 dark:hover:bg-white/[0.08] dark:hover:text-[#F4F7FF]"
             title={isArabic ? "فتح في نافذة كاملة" : "Open full document"}
           >
             <ExternalLink className="h-3.5 w-3.5" />

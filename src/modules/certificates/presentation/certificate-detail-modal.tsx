@@ -51,15 +51,15 @@ export function CertificateDetailModal({
       aria-modal="true"
       aria-labelledby="certificate-modal-title"
     >
-      <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl dark:border-neutral-800 dark:bg-neutral-900 animate-in zoom-in-95 duration-200">
+      <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[#E5EAF2] bg-white/95 shadow-2xl backdrop-blur-xl dark:border-white/[0.1] dark:bg-[#0B1528] animate-in zoom-in-95 duration-200">
         {/* Header Bar */}
-        <div className="flex items-center justify-between border-b border-neutral-200/80 px-6 py-4 dark:border-neutral-800">
-          <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
+        <div className="flex items-center justify-between border-b border-[#E5EAF2] px-6 py-4 dark:border-white/[0.08]">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#D0E2FF] bg-[#EEF5FF] text-[#2F6FED] shadow-2xs dark:border-white/[0.1] dark:bg-white/[0.06] dark:text-indigo-300">
               <Award className="h-4 w-4" />
             </span>
             <div>
-              <span className="text-xs font-semibold text-neutral-500 uppercase tracking-wider dark:text-neutral-400">
+              <span className="text-xs font-semibold text-[#6C7893] uppercase tracking-wider dark:text-[#9AA8C0]">
                 {isArabic ? "تفاصيل الشهادة والدورة" : "Certificate & Course Details"}
               </span>
             </div>
@@ -68,7 +68,7 @@ export function CertificateDetailModal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700 transition-colors dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+            className="rounded-xl p-1.5 text-[#6C7893] hover:bg-[#EEF5FF] hover:text-[#173B6C] transition-colors dark:text-[#9AA8C0] dark:hover:bg-white/[0.06] dark:hover:text-[#F4F7FF]"
             aria-label={isArabic ? "إغلاق" : "Close"}
           >
             <X className="h-5 w-5" />
@@ -78,7 +78,7 @@ export function CertificateDetailModal({
         {/* Scrollable Modal Content */}
         <div className="overflow-y-auto p-6 space-y-6">
           {/* Certificate Image Preview */}
-          <div className="group relative aspect-video w-full overflow-hidden rounded-xl border border-neutral-200/80 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-850">
+          <div className="group relative aspect-video w-full overflow-hidden rounded-2xl border border-[#E5EAF2] bg-[#F4F8FF] dark:border-white/[0.08] dark:bg-neutral-850">
             {!imageError && certificate.imageUrl ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
@@ -89,7 +89,7 @@ export function CertificateDetailModal({
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center">
-                <Award className="h-12 w-12 text-neutral-400" />
+                <Award className="h-12 w-12 text-[#6C7893] dark:text-[#9AA8C0]" />
               </div>
             )}
 
@@ -98,7 +98,7 @@ export function CertificateDetailModal({
                 href={certificate.imageUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute end-3 bottom-3 inline-flex items-center gap-1.5 rounded-lg bg-black/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md opacity-0 transition-opacity group-hover:opacity-100 hover:bg-black/90"
+                className="absolute end-3 bottom-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3.5 py-1.5 text-xs font-medium text-white backdrop-blur-md opacity-0 transition-opacity group-hover:opacity-100 hover:bg-black/90"
               >
                 <Maximize2 className="h-3.5 w-3.5" />
                 <span>{isArabic ? "فتح بالحجم الكامل" : "Open Full Image"}</span>
@@ -109,26 +109,26 @@ export function CertificateDetailModal({
           {/* Title & Metadata */}
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              <span className="rounded-md bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
+              <span className="rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
                 {issuer}
               </span>
-              <span className="inline-flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              <span className="inline-flex items-center gap-1 text-xs text-[#6C7893] dark:text-[#9AA8C0]">
                 <Calendar className="h-3.5 w-3.5" />
                 <span>{certificate.issueDate}</span>
               </span>
             </div>
 
-            <h2 id="certificate-modal-title" className="text-xl font-bold text-[#173B6C] sm:text-2xl dark:text-neutral-100">
+            <h2 id="certificate-modal-title" className="text-xl font-bold text-[#173B6C] sm:text-2xl dark:text-[#F4F7FF]">
               {title}
             </h2>
           </div>
 
           {/* Description */}
           <div className="space-y-2">
-            <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-wider dark:text-neutral-400">
+            <h3 className="text-xs font-bold text-[#6C7893] uppercase tracking-wider dark:text-[#9AA8C0]">
               {isArabic ? "نظرة عامة ومحتوى الدورة" : "Course Overview & Content"}
             </h3>
-            <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+            <p className="text-sm leading-relaxed text-[#4A5568] dark:text-[#CBD5E1]">
               {description}
             </p>
           </div>
@@ -136,16 +136,16 @@ export function CertificateDetailModal({
           {/* Skills Covered */}
           {certificate.skills && certificate.skills.length > 0 && (
             <div className="space-y-2">
-              <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-wider dark:text-neutral-400">
+              <h3 className="text-xs font-bold text-[#6C7893] uppercase tracking-wider dark:text-[#9AA8C0]">
                 {isArabic ? "المهارات والتقنيات المكتسبة" : "Skills & Competencies Acquired"}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {certificate.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-800 dark:border-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3 py-1 text-xs font-medium text-[#1E40AF] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-200"
                   >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#2F6FED] dark:text-indigo-400" />
                     <span>{skill}</span>
                   </span>
                 ))}
@@ -155,8 +155,13 @@ export function CertificateDetailModal({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end border-t border-neutral-200/80 bg-neutral-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900/50">
-          <Button variant="outline" size="sm" onClick={onClose}>
+        <div className="flex items-center justify-end border-t border-[#E5EAF2] bg-[#F8FAFF] px-6 py-4 dark:border-white/[0.08] dark:bg-[#07101F]/80">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onClose}
+            className="rounded-full border border-[#D0E2FF] bg-white px-5 py-2 text-xs font-semibold text-[#173B6C] shadow-2xs hover:bg-[#EEF5FF] hover:text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200"
+          >
             <span>{isArabic ? "إغلاق" : "Close"}</span>
           </Button>
         </div>

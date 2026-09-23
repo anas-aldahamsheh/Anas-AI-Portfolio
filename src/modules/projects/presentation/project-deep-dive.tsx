@@ -17,7 +17,6 @@ import {
   Workflow,
   Flame,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useLocalization } from "@/modules/localization/presentation/localization-provider";
 import { EditableRegion } from "@/modules/admin/presentation";
@@ -176,23 +175,22 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
         {/* Badges Bar */}
         <div className="flex flex-wrap items-center gap-2">
           {project.isFeatured && (
-            <Badge variant="default" size="sm" className="shadow-xs">
+            <span className="rounded-full bg-[#173B6C] px-3 py-1 text-xs font-semibold text-white shadow-xs dark:bg-indigo-600">
               {featuredLabel}
-            </Badge>
+            </span>
           )}
           {project.categories.map((cat) => (
-            <Badge key={cat} variant="secondary" size="sm">
+            <span
+              key={cat}
+              className="rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300"
+            >
               {cat}
-            </Badge>
+            </span>
           ))}
           {project.status !== "PUBLISHED" && (
-            <Badge
-              variant="outline"
-              size="sm"
-              className="border-amber-500 text-amber-600 dark:text-amber-400"
-            >
+            <span className="rounded-full border border-amber-500/40 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-600 dark:border-amber-500/30 dark:bg-amber-950/40 dark:text-amber-400">
               {project.status}
-            </Badge>
+            </span>
           )}
         </div>
 
@@ -216,7 +214,7 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
             <h1 className="text-3xl font-bold tracking-tight text-[#173B6C] sm:text-4xl lg:text-5xl dark:text-neutral-50">
               {project.title}
             </h1>
-            <p className="text-lg leading-relaxed text-neutral-600 sm:text-xl dark:text-neutral-300">
+            <p className="text-lg leading-relaxed text-[#6C7893] sm:text-xl dark:text-[#9AA8C0]">
               {project.summary}
             </p>
           </div>
@@ -230,7 +228,7 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
                 href={project.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-neutral-300 bg-white px-3.5 py-2 text-sm font-medium text-neutral-800 shadow-xs transition-colors hover:bg-neutral-50 hover:text-neutral-950 focus:ring-2 focus:ring-neutral-400 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                className="inline-flex items-center gap-2 rounded-full border border-[#E5EAF2] bg-white px-4 py-2 text-sm font-semibold text-[#173B6C] shadow-2xs transition-colors hover:bg-neutral-50 hover:border-[#D0E2FF] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:bg-white/[0.08]"
               >
                 <SocialIcon name="github" className="h-4 w-4" />
                 <span>{sourceCodeLabel}</span>
@@ -241,7 +239,7 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
                 href={currentDemoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-neutral-300 bg-white px-3.5 py-2 text-sm font-medium text-neutral-800 shadow-xs transition-colors hover:bg-neutral-50 hover:text-neutral-950 focus:ring-2 focus:ring-neutral-400 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                className="inline-flex items-center gap-2 rounded-full border border-[#E5EAF2] bg-white px-4 py-2 text-sm font-semibold text-[#173B6C] shadow-2xs transition-colors hover:bg-neutral-50 hover:border-[#D0E2FF] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:bg-white/[0.08]"
               >
                 <ExternalLink className="h-4 w-4" aria-hidden="true" />
                 <span>{liveDemoLabel}</span>
@@ -327,18 +325,18 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
               >
                 <section
                   id={`section-${sec.key}`}
-                  className="rounded-xl border border-neutral-200/70 bg-white/60 p-6 shadow-2xs backdrop-blur-xs transition-colors hover:border-neutral-300 sm:p-7 dark:border-neutral-800/70 dark:bg-neutral-900/40 dark:hover:border-neutral-700"
+                  className="rounded-2xl border border-[#E5EAF2] bg-white/85 p-6 shadow-xs backdrop-blur-md transition-all hover:border-[#D0E2FF] hover:shadow-md sm:p-8 dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-white/[0.15]"
                 >
                   <div className="mb-4 flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200/80 bg-neutral-100 text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
-                      <SectionIcon className="h-4.5 w-4.5" aria-hidden="true" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#D0E2FF] bg-[#EEF5FF] text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
+                      <SectionIcon className="h-5 w-5" aria-hidden="true" />
                     </div>
-                    <h2 className="text-xl font-bold tracking-tight text-[#173B6C] dark:text-neutral-100">
+                    <h2 className="text-xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF]">
                       {heading}
                     </h2>
                   </div>
 
-                  <div className="prose prose-neutral dark:prose-invert max-w-none text-sm leading-relaxed whitespace-pre-line text-neutral-700 sm:text-base dark:text-neutral-300">
+                  <div className="prose prose-neutral dark:prose-invert max-w-none text-sm sm:text-[15px] leading-relaxed whitespace-pre-line text-[#6C7893] dark:text-[#9AA8C0]">
                     {content}
                   </div>
                 </section>
@@ -351,47 +349,45 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
         <aside className="space-y-8 lg:col-span-4">
           {/* Tech Stack & Tags */}
           {project.tags.length > 0 && (
-            <div className="rounded-xl border border-neutral-200/80 bg-white/70 p-6 shadow-2xs backdrop-blur-xs dark:border-neutral-800/80 dark:bg-neutral-900/60">
-              <h3 className="mb-3 text-sm font-semibold tracking-wider text-neutral-500 uppercase dark:text-neutral-400">
+            <div className="rounded-2xl border border-[#E5EAF2] bg-white/85 p-6 shadow-xs backdrop-blur-md dark:border-white/[0.08] dark:bg-white/[0.02]">
+              <h3 className="mb-3 text-xs font-bold tracking-wider text-[#173B6C] uppercase dark:text-indigo-300">
                 {techStackTitle}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
-                  <Badge
+                  <span
                     key={tag}
-                    variant="outline"
-                    size="sm"
-                    className="border-neutral-200 bg-neutral-50 font-mono text-xs dark:border-neutral-800 dark:bg-neutral-900"
+                    className="rounded-full border border-[#E5EAF2] bg-[#F8FAFF] px-3 py-1 font-mono text-xs font-medium text-[#173B6C] dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-neutral-300"
                   >
                     {tag}
-                  </Badge>
+                  </span>
                 ))}
               </div>
             </div>
           )}
 
           {/* Ask AI Scoped Callout Card */}
-          <div className="relative overflow-hidden rounded-xl border border-neutral-200/90 bg-gradient-to-b from-neutral-50 to-white p-6 shadow-xs dark:border-neutral-800 dark:from-neutral-900 dark:to-neutral-950">
+          <div className="relative overflow-hidden rounded-2xl border border-[#E5EAF2] bg-gradient-to-b from-[#F8FAFF] to-white p-6 shadow-xs dark:border-white/[0.08] dark:from-white/[0.03] dark:to-white/[0.01]">
             {/* Scope Badge */}
-            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-100/90 px-2.5 py-1 text-[11px] font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800/90 dark:text-neutral-300">
+            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
               <Sparkles
-                className="h-3 w-3 text-neutral-500 dark:text-neutral-400"
+                className="h-3.5 w-3.5 text-[#2F6FED] dark:text-indigo-300"
                 aria-hidden="true"
               />
               <span>{scopeBadgeText}</span>
             </div>
 
-            <h3 className="text-lg font-bold text-[#173B6C] dark:text-neutral-100">
+            <h3 className="text-lg font-bold text-[#173B6C] dark:text-[#F4F7FF]">
               {askAiTitle}
             </h3>
 
-            <p className="mt-2 text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
+            <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#6C7893] dark:text-[#9AA8C0]">
               {askAiDesc}
             </p>
 
             {/* Prompt Concept Suggestions */}
             <div className="mt-4 space-y-2">
-              <span className="text-[11px] font-medium tracking-wide text-neutral-500 uppercase dark:text-neutral-400">
+              <span className="text-[11px] font-semibold tracking-wide text-[#173B6C]/70 uppercase dark:text-indigo-300/70">
                 {locale === "ar" ? "أسئلة مقترحة:" : "Suggested Questions:"}
               </span>
               <div className="space-y-1.5">
@@ -403,7 +399,7 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
                       e.preventDefault();
                       openProjectChat(prompt);
                     }}
-                    className="block rounded-md border border-neutral-200/70 bg-white/80 p-2 text-xs text-neutral-700 transition-colors hover:border-neutral-400 hover:bg-neutral-100/80 dark:border-neutral-800 dark:bg-neutral-900/80 dark:text-neutral-300 dark:hover:border-neutral-700 dark:hover:bg-neutral-800"
+                    className="block rounded-xl border border-[#E5EAF2] bg-white/90 p-2.5 text-xs text-[#173B6C] transition-all hover:border-[#D0E2FF] hover:bg-[#EEF5FF]/50 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:border-indigo-500/30"
                   >
                     &ldquo;{prompt}&rdquo;
                   </Link>
@@ -421,10 +417,13 @@ export function ProjectDeepDive({ project, relatedProjects = [], locale }: Proje
                 }}
                 className="w-full"
               >
-                <Button variant="primary" size="sm" className="w-full gap-2">
+                <button
+                  type="button"
+                  className="w-full inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#173B6C] text-white hover:bg-[#1E4B8A] shadow-xs hover:shadow-sm dark:bg-indigo-600 dark:hover:bg-indigo-500"
+                >
                   <Bot className="h-4 w-4" aria-hidden="true" />
                   <span>{askAiCta}</span>
-                </Button>
+                </button>
               </Link>
             </div>
           </div>

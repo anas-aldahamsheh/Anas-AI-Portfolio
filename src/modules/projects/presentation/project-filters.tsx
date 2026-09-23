@@ -64,7 +64,7 @@ export function ProjectFilters({
     sortBy !== "order";
 
   return (
-    <div className="space-y-4 rounded-xl border border-neutral-200/80 bg-white/70 p-4 shadow-xs backdrop-blur-xs sm:p-5 dark:border-neutral-800/80 dark:bg-neutral-900/60">
+    <div className="space-y-4 rounded-2xl border border-[#E5EAF2] bg-white/85 p-5 shadow-xs backdrop-blur-md sm:p-6 dark:border-white/[0.08] dark:bg-white/[0.02]">
       {/* Search Input Row */}
       <div className="relative">
         <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3 text-neutral-400">

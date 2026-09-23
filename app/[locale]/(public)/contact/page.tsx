@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 import { DEVELOPER_PROFILE } from "@/lib/config/developer-profile";
+import { PageHeroBanner } from "@/components/layout/page-hero-banner";
 
 interface ContactPageProps {
   params: Promise<{ locale: string }>;
@@ -98,100 +99,113 @@ export default async function ContactPage({ params }: ContactPageProps) {
   ];
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      {/* Header */}
-      <FadeIn delay={0.05}>
-        <div className="space-y-3 text-start">
-          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
+    <div className="w-full">
+      {/* Overview-Harmonized Aurora Hero Banner */}
+      <PageHeroBanner
+        badge={
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
             <Mail className="h-3.5 w-3.5" />
-            <span>{isAr ? "بيانات الاتصال" : "Direct Contact"}</span>
+            <span>{isAr ? "بيانات وقنوات الاتصال المباشر" : "Direct Contact Channels"}</span>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#173B6C] sm:text-4xl dark:text-neutral-100">
-            {isAr ? "تواصل معي مباشرة" : "Let's Connect"}
-          </h1>
-          <p className="max-w-2xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-neutral-400">
-            {isAr
-              ? "متاح حالياً لفرص العمل كمهندس ذكاء اصطناعي (AI Engineer)، وأدوار هندسة البرمجيات السحابية، والتعاون في بناء الأنظمة الذكية."
-              : "Currently open for AI Engineer positions, systems engineering roles, and high-impact technical collaborations."}
-          </p>
-        </div>
-      </FadeIn>
+        }
+        title={isAr ? "تواصل معي مباشرة" : "Let's Connect"}
+        subtitle={
+          isAr
+            ? "متاح حالياً لفرص العمل كمهندس ذكاء اصطناعي (AI Engineer)، وأدوار هندسة البرمجيات السحابية، والتعاون في بناء الأنظمة الذكية."
+            : "Currently open for AI Engineer positions, systems engineering roles, and high-impact technical collaborations."
+        }
+      />
 
-      {/* Contact Channels Grid */}
-      <div className="mt-10 grid gap-4 sm:grid-cols-2">
-        {contactChannels.map((channel, idx) => {
-          const Icon = channel.icon;
-          return (
-            <div
-              key={idx}
-              className="flex flex-col justify-between rounded-xl border border-neutral-200/80 bg-white p-5 shadow-xs transition-all hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:border-neutral-700"
-            >
-              <div>
-                <div className="flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
-                    <Icon className="h-4 w-4" />
+      {/* Main Content Area */}
+      <div className="mx-auto max-w-[1420px] px-4 pb-16 sm:px-6 lg:px-10">
+        {/* Contact Channels Grid */}
+        <div className="grid gap-6 sm:grid-cols-2">
+          {contactChannels.map((channel, idx) => {
+            const Icon = channel.icon;
+            return (
+              <div
+                key={idx}
+                className="group flex flex-col justify-between rounded-2xl border border-[#E5EAF2] bg-white/85 p-6 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#D0E2FF] hover:shadow-lg dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-white/[0.15]"
+              >
+                <div>
+                  <div className="flex items-center gap-3.5">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#D0E2FF] bg-[#EEF5FF] text-[#2F6FED] shadow-2xs transition-transform duration-300 group-hover:scale-105 dark:border-white/[0.1] dark:bg-white/[0.06] dark:text-indigo-300">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-base font-bold text-[#173B6C] dark:text-[#F4F7FF]">
+                        {channel.title}
+                      </h2>
+                      <p className="font-mono text-xs font-semibold text-[#2F6FED] dark:text-indigo-300">
+                        {channel.value}
+                      </p>
+                    </div>
                   </div>
-                  <h2 className="text-sm font-bold text-[#173B6C] dark:text-neutral-100">
-                    {channel.title}
-                  </h2>
+                  <p className="mt-3.5 text-xs leading-relaxed text-[#6C7893] sm:text-sm dark:text-[#9AA8C0]">
+                    {channel.description}
+                  </p>
                 </div>
-                <p className="mt-2 font-mono text-xs font-medium text-neutral-900 dark:text-neutral-100">
-                  {channel.value}
-                </p>
-                <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-                  {channel.description}
-                </p>
-              </div>
 
-              <div className="mt-4 border-t border-neutral-100 pt-3 dark:border-neutral-800">
-                <a
-                  href={channel.href}
-                  target={channel.href.startsWith("http") ? "_blank" : undefined}
-                  rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-800 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-neutral-100"
-                >
-                  <span>{channel.actionLabel}</span>
-                  <ExternalLink className="h-3 w-3" />
-                </a>
+                <div className="mt-6 border-t border-[#E5EAF2] pt-4 dark:border-white/[0.06]">
+                  <a
+                    href={channel.href}
+                    target={channel.href.startsWith("http") ? "_blank" : undefined}
+                    rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-4 py-2 text-xs font-semibold text-[#173B6C] transition-all hover:bg-[#E0EEFF] hover:text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-[#F4F7FF] dark:hover:bg-white/[0.08]"
+                  >
+                    <span>{channel.actionLabel}</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Quick Recruiter Prompt Assistant */}
-      <FadeIn delay={0.15}>
-        <div className="mt-12 rounded-xl border border-neutral-200/80 bg-neutral-50 p-6 dark:border-neutral-800 dark:bg-neutral-900/40">
-          <div className="flex items-center gap-2.5">
-            <MessageSquare className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
-            <h3 className="text-sm font-bold text-neutral-900 dark:text-neutral-100">
-              {isAr
-                ? "هل لديك استفسار محدد لمسؤولي التوظيف؟"
-                : "Have a specific recruiter question?"}
-            </h3>
-          </div>
-          <p className="mt-2 text-xs leading-relaxed text-neutral-600 sm:text-sm dark:text-neutral-400">
-            {isAr
-              ? "يمكنك استخدام المساعد الذكي المعتمد على الـ RAG والمدرّب على بيانات أنس الموثقة للإجابة فوراً عن أي تساؤل يتعلق بالخبرات، الأكواد، أو المهارات."
-              : "You can also ask the conversational RAG assistant anytime to get immediate, evidence-grounded answers about Anas's qualifications, architecture decisions, and code."}
-          </p>
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            <Link href={`/${supportedLocale}?chat=open`}>
-              <Button variant="primary" size="sm">
-                <span>
-                  {isAr ? "فتح المساعد الذكي (Ask About Anas)" : "Ask About Anas (RAG Assistant)"}
-                </span>
-              </Button>
-            </Link>
-            <Link href={`/${supportedLocale}/cv`}>
-              <Button variant="outline" size="sm" className="gap-1.5">
-                <Download className="h-3.5 w-3.5" />
-                <span>{isAr ? "السيرة الذاتية (PDF)" : "Download Resume (PDF)"}</span>
-              </Button>
-            </Link>
-          </div>
+            );
+          })}
         </div>
-      </FadeIn>
+
+        {/* Quick Recruiter Prompt Assistant */}
+        <FadeIn delay={0.15}>
+          <div className="relative mt-12 overflow-hidden rounded-2xl border border-[#D0E2FF] bg-gradient-to-br from-[#EEF5FF] via-white to-[#F0F5FF] p-6 shadow-sm sm:p-8 dark:border-white/[0.1] dark:from-white/[0.04] dark:via-white/[0.02] dark:to-white/[0.04]">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#D0E2FF] bg-[#EEF5FF] text-[#2F6FED] shadow-2xs dark:border-white/[0.1] dark:bg-white/[0.06] dark:text-indigo-300">
+                <MessageSquare className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-[#173B6C] dark:text-[#F4F7FF]">
+                {isAr
+                  ? "هل لديك استفسار محدد لمسؤولي التوظيف؟"
+                  : "Have a specific recruiter question?"}
+              </h3>
+            </div>
+            <p className="mt-3 max-w-2xl text-xs leading-relaxed text-[#6C7893] sm:text-sm dark:text-[#9AA8C0]">
+              {isAr
+                ? "يمكنك استخدام المساعد الذكي المعتمد على الـ RAG والمدرّب على بيانات أنس الموثقة للإجابة فوراً عن أي تساؤل يتعلق بالخبرات، الأكواد، أو المهارات."
+                : "You can also ask the conversational RAG assistant anytime to get immediate, evidence-grounded answers about Anas's qualifications, architecture decisions, and code."}
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Link href={`/${supportedLocale}?chat=open`}>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  className="rounded-full bg-[#173B6C] px-5 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-[#1E4B8A] dark:bg-indigo-600 dark:hover:bg-indigo-500"
+                >
+                  <span>
+                    {isAr ? "فتح المساعد الذكي (Ask About Anas)" : "Ask About Anas (RAG Assistant)"}
+                  </span>
+                </Button>
+              </Link>
+              <Link href={`/${supportedLocale}/cv`}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-4 py-2.5 text-xs font-semibold text-[#2F6FED] shadow-2xs hover:bg-[#E0EEFF] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  <span>{isAr ? "السيرة الذاتية (PDF)" : "Download Resume (PDF)"}</span>
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </FadeIn>
+      </div>
     </div>
   );
 }

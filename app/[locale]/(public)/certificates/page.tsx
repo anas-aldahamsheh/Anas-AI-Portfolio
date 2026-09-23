@@ -6,6 +6,7 @@ import { FadeIn } from "@/components/motion";
 import { certificateService } from "@/modules/certificates/infrastructure/certificate-service";
 import { CertificatesCatalog } from "@/modules/certificates/presentation";
 import { localizedTextService } from "@/modules/localization/infrastructure/localized-text-service";
+import { PageHeroBanner } from "@/components/layout/page-hero-banner";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 
 interface CertificatesPageProps {
@@ -56,44 +57,49 @@ export default async function CertificatesPage({ params }: CertificatesPageProps
       : "A verified record of technical certifications and specialized courses in AI engineering, hybrid RAG pipelines, and production systems.");
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-      {/* Header Section */}
-      <FadeIn delay={0.05}>
-        <div className="mb-10 max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
-            <Award className="h-3.5 w-3.5 text-primary" />
-            <span>{isArabic ? "الاعتمادات والدورات" : "Credentials & Continuous Learning"}</span>
+    <div className="w-full">
+      {/* Overview-Harmonized Aurora Hero Banner */}
+      <PageHeroBanner
+        badge={
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
+            <Award className="h-3.5 w-3.5" />
+            <span>{isArabic ? "الاعتمادات والدورات التخصصية" : "Credentials & Specialized Learning"}</span>
           </div>
-
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#173B6C] sm:text-4xl dark:text-neutral-50">
-            {heading}
-          </h1>
-
-          <p className="text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-neutral-400">
-            {subtitle}
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+        }
+        title={heading}
+        subtitle={subtitle}
+        actions={
+          <div className="flex flex-wrap items-center gap-3">
             <Link href={`/${supportedLocale}/cv`}>
-              <Button variant="primary" size="sm" className="gap-2">
+              <Button
+                variant="primary"
+                size="sm"
+                className="gap-2 rounded-full bg-[#173B6C] px-5 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-[#1E4B8A] dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              >
                 <Download className="h-3.5 w-3.5" />
                 <span>{isArabic ? "السيرة الذاتية (About & Resume)" : "About & Resume"}</span>
               </Button>
             </Link>
             <Link href={`/${supportedLocale}/projects`}>
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-4 py-2.5 text-xs font-semibold text-[#2F6FED] shadow-2xs hover:bg-[#E0EEFF] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200"
+              >
                 <span>{isArabic ? "استعراض المشاريع" : "Explore Projects"}</span>
                 <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
               </Button>
             </Link>
           </div>
-        </div>
-      </FadeIn>
+        }
+      />
 
       {/* Catalog Grid with Cards & Detail Modal */}
-      <FadeIn delay={0.1}>
-        <CertificatesCatalog certificates={certificates} locale={supportedLocale} />
-      </FadeIn>
+      <div className="mx-auto max-w-[1420px] px-4 pb-16 sm:px-6 lg:px-10">
+        <FadeIn delay={0.1}>
+          <CertificatesCatalog certificates={certificates} locale={supportedLocale} />
+        </FadeIn>
+      </div>
     </div>
   );
 }

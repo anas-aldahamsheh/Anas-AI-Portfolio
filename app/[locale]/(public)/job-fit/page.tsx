@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Briefcase } from "lucide-react";
 import { JobFitAnalyzer } from "@/modules/job-fit/presentation";
 import { localizedTextService } from "@/modules/localization/infrastructure/localized-text-service";
+import { PageHeroBanner } from "@/components/layout/page-hero-banner";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 
 interface JobFitPageProps {
@@ -32,23 +34,26 @@ export default async function JobFitPage({ params }: JobFitPageProps) {
   const isAr = locale === "ar";
 
   return (
-    <main className="container mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-      {/* Engineering Project Showcase Context */}
-      <div className="mb-8 border-b border-neutral-200/80 pb-6 dark:border-neutral-800/80">
-        <span className="text-xs font-semibold tracking-wider text-neutral-500 uppercase dark:text-neutral-400">
-          {isAr ? "مشروع تطبيقي وأداة مهندسة" : "Applied Engineering Tool"}
-        </span>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl dark:text-neutral-100">
-          {isAr ? "محلل المواءمة الوظيفية ونقاط التوافق" : "Job Fit & ATS Alignment Engine"}
-        </h1>
-        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
-          {isAr
+    <div className="w-full">
+      {/* Overview-Harmonized Aurora Hero Banner */}
+      <PageHeroBanner
+        badge={
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
+            <Briefcase className="h-3.5 w-3.5" />
+            <span>{isAr ? "مشروع تطبيقي وأداة مهندسة" : "Applied Engineering Tool"}</span>
+          </div>
+        }
+        title={isAr ? "محلل المواءمة الوظيفية ونقاط التوافق" : "Job Fit & ATS Alignment Engine"}
+        subtitle={
+          isAr
             ? "أداة هندسية صممها وبناها أنس الدحامشة: تدمج التحليل الدلالي لمواصفات الوظيفة مع خوارزميات تقييم قطعية لمطابقة المتطلبات بدقة مع الأدلة والمشاريع البرمجية الحقيقية."
-            : "An engineering tool built by Anas Al Dahamsheh combining LLM semantic requirement extraction with deterministic scoring algorithms to match candidate achievements against job descriptions."}
-        </p>
-      </div>
+            : "An engineering tool built by Anas Al Dahamsheh combining LLM semantic requirement extraction with deterministic scoring algorithms to match candidate achievements against job descriptions."
+        }
+      />
 
-      <JobFitAnalyzer />
-    </main>
+      <div className="mx-auto max-w-[1420px] px-4 pb-16 sm:px-6 lg:px-10">
+        <JobFitAnalyzer />
+      </div>
+    </div>
   );
 }
