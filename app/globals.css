@@ -308,6 +308,21 @@ input[type="tel"] {
   z-index: 2;
 }
 
+/* Zero-layout-shift stacked grid for hero typewriter streaming */
+.hero-grid-stack {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  position: relative;
+  width: 100%;
+}
+
+.hero-grid-item {
+  grid-column: 1 / -1 !important;
+  grid-row: 1 / -1 !important;
+  margin: 0 !important;
+}
+
 .hero-name-shimmer-sweep::after {
   content: "";
   position: absolute;

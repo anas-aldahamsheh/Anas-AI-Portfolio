@@ -191,21 +191,21 @@ export function PageHeroBanner({
 
           <div className="space-y-2">
             {isTitleString ? (
-              <div className="relative inline-grid grid-cols-1 grid-rows-1">
-                {/* Ghost element that holds full dimensions at all times to eliminate layout shifts (browser only) */}
-                {mounted && !isTestEnv && (
+              <div className="hero-grid-stack">
+                {/* Ghost element that permanently holds exact full dimensions and line wraps at all times in browser */}
+                {!isTestEnv && (
                   <span
                     aria-hidden="true"
-                    className="invisible col-start-1 row-start-1 font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.18] select-none pointer-events-none"
+                    className="hero-grid-item invisible font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.18] select-none pointer-events-none"
                   >
                     {rawTitle}
                   </span>
                 )}
 
-                {/* Animated streamed heading overlaid in the exact same grid cell */}
+                {/* Animated streamed heading overlaid in the exact same grid stack */}
                 <h1
                   aria-label={rawTitle}
-                  className="col-start-1 row-start-1 font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF] leading-[1.18]"
+                  className="hero-grid-item font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF] leading-[1.18]"
                 >
                   {mounted && enableTypewriter && !isTestEnv ? (
                     <span className="inline-flex items-baseline">
@@ -231,21 +231,21 @@ export function PageHeroBanner({
             )}
 
             {isSubString ? (
-              <div className="relative inline-grid grid-cols-1 grid-rows-1 max-w-2xl">
-                {/* Ghost element that holds full paragraph height at all times (browser only) */}
-                {mounted && !isTestEnv && (
+              <div className="hero-grid-stack max-w-2xl">
+                {/* Ghost element that permanently holds full paragraph height and line wraps at all times in browser */}
+                {!isTestEnv && (
                   <span
                     aria-hidden="true"
-                    className="invisible col-start-1 row-start-1 font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed select-none pointer-events-none"
+                    className="hero-grid-item invisible font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed select-none pointer-events-none"
                   >
                     {rawSub}
                   </span>
                 )}
 
-                {/* Animated streamed subtitle overlaid in the exact same grid cell */}
+                {/* Animated streamed subtitle overlaid in the exact same grid stack */}
                 <p
                   aria-label={rawSub}
-                  className="col-start-1 row-start-1 font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed text-[#6C7893] dark:text-[#9AA8C0]"
+                  className="hero-grid-item font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed text-[#6C7893] dark:text-[#9AA8C0]"
                 >
                   {mounted && enableTypewriter && !isTestEnv ? (
                     <span className="inline-flex items-baseline flex-wrap">

@@ -27,6 +27,9 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
     ? "ومطور برمجيات شامل (Full-Stack)"
     : "& Full-Stack Developer";
 
+  const isTestEnv =
+    typeof process !== "undefined" && process.env.NODE_ENV === "test";
+
   const [mounted, setMounted] = useState(false);
   const [titleText, setTitleText] = useState("");
   const [sub1Text, setSub1Text] = useState("");
@@ -268,10 +271,21 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
 
         {/* Content Container matching reference image layout */}
         <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-14 sm:py-18 lg:py-22 text-start">
-          <div className="relative inline-block min-h-[1.25em]">
+          <div className="hero-grid-stack">
+            {/* Ghost element that permanently holds exact full dimensions and line wraps at all times */}
+            {!isTestEnv && (
+              <span
+                aria-hidden="true"
+                className="hero-grid-item invisible font-space-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] select-none pointer-events-none"
+              >
+                {fullTitle}
+              </span>
+            )}
+
+            {/* Animated streamed heading overlaid in the exact same grid stack */}
             <h1
               aria-label={fullTitle}
-              className="font-space-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] text-[#173B6C] dark:text-[#F4F7FF]"
+              className="hero-grid-item font-space-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] text-[#173B6C] dark:text-[#F4F7FF]"
             >
               {mounted ? (
                 <span className="inline-flex items-baseline">
@@ -292,43 +306,57 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
               <div className="hero-name-shimmer-sweep pointer-events-none" aria-hidden="true" />
             )}
           </div>
-          <p
-            aria-label={`${fullSub1} ${fullSub2}`}
-            className="font-manrope font-medium mt-3 sm:mt-4 text-base sm:text-lg md:text-xl lg:text-[21px] leading-relaxed max-w-2xl min-h-[1.5em] text-[#64748B] dark:text-[#A7B3C7]"
-          >
-            {mounted ? (
-              <span className="inline-flex flex-wrap items-baseline">
-                {sub1Text && (
-                  <span className="bg-gradient-to-r from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] bg-clip-text text-transparent font-semibold">
-                    {sub1Text}
-                  </span>
-                )}
-                {sub2Text && <span className="inline-block" aria-hidden="true">&nbsp;</span>}
-                {sub2Text && (
-                  <span className="text-[#64748B] dark:text-[#A7B3C7]">
-                    {sub2Text}
-                  </span>
-                )}
-                {cursorPhase === "sub" && (
-                  <span
-                    className="ms-1 inline-block w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)] align-baseline"
-                    style={{ height: "0.8em" }}
-                    aria-hidden="true"
-                  />
-                )}
+
+          <div className="hero-grid-stack max-w-2xl mt-3 sm:mt-4">
+            {/* Ghost element that permanently holds full paragraph height and line wraps at all times */}
+            {!isTestEnv && (
+              <span
+                aria-hidden="true"
+                className="hero-grid-item invisible font-manrope font-medium text-base sm:text-lg md:text-xl lg:text-[21px] leading-relaxed select-none pointer-events-none"
+              >
+                {fullSub1} {fullSub2}
               </span>
-            ) : (
-              <>
-                <span className="bg-gradient-to-r from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] bg-clip-text text-transparent font-semibold">
-                  {fullSub1}
-                </span>
-                <span className="inline-block" aria-hidden="true">&nbsp;</span>
-                <span className="text-[#64748B] dark:text-[#A7B3C7]">
-                  {fullSub2}
-                </span>
-              </>
             )}
-          </p>
+
+            {/* Animated streamed subtitle overlaid in the exact same grid stack */}
+            <p
+              aria-label={`${fullSub1} ${fullSub2}`}
+              className="hero-grid-item font-manrope font-medium text-base sm:text-lg md:text-xl lg:text-[21px] leading-relaxed text-[#64748B] dark:text-[#A7B3C7]"
+            >
+              {mounted ? (
+                <span className="inline-flex flex-wrap items-baseline">
+                  {sub1Text && (
+                    <span className="bg-gradient-to-r from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] bg-clip-text text-transparent font-semibold">
+                      {sub1Text}
+                    </span>
+                  )}
+                  {sub2Text && <span className="inline-block" aria-hidden="true">&nbsp;</span>}
+                  {sub2Text && (
+                    <span className="text-[#64748B] dark:text-[#A7B3C7]">
+                      {sub2Text}
+                    </span>
+                  )}
+                  {cursorPhase === "sub" && (
+                    <span
+                      className="ms-1 inline-block w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)] align-baseline"
+                      style={{ height: "0.8em" }}
+                      aria-hidden="true"
+                    />
+                  )}
+                </span>
+              ) : (
+                <>
+                  <span className="bg-gradient-to-r from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] bg-clip-text text-transparent font-semibold">
+                    {fullSub1}
+                  </span>
+                  <span className="inline-block" aria-hidden="true">&nbsp;</span>
+                  <span className="text-[#64748B] dark:text-[#A7B3C7]">
+                    {fullSub2}
+                  </span>
+                </>
+              )}
+            </p>
+          </div>
         </div>
       </section>
 
