@@ -103,11 +103,11 @@ export function UserNav({ locale, initialUser, className = "" }: UserNavProps) {
     return (
       <Link
         href={`/${locale}/sign-in`}
-        className={`inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-900 bg-neutral-900 px-3.5 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-neutral-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 dark:border-neutral-200 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 cursor-pointer ${className}`.trim()}
+        className={`inline-flex h-9 items-center gap-1.5 rounded-full border border-[#E4EAF3] bg-white/90 px-3.5 text-xs font-semibold text-[#173B6C] shadow-2xs transition-all duration-200 hover:bg-[#EEF5FF] hover:border-[#D0E2FF] hover:text-[#1E40AF] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.05] dark:text-[#E2E8F0] dark:hover:bg-white/[0.1] dark:hover:text-white cursor-pointer ${className}`.trim()}
         title={isArabic ? "تسجيل الدخول" : "Sign In"}
         aria-label={isArabic ? "تسجيل الدخول" : "Sign In"}
       >
-        <LogIn className="h-3.5 w-3.5" />
+        <LogIn className="h-3.5 w-3.5 text-[#2F6FED] dark:text-[#67E8F9]" />
         <span className="font-semibold">
           {isArabic ? "تسجيل الدخول" : "Sign In"}
         </span>
@@ -128,11 +128,12 @@ export function UserNav({ locale, initialUser, className = "" }: UserNavProps) {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup="menu"
-        className={`inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-200/80 bg-white px-2.5 text-xs font-semibold text-neutral-800 shadow-xs transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800 cursor-pointer ${className}`.trim()}
+        className={`group/usernav inline-flex h-9 items-center gap-2 rounded-full border border-[#E4EAF3] bg-white/95 px-2.5 sm:px-3 text-xs font-semibold text-[#173B6C] shadow-2xs transition-all duration-200 hover:bg-[#EEF5FF] hover:border-[#BFD5F5] hover:text-[#1E40AF] hover:shadow-[0_2px_12px_rgba(47,111,237,0.12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED] dark:border-white/[0.12] dark:bg-[#0B1728]/90 dark:text-[#E2E8F0] dark:hover:bg-[#13233D] dark:hover:border-white/[0.22] dark:hover:text-white dark:hover:shadow-[0_4px_16px_rgba(56,189,248,0.18)] cursor-pointer ${className}`.trim()}
         title={displayName}
         aria-label={isArabic ? `حساب المستخدم: ${displayName}` : `User account: ${displayName}`}
       >
-        <div className="flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/10 text-primary font-bold text-[11px]">
+        {/* Dynamic Glowing Avatar */}
+        <div className="flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-[#2F6FED] to-[#4F46E5] text-white text-[11px] font-bold shadow-xs transition-transform duration-200 group-hover/usernav:scale-105 dark:from-[#38BDF8] dark:to-[#818CF8] dark:text-[#07101F]">
           {user.image ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
@@ -148,49 +149,49 @@ export function UserNav({ locale, initialUser, className = "" }: UserNavProps) {
           )}
         </div>
 
-        <span className="max-w-[110px] truncate hidden md:inline font-medium">
+        <span className="max-w-[120px] truncate hidden md:inline font-medium tracking-tight">
           {displayName}
         </span>
 
         <ChevronDown
-          className={`h-3 w-3 opacity-60 transition-transform duration-200 ${
+          className={`h-3.5 w-3.5 text-[#6C7893] transition-all duration-200 group-hover/usernav:text-[#173B6C] dark:text-[#9AA8C0] dark:group-hover/usernav:text-white ${
             isOpen ? "rotate-180" : ""
           }`}
         />
       </button>
 
-      {/* Popover Menu */}
+      {/* Popover Menu with Brand Glassmorphic Styling */}
       {isOpen && (
         <div
           ref={dropdownRef}
           role="menu"
-          className="absolute end-0 top-full mt-2 w-56 rounded-xl border border-neutral-200/80 bg-white p-1.5 shadow-xl backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-900 z-50 animate-in fade-in zoom-in-95 duration-150"
+          className="absolute end-0 top-full mt-2 w-60 rounded-2xl border border-[#E4EAF3] bg-white/98 p-1.5 shadow-[0_16px_40px_rgba(23,59,108,0.14)] backdrop-blur-xl dark:border-white/[0.12] dark:bg-[#0B1728]/95 dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)] z-50 animate-in fade-in zoom-in-95 duration-150"
         >
           {/* Header Info */}
-          <div className="border-b border-neutral-100 px-3 py-2 dark:border-neutral-800/80">
-            <p className="text-xs font-bold text-neutral-900 truncate dark:text-neutral-100">
+          <div className="border-b border-[#F0F4FA] px-3.5 py-2.5 dark:border-white/[0.08]">
+            <p className="text-xs font-bold text-[#173B6C] truncate dark:text-[#F4F7FF]">
               {displayName}
             </p>
-            <p className="text-[11px] text-neutral-500 truncate dark:text-neutral-400">
+            <p className="text-[11px] text-[#6C7893] truncate dark:text-[#9AA8C0] mt-0.5">
               {user.email}
             </p>
             {role && (
-              <span className="mt-1.5 inline-block rounded-md bg-neutral-100 px-2 py-0.5 text-[10px] font-mono font-semibold uppercase text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+              <span className="mt-2 inline-flex items-center rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-2.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.06] dark:text-[#67E8F9]">
                 {role}
               </span>
             )}
           </div>
 
           {/* Action Links */}
-          <div className="pt-1 space-y-0.5">
+          <div className="pt-1.5 space-y-1">
             {isAdmin && (
               <Link
                 href={`/${locale}/admin`}
                 onClick={closeDropdown}
                 role="menuitem"
-                className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-[#173B6C] transition-colors hover:bg-[#EEF5FF] hover:text-[#1E40AF] dark:text-[#E2E8F0] dark:hover:bg-white/[0.08] dark:hover:text-[#67E8F9]"
               >
-                <LayoutDashboard className="h-3.5 w-3.5 opacity-70" />
+                <LayoutDashboard className="h-3.5 w-3.5 text-[#2F6FED] dark:text-[#67E8F9]" />
                 <span>{isArabic ? "لوحة التحكم (Admin)" : "Admin Dashboard"}</span>
               </Link>
             )}
@@ -200,7 +201,7 @@ export function UserNav({ locale, initialUser, className = "" }: UserNavProps) {
               onClick={handleSignOut}
               disabled={isSigningOut}
               role="menuitem"
-              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-red-600 transition-colors hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/40 dark:hover:text-red-300 cursor-pointer disabled:opacity-50"
+              className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-rose-600 transition-colors hover:bg-rose-50 hover:text-rose-700 dark:text-rose-400 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 cursor-pointer disabled:opacity-50"
             >
               <LogOut className="h-3.5 w-3.5" />
               <span>
