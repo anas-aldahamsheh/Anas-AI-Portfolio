@@ -444,7 +444,7 @@ export function ChatDrawer({
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className={`fixed end-6 bottom-6 z-40 flex h-13 w-13 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-gradient-to-tr from-[#173B6C] via-[#2F6FED] to-[#0891B2] text-white shadow-[0_4px_20px_rgba(47,111,237,0.35)] hover:shadow-[0_6px_25px_rgba(47,111,237,0.45)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400 dark:from-[#4F46E5] dark:via-[#6366F1] dark:to-[#0891B2] dark:shadow-[0_0_25px_rgba(79,70,229,0.5)] ${
+        className={`fixed end-6 bottom-6 z-40 flex h-13 w-13 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-gradient-to-tr from-[#173B6C] via-[#2F6FED] to-[#0891B2] text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400 dark:from-[#4F46E5] dark:via-[#6366F1] dark:to-[#0891B2] dark:shadow-[0_4px_12px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)] ${
           isOpen ? "hidden" : "flex"
         }`}
         aria-label={t("chat.trigger.aria")}

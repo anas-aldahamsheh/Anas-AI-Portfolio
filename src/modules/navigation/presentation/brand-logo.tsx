@@ -17,14 +17,14 @@ export function BrandLogo({ className }: BrandLogoProps) {
         priority
         className="h-full w-auto max-h-full object-contain transition-all duration-300 dark:hidden"
       />
-      {/* Dark mode brand logo with luminous white typography */}
+      {/* Dark mode brand logo with crisp luminous typography */}
       <Image
         src="/images/logo-dark.png"
         alt="Anas Al Dahamsheh — AI Engineer"
         width={2012}
         height={307}
         priority
-        className="hidden h-full w-auto max-h-full object-contain transition-all duration-300 dark:block dark:drop-shadow-[0_0_12px_rgba(0,163,255,0.2)]"
+        className="hidden h-full w-auto max-h-full object-contain transition-all duration-300 dark:block"
       />
       {/* Accessible text for screen readers and automated test assertions */}
       <span className="sr-only">Anas Al Dahamsheh</span>
