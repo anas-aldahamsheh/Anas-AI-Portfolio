@@ -76,7 +76,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       />
 
       {/* Main Content Area */}
-      <div className="mx-auto max-w-[1420px] px-4 pb-16 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10 lg:py-16">
         {/* Main Narrative Card */}
         <FadeIn delay={0.1}>
           <div className="rounded-2xl border border-[#E5EAF2] bg-white/85 p-6 shadow-sm backdrop-blur-md sm:p-8 dark:border-white/[0.08] dark:bg-white/[0.02]">

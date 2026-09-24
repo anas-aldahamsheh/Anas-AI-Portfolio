@@ -191,10 +191,21 @@ export function PageHeroBanner({
 
           <div className="space-y-2">
             {isTitleString ? (
-              <div className="relative inline-block min-h-[1.2em]">
+              <div className="relative inline-grid grid-cols-1 grid-rows-1">
+                {/* Ghost element that holds full dimensions at all times to eliminate layout shifts (browser only) */}
+                {mounted && !isTestEnv && (
+                  <span
+                    aria-hidden="true"
+                    className="invisible col-start-1 row-start-1 font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.18] select-none pointer-events-none"
+                  >
+                    {rawTitle}
+                  </span>
+                )}
+
+                {/* Animated streamed heading overlaid in the exact same grid cell */}
                 <h1
                   aria-label={rawTitle}
-                  className="font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF] leading-[1.18]"
+                  className="col-start-1 row-start-1 font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF] leading-[1.18]"
                 >
                   {mounted && enableTypewriter && !isTestEnv ? (
                     <span className="inline-flex items-baseline">
@@ -220,25 +231,38 @@ export function PageHeroBanner({
             )}
 
             {isSubString ? (
-              <p
-                aria-label={rawSub}
-                className="font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed text-[#6C7893] dark:text-[#9AA8C0] max-w-2xl min-h-[1.5em]"
-              >
-                {mounted && enableTypewriter && !isTestEnv ? (
-                  <span className="inline-flex items-baseline flex-wrap">
-                    <span>{subText}</span>
-                    {cursorPhase === "sub" && (
-                      <span
-                        className="ms-1 inline-block w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)] align-baseline"
-                        style={{ height: "0.8em" }}
-                        aria-hidden="true"
-                      />
-                    )}
+              <div className="relative inline-grid grid-cols-1 grid-rows-1 max-w-2xl">
+                {/* Ghost element that holds full paragraph height at all times (browser only) */}
+                {mounted && !isTestEnv && (
+                  <span
+                    aria-hidden="true"
+                    className="invisible col-start-1 row-start-1 font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed select-none pointer-events-none"
+                  >
+                    {rawSub}
                   </span>
-                ) : (
-                  <span>{rawSub}</span>
                 )}
-              </p>
+
+                {/* Animated streamed subtitle overlaid in the exact same grid cell */}
+                <p
+                  aria-label={rawSub}
+                  className="col-start-1 row-start-1 font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed text-[#6C7893] dark:text-[#9AA8C0]"
+                >
+                  {mounted && enableTypewriter && !isTestEnv ? (
+                    <span className="inline-flex items-baseline flex-wrap">
+                      <span>{subText}</span>
+                      {cursorPhase === "sub" && (
+                        <span
+                          className="ms-1 inline-block w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)] align-baseline"
+                          style={{ height: "0.8em" }}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </span>
+                  ) : (
+                    <span>{rawSub}</span>
+                  )}
+                </p>
+              </div>
             ) : (
               subtitle
             )}

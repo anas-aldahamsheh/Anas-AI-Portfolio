@@ -53,7 +53,7 @@ export default async function EvaluationPage({ params }: EvaluationPageProps) {
         }
       />
 
-      <div className="mx-auto max-w-[1420px] px-4 pb-16 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10 lg:py-16">
         <EvaluationDashboard initialData={initialData} />
       </div>
     </div>

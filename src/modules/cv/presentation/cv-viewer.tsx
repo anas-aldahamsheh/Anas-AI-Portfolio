@@ -139,7 +139,7 @@ export function CvViewer({
       </EditableRegion>
 
       {/* Main Page Body Container */}
-      <div className="mx-auto w-full max-w-[1420px] space-y-10 px-4 py-8 sm:px-6 sm:py-12 lg:px-10">
+      <div className="mx-auto w-full max-w-[1420px] space-y-10 px-4 py-8 sm:px-6 sm:py-12 lg:px-10 lg:py-16">
         <FadeIn delay={0.05}>
           {/* Admin Controls (visible only when admin edit mode is ON) */}
           <CvAdminControls currentCv={cv} versions={versions} />

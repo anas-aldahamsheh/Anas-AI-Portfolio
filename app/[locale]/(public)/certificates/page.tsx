@@ -95,7 +95,7 @@ export default async function CertificatesPage({ params }: CertificatesPageProps
       />
 
       {/* Catalog Grid with Cards & Detail Modal */}
-      <div className="mx-auto max-w-[1420px] px-4 pb-16 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10 lg:py-16">
         <FadeIn delay={0.1}>
           <CertificatesCatalog certificates={certificates} locale={supportedLocale} />
         </FadeIn>

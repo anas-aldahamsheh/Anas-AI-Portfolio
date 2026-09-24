@@ -63,7 +63,7 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
       />
 
       {/* Main Catalog Content Container */}
-      <div className="mx-auto w-full max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10">
+      <div className="mx-auto w-full max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10 lg:py-16">
         <ProjectCatalog
           initialProjects={catalogResult.projects}
           categories={catalogResult.categories}

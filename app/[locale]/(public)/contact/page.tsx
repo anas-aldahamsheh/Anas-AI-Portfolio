@@ -117,7 +117,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
       />
 
       {/* Main Content Area */}
-      <div className="mx-auto max-w-[1420px] px-4 pb-16 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10 lg:py-16">
         {/* Contact Channels Grid */}
         <div className="grid gap-6 sm:grid-cols-2">
           {contactChannels.map((channel, idx) => {

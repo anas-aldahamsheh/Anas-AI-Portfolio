@@ -171,7 +171,7 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
       />
 
       {/* Main Experience Timeline Container */}
-      <div className="mx-auto w-full max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10">
+      <div className="mx-auto w-full max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10 lg:py-16">
         <div className="space-y-10">
           <StaggerContainer className="space-y-8">
             {EXPERIENCES.map((exp) => (
