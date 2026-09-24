@@ -62,7 +62,7 @@ export default async function CertificatesPage({ params }: CertificatesPageProps
         title={heading}
         subtitle={subtitle}
         actions={
-          <div className="flex flex-wrap items-center gap-3">
+          <>
             <Link href={`/${supportedLocale}/cv`} className="btn-action-primary">
               <Download className="h-4 w-4" />
               <span>{isArabic ? "السيرة الذاتية (About & Resume)" : "About & Resume"}</span>
@@ -71,7 +71,7 @@ export default async function CertificatesPage({ params }: CertificatesPageProps
               <span>{isArabic ? "استعراض المشاريع" : "Explore Projects"}</span>
               <ArrowRight className="h-4 w-4 rtl:rotate-180" />
             </Link>
-          </div>
+          </>
         }
       />
 

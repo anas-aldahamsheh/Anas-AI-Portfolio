@@ -191,34 +191,39 @@ export function PageHeroBanner({
 
           <div className="space-y-2">
             {isTitleString ? (
-              <div className="relative inline-block w-full">
+              <div className="relative w-full">
                 {/* 
-                  The heading always renders the exact full target text in the DOM.
-                  Characters are progressively revealed by slicing into visible and invisible spans.
-                  Because the full text with all words and wrap points is always present,
-                  the height, line count, and width are 100% identical and invariant at every millisecond!
+                  Rock-solid dual-lock layout:
+                  1. The anchor element always renders the complete full title in DOM (invisible),
+                     defining the 100% exact final height, line wraps, and width at all times.
+                  2. The typewriter heading is overlaid with absolute inset-0 so it can never push borders or alter layout.
                 */}
+                {!isTestEnv && (
+                  <div
+                    aria-hidden="true"
+                    className="invisible select-none pointer-events-none font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.18]"
+                  >
+                    {rawTitle}
+                  </div>
+                )}
+
                 <h1
                   aria-label={rawTitle}
-                  className="relative font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF] leading-[1.18]"
+                  className={cn(
+                    !isTestEnv ? "absolute inset-0" : "relative",
+                    "font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF] leading-[1.18]"
+                  )}
                 >
                   {mounted && enableTypewriter && !isTestEnv ? (
-                    <span className="relative">
+                    <span>
                       <span>{titleText}</span>
                       {cursorPhase === "title" && (
                         <span
-                          className="relative inline-block w-0 overflow-visible align-baseline pointer-events-none"
+                          className="ms-1.5 inline-block w-[3px] sm:w-[3.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_10px_rgba(79,70,229,0.7)] align-baseline"
+                          style={{ height: "0.82em" }}
                           aria-hidden="true"
-                        >
-                          <span
-                            className="absolute start-1 bottom-[0.12em] w-[3px] sm:w-[3.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_10px_rgba(79,70,229,0.7)]"
-                            style={{ height: "0.82em" }}
-                          />
-                        </span>
+                        />
                       )}
-                      <span className="invisible select-none pointer-events-none" aria-hidden="true">
-                        {rawTitle.slice(titleText.length)}
-                      </span>
                     </span>
                   ) : (
                     <span>{rawTitle}</span>
@@ -233,33 +238,38 @@ export function PageHeroBanner({
             )}
 
             {isSubString ? (
-              <div className="relative inline-block w-full max-w-2xl">
+              <div className="relative w-full max-w-2xl">
                 {/* 
-                  The subtitle always renders the full paragraph text.
-                  Streamed characters are shown, while remaining characters are invisible.
-                  Zero height difference, zero line-wrap bounce, zero jumping!
+                  Rock-solid dual-lock layout for subtitle:
+                  1. Full paragraph is permanently rendered as an invisible <p>, locking exact paragraph height, line-height, and wrapping from millisecond 0.
+                  2. Typewritten paragraph is overlaid with absolute inset-0, so its height can never affect the layout or shift following buttons.
                 */}
+                {!isTestEnv && (
+                  <p
+                    aria-hidden="true"
+                    className="invisible select-none pointer-events-none font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed"
+                  >
+                    {rawSub}
+                  </p>
+                )}
+
                 <p
                   aria-label={rawSub}
-                  className="relative font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed text-[#6C7893] dark:text-[#9AA8C0]"
+                  className={cn(
+                    !isTestEnv ? "absolute inset-0" : "relative",
+                    "font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed text-[#6C7893] dark:text-[#9AA8C0]"
+                  )}
                 >
                   {mounted && enableTypewriter && !isTestEnv ? (
-                    <span className="relative">
+                    <span>
                       <span>{subText}</span>
                       {cursorPhase === "sub" && (
                         <span
-                          className="relative inline-block w-0 overflow-visible align-baseline pointer-events-none"
+                          className="ms-1 inline-block w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)] align-baseline"
+                          style={{ height: "0.8em" }}
                           aria-hidden="true"
-                        >
-                          <span
-                            className="absolute start-1 bottom-[0.14em] w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)]"
-                            style={{ height: "0.8em" }}
-                          />
-                        </span>
+                        />
                       )}
-                      <span className="invisible select-none pointer-events-none" aria-hidden="true">
-                        {rawSub.slice(subText.length)}
-                      </span>
                     </span>
                   ) : (
                     <span>{rawSub}</span>
