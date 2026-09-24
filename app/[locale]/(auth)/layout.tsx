@@ -2,6 +2,10 @@ import Link from "next/link";
 import { BrandLogo } from "@/modules/navigation/presentation/brand-logo";
 import { LanguageSelect } from "@/modules/localization/presentation/language-select";
 import { ThemeToggle } from "@/modules/theme/presentation/theme-toggle";
+import { Footer } from "@/modules/navigation/presentation";
+import { navigationService } from "@/modules/navigation/infrastructure/navigation-service";
+import { socialService } from "@/modules/social/infrastructure/social-service";
+import type { SupportedLocale } from "@/modules/localization/domain/locales";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -10,7 +14,15 @@ interface AuthLayoutProps {
 
 export default async function AuthLayout({ children, params }: AuthLayoutProps) {
   const { locale } = await params;
-  const isArabic = locale === "ar";
+  const supportedLocale = (locale === "en" ? "en" : "ar") as SupportedLocale;
+  const isArabic = supportedLocale === "ar";
+
+  // Fetch footer items and social profiles concurrently, identical to public pages
+  const [footerItems, githubProfile, linkedinProfile] = await Promise.all([
+    navigationService.getNavigationItems("footer", "GUEST"),
+    socialService.getProfile("github", supportedLocale),
+    socialService.getProfile("linkedin", supportedLocale),
+  ]);
 
   return (
     <div className="relative min-h-screen flex flex-col justify-between overflow-x-hidden bg-white text-[#173B6C] transition-colors duration-300 dark:bg-[#07101F] dark:text-[#F4F7FF]">
@@ -49,7 +61,7 @@ export default async function AuthLayout({ children, params }: AuthLayoutProps) 
         <div className="mx-auto flex h-16 max-w-[1420px] items-center justify-between px-4 sm:px-6 lg:px-10">
           {/* Start: Brand Identity */}
           <Link
-            href={`/${locale}`}
+            href={`/${supportedLocale}`}
             className="flex items-center gap-3 transition-opacity hover:opacity-85 text-start shrink-0"
             aria-label={isArabic ? "أنس الدحامشة - الرئيسية" : "Anas Al Dahamsheh - Home"}
           >
@@ -60,19 +72,19 @@ export default async function AuthLayout({ children, params }: AuthLayoutProps) 
           <div className="flex items-center gap-2 sm:gap-2.5">
             {/* 1. Language Toggle (AR / EN) */}
             <LanguageSelect
-              currentLocale={locale}
+              currentLocale={supportedLocale}
               className="h-9 w-9 rounded-full border border-[#E4EAF3] bg-white text-xs font-bold text-[#173B6C] shadow-2xs hover:bg-[#EEF5FF] hover:border-[#D0E2FF] hover:text-[#1E40AF] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-[#E2E8F0] dark:hover:bg-white/[0.08] dark:hover:text-white"
             />
 
             {/* 2. Theme Toggle (Light / Dark) */}
             <ThemeToggle
-              locale={locale}
+              locale={supportedLocale}
               className="h-9 w-9 rounded-full border border-[#E4EAF3] bg-white text-[#173B6C] shadow-2xs hover:bg-[#EEF5FF] hover:border-[#D0E2FF] hover:text-[#1E40AF] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-[#E2E8F0] dark:hover:bg-white/[0.08] dark:hover:text-white"
             />
 
             {/* 3. Return to Portfolio Link */}
             <Link
-              href={`/${locale}`}
+              href={`/${supportedLocale}`}
               className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#E4EAF3] bg-white/90 px-3.5 py-1.5 text-xs font-semibold text-[#173B6C] shadow-2xs transition-all duration-200 hover:bg-[#EEF5FF] hover:border-[#D0E2FF] hover:text-[#1E40AF] dark:border-white/[0.1] dark:bg-white/[0.05] dark:text-[#E2E8F0] dark:hover:bg-white/[0.1] dark:hover:text-white"
             >
               <span>{isArabic ? "المحفظة" : "Portfolio"}</span>
@@ -89,14 +101,13 @@ export default async function AuthLayout({ children, params }: AuthLayoutProps) 
         {children}
       </main>
 
-      {/* Subtle Minimal Footer Note */}
-      <footer className="relative z-10 border-t border-[#E5EAF2]/60 py-4 text-center text-xs text-[#6C7893] transition-colors duration-300 dark:border-white/[0.06] dark:text-[#9AA8C0]/80">
-        <p>
-          {isArabic
-            ? "© أنس الدحامشة — مهندس ذكاء اصطناعي ومطور برمجيات"
-            : "© Anas Al Dahamsheh — AI Engineer & Full-Stack Developer"}
-        </p>
-      </footer>
+      {/* Full Shared Footer matching all other pages */}
+      <Footer
+        locale={supportedLocale}
+        items={footerItems}
+        githubProfile={githubProfile}
+        linkedinProfile={linkedinProfile}
+      />
     </div>
   );
 }
