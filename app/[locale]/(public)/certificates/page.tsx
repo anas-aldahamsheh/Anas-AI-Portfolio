@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Award, ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion";
 import { certificateService } from "@/modules/certificates/infrastructure/certificate-service";
@@ -60,12 +60,6 @@ export default async function CertificatesPage({ params }: CertificatesPageProps
     <div className="w-full">
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
-        badge={
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
-            <Award className="h-3.5 w-3.5" />
-            <span>{isArabic ? "الاعتمادات والدورات التخصصية" : "Credentials & Specialized Learning"}</span>
-          </div>
-        }
         title={heading}
         subtitle={subtitle}
         actions={

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { User, Download, Mail, Terminal, Cpu, Shield, Sparkles } from "lucide-react";
+import { Download, Mail, Terminal, Cpu, Shield, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion";
 import { PageHeroBanner } from "@/components/layout/page-hero-banner";
@@ -61,12 +61,6 @@ export default async function AboutPage({ params }: AboutPageProps) {
     <div className="w-full">
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
-        badge={
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
-            <User className="h-3.5 w-3.5" />
-            <span>{isAr ? "الملف التعريفي والهندسي" : "Engineering Profile"}</span>
-          </div>
-        }
         title={isAr ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
         subtitle={
           isAr

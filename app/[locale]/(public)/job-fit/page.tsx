@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Briefcase } from "lucide-react";
 import { JobFitAnalyzer } from "@/modules/job-fit/presentation";
 import { localizedTextService } from "@/modules/localization/infrastructure/localized-text-service";
 import { PageHeroBanner } from "@/components/layout/page-hero-banner";
@@ -37,12 +36,6 @@ export default async function JobFitPage({ params }: JobFitPageProps) {
     <div className="w-full">
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
-        badge={
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
-            <Briefcase className="h-3.5 w-3.5" />
-            <span>{isAr ? "مشروع تطبيقي وأداة مهندسة" : "Applied Engineering Tool"}</span>
-          </div>
-        }
         title={isAr ? "محلل المواءمة الوظيفية ونقاط التوافق" : "Job Fit & ATS Alignment Engine"}
         subtitle={
           isAr

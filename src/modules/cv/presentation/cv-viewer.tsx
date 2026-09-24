@@ -80,14 +80,6 @@ export function CvViewer({
         }}
       >
         <PageHeroBanner
-          badge={
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
-              <User className="h-3.5 w-3.5" />
-              <span>{activeAbout.badge || (isAr ? "نبذة والسيرة الذاتية" : "About & Resume")}</span>
-              <span className="text-[#2F6FED]/40 dark:text-indigo-400/40">•</span>
-              <span>{t("cv.version_label", { version: String(cv.versionNumber) }) || `v${cv.versionNumber}`}</span>
-            </div>
-          }
           title={t("cv.title") || (isAr ? "نبذة والسيرة الذاتية" : "About & Resume")}
           subtitle={
             t("cv.subtitle") ||
@@ -97,11 +89,15 @@ export function CvViewer({
           }
           meta={
             <div className="flex items-center gap-3 text-xs font-medium text-[#6C7893] dark:text-[#9AA8C0]">
+              <span>{t("cv.version_label", { version: String(cv.versionNumber) }) || `v${cv.versionNumber}`}</span>
               {formattedDate && (
-                <span>
-                  {t("cv.published_date", { date: formattedDate }) ||
-                    (isAr ? `تاريخ النشر: ${formattedDate}` : `Published: ${formattedDate}`)}
-                </span>
+                <>
+                  <span>•</span>
+                  <span>
+                    {t("cv.published_date", { date: formattedDate }) ||
+                      (isAr ? `تاريخ النشر: ${formattedDate}` : `Published: ${formattedDate}`)}
+                  </span>
+                </>
               )}
               <span>•</span>
               <span>

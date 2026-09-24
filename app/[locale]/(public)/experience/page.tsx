@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Briefcase, ArrowRight, CheckCircle2, Download, Mail } from "lucide-react";
+import { ArrowRight, CheckCircle2, Download, Mail } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/motion";
 import { PageHeroBanner } from "@/components/layout/page-hero-banner";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
@@ -138,12 +138,6 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
     <div className="w-full">
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
-        badge={
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3.5 py-1 text-xs font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
-            <Briefcase className="h-3.5 w-3.5" />
-            <span>{isAr ? "المسيرة المهنية" : "Career Track Record"}</span>
-          </div>
-        }
         title={isAr ? "الخبرة والإنجازات الهندسية" : "Engineering Experience"}
         subtitle={
           isAr
