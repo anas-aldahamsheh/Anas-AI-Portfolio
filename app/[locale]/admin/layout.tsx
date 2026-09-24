@@ -96,11 +96,19 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
           </nav>
         </div>
 
-        <div className="border-border mt-6 border-t pt-6">
-          <div className="text-muted-foreground mb-2 truncate text-xs">{session.user.email}</div>
+        <div className="border-border mt-6 border-t pt-4 space-y-3">
+          <Link
+            href={`/${locale}?editMode=true`}
+            target="_blank"
+            className="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-indigo-700 transition-colors"
+          >
+            <span>✏️</span>
+            <span>{isArabic ? "وضع التعديل البصري للموقع" : "Live Visual Edit Mode"}</span>
+          </Link>
+          <div className="text-muted-foreground truncate text-xs">{session.user.email}</div>
           <Link
             href={`/${locale}`}
-            className="text-primary text-xs underline underline-offset-4 transition-opacity hover:opacity-80"
+            className="text-primary text-xs underline underline-offset-4 transition-opacity hover:opacity-80 block"
           >
             {isArabic ? "← العودة للموقع العام" : "← Public Site"}
           </Link>

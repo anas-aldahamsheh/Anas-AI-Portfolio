@@ -5,6 +5,7 @@ import { FadeIn } from "@/components/motion";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 import { DEVELOPER_PROFILE } from "@/lib/config/developer-profile";
 import { PageHeroBanner } from "@/components/layout/page-hero-banner";
+import { EditableText } from "@/modules/admin/presentation";
 
 interface ContactPageProps {
   params: Promise<{ locale: string }>;
@@ -56,6 +57,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
 
   const contactChannels = [
     {
+      id: "email",
       title: isAr ? "البريد الإلكتروني" : "Email",
       value: DEVELOPER_PROFILE.email.address,
       href: DEVELOPER_PROFILE.email.href,
@@ -66,6 +68,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
       actionLabel: isAr ? "إرسال بريد" : "Send Email",
     },
     {
+      id: "phone",
       title: isAr ? "رقم الهاتف والواتساب" : "Direct Phone / WhatsApp",
       value: DEVELOPER_PROFILE.phone.display,
       href: DEVELOPER_PROFILE.phone.href,
@@ -76,6 +79,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
       actionLabel: isAr ? "اتصال فوري" : "Call Directly",
     },
     {
+      id: "linkedin",
       title: "LinkedIn",
       value: DEVELOPER_PROFILE.linkedin.display,
       href: DEVELOPER_PROFILE.linkedin.url,
@@ -86,6 +90,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
       actionLabel: isAr ? "زيارة الملف" : "View Profile",
     },
     {
+      id: "github",
       title: "GitHub",
       value: DEVELOPER_PROFILE.github.display,
       href: DEVELOPER_PROFILE.github.url,
@@ -102,11 +107,13 @@ export default async function ContactPage({ params }: ContactPageProps) {
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
         title={isAr ? "تواصل معي مباشرة" : "Let's Connect"}
+        titleKey="contact.hero.title"
         subtitle={
           isAr
             ? "متاح حالياً لفرص العمل كمهندس ذكاء اصطناعي (AI Engineer)، وأدوار هندسة البرمجيات السحابية، والتعاون في بناء الأنظمة الذكية."
             : "Currently open for AI Engineer positions, systems engineering roles, and high-impact technical collaborations."
         }
+        subtitleKey="contact.hero.subtitle"
       />
 
       {/* Main Content Area */}
@@ -127,7 +134,10 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     </div>
                     <div>
                       <h2 className="text-base font-bold text-[#173B6C] dark:text-[#F4F7FF]">
-                        {channel.title}
+                        <EditableText
+                          textKey={`contact.channel.${channel.id}.title`}
+                          fallback={channel.title}
+                        />
                       </h2>
                       <p className="font-mono text-xs font-semibold text-[#2F6FED] dark:text-indigo-300">
                         {channel.value}
@@ -135,7 +145,11 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     </div>
                   </div>
                   <p className="mt-3.5 text-xs leading-relaxed text-[#6C7893] sm:text-sm dark:text-[#9AA8C0]">
-                    {channel.description}
+                    <EditableText
+                      textKey={`contact.channel.${channel.id}.desc`}
+                      fallback={channel.description}
+                      multiline
+                    />
                   </p>
                 </div>
 
@@ -163,25 +177,40 @@ export default async function ContactPage({ params }: ContactPageProps) {
                 <MessageSquare className="h-5 w-5" />
               </div>
               <h3 className="text-lg font-bold text-[#173B6C] dark:text-[#F4F7FF]">
-                {isAr
-                  ? "هل لديك استفسار محدد لمسؤولي التوظيف؟"
-                  : "Have a specific recruiter question?"}
+                <EditableText
+                  textKey="contact.assistant.title"
+                  fallback={
+                    isAr
+                      ? "هل لديك استفسار محدد لمسؤولي التوظيف؟"
+                      : "Have a specific recruiter question?"
+                  }
+                />
               </h3>
             </div>
             <p className="mt-3 max-w-2xl text-xs leading-relaxed text-[#6C7893] sm:text-sm dark:text-[#9AA8C0]">
-              {isAr
-                ? "يمكنك استخدام المساعد الذكي المعتمد على الـ RAG والمدرّب على بيانات أنس الموثقة للإجابة فوراً عن أي تساؤل يتعلق بالخبرات، الأكواد، أو المهارات."
-                : "You can also ask the conversational RAG assistant anytime to get immediate, evidence-grounded answers about Anas's qualifications, architecture decisions, and code."}
+              <EditableText
+                textKey="contact.assistant.desc"
+                multiline
+                fallback={
+                  isAr
+                    ? "يمكنك استخدام المساعد الذكي المعتمد على الـ RAG والمدرّب على بيانات أنس الموثقة للإجابة فوراً عن أي تساؤل يتعلق بالخبرات، الأكواد، أو المهارات."
+                    : "You can also ask the conversational RAG assistant anytime to get immediate, evidence-grounded answers about Anas's qualifications, architecture decisions, and code."
+                }
+              />
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Link href={`/${supportedLocale}?chat=open`} className="btn-action-primary !h-10 !px-5 !text-xs">
-                <span>
-                  {isAr ? "فتح المساعد الذكي (Ask About Anas)" : "Ask About Anas (RAG Assistant)"}
-                </span>
+                <EditableText
+                  textKey="contact.assistant.chat"
+                  fallback={isAr ? "فتح المساعد الذكي (Ask About Anas)" : "Ask About Anas (RAG Assistant)"}
+                />
               </Link>
               <Link href={`/${supportedLocale}/cv`} className="btn-action-secondary !h-10 !px-5 !text-xs">
                 <Download className="h-4 w-4" />
-                <span>{isAr ? "السيرة الذاتية (PDF)" : "Download Resume (PDF)"}</span>
+                <EditableText
+                  textKey="contact.assistant.cv"
+                  fallback={isAr ? "السيرة الذاتية (PDF)" : "Download Resume (PDF)"}
+                />
               </Link>
             </div>
           </div>

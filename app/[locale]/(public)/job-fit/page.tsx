@@ -37,11 +37,13 @@ export default async function JobFitPage({ params }: JobFitPageProps) {
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
         title={isAr ? "محلل المواءمة الوظيفية ونقاط التوافق" : "Job Fit & ATS Alignment Engine"}
+        titleKey="jobfit.title"
         subtitle={
           isAr
             ? "أداة هندسية صممها وبناها أنس الدحامشة: تدمج التحليل الدلالي لمواصفات الوظيفة مع خوارزميات تقييم قطعية لمطابقة المتطلبات بدقة مع الأدلة والمشاريع البرمجية الحقيقية."
             : "An engineering tool built by Anas Al Dahamsheh combining LLM semantic requirement extraction with deterministic scoring algorithms to match candidate achievements against job descriptions."
         }
+        subtitleKey="jobfit.subtitle"
       />
 
       <div className="mx-auto max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10 lg:py-16">

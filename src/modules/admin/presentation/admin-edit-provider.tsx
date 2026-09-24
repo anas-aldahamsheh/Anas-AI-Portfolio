@@ -44,15 +44,53 @@ export function AdminEditProvider({
     [],
   );
 
+  // Synchronize edit mode from localStorage or URL parameter on mount
+  React.useEffect(() => {
+    if (!isAdmin) return;
+    try {
+      if (typeof window !== "undefined") {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("editMode") === "true") {
+          setIsEditMode(true);
+          localStorage.setItem("admin_inline_edit_mode", "true");
+          return;
+        }
+        const saved = localStorage.getItem("admin_inline_edit_mode");
+        if (saved === "true") {
+          setIsEditMode(true);
+        }
+      }
+    } catch {
+      // Ignore security/storage sandbox errors
+    }
+  }, [isAdmin]);
+
   const toggleEditMode = useCallback(() => {
     if (!isAdmin) return;
-    setIsEditMode((prev) => !prev);
+    setIsEditMode((prev) => {
+      const next = !prev;
+      try {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("admin_inline_edit_mode", String(next));
+        }
+      } catch {
+        // Ignore
+      }
+      return next;
+    });
   }, [isAdmin]);
 
   const setEditMode = useCallback(
     (enabled: boolean) => {
       if (!isAdmin) return;
       setIsEditMode(enabled);
+      try {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("admin_inline_edit_mode", String(enabled));
+        }
+      } catch {
+        // Ignore
+      }
     },
     [isAdmin],
   );

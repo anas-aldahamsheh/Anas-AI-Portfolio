@@ -37,8 +37,8 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
   ]);
 
   return (
-    <LocalizationProvider locale={supportedLocale} dictionary={dictionary}>
-      <AdminEditProvider isAdmin={isAdmin}>
+    <AdminEditProvider isAdmin={isAdmin}>
+      <LocalizationProvider locale={supportedLocale} dictionary={dictionary}>
         <div className="bg-background text-foreground flex min-h-screen flex-col dark:bg-[#07101F] transition-colors duration-300">
           <Navbar
             locale={supportedLocale}
@@ -70,7 +70,7 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
         <AdminToolbar locale={supportedLocale} />
         <ContextualEditorDialog />
         <ChatDrawer />
-      </AdminEditProvider>
-    </LocalizationProvider>
+      </LocalizationProvider>
+    </AdminEditProvider>
   );
 }

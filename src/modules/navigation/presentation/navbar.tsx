@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import type { SocialProfile } from "@/modules/social/domain/types";
 import { UserNav } from "@/modules/auth/presentation/user-nav";
 import { BrandLogo } from "./brand-logo";
+import { EditableText } from "@/modules/admin/presentation";
 
 export interface NavbarProps {
   locale: string;
@@ -131,7 +132,9 @@ export function Navbar({
                       : "text-[#6C7893] hover:text-[#173B6C] hover:bg-neutral-100/70 dark:text-[#9AA8C0] dark:hover:text-[#F6F8FC] dark:hover:bg-white/[0.06]",
                   )}
                 >
-                  <span>{label}</span>
+                  <EditableText textKey={item.labelKey} fallback={label}>
+                    {label}
+                  </EditableText>
                   {item.badge && (
                     <span className="ms-1 px-1.5 py-0 text-[10px] rounded-full bg-neutral-100 text-neutral-600 dark:bg-white/[0.08] dark:text-neutral-300">
                       {item.badge}
@@ -223,7 +226,9 @@ export function Navbar({
                           : "text-[#6C7893] hover:bg-neutral-100/80 hover:text-[#173B6C] dark:text-[#9AA8C0] dark:hover:bg-white/[0.06] dark:hover:text-[#F6F8FC]",
                       )}
                     >
-                      <span>{label}</span>
+                      <EditableText textKey={item.labelKey} fallback={label}>
+                        {label}
+                      </EditableText>
                       {item.badge && (
                         <span className="ms-1 px-1.5 py-0 text-[10px] rounded-full bg-neutral-100 text-neutral-600 dark:bg-white/[0.08] dark:text-neutral-300">
                           {item.badge}

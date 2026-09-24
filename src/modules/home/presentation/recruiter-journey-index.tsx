@@ -10,7 +10,10 @@ import {
   Mail,
   ArrowRight,
   ArrowLeft,
+  Pencil,
 } from "lucide-react";
+import { useAdminEdit, EditableText } from "@/modules/admin/presentation";
+import { useTranslation } from "@/modules/localization/presentation/localization-provider";
 
 export interface RecruiterJourneyIndexProps {
   locale: string;
@@ -20,12 +23,20 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
   const isArabic = locale === "ar";
   const ArrowIcon = isArabic ? ArrowLeft : ArrowRight;
   const heroRef = useRef<HTMLElement>(null);
+  const { isAdmin, isEditMode, openEditor } = useAdminEdit();
+  const { dictionary } = useTranslation();
 
-  const fullTitle = isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh";
-  const fullSub1 = isArabic ? "مهندس ذكاء اصطناعي" : "AI Engineer";
-  const fullSub2 = isArabic
-    ? "ومطور برمجيات شامل (Full-Stack)"
-    : "& Full-Stack Developer";
+  const fullTitle =
+    dictionary["home.hero.title"] ||
+    (isArabic ? "أنس الدحامشة" : "Anas Al Dahamsheh");
+  const fullSub1 =
+    dictionary["home.hero.sub1"] ||
+    (isArabic ? "مهندس ذكاء اصطناعي" : "AI Engineer");
+  const fullSub2 =
+    dictionary["home.hero.sub2"] ||
+    (isArabic
+      ? "ومطور برمجيات شامل (Full-Stack)"
+      : "& Full-Stack Developer");
 
   const isTestEnv =
     typeof process !== "undefined" && process.env.NODE_ENV === "test";
@@ -301,6 +312,28 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
             {isTitleDone && (
               <div className="hero-name-shimmer-sweep pointer-events-none" aria-hidden="true" />
             )}
+            {isAdmin && isEditMode && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  openEditor({
+                    entityType: "ui_text",
+                    entityId: "home.hero.title",
+                    fieldOrBlockId: "value",
+                    locale: isArabic ? "ar" : "en",
+                    title: "Hero Title (home.hero.title)",
+                    initialData: fullTitle,
+                  });
+                }}
+                aria-label="Edit Hero Title"
+                className="absolute -top-3.5 end-0 z-30 inline-flex items-center gap-1 rounded-md bg-[#4F46E5] px-2 py-0.5 text-xs font-semibold text-white shadow-md hover:bg-[#4338CA] transition-all cursor-pointer opacity-85 hover:opacity-100"
+              >
+                <Pencil className="h-3 w-3" />
+                <span>Edit Title</span>
+              </button>
+            )}
           </div>
 
           <div className="relative inline-block w-full max-w-2xl mt-3 sm:mt-4">
@@ -355,6 +388,50 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
                 </>
               )}
             </p>
+            {isAdmin && isEditMode && (
+              <div className="absolute -top-3.5 end-0 z-30 flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    openEditor({
+                      entityType: "ui_text",
+                      entityId: "home.hero.sub1",
+                      fieldOrBlockId: "value",
+                      locale: isArabic ? "ar" : "en",
+                      title: "Hero Subtitle 1 (home.hero.sub1)",
+                      initialData: fullSub1,
+                    });
+                  }}
+                  aria-label="Edit Subtitle 1"
+                  className="inline-flex items-center gap-1 rounded-md bg-[#4F46E5] px-2 py-0.5 text-xs font-semibold text-white shadow-md hover:bg-[#4338CA] transition-all cursor-pointer opacity-85 hover:opacity-100"
+                >
+                  <Pencil className="h-3 w-3" />
+                  <span>Edit Subtitle 1</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    openEditor({
+                      entityType: "ui_text",
+                      entityId: "home.hero.sub2",
+                      fieldOrBlockId: "value",
+                      locale: isArabic ? "ar" : "en",
+                      title: "Hero Subtitle 2 (home.hero.sub2)",
+                      initialData: fullSub2,
+                    });
+                  }}
+                  aria-label="Edit Subtitle 2"
+                  className="inline-flex items-center gap-1 rounded-md bg-[#0891B2] px-2 py-0.5 text-xs font-semibold text-white shadow-md hover:bg-[#0e7490] transition-all cursor-pointer opacity-85 hover:opacity-100"
+                >
+                  <Pencil className="h-3 w-3" />
+                  <span>Edit Subtitle 2</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -392,15 +469,25 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
                   {/* ZONE 2: CONTENT (Category, Headline, Description) */}
                   <div className="space-y-1.5 flex-1 min-w-0">
                     <div className="text-xs font-medium uppercase tracking-wider text-[#6C7893] dark:text-[#9AA8C0]">
-                      {item.category}
+                      <EditableText
+                        textKey={`home.section.${item.id}.category`}
+                        fallback={item.category}
+                      />
                     </div>
 
                     <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#173B6C] dark:text-[#F6F8FC]">
-                      {item.title}
+                      <EditableText
+                        textKey={`home.section.${item.id}.title`}
+                        fallback={item.title}
+                      />
                     </h2>
 
                     <p className="text-sm sm:text-[15px] font-normal leading-relaxed text-[#6C7893] dark:text-[#9AA8C0] max-w-2xl lg:max-w-3xl">
-                      {item.description}
+                      <EditableText
+                        textKey={`home.section.${item.id}.description`}
+                        fallback={item.description}
+                        multiline
+                      />
                     </p>
                   </div>
                 </div>
@@ -411,7 +498,10 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
                     href={item.href}
                     className="inline-flex h-11 sm:h-12 w-[220px] sm:w-[235px] items-center justify-center gap-2 rounded-full px-4 text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#EEF5FF] text-[#2F6FED] border border-[#D0E2FF] hover:bg-[#E0EEFF] shadow-2xs hover:shadow-xs dark:bg-white/[0.04] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.08] dark:hover:border-indigo-500/40 dark:hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2F6FED]"
                   >
-                    <span>{item.cta}</span>
+                    <EditableText
+                      textKey={`home.section.${item.id}.cta`}
+                      fallback={item.cta}
+                    />
                     <ArrowIcon className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
                   </Link>
                 </div>

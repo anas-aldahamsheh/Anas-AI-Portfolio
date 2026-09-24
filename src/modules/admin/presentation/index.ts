@@ -4,6 +4,8 @@ export { AdminToolbar } from "./admin-toolbar";
 export type { AdminToolbarProps } from "./admin-toolbar";
 export { EditableRegion } from "./editable-region";
 export type { EditableRegionProps } from "./editable-region";
+export { EditableText } from "./editable-text";
+export type { EditableTextProps } from "./editable-text";
 export { ContextualEditorDialog } from "./contextual-editor-dialog";
 export { AiRegistryManager } from "./ai-registry-manager";
 export type { AiRegistryManagerProps } from "./ai-registry-manager";

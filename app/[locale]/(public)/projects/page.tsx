@@ -52,7 +52,9 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
         title={heading}
+        titleKey="projects.catalog.title"
         subtitle={subtitle}
+        subtitleKey="projects.catalog.description"
       />
 
       {/* Main Catalog Content Container */}

@@ -39,11 +39,13 @@ export default async function EvaluationPage({ params }: EvaluationPageProps) {
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
         title={isAr ? "بيئة التقييم المعياري للذكاء الاصطناعي" : "AI Benchmark & Quality Evaluation"}
+        titleKey="eval.title"
         subtitle={
           isAr
             ? "بيئة تقييم قطعية صممها وبناها أنس الدحامشة لقياس دقة الاسترجاع (Retrieval Accuracy)، مصداقية الإسناد (Grounding Fidelity)، التكافؤ ثنائي اللغة، ومراقبة زمن الاستجابة P95 في بيئة إنتاجية حقيقية."
             : "A deterministic evaluation environment built by Anas Al Dahamsheh to benchmark retrieval quality, grounding fidelity, bilingual consistency, and latency under production workloads."
         }
+        subtitleKey="eval.subtitle"
       />
 
       <div className="mx-auto max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10 lg:py-16">

@@ -6,6 +6,7 @@ import { certificateService } from "@/modules/certificates/infrastructure/certif
 import { CertificatesCatalog } from "@/modules/certificates/presentation";
 import { localizedTextService } from "@/modules/localization/infrastructure/localized-text-service";
 import { PageHeroBanner } from "@/components/layout/page-hero-banner";
+import { EditableText } from "@/modules/admin/presentation";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 
 interface CertificatesPageProps {
@@ -60,15 +61,23 @@ export default async function CertificatesPage({ params }: CertificatesPageProps
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
         title={heading}
+        titleKey="certificates.catalog.title"
         subtitle={subtitle}
+        subtitleKey="certificates.catalog.subtitle"
         actions={
           <>
             <Link href={`/${supportedLocale}/cv`} className="btn-action-primary">
               <Download className="h-4 w-4" />
-              <span>{isArabic ? "السيرة الذاتية (About & Resume)" : "About & Resume"}</span>
+              <EditableText
+                textKey="certificates.actions.cv"
+                fallback={isArabic ? "السيرة الذاتية (About & Resume)" : "About & Resume"}
+              />
             </Link>
             <Link href={`/${supportedLocale}/projects`} className="btn-action-secondary">
-              <span>{isArabic ? "استعراض المشاريع" : "Explore Projects"}</span>
+              <EditableText
+                textKey="certificates.actions.projects"
+                fallback={isArabic ? "استعراض المشاريع" : "Explore Projects"}
+              />
               <ArrowRight className="h-4 w-4 rtl:rotate-180" />
             </Link>
           </>

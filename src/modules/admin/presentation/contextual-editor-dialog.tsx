@@ -144,20 +144,39 @@ function ContextualEditorForm({ activeEditableRef, onClose }: ContextualEditorFo
 
       <form onSubmit={handleSubmit} className="mt-4 space-y-4">
         <div className="space-y-1.5">
-          <label
-            htmlFor="inline-edit-field"
-            className="text-xs font-medium text-neutral-700 dark:text-neutral-300"
-          >
-            Content
-          </label>
-          <Input
-            id="inline-edit-field"
-            value={textValue}
-            onChange={(e) => setTextValue(e.target.value)}
-            placeholder="Enter updated content..."
-            required
-            autoFocus
-          />
+          <div className="flex items-center justify-between">
+            <label
+              htmlFor="inline-edit-field"
+              className="text-xs font-semibold text-neutral-700 dark:text-neutral-300"
+            >
+              Content Text / المحتوى
+            </label>
+            <span className="text-[10px] text-neutral-400 font-mono">
+              {textValue.length} chars
+            </span>
+          </div>
+
+          {activeEditableRef.multiline || textValue.length > 60 || textValue.includes("\n") ? (
+            <textarea
+              id="inline-edit-field"
+              value={textValue}
+              onChange={(e) => setTextValue(e.target.value)}
+              placeholder="Enter updated content..."
+              required
+              autoFocus
+              rows={5}
+              className="w-full rounded-lg border border-neutral-300 bg-white p-3 text-sm leading-relaxed text-neutral-900 shadow-xs focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
+            />
+          ) : (
+            <Input
+              id="inline-edit-field"
+              value={textValue}
+              onChange={(e) => setTextValue(e.target.value)}
+              placeholder="Enter updated content..."
+              required
+              autoFocus
+            />
+          )}
         </div>
 
         {activeEditableRef.entityType === "section" && (

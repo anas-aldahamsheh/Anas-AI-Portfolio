@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, Download, Mail } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/motion";
 import { PageHeroBanner } from "@/components/layout/page-hero-banner";
+import { EditableText } from "@/modules/admin/presentation";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 
 interface ExperienceItem {
@@ -139,11 +140,13 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
         title={isAr ? "الخبرة والإنجازات الهندسية" : "Engineering Experience"}
+        titleKey="experience.hero.title"
         subtitle={
           isAr
             ? "سجل موثق من الإنجاز العملي في هندسة أنظمة الذكاء الاصطناعي، خطوط أنابيب RAG، والبرمجيات عالية الأداء والاعتمادية."
             : "A focused track record of building production AI systems, evaluation pipelines, and high-performance, resilient software."
         }
+        subtitleKey="experience.hero.subtitle"
         actions={
           <>
             <Link
@@ -151,14 +154,20 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
               className="btn-action-primary"
             >
               <Download className="h-4 w-4" />
-              <span>{isAr ? "تحميل السيرة الذاتية (PDF)" : "Download Resume (PDF)"}</span>
+              <EditableText
+                textKey="experience.actions.cv"
+                fallback={isAr ? "تحميل السيرة الذاتية (PDF)" : "Download Resume (PDF)"}
+              />
             </Link>
             <Link
               href={`/${supportedLocale}/contact`}
               className="btn-action-secondary"
             >
               <Mail className="h-4 w-4" />
-              <span>{isAr ? "تواصل معي" : "Get in Touch"}</span>
+              <EditableText
+                textKey="experience.actions.contact"
+                fallback={isAr ? "تواصل معي" : "Get in Touch"}
+              />
             </Link>
           </>
         }
@@ -175,7 +184,10 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
                   <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-baseline">
                     <div className="space-y-1">
                       <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF]">
-                        {isAr ? exp.role.ar : exp.role.en}
+                        <EditableText
+                          textKey={`experience.${exp.id}.role`}
+                          fallback={isAr ? exp.role.ar : exp.role.en}
+                        />
                       </h2>
                       <p className="text-xs font-semibold text-[#2F6FED] sm:text-sm dark:text-indigo-400">
                         {isAr ? exp.company.ar : exp.company.en} •{" "}
@@ -189,13 +201,20 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
 
                   {/* Summary */}
                   <p className="mt-4 text-xs sm:text-sm leading-relaxed text-[#6C7893] dark:text-[#9AA8C0]">
-                    {isAr ? exp.summary.ar : exp.summary.en}
+                    <EditableText
+                      textKey={`experience.${exp.id}.summary`}
+                      fallback={isAr ? exp.summary.ar : exp.summary.en}
+                      multiline
+                    />
                   </p>
 
                   {/* Measurable Achievements */}
                   <div className="mt-5 space-y-2.5">
                     <h3 className="text-xs font-bold tracking-wider text-[#173B6C]/80 uppercase dark:text-indigo-300/90">
-                      {isAr ? "أبرز الإنجازات والنتائج" : "Key Outcomes & Impact"}
+                      <EditableText
+                        textKey="experience.outcomes.title"
+                        fallback={isAr ? "أبرز الإنجازات والنتائج" : "Key Outcomes & Impact"}
+                      />
                     </h3>
                     <ul className="space-y-2 text-xs sm:text-sm">
                       {(isAr ? exp.achievements.ar : exp.achievements.en).map((achievement, idx) => (
@@ -232,14 +251,25 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
           <div className="mt-14 flex flex-col items-center justify-between gap-6 rounded-2xl border border-[#E5EAF2] bg-gradient-to-r from-[#F8FAFF] via-white to-[#F3EEFE]/50 p-6 sm:p-8 shadow-xs backdrop-blur-md transition-all hover:border-[#D0E2FF] hover:shadow-md sm:flex-row dark:border-white/[0.08] dark:bg-gradient-to-r dark:from-white/[0.03] dark:via-white/[0.01] dark:to-indigo-950/20">
             <div className="text-start space-y-1">
               <h3 className="text-base sm:text-lg font-bold text-[#173B6C] dark:text-[#F4F7FF]">
-                {isAr
-                  ? "هل تبحث عن مهندس ذكاء اصطناعي لفريقك؟"
-                  : "Looking for an AI Engineer to join your team?"}
+                <EditableText
+                  textKey="experience.cta.title"
+                  fallback={
+                    isAr
+                      ? "هل تبحث عن مهندس ذكاء اصطناعي لفريقك؟"
+                      : "Looking for an AI Engineer to join your team?"
+                  }
+                />
               </h3>
               <p className="text-xs sm:text-sm text-[#6C7893] dark:text-[#9AA8C0] max-w-xl">
-                {isAr
-                  ? "يسعدني مناقشة كيف يمكن لخبراتي في أنظمة RAG، نماذج اللغات الكبيرة، وهندسة البرمجيات أن تضيف قيمة حقيقية لمشاريعكم."
-                  : "I'd be glad to discuss how my expertise in RAG architectures, LLM evaluation, and full-stack systems can deliver value to your engineering team."}
+                <EditableText
+                  textKey="experience.cta.desc"
+                  multiline
+                  fallback={
+                    isAr
+                      ? "يسعدني مناقشة كيف يمكن لخبراتي في أنظمة RAG، نماذج اللغات الكبيرة، وهندسة البرمجيات أن تضيف قيمة حقيقية لمشاريعكم."
+                      : "I'd be glad to discuss how my expertise in RAG architectures, LLM evaluation, and full-stack systems can deliver value to your engineering team."
+                  }
+                />
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-3">
@@ -247,13 +277,19 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
                 href={`/${supportedLocale}/projects`}
                 className="inline-flex h-10 items-center justify-center gap-2 rounded-full px-4 text-xs sm:text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-white text-[#173B6C] border border-[#E5EAF2] hover:bg-neutral-50 shadow-2xs dark:bg-white/[0.06] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.1]"
               >
-                <span>{isAr ? "استكشف المشاريع" : "View Projects"}</span>
+                <EditableText
+                  textKey="experience.cta.projects"
+                  fallback={isAr ? "استكشف المشاريع" : "View Projects"}
+                />
               </Link>
               <Link
                 href={`/${supportedLocale}/contact`}
                 className="inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-xs sm:text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#EEF5FF] text-[#2F6FED] border border-[#D0E2FF] hover:bg-[#E0EEFF] shadow-2xs hover:shadow-xs dark:bg-white/[0.04] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.08]"
               >
-                <span>{isAr ? "تواصل معي الآن" : "Let's Connect"}</span>
+                <EditableText
+                  textKey="experience.cta.contact"
+                  fallback={isAr ? "تواصل معي الآن" : "Let's Connect"}
+                />
                 <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
               </Link>
             </div>

@@ -5,6 +5,7 @@ import { Phone } from "lucide-react";
 import type { NavigationItem } from "../domain/types";
 import type { SocialProfile } from "@/modules/social/domain/types";
 import { DEVELOPER_PROFILE } from "@/lib/config/developer-profile";
+import { EditableText } from "@/modules/admin/presentation";
 
 export interface FooterProps {
   locale?: string;
@@ -81,23 +82,38 @@ export function Footer({
           <div className="space-y-3">
             <div>
               <h3 className="text-base font-bold tracking-tight text-[#173B6C] dark:text-[#F6F8FC]">
-                {brandTitle || (isArabic ? DEVELOPER_PROFILE.fullName.ar : DEVELOPER_PROFILE.fullName.en)}
+                <EditableText
+                  textKey="footer.brand.name"
+                  fallback={brandTitle || (isArabic ? DEVELOPER_PROFILE.fullName.ar : DEVELOPER_PROFILE.fullName.en)}
+                />
               </h3>
               <p className="text-xs font-semibold text-[#2F6FED] dark:text-indigo-400 mt-1">
-                {isArabic ? DEVELOPER_PROFILE.headline.ar : DEVELOPER_PROFILE.headline.en}
+                <EditableText
+                  textKey="footer.brand.headline"
+                  fallback={isArabic ? DEVELOPER_PROFILE.headline.ar : DEVELOPER_PROFILE.headline.en}
+                />
               </p>
             </div>
             <p className="text-xs leading-relaxed text-[#6C7893] dark:text-[#9AA8C0] max-w-sm">
-              {isArabic
-                ? "مهندس برمجيات متخصص في بناء وتطوير حلول الذكاء الاصطناعي التوليدي، أنظمة RAG المتقدمة، وتطبيقات الويب الإنتاجية عالية الأداء والقابلة للتوسع."
-                : "Specialized in architecting production-grade AI systems, advanced RAG architectures, and resilient, high-performance web platforms."}
+              <EditableText
+                textKey="footer.brand.description"
+                multiline
+                fallback={
+                  isArabic
+                    ? "مهندس برمجيات متخصص في بناء وتطوير حلول الذكاء الاصطناعي التوليدي، أنظمة RAG المتقدمة، وتطبيقات الويب الإنتاجية عالية الأداء والقابلة للتوسع."
+                    : "Specialized in architecting production-grade AI systems, advanced RAG architectures, and resilient, high-performance web platforms."
+                }
+              />
             </p>
           </div>
 
           {/* COLUMN 2: Contact Developer */}
           <div className="space-y-3.5">
             <h4 className="text-xs font-bold tracking-wider uppercase text-[#173B6C] dark:text-[#F6F8FC]">
-              {isArabic ? "بيانات التواصل المباشر" : "Contact Developer"}
+              <EditableText
+                textKey="footer.contact.heading"
+                fallback={isArabic ? "بيانات التواصل المباشر" : "Contact Developer"}
+              />
             </h4>
             <div className="flex flex-col items-start gap-2.5 text-xs">
               {/* Phone */}
@@ -148,7 +164,10 @@ export function Footer({
           {/* COLUMN 3: Navigation */}
           <div className="space-y-3.5">
             <h4 className="text-xs font-bold tracking-wider uppercase text-[#173B6C] dark:text-[#F6F8FC]">
-              {isArabic ? "التنقل" : "Navigation"}
+              <EditableText
+                textKey="footer.nav.heading"
+                fallback={isArabic ? "التنقل" : "Navigation"}
+              />
             </h4>
             <div className="grid grid-cols-2 gap-x-6 sm:gap-x-8 gap-y-2.5 text-xs font-medium">
               <div className="flex flex-col gap-2.5">
@@ -180,7 +199,10 @@ export function Footer({
         {/* Bottom copyright line */}
         <div className="mt-12 border-t border-[#E5EAF2] pt-6 text-center text-xs text-[#6C7893] sm:text-start dark:border-white/[0.08] dark:text-[#9AA8C0]">
           <p>
-            © 2026 Anas Aldahamsheh. {isArabic ? "جميع الحقوق محفوظة." : "All rights reserved."}
+            <EditableText
+              textKey="footer.copyright"
+              fallback={isArabic ? "© 2026 Anas Aldahamsheh. جميع الحقوق محفوظة." : "© 2026 Anas Aldahamsheh. All rights reserved."}
+            />
           </p>
         </div>
       </div>

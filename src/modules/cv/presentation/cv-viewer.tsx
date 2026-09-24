@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { FadeIn } from "@/components/motion";
 import { useLocalization } from "@/modules/localization/presentation/localization-provider";
-import { EditableRegion } from "@/modules/admin/presentation";
+import { EditableRegion, EditableText } from "@/modules/admin/presentation";
 import {
   formatFileSize,
   type PublishedCv,
@@ -73,12 +73,14 @@ export function CvViewer({
       >
         <PageHeroBanner
           title={t("cv.title") || (isAr ? "نبذة والسيرة الذاتية" : "About & Resume")}
+          titleKey="cv.title"
           subtitle={
             t("cv.subtitle") ||
             (isAr
               ? "الخلفية المهنية وفلسفة هندسة البرمجيات والنسخة المعتمدة من السيرة الذاتية."
               : "Executive background, engineering philosophy, and verified resume for AI & Software Engineering.")
           }
+          subtitleKey="cv.subtitle"
           actions={
             <>
               <Link
@@ -86,7 +88,10 @@ export function CvViewer({
                 className="btn-action-primary"
               >
                 <Download className="h-4 w-4" aria-hidden="true" />
-                <span>{t("cv.download") || (isAr ? "تحميل PDF" : "Download PDF")}</span>
+                <EditableText
+                  textKey="cv.download"
+                  fallback={isAr ? "تحميل PDF" : "Download PDF"}
+                />
               </Link>
 
               <Link
@@ -96,9 +101,10 @@ export function CvViewer({
                 className="btn-action-secondary"
               >
                 <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                <span>
-                  {t("cv.open_fullscreen") || (isAr ? "فتح كنافذة مستقلة" : "Open New Tab")}
-                </span>
+                <EditableText
+                  textKey="cv.open_fullscreen"
+                  fallback={isAr ? "فتح كنافذة مستقلة" : "Open New Tab"}
+                />
               </Link>
             </>
           }
@@ -116,19 +122,34 @@ export function CvViewer({
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-3 py-1 text-xs font-medium text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
                 <User className="h-3.5 w-3.5" />
-                <span>{activeAbout.badge || (isAr ? "نبذة عني" : "About Me")}</span>
+                <EditableText
+                  textKey="cv.about.badge"
+                  fallback={activeAbout.badge || (isAr ? "نبذة عني" : "About Me")}
+                />
               </div>
               <h2 className="text-2xl font-bold tracking-tight text-[#173B6C] sm:text-3xl dark:text-[#F4F7FF]">
-                {activeAbout.name}
+                <EditableText
+                  textKey="cv.about.name"
+                  fallback={activeAbout.name}
+                />
               </h2>
               <p className="text-sm font-semibold text-[#2F6FED] sm:text-base dark:text-indigo-400">
-                {activeAbout.headline}
+                <EditableText
+                  textKey="cv.about.headline"
+                  fallback={activeAbout.headline}
+                />
               </p>
             </div>
 
             <div className="mt-6 space-y-4 text-xs leading-relaxed text-[#6C7893] sm:text-sm sm:leading-7 dark:text-[#9AA8C0]">
               {activeAbout.paragraphs.map((para, idx) => (
-                <p key={idx}>{para}</p>
+                <p key={idx}>
+                  <EditableText
+                    textKey={`cv.about.paragraph.${idx}`}
+                    fallback={para}
+                    multiline
+                  />
+                </p>
               ))}
             </div>
           </div>

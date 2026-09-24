@@ -42,11 +42,13 @@ export default async function AiLabPage({ params }: AiLabPageProps) {
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
         title={isAr ? "تجارب هندسة الذكاء الاصطناعي التفاعلية" : "Interactive AI Engineering Experiments"}
+        titleKey="lab.title"
         subtitle={
           isAr
             ? "بيئة تجارب حية صممها وبناها أنس الدحامشة لإثبات آليات الاسترجاع الهجين، إعادة الترتيب بالمرمز المتقاطع (Cross-Encoder)، وضبط زمن الاستجابة وجودة التوليد عملياً."
             : "Interactive demonstrations built by Anas Al Dahamsheh to validate hybrid retrieval, cross-encoder reranking, latency bounds, and grounded generation in production scenarios."
         }
+        subtitleKey="lab.subtitle"
       />
 
       <div className="mx-auto max-w-[1420px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10 lg:py-16">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Download, Mail, Terminal, Cpu, Shield, Sparkles } from "lucide-react";
 import { FadeIn } from "@/components/motion";
 import { PageHeroBanner } from "@/components/layout/page-hero-banner";
+import { EditableText } from "@/modules/admin/presentation";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
 
 interface AboutPageProps {
@@ -61,11 +62,13 @@ export default async function AboutPage({ params }: AboutPageProps) {
       {/* Overview-Harmonized Aurora Hero Banner */}
       <PageHeroBanner
         title={isAr ? "أنس الدحامشة" : "Anas Al Dahamsheh"}
+        titleKey="about.hero.title"
         subtitle={
           isAr
             ? "مهندس ذكاء اصطناعي وبرمجيات شغوف بالأنظمة الإنتاجية عالية الاعتمادية"
             : "AI & Software Engineer focused on reliable, production-grade intelligence"
         }
+        subtitleKey="about.hero.subtitle"
       />
 
       {/* Main Content Area */}
@@ -75,19 +78,37 @@ export default async function AboutPage({ params }: AboutPageProps) {
           <div className="rounded-2xl border border-[#E5EAF2] bg-white/85 p-6 shadow-sm backdrop-blur-md sm:p-8 dark:border-white/[0.08] dark:bg-white/[0.02]">
             <div className="space-y-4 text-xs leading-relaxed text-[#6C7893] sm:text-sm sm:leading-7 dark:text-[#9AA8C0]">
               <p>
-                {isAr
-                  ? "أنا مهندس برمجيات وذكاء اصطناعي بخلفية في هندسة الحاسوب. أركز جهودي على الجسر الفاصل بين أحدث أبحاث نماذج الذكاء الاصطناعي وبين تحويلها إلى أنظمة برمجية متكاملة، آمنة، وعالية الأداء تعمل بكفاءة على أرض الواقع."
-                  : "I am an AI & Software Engineer with a Computer Engineering foundation. My primary focus is bridging the gap between cutting-edge AI research and building reliable, latency-bounded, and cost-efficient production software."}
+                <EditableText
+                  textKey="about.narrative.p1"
+                  multiline
+                  fallback={
+                    isAr
+                      ? "أنا مهندس برمجيات وذكاء اصطناعي بخلفية في هندسة الحاسوب. أركز جهودي على الجسر الفاصل بين أحدث أبحاث نماذج الذكاء الاصطناعي وبين تحويلها إلى أنظمة برمجية متكاملة، آمنة، وعالية الأداء تعمل بكفاءة على أرض الواقع."
+                      : "I am an AI & Software Engineer with a Computer Engineering foundation. My primary focus is bridging the gap between cutting-edge AI research and building reliable, latency-bounded, and cost-efficient production software."
+                  }
+                />
               </p>
               <p>
-                {isAr
-                  ? "خلال عملي على الأنظمة المعتمدة على النماذج اللغوية الكبيرة (LLMs)، لاحظت أن التحدي الحقيقي ليس مجرد استدعاء واجهات الـ API، بل في ضمان ربط الإجابات بالحقائق (Grounding)، منع الهلوسة، تقليص أزمنة الاستجابة، وبناء مسارات تقييم قطعية تضمن الجودة قبل النشر إلى المستخدمين."
-                  : "In building LLM applications and agentic workflows, I believe the real engineering challenge is not making API calls — it is ensuring strict evidence grounding, eliminating hallucinations, minimizing retrieval latency, and building reproducible evaluation suites that prove system reliability."}
+                <EditableText
+                  textKey="about.narrative.p2"
+                  multiline
+                  fallback={
+                    isAr
+                      ? "خلال عملي على الأنظمة المعتمدة على النماذج اللغوية الكبيرة (LLMs)، لاحظت أن التحدي الحقيقي ليس مجرد استدعاء واجهات الـ API، بل في ضمان ربط الإجابات بالحقائق (Grounding)، منع الهلوسة، تقليص أزمنة الاستجابة، وبناء مسارات تقييم قطعية تضمن الجودة قبل النشر إلى المستخدمين."
+                      : "In building LLM applications and agentic workflows, I believe the real engineering challenge is not making API calls — it is ensuring strict evidence grounding, eliminating hallucinations, minimizing retrieval latency, and building reproducible evaluation suites that prove system reliability."
+                  }
+                />
               </p>
               <p>
-                {isAr
-                  ? "أؤمن بأن الكود الممتاز هو الكود البسيط، الموثق، والمختبر جيداً. سواء كنت أصمم محرك استرجاع هجين (Hybrid RAG)، أو أبني خادم حافة عالي الأداء بلغة Rust، أو أطور واجهات تفاعلية متجاوبة ثنائية اللغة، فإن هدفي الدائم هو تقديم حلول برمجية مستدامة تضيف قيمة مباشرة للأعمال."
-                  : "I value simplicity, clean architecture, and rigorous testing. Whether engineering a hybrid dense/sparse RAG pipeline, writing low-latency edge daemons in Rust, or crafting accessible bilingual interfaces, my goal is to deliver durable engineering solutions that solve concrete business challenges."}
+                <EditableText
+                  textKey="about.narrative.p3"
+                  multiline
+                  fallback={
+                    isAr
+                      ? "أؤمن بأن الكود الممتاز هو الكود البسيط، الموثق، والمختبر جيداً. سواء كنت أصمم محرك استرجاع هجين (Hybrid RAG)، أو أبني خادم حافة عالي الأداء بلغة Rust، أو أطور واجهات تفاعلية متجاوبة ثنائية اللغة، فإن هدفي الدائم هو تقديم حلول برمجية مستدامة تضيف قيمة مباشرة للأعمال."
+                      : "I value simplicity, clean architecture, and rigorous testing. Whether engineering a hybrid dense/sparse RAG pipeline, writing low-latency edge daemons in Rust, or crafting accessible bilingual interfaces, my goal is to deliver durable engineering solutions that solve concrete business challenges."
+                  }
+                />
               </p>
             </div>
           </div>
@@ -97,7 +118,10 @@ export default async function AboutPage({ params }: AboutPageProps) {
         <div className="mt-12">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-xl font-bold tracking-tight text-[#173B6C] sm:text-2xl dark:text-[#F4F7FF]">
-              {isAr ? "النهج والمبادئ الهندسية" : "Core Engineering Principles"}
+              <EditableText
+                textKey="about.pillars.title"
+                fallback={isAr ? "النهج والمبادئ الهندسية" : "Core Engineering Principles"}
+              />
             </h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
@@ -113,11 +137,18 @@ export default async function AboutPage({ params }: AboutPageProps) {
                       <Icon className="h-5 w-5" />
                     </div>
                     <h3 className="text-base font-bold text-[#173B6C] dark:text-[#F4F7FF]">
-                      {pillar.title}
+                      <EditableText
+                        textKey={`about.pillar.${idx}.title`}
+                        fallback={pillar.title}
+                      />
                     </h3>
                   </div>
                   <p className="mt-3.5 text-xs leading-relaxed text-[#6C7893] sm:text-sm dark:text-[#9AA8C0]">
-                    {pillar.description}
+                    <EditableText
+                      textKey={`about.pillar.${idx}.desc`}
+                      fallback={pillar.description}
+                      multiline
+                    />
                   </p>
                 </div>
               );
@@ -130,22 +161,37 @@ export default async function AboutPage({ params }: AboutPageProps) {
           <div className="relative mt-12 flex flex-col items-center justify-between gap-6 overflow-hidden rounded-2xl border border-[#D0E2FF] bg-gradient-to-br from-[#EEF5FF] via-white to-[#F0F5FF] p-6 shadow-sm sm:flex-row sm:p-8 dark:border-white/[0.1] dark:from-white/[0.04] dark:via-white/[0.02] dark:to-white/[0.04]">
             <div>
               <h3 className="text-lg font-bold text-[#173B6C] dark:text-[#F4F7FF]">
-                {isAr ? "مهتم بالتعرف أكثر على أعمالي؟" : "Interested in working together?"}
+                <EditableText
+                  textKey="about.cta.title"
+                  fallback={isAr ? "مهتم بالتعرف أكثر على أعمالي؟" : "Interested in working together?"}
+                />
               </h3>
               <p className="mt-1 text-xs text-[#6C7893] sm:text-sm dark:text-[#9AA8C0]">
-                {isAr
-                  ? "استعرض المشاريع أو حمّل السيرة الذاتية أو تواصل معي مباشرة."
-                  : "Explore case studies, download my resume, or get in touch directly."}
+                <EditableText
+                  textKey="about.cta.desc"
+                  multiline
+                  fallback={
+                    isAr
+                      ? "استعرض المشاريع أو حمّل السيرة الذاتية أو تواصل معي مباشرة."
+                      : "Explore case studies, download my resume, or get in touch directly."
+                  }
+                />
               </p>
             </div>
             <div className="flex shrink-0 flex-wrap items-center gap-3">
               <Link href={`/${supportedLocale}/cv`} className="btn-action-secondary !h-9 !px-4 !text-xs">
                 <Download className="h-4 w-4" />
-                <span>{isAr ? "السيرة الذاتية" : "Resume"}</span>
+                <EditableText
+                  textKey="about.cta.resume"
+                  fallback={isAr ? "السيرة الذاتية" : "Resume"}
+                />
               </Link>
               <Link href={`/${supportedLocale}/contact`} className="btn-action-primary !h-9 !px-4 !text-xs">
                 <Mail className="h-4 w-4" />
-                <span>{isAr ? "تواصل معي" : "Contact"}</span>
+                <EditableText
+                  textKey="about.cta.contact"
+                  fallback={isAr ? "تواصل معي" : "Contact"}
+                />
               </Link>
             </div>
           </div>

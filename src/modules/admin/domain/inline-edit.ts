@@ -20,6 +20,7 @@ export interface EditableRef {
   version?: number | undefined;
   title?: string | undefined;
   initialData?: Record<string, unknown> | string | undefined;
+  multiline?: boolean | undefined;
 }
 
 export const inlineEditUpdateSchema = z.object({

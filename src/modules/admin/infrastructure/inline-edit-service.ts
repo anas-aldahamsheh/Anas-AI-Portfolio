@@ -8,10 +8,12 @@ import {
   sectionBlockTranslations,
 } from "@/lib/db/schema/content";
 import { uiTextKeys, uiTextTranslations } from "@/lib/db/schema/localization";
+import { projects, projectTranslations } from "@/lib/db/schema/projects";
 import { logger } from "@/lib/observability/logger";
 import { sectionService } from "@/modules/content/infrastructure/section-service";
 import { localizedTextService } from "@/modules/localization/infrastructure/localized-text-service";
 import { navigationService } from "@/modules/navigation/infrastructure/navigation-service";
+import { projectService } from "@/modules/projects/infrastructure/project-service";
 import type {
   InlineEditUpdateInput,
   InlineEditResult,
@@ -256,6 +258,61 @@ export class InlineEditService {
           break;
         }
 
+        case "project": {
+          const targetLocale = locale ?? "ar";
+          if (typeof data === "object" && data !== null) {
+            const dataObj = data as Record<string, unknown>;
+            const projectRows = await db
+              .select({ id: projects.id })
+              .from(projects)
+              .where(eq(projects.slug, entityId))
+              .limit(1);
+
+            const projectId = projectRows[0]?.id;
+            if (projectId) {
+              const transRows = await db
+                .select()
+                .from(projectTranslations)
+                .where(
+                  and(
+                    eq(projectTranslations.projectId, projectId),
+                    eq(projectTranslations.localeCode, targetLocale),
+                  ),
+                )
+                .limit(1);
+
+              const updatePayload: Record<string, unknown> = {
+                updatedAt: new Date(),
+              };
+              if (dataObj["title"]) updatePayload["title"] = String(dataObj["title"]);
+              if (dataObj["summary"]) updatePayload["summary"] = String(dataObj["summary"]);
+              if (dataObj["problem"]) updatePayload["problem"] = String(dataObj["problem"]);
+              if (dataObj["solution"]) updatePayload["solution"] = String(dataObj["solution"]);
+
+              if (transRows.length > 0) {
+                await db
+                  .update(projectTranslations)
+                  .set(updatePayload)
+                  .where(
+                    and(
+                      eq(projectTranslations.projectId, projectId),
+                      eq(projectTranslations.localeCode, targetLocale),
+                    ),
+                  );
+              } else {
+                await db.insert(projectTranslations).values({
+                  projectId,
+                  localeCode: targetLocale,
+                  title: String(dataObj["title"] || "Project Title"),
+                  summary: String(dataObj["summary"] || "Project Summary"),
+                  ...updatePayload,
+                });
+              }
+            }
+          }
+          break;
+        }
+
         default:
           break;
       }
@@ -284,6 +341,7 @@ export class InlineEditService {
       sectionService.invalidateCache();
       localizedTextService.invalidateCache();
       navigationService.invalidateCache();
+      projectService.invalidateCache();
 
       logger.info("inline_edit_completed", {
         module: "admin",

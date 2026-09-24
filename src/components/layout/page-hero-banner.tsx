@@ -1,12 +1,16 @@
-"use client";
-
 import React, { useRef, useState, useEffect } from "react";
+import { Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAdminEdit } from "@/modules/admin/presentation/admin-edit-provider";
+import { useTranslation } from "@/modules/localization/presentation/localization-provider";
 
 export interface PageHeroBannerProps {
   badge?: React.ReactNode;
+  badgeKey?: string;
   title: React.ReactNode;
+  titleKey?: string;
   subtitle?: React.ReactNode;
+  subtitleKey?: string;
   actions?: React.ReactNode;
   meta?: React.ReactNode;
   children?: React.ReactNode;
@@ -22,8 +26,11 @@ export interface PageHeroBannerProps {
  */
 export function PageHeroBanner({
   badge,
+  badgeKey,
   title,
+  titleKey,
   subtitle,
+  subtitleKey,
   actions,
   meta,
   children,
@@ -31,6 +38,8 @@ export function PageHeroBanner({
   enableTypewriter = true,
 }: PageHeroBannerProps) {
   const bannerRef = useRef<HTMLElement>(null);
+  const { isAdmin, isEditMode, openEditor } = useAdminEdit();
+  const { locale: currentLocale } = useTranslation();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!bannerRef.current) return;
@@ -187,7 +196,33 @@ export function PageHeroBanner({
       {/* Content Container */}
       <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-10 sm:py-14 lg:py-16 text-start">
         <div className="max-w-3xl space-y-4">
-          {badge && <div className="inline-block">{badge}</div>}
+          {badge && (
+            <div className="relative inline-block">
+              {badge}
+              {isAdmin && isEditMode && badgeKey && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    openEditor({
+                      entityType: "ui_text",
+                      entityId: badgeKey,
+                      fieldOrBlockId: "value",
+                      locale: currentLocale,
+                      title: `Hero Badge (${badgeKey})`,
+                      initialData: typeof badge === "string" ? badge : "",
+                    });
+                  }}
+                  aria-label={`Edit ${badgeKey}`}
+                  title={`Edit: ${badgeKey}`}
+                  className="ms-1.5 inline-flex items-center gap-1 rounded bg-[#4F46E5] px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-xs hover:bg-[#4338CA] transition-all cursor-pointer"
+                >
+                  <Pencil className="h-2.5 w-2.5" />
+                </button>
+              )}
+            </div>
+          )}
 
           <div className="space-y-2">
             {isTitleString ? (
@@ -232,6 +267,29 @@ export function PageHeroBanner({
                 {isTitleDone && (
                   <div className="hero-name-shimmer-sweep pointer-events-none" aria-hidden="true" />
                 )}
+                {isAdmin && isEditMode && titleKey && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      openEditor({
+                        entityType: "ui_text",
+                        entityId: titleKey,
+                        fieldOrBlockId: "value",
+                        locale: currentLocale,
+                        title: `Hero Title (${titleKey})`,
+                        initialData: rawTitle,
+                      });
+                    }}
+                    aria-label={`Edit ${titleKey}`}
+                    title={`Edit: ${titleKey}`}
+                    className="absolute -top-3.5 end-0 z-30 inline-flex items-center gap-1 rounded-md bg-[#4F46E5] px-2 py-0.5 text-xs font-semibold text-white shadow-md hover:bg-[#4338CA] transition-all cursor-pointer opacity-85 hover:opacity-100"
+                  >
+                    <Pencil className="h-3 w-3" />
+                    <span>Edit Title</span>
+                  </button>
+                )}
               </div>
             ) : (
               title
@@ -275,6 +333,29 @@ export function PageHeroBanner({
                     <span>{rawSub}</span>
                   )}
                 </p>
+                {isAdmin && isEditMode && subtitleKey && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      openEditor({
+                        entityType: "ui_text",
+                        entityId: subtitleKey,
+                        fieldOrBlockId: "value",
+                        locale: currentLocale,
+                        title: `Hero Subtitle (${subtitleKey})`,
+                        initialData: rawSub,
+                      });
+                    }}
+                    aria-label={`Edit ${subtitleKey}`}
+                    title={`Edit: ${subtitleKey}`}
+                    className="absolute -top-3.5 end-0 z-30 inline-flex items-center gap-1 rounded-md bg-[#4F46E5] px-2 py-0.5 text-xs font-semibold text-white shadow-md hover:bg-[#4338CA] transition-all cursor-pointer opacity-85 hover:opacity-100"
+                  >
+                    <Pencil className="h-3 w-3" />
+                    <span>Edit Subtitle</span>
+                  </button>
+                )}
               </div>
             ) : (
               subtitle
