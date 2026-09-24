@@ -191,32 +191,34 @@ export function PageHeroBanner({
 
           <div className="space-y-2">
             {isTitleString ? (
-              <div className="hero-grid-stack">
-                {/* Ghost element that permanently holds exact full dimensions and line wraps at all times in browser */}
-                {!isTestEnv && (
-                  <span
-                    aria-hidden="true"
-                    className="hero-grid-item invisible font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.18] select-none pointer-events-none"
-                  >
-                    {rawTitle}
-                  </span>
-                )}
-
-                {/* Animated streamed heading overlaid in the exact same grid stack */}
+              <div className="relative inline-block w-full">
+                {/* 
+                  The heading always renders the exact full target text in the DOM.
+                  Characters are progressively revealed by slicing into visible and invisible spans.
+                  Because the full text with all words and wrap points is always present,
+                  the height, line count, and width are 100% identical and invariant at every millisecond!
+                */}
                 <h1
                   aria-label={rawTitle}
-                  className="hero-grid-item font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF] leading-[1.18]"
+                  className="relative font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#173B6C] dark:text-[#F4F7FF] leading-[1.18]"
                 >
                   {mounted && enableTypewriter && !isTestEnv ? (
-                    <span className="inline-flex items-baseline">
+                    <span className="relative">
                       <span>{titleText}</span>
                       {cursorPhase === "title" && (
                         <span
-                          className="ms-1.5 inline-block w-[3px] sm:w-[3.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_10px_rgba(79,70,229,0.7)] align-baseline"
-                          style={{ height: "0.82em" }}
+                          className="relative inline-block w-0 overflow-visible align-baseline pointer-events-none"
                           aria-hidden="true"
-                        />
+                        >
+                          <span
+                            className="absolute start-1 bottom-[0.12em] w-[3px] sm:w-[3.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_10px_rgba(79,70,229,0.7)]"
+                            style={{ height: "0.82em" }}
+                          />
+                        </span>
                       )}
+                      <span className="invisible select-none pointer-events-none" aria-hidden="true">
+                        {rawTitle.slice(titleText.length)}
+                      </span>
                     </span>
                   ) : (
                     <span>{rawTitle}</span>
@@ -231,32 +233,33 @@ export function PageHeroBanner({
             )}
 
             {isSubString ? (
-              <div className="hero-grid-stack max-w-2xl">
-                {/* Ghost element that permanently holds full paragraph height and line wraps at all times in browser */}
-                {!isTestEnv && (
-                  <span
-                    aria-hidden="true"
-                    className="hero-grid-item invisible font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed select-none pointer-events-none"
-                  >
-                    {rawSub}
-                  </span>
-                )}
-
-                {/* Animated streamed subtitle overlaid in the exact same grid stack */}
+              <div className="relative inline-block w-full max-w-2xl">
+                {/* 
+                  The subtitle always renders the full paragraph text.
+                  Streamed characters are shown, while remaining characters are invisible.
+                  Zero height difference, zero line-wrap bounce, zero jumping!
+                */}
                 <p
                   aria-label={rawSub}
-                  className="hero-grid-item font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed text-[#6C7893] dark:text-[#9AA8C0]"
+                  className="relative font-manrope text-sm sm:text-base md:text-lg font-normal leading-relaxed text-[#6C7893] dark:text-[#9AA8C0]"
                 >
                   {mounted && enableTypewriter && !isTestEnv ? (
-                    <span className="inline-flex items-baseline flex-wrap">
+                    <span className="relative">
                       <span>{subText}</span>
                       {cursorPhase === "sub" && (
                         <span
-                          className="ms-1 inline-block w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)] align-baseline"
-                          style={{ height: "0.8em" }}
+                          className="relative inline-block w-0 overflow-visible align-baseline pointer-events-none"
                           aria-hidden="true"
-                        />
+                        >
+                          <span
+                            className="absolute start-1 bottom-[0.14em] w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)]"
+                            style={{ height: "0.8em" }}
+                          />
+                        </span>
                       )}
+                      <span className="invisible select-none pointer-events-none" aria-hidden="true">
+                        {rawSub.slice(subText.length)}
+                      </span>
                     </span>
                   ) : (
                     <span>{rawSub}</span>

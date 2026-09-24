@@ -271,32 +271,28 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
 
         {/* Content Container matching reference image layout */}
         <div className="relative z-10 mx-auto max-w-[1420px] px-4 sm:px-6 lg:px-10 py-14 sm:py-18 lg:py-22 text-start">
-          <div className="hero-grid-stack">
-            {/* Ghost element that permanently holds exact full dimensions and line wraps at all times */}
-            {!isTestEnv && (
-              <span
-                aria-hidden="true"
-                className="hero-grid-item invisible font-space-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] select-none pointer-events-none"
-              >
-                {fullTitle}
-              </span>
-            )}
-
-            {/* Animated streamed heading overlaid in the exact same grid stack */}
+          <div className="relative inline-block w-full">
             <h1
               aria-label={fullTitle}
-              className="hero-grid-item font-space-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] text-[#173B6C] dark:text-[#F4F7FF]"
+              className="relative font-space-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] text-[#173B6C] dark:text-[#F4F7FF]"
             >
-              {mounted ? (
-                <span className="inline-flex items-baseline">
+              {mounted && !isTestEnv ? (
+                <span className="relative">
                   <span>{titleText}</span>
                   {cursorPhase === "title" && (
                     <span
-                      className="ms-1.5 inline-block w-[3px] sm:w-[3.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_10px_rgba(79,70,229,0.7)] align-baseline"
-                      style={{ height: "0.82em" }}
+                      className="relative inline-block w-0 overflow-visible align-baseline pointer-events-none"
                       aria-hidden="true"
-                    />
+                    >
+                      <span
+                        className="absolute start-1 bottom-[0.14em] w-[3px] sm:w-[3.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_10px_rgba(79,70,229,0.7)]"
+                        style={{ height: "0.82em" }}
+                      />
+                    </span>
                   )}
+                  <span className="invisible select-none pointer-events-none" aria-hidden="true">
+                    {fullTitle.slice(titleText.length)}
+                  </span>
                 </span>
               ) : (
                 <span>{fullTitle}</span>
@@ -307,24 +303,13 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
             )}
           </div>
 
-          <div className="hero-grid-stack max-w-2xl mt-3 sm:mt-4">
-            {/* Ghost element that permanently holds full paragraph height and line wraps at all times */}
-            {!isTestEnv && (
-              <span
-                aria-hidden="true"
-                className="hero-grid-item invisible font-manrope font-medium text-base sm:text-lg md:text-xl lg:text-[21px] leading-relaxed select-none pointer-events-none"
-              >
-                {fullSub1} {fullSub2}
-              </span>
-            )}
-
-            {/* Animated streamed subtitle overlaid in the exact same grid stack */}
+          <div className="relative inline-block w-full max-w-2xl mt-3 sm:mt-4">
             <p
               aria-label={`${fullSub1} ${fullSub2}`}
-              className="hero-grid-item font-manrope font-medium text-base sm:text-lg md:text-xl lg:text-[21px] leading-relaxed text-[#64748B] dark:text-[#A7B3C7]"
+              className="relative font-manrope font-medium text-base sm:text-lg md:text-xl lg:text-[21px] leading-relaxed text-[#64748B] dark:text-[#A7B3C7]"
             >
-              {mounted ? (
-                <span className="inline-flex flex-wrap items-baseline">
+              {mounted && !isTestEnv ? (
+                <span className="relative">
                   {sub1Text && (
                     <span className="bg-gradient-to-r from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] bg-clip-text text-transparent font-semibold">
                       {sub1Text}
@@ -338,11 +323,25 @@ export function RecruiterJourneyIndex({ locale }: RecruiterJourneyIndexProps) {
                   )}
                   {cursorPhase === "sub" && (
                     <span
-                      className="ms-1 inline-block w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)] align-baseline"
-                      style={{ height: "0.8em" }}
+                      className="relative inline-block w-0 overflow-visible align-baseline pointer-events-none"
                       aria-hidden="true"
-                    />
+                    >
+                      <span
+                        className="absolute start-1 bottom-[0.14em] w-[2.5px] rounded-full bg-gradient-to-b from-[#4F46E5] to-[#0891B2] dark:from-[#8B8CFF] dark:to-[#67E8F9] animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.7)]"
+                        style={{ height: "0.8em" }}
+                      />
+                    </span>
                   )}
+                  {/* Invisible remaining characters ensure line count and line wrapping remain 100% constant */}
+                  <span className="invisible select-none pointer-events-none" aria-hidden="true">
+                    {cursorPhase === "title"
+                      ? `${fullSub1} ${fullSub2}`
+                      : cursorPhase === "sub"
+                      ? sub2Text
+                        ? fullSub2.slice(sub2Text.length)
+                        : ` ${fullSub1.slice(sub1Text.length)} ${fullSub2}`
+                      : ""}
+                  </span>
                 </span>
               ) : (
                 <>
