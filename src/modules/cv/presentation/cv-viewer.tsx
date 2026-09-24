@@ -51,14 +51,6 @@ export function CvViewer({
   const activeAbout: CvAboutItem =
     about || DEFAULT_CV_ABOUT[isAr ? "ar" : "en"] || DEFAULT_CV_ABOUT.en;
 
-  const formattedDate = cv.publishedAt
-    ? new Date(cv.publishedAt).toLocaleDateString(isAr ? "ar-SA" : "en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : "";
-
   return (
     <div className="w-full">
       {/* Overview-Harmonized Aurora Hero Banner */}
@@ -86,27 +78,6 @@ export function CvViewer({
             (isAr
               ? "الخلفية المهنية وفلسفة هندسة البرمجيات والنسخة المعتمدة من السيرة الذاتية."
               : "Executive background, engineering philosophy, and verified resume for AI & Software Engineering.")
-          }
-          meta={
-            <div className="flex items-center gap-3 text-xs font-medium text-[#6C7893] dark:text-[#9AA8C0]">
-              <span>{t("cv.version_label", { version: String(cv.versionNumber) }) || `v${cv.versionNumber}`}</span>
-              {formattedDate && (
-                <>
-                  <span>•</span>
-                  <span>
-                    {t("cv.published_date", { date: formattedDate }) ||
-                      (isAr ? `تاريخ النشر: ${formattedDate}` : `Published: ${formattedDate}`)}
-                  </span>
-                </>
-              )}
-              <span>•</span>
-              <span>
-                {t("cv.filesize_label", { size: formatFileSize(cv.fileSize) }) ||
-                  (isAr
-                    ? `الحجم: ${formatFileSize(cv.fileSize)}`
-                    : `Size: ${formatFileSize(cv.fileSize)}`)}
-              </span>
-            </div>
           }
           actions={
             <>
@@ -185,10 +156,10 @@ export function CvViewer({
                         <div className="flex flex-wrap items-center gap-2 pt-0.5">
                           <span className="inline-flex items-center gap-1 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-2.5 py-0.5 text-[11px] font-semibold text-[#2F6FED] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-300">
                             <CheckCircle2 className="h-3 w-3" />
-                            <span>{isAr ? "نسخة رسمية معتمدة ومحدثة" : "Verified & Grounded Version"}</span>
+                            <span>{t("cv.version_label", { version: String(cv.versionNumber) }) || `v${cv.versionNumber}`}</span>
                           </span>
                           <span className="text-[11px] font-medium text-[#6C7893] dark:text-[#9AA8C0]">
-                            • {formatFileSize(cv.fileSize)}
+                            • <span>{t("cv.filesize_label", { size: formatFileSize(cv.fileSize) }) || (isAr ? `الحجم: ${formatFileSize(cv.fileSize)}` : `Size: ${formatFileSize(cv.fileSize)}`)}</span>
                           </span>
                         </div>
                       </div>
