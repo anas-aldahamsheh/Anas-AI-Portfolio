@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Download } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion";
 import { certificateService } from "@/modules/certificates/infrastructure/certificate-service";
 import { CertificatesCatalog } from "@/modules/certificates/presentation";
@@ -64,25 +63,13 @@ export default async function CertificatesPage({ params }: CertificatesPageProps
         subtitle={subtitle}
         actions={
           <div className="flex flex-wrap items-center gap-3">
-            <Link href={`/${supportedLocale}/cv`}>
-              <Button
-                variant="primary"
-                size="sm"
-                className="gap-2 rounded-full bg-[#173B6C] px-5 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-[#1E4B8A] dark:bg-indigo-600 dark:hover:bg-indigo-500"
-              >
-                <Download className="h-3.5 w-3.5" />
-                <span>{isArabic ? "السيرة الذاتية (About & Resume)" : "About & Resume"}</span>
-              </Button>
+            <Link href={`/${supportedLocale}/cv`} className="btn-action-primary">
+              <Download className="h-4 w-4" />
+              <span>{isArabic ? "السيرة الذاتية (About & Resume)" : "About & Resume"}</span>
             </Link>
-            <Link href={`/${supportedLocale}/projects`}>
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-4 py-2.5 text-xs font-semibold text-[#2F6FED] shadow-2xs hover:bg-[#E0EEFF] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200"
-              >
-                <span>{isArabic ? "استعراض المشاريع" : "Explore Projects"}</span>
-                <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
-              </Button>
+            <Link href={`/${supportedLocale}/projects`} className="btn-action-secondary">
+              <span>{isArabic ? "استعراض المشاريع" : "Explore Projects"}</span>
+              <ArrowRight className="h-4 w-4 rtl:rotate-180" />
             </Link>
           </div>
         }

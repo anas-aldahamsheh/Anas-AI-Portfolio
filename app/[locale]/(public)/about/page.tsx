@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Download, Mail, Terminal, Cpu, Shield, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion";
 import { PageHeroBanner } from "@/components/layout/page-hero-banner";
 import type { SupportedLocale } from "@/modules/localization/domain/locales";
@@ -140,25 +139,13 @@ export default async function AboutPage({ params }: AboutPageProps) {
               </p>
             </div>
             <div className="flex shrink-0 flex-wrap items-center gap-3">
-              <Link href={`/${supportedLocale}/cv`}>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="gap-2 rounded-full border border-[#D0E2FF] bg-white px-4 py-2.5 text-xs font-semibold text-[#2F6FED] shadow-2xs hover:bg-[#EEF5FF] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200"
-                >
-                  <Download className="h-4 w-4" />
-                  <span>{isAr ? "السيرة الذاتية" : "Resume"}</span>
-                </Button>
+              <Link href={`/${supportedLocale}/cv`} className="btn-action-secondary !h-9 !px-4 !text-xs">
+                <Download className="h-4 w-4" />
+                <span>{isAr ? "السيرة الذاتية" : "Resume"}</span>
               </Link>
-              <Link href={`/${supportedLocale}/contact`}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  className="gap-2 rounded-full bg-[#173B6C] px-5 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-[#1E4B8A] dark:bg-indigo-600 dark:hover:bg-indigo-500"
-                >
-                  <Mail className="h-4 w-4" />
-                  <span>{isAr ? "تواصل معي" : "Contact"}</span>
-                </Button>
+              <Link href={`/${supportedLocale}/contact`} className="btn-action-primary !h-9 !px-4 !text-xs">
+                <Mail className="h-4 w-4" />
+                <span>{isAr ? "تواصل معي" : "Contact"}</span>
               </Link>
             </div>
           </div>

@@ -112,7 +112,7 @@ export function CvViewer({
             <>
               <Link
                 href={downloadUrl}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#173B6C] text-white hover:bg-[#1E4B8A] shadow-xs hover:shadow-sm dark:bg-indigo-600 dark:hover:bg-indigo-500"
+                className="btn-action-primary"
               >
                 <Download className="h-4 w-4" aria-hidden="true" />
                 <span>{t("cv.download") || (isAr ? "تحميل PDF" : "Download PDF")}</span>
@@ -122,7 +122,7 @@ export function CvViewer({
                 href={viewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer bg-[#EEF5FF] text-[#2F6FED] border border-[#D0E2FF] hover:bg-[#E0EEFF] shadow-2xs hover:shadow-xs dark:bg-white/[0.04] dark:text-neutral-200 dark:border-white/[0.1] dark:hover:bg-white/[0.08]"
+                className="btn-action-secondary"
               >
                 <ExternalLink className="h-4 w-4" aria-hidden="true" />
                 <span>
