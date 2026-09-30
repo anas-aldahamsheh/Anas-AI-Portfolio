@@ -24,6 +24,7 @@ export function BrandLogo({ name, className }: { name: string; className?: strin
         height={307}
         sizes="(min-width: 1024px) 262px, (min-width: 640px) 236px, 210px"
         className="hidden h-full w-auto object-contain dark:block"
+        loading="eager"
       />
     </span>
   );

@@ -46,7 +46,7 @@ export class SourceRegistry {
 }
 
 const CITATION = /\s?\[(\d{1,3}(?:\s*,\s*\d{1,3})*)\]/g;
-const MARKDOWN_LINK = /\[([^\]\n]+)\]\(([^)\s]+)\)/g;
+const MARKDOWN_LINK = /\[([^\]\n]+)\]\(((?:[^()\s]|\([^()\s]*\))+)\)/g;
 
 /**
  * Removes citations to unknown refs, renumbers the rest 1..n in order of first appearance,

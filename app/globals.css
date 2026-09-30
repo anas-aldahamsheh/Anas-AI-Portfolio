@@ -659,18 +659,18 @@
 /* ==================================================================================
    View transitions between pages (React <ViewTransition>, supported browsers only).
    ================================================================================== */
+/* Page changes animate only the main content; the header and footer stay perfectly still. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 380ms;
-  animation-timing-function: var(--ease-out-quint);
+  animation: none;
 }
 
-::view-transition-old(root) {
-  animation-name: vt-out;
+::view-transition-old(.page) {
+  animation: vt-out 200ms var(--ease-out-quint) both;
 }
 
-::view-transition-new(root) {
-  animation-name: vt-in;
+::view-transition-new(.page) {
+  animation: vt-in 420ms var(--ease-out-expo) both;
 }
 
 @keyframes vt-out {
@@ -685,7 +685,25 @@
   from {
     opacity: 0;
     filter: blur(4px);
-    transform: translate3d(0, 12px, 0);
+    transform: translate3d(0, 14px, 0);
+  }
+}
+
+/* Theme switch: the new theme grows as a circle from the toggle button. */
+html[data-vt="theme"]::view-transition-old(root) {
+  animation: none;
+}
+
+html[data-vt="theme"]::view-transition-new(root) {
+  animation: theme-reveal 650ms var(--ease-out-quint) both;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0));
+  }
+  to {
+    clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 0));
   }
 }
 

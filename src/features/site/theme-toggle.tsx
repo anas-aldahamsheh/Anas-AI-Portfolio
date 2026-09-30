@@ -13,7 +13,7 @@ function subscribe(callback: () => void) {
 
 const isDarkNow = () => document.documentElement.classList.contains("dark");
 
-function applyTheme(dark: boolean) {
+function applyTheme(dark: boolean, origin?: { x: number; y: number }) {
   const root = document.documentElement;
   const apply = () => {
     root.classList.toggle("dark", dark);
@@ -26,11 +26,19 @@ function applyTheme(dark: boolean) {
     // storage disabled
   }
   document.cookie = `pf_theme=${value}; path=/; max-age=31536000; samesite=lax`;
-  // Cross-fade the whole page where the View Transitions API exists.
-  const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+  // Reveal the new theme as a circle growing from the toggle (View Transitions API).
+  const doc = document as Document & {
+    startViewTransition?: (cb: () => void) => { finished: Promise<void> };
+  };
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (doc.startViewTransition && !reduced) doc.startViewTransition(apply);
-  else apply();
+  if (!doc.startViewTransition || reduced) {
+    apply();
+    return;
+  }
+  root.style.setProperty("--vt-x", `${origin?.x ?? window.innerWidth / 2}px`);
+  root.style.setProperty("--vt-y", `${origin?.y ?? 0}px`);
+  root.dataset["vt"] = "theme";
+  void doc.startViewTransition(apply).finished.finally(() => delete root.dataset["vt"]);
 }
 
 export function ThemeToggle({ className }: { className?: string }) {
@@ -42,7 +50,10 @@ export function ThemeToggle({ className }: { className?: string }) {
   return (
     <button
       type="button"
-      onClick={() => applyTheme(!dark)}
+      onClick={(event) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        applyTheme(!dark, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+      }}
       aria-label={label}
       title={label}
       className={cn(

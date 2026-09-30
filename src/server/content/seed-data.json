@@ -20,10 +20,7 @@
         "en": {
           "name": "Anas Al Dahamsheh",
           "headline": "AI Engineer",
-          "roles": [
-            "AI Engineer",
-            "Full-Stack Developer"
-          ],
+          "roles": ["AI Engineer", "Full-Stack Developer"],
           "tagline": "I build AI systems, evaluation pipelines, automation tools and production-ready AI applications.",
           "summary": "AI & Software Engineer with a B.S. in Computer Engineering. Experienced in architecting production RAG systems, LLM evaluation pipelines, autonomous agent workflows, and scalable full-stack web applications with rigorous benchmarking and sub-second latency.",
           "about": [
@@ -37,10 +34,7 @@
         "ar": {
           "name": "أنس الدحامشة",
           "headline": "مهندس ذكاء اصطناعي",
-          "roles": [
-            "مهندس ذكاء اصطناعي",
-            "مطور برمجيات شامل (Full-Stack)"
-          ],
+          "roles": ["مهندس ذكاء اصطناعي", "مطور برمجيات شامل (Full-Stack)"],
           "tagline": "أبني أنظمة ذكاء اصطناعي، ومسارات تقييم، وأدوات أتمتة، وتطبيقات ذكاء اصطناعي جاهزة للإنتاج.",
           "summary": "مهندس ذكاء اصطناعي وبرمجيات بشهادة بكالوريوس في هندسة الحاسوب، بخبرة في بناء أنظمة RAG إنتاجية، ومسارات تقييم النماذج اللغوية، وتطبيقات ويب متكاملة قابلة للتوسع.",
           "about": [
@@ -61,12 +55,7 @@
         "cover": "/images/projects/rag-engine.svg",
         "repoUrl": "https://github.com/anas-aldahamsheh/multimodal-rag-engine",
         "demoUrl": "https://rag-demo.anas-ai.dev",
-        "tags": [
-          "TypeScript",
-          "pgvector",
-          "RAG",
-          "Python"
-        ],
+        "tags": ["TypeScript", "pgvector", "RAG", "Python"],
         "category": "Agentic AI",
         "featured": true,
         "startDate": "2026-01",
@@ -107,11 +96,7 @@
         "cover": "/images/projects/policy-router.svg",
         "repoUrl": "https://github.com/anas-aldahamsheh/edge-policy-router",
         "demoUrl": "",
-        "tags": [
-          "Rust",
-          "Next.js",
-          "TypeScript"
-        ],
+        "tags": ["Rust", "Next.js", "TypeScript"],
         "category": "Enterprise Systems",
         "featured": true,
         "startDate": "2026-02",
@@ -152,11 +137,7 @@
         "cover": "/images/projects/speech-stream.svg",
         "repoUrl": "https://github.com/anas-aldahamsheh/neural-speech-stream",
         "demoUrl": "https://voice-demo.anas-ai.dev",
-        "tags": [
-          "Python",
-          "WebRTC",
-          "FastAPI"
-        ],
+        "tags": ["Python", "WebRTC", "FastAPI"],
         "category": "Agentic AI",
         "featured": false,
         "startDate": "2026-02",
@@ -197,11 +178,7 @@
         "cover": "/images/projects/bilingual-platform.svg",
         "repoUrl": "https://github.com/anas-aldahamsheh/bilingual-design-studio",
         "demoUrl": "",
-        "tags": [
-          "TypeScript",
-          "Next.js",
-          "TailwindCSS"
-        ],
+        "tags": ["TypeScript", "Next.js", "TailwindCSS"],
         "category": "Full Stack & Edge",
         "featured": false,
         "startDate": "2026-03",
@@ -433,13 +410,7 @@
         "credentialId": "DLAI-RAG-2024-9981",
         "credentialUrl": "https://www.deeplearning.ai/courses/",
         "image": "/images/certificates/cert-rag-systems.svg",
-        "skills": [
-          "Hybrid RAG",
-          "Vector Databases",
-          "BGE-M3",
-          "Dense Embeddings",
-          "Evaluation"
-        ],
+        "skills": ["Hybrid RAG", "Vector Databases", "BGE-M3", "Dense Embeddings", "Evaluation"],
         "featured": true
       },
       "i18n": {
@@ -464,13 +435,7 @@
         "credentialId": "DLAI-AGENTIC-2024-4420",
         "credentialUrl": "https://www.deeplearning.ai/",
         "image": "/images/certificates/cert-agentic-ai.svg",
-        "skills": [
-          "AI Agents",
-          "Tool Calling",
-          "LangGraph",
-          "Guardrails",
-          "Python"
-        ],
+        "skills": ["AI Agents", "Tool Calling", "LangGraph", "Guardrails", "Python"],
         "featured": true
       },
       "i18n": {
@@ -526,14 +491,7 @@
         "credentialId": "AWS-ARCH-2023-5519",
         "credentialUrl": "https://aws.amazon.com/certification/",
         "image": "/images/certificates/cert-cloud-systems.svg",
-        "skills": [
-          "Cloud Architecture",
-          "Docker",
-          "PostgreSQL",
-          "Redis",
-          "Microservices",
-          "CI/CD"
-        ],
+        "skills": ["Cloud Architecture", "Docker", "PostgreSQL", "Redis", "Microservices", "CI/CD"],
         "featured": false
       },
       "i18n": {

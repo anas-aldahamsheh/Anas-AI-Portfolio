@@ -65,7 +65,7 @@ function parseBlocks(source: string): Block[] {
 }
 
 const INLINE =
-  /(\*\*([^*]+)\*\*|__([^_]+)__|\*([^*\s][^*]*)\*|`([^`]+)`|\[([^\]\n]+)\]\(([^)\s]+)\)|\[(\d{1,3}(?:\s*,\s*\d{1,3})*)\])/g;
+  /(\*\*([^*]+)\*\*|__([^_]+)__|\*([^*\s][^*]*)\*|`([^`]+)`|\[([^\]\n]+)\]\(((?:[^()\s]|\([^()\s]*\))+)\)|\[(\d{1,3}(?:\s*,\s*\d{1,3})*)\])/g;
 
 function safeHref(href: string): { href: string; internal: boolean } | null {
   if (/^\/(en|ar)(\/|$|#)/.test(href)) return { href, internal: true };

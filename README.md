@@ -1,120 +1,49 @@
-# Anas AI Portfolio — Production-Grade AI Engineering Platform
+# Anas Al Dahamsheh — AI Engineer Portfolio
 
-A modern, bilingual, production-grade AI engineering portfolio and interactive platform engineered with Next.js 16 (App Router), TypeScript, Tailwind CSS, Drizzle ORM, Better Auth, and a grounded multi-lingual RAG system.
+A bilingual (English / Arabic) portfolio with an AI assistant that knows everything the owner
+publishes or uploads, and an inline editor that lets the owner change anything on the site.
 
----
+## What's inside
 
-## 🌟 Key Features
+- **Public site** (Next.js 16, React 19, Tailwind 4, Motion). Pages are prerendered and cached;
+  an admin edit expires only the affected pages. Scroll reveals run from one tiny script, so pages
+  stay server components and content is never hidden from crawlers.
+- **Content model**: every section (profile, projects, experience, education, certificates,
+  skills, knowledge files, private notes) is one validated row in `content_entries`, written per
+  language with field-by-field fallback. Every change is versioned in `content_revisions`.
+- **AI assistant** (`/api/assistant`): a Gemini tool-calling agent. It looks facts up instead of
+  receiving the whole portfolio in its prompt:
+  - `get_profile`, `list_projects`, `get_project`, `list_experience`,
+    `list_education_and_certificates`, `get_skills` (skills mapped to the projects and roles that
+    prove them), `match_job_requirements` (job-fit evidence per requirement), and
+    `search_knowledge` (hybrid RAG over everything, including the CV and uploaded files).
+  - Answers stream over SSE with citations to the pages they came from; links that did not come
+    from a tool are removed; model fallback, retries and database-backed rate limits are built in.
+- **Hybrid retrieval**: bilingual normalisation and light stemming → Gemini embeddings in
+  pgvector (HNSW) + Postgres full-text + trigram title match → weighted Reciprocal Rank Fusion →
+  cross-language de-duplication → LLM reranking.
+- **Always in sync**: saving, hiding or deleting anything re-indexes (or forgets) it right away;
+  only chunks whose text changed are re-embedded. Uploaded PDFs and images are read by Gemini.
+- **Admin**: sign-up is disabled. The owner signs in at `/en/sign-in`, then edits any text or item
+  in place (edit mode), or uses the dashboard at `/en/admin` for content, CV and knowledge files,
+  assistant settings and the questions visitors asked.
 
-- **Guest-First Architecture**: Instant, unrestricted access for recruiters and hiring managers to all projects, deep-dive case studies, interactive AI features, and verified CV downloads without sign-in barriers.
-- **Interactive Grounded AI Assistant (RAG)**:
-  - Vector retrieval powered by Qdrant.
-  - Conversational modes (General, Recruiter, Technical).
-  - Arabic & English bilingual support with automatic RTL/LTR layout mirroring.
-  - Strict grounding in verified career achievements, projects, and architecture notes (zero hallucination design).
-- **Job Fit & ATS Match Analyzer**: Automated comparison engine that evaluates job descriptions against skills, experience, and project metrics with grounded match scoring.
-- **Dynamic Content & Admin Control Center**:
-  - Full CMS-grade control over pages, navigation items, CV versions, and social links.
-  - Encrypted secrets management for AI model providers (OpenAI, Anthropic, Google Gemini) using AES-256-GCM.
-  - AI Prompt Registry with versioning and rollbacks.
-- **Production Hardening**:
-  - OWASP Top 10 defenses (SSRF validation, CSRF tokens, strict sanitization, rate limiting via Upstash Redis).
-  - WCAG 2.2 AA accessibility compliance (skip links, screen reader announcer, full keyboard navigation).
-  - Operational health probes (`/api/health`, `/api/readiness`, `/api/metrics`).
-
----
-
-## 🛠️ Tech Stack
-
-| Layer                  | Technology                                             |
-| :--------------------- | :----------------------------------------------------- |
-| **Framework**          | Next.js 16 (App Router, Turbopack) & React 19          |
-| **Language**           | TypeScript (Strict Mode)                               |
-| **Styling**            | Tailwind CSS v4 & Motion (Micro-animations)            |
-| **Database**           | PostgreSQL (Neon / Serverless) + Drizzle ORM           |
-| **Vector DB**          | Qdrant Cloud (Vector embeddings & hybrid retrieval)    |
-| **Cache & Rate Limit** | Upstash Redis                                          |
-| **Authentication**     | Better Auth (RBAC for Administrator operations)        |
-| **Testing**            | Vitest (Unit & Integration) + Playwright (E2E)         |
-| **Security**           | AES-256-GCM encrypted provider secrets, Zod validation |
-
----
-
-## 🚀 Getting Started
-
-### 1. Prerequisites
-
-- **Node.js**: `>= 22.0.0`
-- **pnpm**: `>= 10.0.0`
-
-### 2. Installation
+## Setup
 
 ```bash
-git clone https://github.com/anas-aldahamsheh/anas-ai-portfolio.git
-cd anas-ai-portfolio
 pnpm install
-```
-
-### 3. Environment Configuration
-
-Copy the example environment template:
-
-```bash
-cp .env.example .env.local
-```
-
-Configure your local or production credentials (see `docs/ops/` and `.env.example` for detailed guidelines).
-
-### 4. Database Setup & Migration
-
-```bash
-# Generate schema migrations
-pnpm db:generate
-
-# Apply migrations
-pnpm db:migrate
-```
-
-### 5. Running the Application
-
-```bash
-# Development server (Turbopack)
+cp .env.example .env.local        # fill in DATABASE_URL, BETTER_AUTH_SECRET, GEMINI_API_KEY
+pnpm db:migrate                   # additive and idempotent
+pnpm db:seed                      # starter content (only fills what is missing) + AI index
+pnpm admin -- --email you@example.com --password "a long password" --name "Your Name"
 pnpm dev
-
-# Production build
-pnpm build
-pnpm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## 🧪 Testing & Verification
+## Checks
 
 ```bash
-# Run unit & integration tests
-pnpm test
-
-# Run deployment verification script
-pnpm verify:deploy
-
-# Run linter & type check
-pnpm lint
 pnpm typecheck
+pnpm lint
+pnpm test                          # set TEST_DATABASE_URL to also run the pgvector integration tests
+pnpm build
 ```
-
----
-
-## 👨‍💻 Author
-
-**Anas Aldahamsheh**
-
-- **GitHub**: [@anas-aldahamsheh](https://github.com/anas-aldahamsheh)
-- **LinkedIn**: [linkedin.com/in/anas-aldahamsheh](https://linkedin.com/in/anas-aldahamsheh)
-
----
-
-## 📄 License
-
-This project is private and proprietary. All rights reserved © 2026 Anas Aldahamsheh.

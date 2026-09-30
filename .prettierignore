@@ -8,3 +8,7 @@ coverage
 pnpm-lock.yaml
 next-env.d.ts
 anas-ai-portfolio-blueprint
+drizzle/meta
+portfolio_redesign_requirements.md
+scratch
+tests-legacy

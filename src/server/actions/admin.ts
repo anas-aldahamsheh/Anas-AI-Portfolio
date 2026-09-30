@@ -6,13 +6,7 @@ import { desc, sql } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { assistantTurns, knowledgeSources } from "@/lib/db/schema";
 import { requireAdmin, NotAdminError } from "@/server/auth/session";
-import {
-  COLLECTIONS,
-  isCollectionName,
-  isSingleton,
-  type CollectionName,
-  type EntryStatus,
-} from "@/server/content/collections";
+import { isCollectionName, type EntryStatus } from "@/server/content/collections";
 import {
   ContentError,
   createEntry,
@@ -63,24 +57,8 @@ function published(collection: string, entryId: string) {
 }
 
 // ---------------------------------------------------------------------------------------------
-// Session
-// ---------------------------------------------------------------------------------------------
-
-export async function adminWhoAmI(): Promise<ActionResult<{ name: string; email: string }>> {
-  return run(async () => {
-    const admin = await requireAdmin();
-    return { name: admin.name, email: admin.email };
-  });
-}
-
-// ---------------------------------------------------------------------------------------------
 // Entries
 // ---------------------------------------------------------------------------------------------
-
-export interface EditableEntry {
-  row: EntryRow;
-  collection: CollectionName;
-}
 
 export async function loadEntry(id: string): Promise<ActionResult<EntryRow>> {
   return run(async () => {
@@ -412,25 +390,4 @@ export async function recentConversations(limit = 50) {
       createdAt: r.createdAt.toISOString(),
     }));
   });
-}
-
-// ---------------------------------------------------------------------------------------------
-// Collection specs for the generic editor (serializable subset).
-// ---------------------------------------------------------------------------------------------
-
-export async function collectionSpecs() {
-  return run(async () =>
-    Object.fromEntries(
-      Object.values(COLLECTIONS).map((spec) => [
-        spec.name,
-        {
-          name: spec.name,
-          label: spec.label,
-          singleton: isSingleton(spec.name as CollectionName),
-          titleField: spec.titleField,
-          fields: spec.fields,
-        },
-      ]),
-    ),
-  );
 }
