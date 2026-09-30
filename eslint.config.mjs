@@ -30,6 +30,8 @@ const eslintConfig = [
       "build/**",
       "coverage/**",
       "anas-ai-portfolio-blueprint/**",
+      "scratch/**",
+      "tests-legacy/**",
     ],
   },
 ];

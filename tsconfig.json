@@ -45,5 +45,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "anas-ai-portfolio-blueprint"]
+  "exclude": ["node_modules", "anas-ai-portfolio-blueprint", "tests-legacy", "scratch"]
 }

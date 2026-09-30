@@ -14,17 +14,17 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
-    "test:e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/lib/db/migrate.ts",
     "db:check": "drizzle-kit check",
     "db:studio": "drizzle-kit studio",
-    "verify:deploy": "tsx scripts/verify-deployment.ts"
+    "db:seed": "tsx scripts/seed/index.ts",
+    "admin": "tsx scripts/admin.ts"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.3.7",

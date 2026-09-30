@@ -2,188 +2,499 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ==================================================================================
+   Design tokens — the site's identity (navy ink, electric blue, indigo/cyan accents).
+   Semantic tokens map to utilities via @theme inline (bg-background, text-muted, ...).
+   ================================================================================== */
+:root {
+  --background: #ffffff;
+  --foreground: #173b6c;
+  --surface: #f8faff;
+  --surface-strong: #eef5ff;
+  --muted: #637089;
+  --border: #e5eaf2;
+  --border-strong: #d0e2ff;
+  --primary: #2f6fed;
+  --primary-strong: #1e40af;
+  --accent: #4f46e5;
+  --accent-2: #0891b2;
+  --ring: #2f6fed;
+  --radius: 1rem;
+  --shadow-color: 220 40% 30%;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dark {
+  --background: #07101f;
+  --foreground: #f4f7ff;
+  --surface: #0b1728;
+  --surface-strong: rgb(30 27 75 / 0.55);
+  --muted: #9aa8c0;
+  --border: rgb(255 255 255 / 0.08);
+  --border-strong: rgb(99 102 241 / 0.3);
+  --primary: #818cf8;
+  --primary-strong: #c7d2fe;
+  --accent: #8b8cff;
+  --accent-2: #67e8f9;
+  --ring: #8b8cff;
+  --shadow-color: 230 60% 2%;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-primary: var(--primary);
+  --color-primary-strong: var(--primary-strong);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-ring: var(--ring);
+
+  --font-sans:
+    var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-arabic:
+    var(--font-ibm-plex-arabic), "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-display:
+    var(--font-space-grotesk), "Space Grotesk", var(--font-ibm-plex-arabic), sans-serif;
+  --font-ui: var(--font-manrope), "Manrope", var(--font-ibm-plex-arabic), sans-serif;
+}
+
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-    --radius: 0.5rem;
+  * {
+    border-color: var(--border);
   }
 
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
   }
-}
 
-@theme {
-  --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-arabic: var(--font-ibm-plex-arabic), "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
-  --font-sora: var(--font-sora), "Sora", sans-serif;
-  --font-space-grotesk: var(--font-space-grotesk), "Space Grotesk", sans-serif;
-  --font-manrope: var(--font-manrope), "Manrope", sans-serif;
-}
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-.font-sora {
-  font-family: var(--font-sora), "Sora", var(--font-ibm-plex-arabic), sans-serif;
-}
+  html[lang="ar"] {
+    font-family: var(--font-arabic);
+    line-height: 1.65;
+  }
 
-.font-space-grotesk {
-  font-family: var(--font-space-grotesk), "Space Grotesk", var(--font-ibm-plex-arabic), sans-serif;
-}
+  html[lang="en"] {
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
 
-.font-manrope {
-  font-family: var(--font-manrope), "Manrope", var(--font-ibm-plex-arabic), sans-serif;
-}
+  /* Arabic is a connected script: tracking breaks the joins. */
+  html[lang="ar"] * {
+    letter-spacing: normal !important;
+  }
 
-body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  p {
+    line-height: 1.7;
+  }
 
-/* Bidirectional & Logical RTL/LTR Rules per Typography System */
-html[lang="ar"],
-html[dir="rtl"] {
-  font-family: var(--font-ibm-plex-arabic), "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
-  line-height: 1.65;
-  text-align: start;
-}
+  html[lang="ar"] p {
+    line-height: 1.85;
+  }
 
-html[lang="en"],
-html[dir="ltr"] {
-  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.5;
-  text-align: start;
-}
+  code,
+  pre,
+  kbd,
+  samp {
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
 
-/* Ensure Arabic cursive script connections are preserved without tracking distortion */
-html[lang="ar"] *,
-html[dir="rtl"] * {
-  letter-spacing: normal !important;
-}
+  input[type="url"],
+  input[type="email"],
+  input[type="tel"] {
+    direction: ltr;
+    text-align: start;
+  }
 
-/* Clean, modern typography rhythm */
-p {
-  line-height: 1.65;
-}
+  ::selection {
+    background: rgb(47 111 237 / 0.18);
+  }
 
-html[lang="ar"] p,
-html[dir="rtl"] p {
-  line-height: 1.75;
-}
+  .dark ::selection {
+    background: rgb(139 140 255 / 0.3);
+  }
 
-/* Code and monospaced content isolation */
-code,
-pre,
-kbd,
-samp {
-  direction: ltr !important;
-  text-align: left !important;
-  unicode-bidi: isolate;
-}
-
-/* Technical inputs and URLs isolation */
-input[type="url"],
-input[type="email"],
-input[type="tel"] {
-  direction: ltr;
-  text-align: start;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
   }
 }
 
-/* ==================================================
-   Hero Section Animations (High-Impact Luxury Motion)
-   - Cinematic blur-to-sharp upward reveal (850ms, cubic-bezier(0.16, 1, 0.3, 1))
-   - Continuous luxury gradient shimmer on name
-   - Staggered subtitle entrance (800ms)
-   - Living organic aurora float for background auras
-   - Interactive mouse spotlight
-   ================================================== */
-@keyframes hero-entrance-name {
-  0% {
+@layer components {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-ui {
+    font-family: var(--font-ui);
+  }
+
+  /* Keep the class names the first version used, so the identity stays intact. */
+  .font-space-grotesk {
+    font-family: var(--font-display);
+  }
+
+  .font-manrope {
+    font-family: var(--font-ui);
+  }
+
+  /* ==================================================================================
+     Buttons (unchanged look from the first version)
+     ================================================================================== */
+  .btn-action-primary,
+  .btn-action-secondary {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding-inline: 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    cursor: pointer;
+    overflow: hidden;
+    transition:
+      background-color 200ms var(--ease-out-quint),
+      border-color 200ms var(--ease-out-quint),
+      color 200ms var(--ease-out-quint),
+      box-shadow 250ms var(--ease-out-quint),
+      transform 250ms var(--ease-out-quint);
+  }
+
+  .btn-action-primary {
+    background-color: #173b6c;
+    color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+
+  .btn-action-primary:hover {
+    background-color: #1e4b8a;
+    box-shadow: 0 8px 24px -8px rgb(23 59 108 / 0.55);
+  }
+
+  .dark .btn-action-primary {
+    background-color: #4f46e5;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+  }
+
+  .dark .btn-action-primary:hover {
+    background-color: #4338ca;
+    box-shadow: 0 10px 30px -8px rgb(79 70 229 / 0.65);
+  }
+
+  .btn-action-secondary {
+    background-color: #eef5ff;
+    color: #2f6fed;
+    border: 1px solid #d0e2ff;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.02);
+  }
+
+  .btn-action-secondary:hover {
+    background-color: #e0eeff;
+    border-color: #b9d5ff;
+    color: #1b56ca;
+  }
+
+  .dark .btn-action-secondary {
+    background-color: rgb(255 255 255 / 0.04);
+    color: #e2e8f0;
+    border: 1px solid rgb(255 255 255 / 0.12);
+    box-shadow: none;
+  }
+
+  .dark .btn-action-secondary:hover {
+    background-color: rgb(255 255 255 / 0.08);
+    border-color: rgb(255 255 255 / 0.2);
+    color: #ffffff;
+  }
+
+  .btn-action-primary:active,
+  .btn-action-secondary:active {
+    transform: scale(0.97);
+  }
+
+  /* Light sweep across primary buttons on hover. */
+  .btn-action-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      110deg,
+      transparent 20%,
+      rgb(255 255 255 / 0.22) 50%,
+      transparent 80%
+    );
+    transform: translateX(-120%);
+    transition: transform 700ms var(--ease-out-expo);
+  }
+
+  .btn-action-primary:hover::after {
+    transform: translateX(120%);
+  }
+
+  [dir="rtl"] .btn-action-primary::after {
+    transform: translateX(120%);
+  }
+
+  [dir="rtl"] .btn-action-primary:hover::after {
+    transform: translateX(-120%);
+  }
+
+  .hero-aurora-left {
+    animation: hero-aurora-left 9s ease-in-out infinite alternate;
+  }
+
+  .hero-aurora-right {
+    animation: hero-aurora-right 11s ease-in-out infinite alternate;
+  }
+
+  .hero-aurora-center {
+    animation: hero-aurora-center 13s ease-in-out infinite alternate;
+  }
+
+  .hero-name-shimmer-sweep {
+    position: absolute;
+    inset: -6px -10px;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: 6px;
+    z-index: 2;
+  }
+
+  .hero-name-shimmer-sweep::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(79 70 229 / 0.15) 30%,
+      rgb(255 255 255 / 0.7) 50%,
+      rgb(8 145 178 / 0.2) 70%,
+      transparent 100%
+    );
     opacity: 0;
-    filter: blur(6px);
-    transform: translate3d(0, 20px, 0);
+    transform: translate3d(-100%, 0, 0) skewX(-20deg);
+    animation: hero-shimmer-sweep 1150ms var(--ease-out-quint) var(--shimmer-delay, 900ms) 1 normal
+      forwards;
   }
-  100% {
-    opacity: 1;
-    filter: blur(0);
-    transform: translate3d(0, 0, 0);
+
+  .dark .hero-name-shimmer-sweep::after {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(139 140 255 / 0.2) 30%,
+      rgb(255 255 255 / 0.8) 50%,
+      rgb(103 232 249 / 0.25) 70%,
+      transparent 100%
+    );
+  }
+
+  .split-text {
+    perspective: 900px;
+  }
+
+  .split-unit {
+    display: inline-block;
+    transform-origin: 50% 100%;
+    animation: split-rise 800ms var(--ease-out-quint) both;
+    animation-delay: calc(var(--split-base, 0ms) + var(--i, 0) * var(--split-step, 28ms));
+  }
+
+  .typing-caret {
+    animation: caret-blink 1.05s steps(1) infinite;
+  }
+
+  .text-gradient-accent {
+    background-image: linear-gradient(90deg, #4f46e5, #0891b2, #7c3aed, #4f46e5);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradient-pan 8s linear infinite;
+  }
+
+  .dark .text-gradient-accent {
+    background-image: linear-gradient(90deg, #8b8cff, #67e8f9, #c084fc, #8b8cff);
+  }
+
+  .border-beam {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .border-beam::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--border-angle),
+      transparent 0deg,
+      #2f6fed 60deg,
+      #8b5cf6 120deg,
+      #06b6d4 180deg,
+      transparent 240deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: border-spin 4s linear infinite;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+  }
+
+  [dir="rtl"] .marquee-track {
+    animation-name: marquee-rtl;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee-mask {
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+
+  .ping-soft {
+    animation: ping-soft 2.2s var(--ease-out-quint) infinite;
+  }
+
+  .float-y {
+    animation: float-y 6s ease-in-out infinite;
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgb(148 163 184 / 0.12) 25%,
+      rgb(148 163 184 / 0.24) 50%,
+      rgb(148 163 184 / 0.12) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-sweep 1.6s linear infinite;
+  }
+
+  /* Timeline line drawing (experience page), driven by a scroll-linked custom property. */
+  .timeline-line {
+    transform-origin: top;
+    transform: scaleY(var(--timeline-progress, 1));
+  }
+
+  /* Subtle film grain on hero surfaces for depth. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Header and chat launcher stay put during page transitions. */
+  .vt-static {
+    view-transition-name: none;
   }
 }
 
-@keyframes hero-entrance-subtitle {
-  0% {
-    opacity: 0;
-    filter: blur(4px);
-    transform: translate3d(0, 12px, 0);
-  }
-  100% {
-    opacity: 1;
-    filter: blur(0);
-    transform: translate3d(0, 0, 0);
-  }
+/* ==================================================================================
+   Scroll reveal. Content is visible by default; the head script adds `.reveal-ready`
+   only when JS runs, so nothing is ever hidden for crawlers or failed scripts.
+   ================================================================================== */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: var(--reveal-from, translate3d(0, 24px, 0));
+  filter: blur(var(--reveal-blur, 0px));
+  transition:
+    opacity 700ms var(--ease-out-quint) var(--reveal-delay, 0ms),
+    transform 900ms var(--ease-out-expo) var(--reveal-delay, 0ms),
+    filter 700ms var(--ease-out-quint) var(--reveal-delay, 0ms),
+    color 300ms ease,
+    background-color 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
 }
 
-@keyframes hero-text-shimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+.reveal-ready [data-reveal="up"] {
+  --reveal-from: translate3d(0, 28px, 0);
 }
 
+.reveal-ready [data-reveal="down"] {
+  --reveal-from: translate3d(0, -20px, 0);
+}
+
+.reveal-ready [data-reveal="start"] {
+  --reveal-from: translate3d(-32px, 0, 0);
+}
+
+.reveal-ready [data-reveal="end"] {
+  --reveal-from: translate3d(32px, 0, 0);
+}
+
+[dir="rtl"].reveal-ready [data-reveal="start"],
+[dir="rtl"] .reveal-ready [data-reveal="start"] {
+  --reveal-from: translate3d(32px, 0, 0);
+}
+
+[dir="rtl"].reveal-ready [data-reveal="end"],
+[dir="rtl"] .reveal-ready [data-reveal="end"] {
+  --reveal-from: translate3d(-32px, 0, 0);
+}
+
+.reveal-ready [data-reveal="scale"] {
+  --reveal-from: scale(0.94);
+}
+
+.reveal-ready [data-reveal="blur"] {
+  --reveal-from: translate3d(0, 12px, 0);
+  --reveal-blur: 10px;
+}
+
+.reveal-ready [data-reveal="fade"] {
+  --reveal-from: none;
+}
+
+.reveal-ready [data-reveal][data-shown] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* ==================================================================================
+   Hero (kept from the first version, with the RTL centring bug fixed)
+   ================================================================================== */
 @keyframes hero-aurora-left {
   0% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -208,31 +519,20 @@ input[type="tel"] {
   }
 }
 
+/* The centre orb is positioned with `inset-inline: 0; margin-inline: auto`, so its drift
+   animation owns `transform` alone and never fights a translate utility (RTL-safe). */
 @keyframes hero-aurora-center {
   0% {
-    transform: translate3d(-50%, 0, 0) scale(0.95);
+    transform: translate3d(0, 0, 0) scale(0.95);
     opacity: 0.45;
   }
   50% {
-    transform: translate3d(-46%, -18px, 0) scale(1.12);
+    transform: translate3d(24px, -18px, 0) scale(1.12);
     opacity: 0.8;
   }
   100% {
-    transform: translate3d(-54%, 18px, 0) scale(0.97);
+    transform: translate3d(-24px, 18px, 0) scale(0.97);
     opacity: 0.55;
-  }
-}
-
-@keyframes hero-split-reveal {
-  0% {
-    opacity: 0;
-    filter: blur(8px);
-    transform: translate3d(0, 25px, 0) rotateX(18deg);
-  }
-  100% {
-    opacity: 1;
-    filter: blur(0px);
-    transform: translate3d(0, 0, 0) rotateX(0deg);
   }
 }
 
@@ -241,9 +541,7 @@ input[type="tel"] {
     transform: translate3d(-100%, 0, 0) skewX(-20deg);
     opacity: 0;
   }
-  15% {
-    opacity: 1;
-  }
+  15%,
   85% {
     opacity: 1;
   }
@@ -253,218 +551,208 @@ input[type="tel"] {
   }
 }
 
-@keyframes hero-subtitle-reveal {
+/* Split-text reveal (letters or words), driven by CSS so it runs before hydration. */
+@keyframes split-rise {
   0% {
     opacity: 0;
-    filter: blur(4px);
-    transform: translate3d(0, 16px, 0);
-    letter-spacing: 0.04em;
+    filter: blur(8px);
+    transform: translate3d(0, 0.55em, 0) rotateX(35deg);
   }
   100% {
     opacity: 1;
-    filter: blur(0px);
-    transform: translate3d(0, 0, 0);
-    letter-spacing: 0em;
+    filter: blur(0);
+    transform: none;
   }
 }
 
-@keyframes hero-subtitle-reveal-rtl {
-  0% {
+/* Caret used by the role typewriter. */
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
     opacity: 0;
-    filter: blur(4px);
-    transform: translate3d(0, 16px, 0);
   }
   100% {
     opacity: 1;
-    filter: blur(0px);
-    transform: translate3d(0, 0, 0);
   }
 }
 
-.hero-split-mask {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: baseline;
-  perspective: 800px;
+/* Animated gradient text for accents. */
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
 }
 
-.hero-char-item {
-  display: inline-block;
-  opacity: 0;
-  filter: blur(8px);
-  transform: translate3d(0, 25px, 0) rotateX(18deg);
-  transform-origin: 50% 100%;
-  animation: hero-split-reveal 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  will-change: transform, opacity, filter;
-  backface-visibility: hidden;
+/* Rotating conic border used on the assistant launcher and highlighted cards. */
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
 }
 
-.hero-name-shimmer-sweep {
-  position: absolute;
-  inset: -6px -10px;
-  pointer-events: none;
-  overflow: hidden;
-  border-radius: 6px;
-  z-index: 2;
+@keyframes border-spin {
+  to {
+    --border-angle: 360deg;
+  }
 }
 
-/* Zero-layout-shift stacked grid for hero typewriter streaming */
-.hero-grid-stack {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) !important;
-  grid-template-rows: minmax(0, 1fr) !important;
-  position: relative;
-  width: 100%;
+/* Infinite marquee (tech stack strip). Pauses on hover; mirrored in RTL. */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
-.hero-grid-item {
-  grid-column: 1 / -1 !important;
-  grid-row: 1 / -1 !important;
-  margin: 0 !important;
+@keyframes marquee-rtl {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(50%, 0, 0);
+  }
 }
 
-/* Unified Action Buttons for Light and Dark Modes across all pages */
-.btn-action-primary {
-  display: inline-flex;
-  height: 2.75rem; /* h-11 */
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  font-size: 0.875rem; /* text-sm */
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  background-color: #173B6C;
-  color: #ffffff;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+/* Soft pulsing ring (availability dot, assistant launcher). */
+@keyframes ping-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
 }
 
-.btn-action-primary:hover {
-  background-color: #1E4B8A;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+/* Floating (idle) motion for decorative elements. */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
 }
 
-.dark .btn-action-primary {
-  background-color: #4F46E5; /* indigo-600 */
-  color: #ffffff;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+/* Skeleton shimmer. */
+@keyframes skeleton-sweep {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
 }
 
-.dark .btn-action-primary:hover {
-  background-color: #4338CA; /* indigo-700 */
+/* ==================================================================================
+   View transitions between pages (React <ViewTransition>, supported browsers only).
+   ================================================================================== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 380ms;
+  animation-timing-function: var(--ease-out-quint);
 }
 
-.btn-action-secondary {
-  display: inline-flex;
-  height: 2.75rem; /* h-11 */
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  font-size: 0.875rem; /* text-sm */
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  background-color: #EEF5FF;
-  color: #2F6FED;
-  border: 1px solid #D0E2FF;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+::view-transition-old(root) {
+  animation-name: vt-out;
 }
 
-.btn-action-secondary:hover {
-  background-color: #E0EEFF;
-  border-color: #B9D5FF;
-  color: #1B56CA;
+::view-transition-new(root) {
+  animation-name: vt-in;
 }
 
-.dark .btn-action-secondary {
-  background-color: rgba(255, 255, 255, 0.04);
-  color: #E2E8F0; /* slate-200 / neutral-200 */
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: none;
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translate3d(0, -8px, 0);
+  }
 }
 
-.dark .btn-action-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translate3d(0, 12px, 0);
+  }
 }
 
-.hero-name-shimmer-sweep::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 45%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(79, 70, 229, 0.15) 30%,
-    rgba(255, 255, 255, 0.7) 50%,
-    rgba(8, 145, 178, 0.2) 70%,
-    transparent 100%
-  );
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0) skewX(-20deg);
-  animation: hero-shimmer-sweep 1150ms cubic-bezier(0.22, 1, 0.36, 1) 1050ms 1 normal forwards;
-  will-change: transform, opacity;
+::view-transition-group(.morph) {
+  animation-duration: 450ms;
+  animation-timing-function: var(--ease-out-expo);
 }
 
-.dark .hero-name-shimmer-sweep::after {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(139, 140, 255, 0.2) 30%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(103, 232, 249, 0.25) 70%,
-    transparent 100%
-  );
+::view-transition-image-pair(.morph) {
+  animation-name: vt-morph-blur;
 }
 
-.hero-subtitle-cinematic {
-  opacity: 0;
-  letter-spacing: 0.04em;
-  transform: translate3d(0, 16px, 0);
-  animation: hero-subtitle-reveal 750ms cubic-bezier(0.22, 1, 0.36, 1) 750ms forwards;
-  will-change: transform, opacity, letter-spacing, filter;
+@keyframes vt-morph-blur {
+  30% {
+    filter: blur(3px);
+  }
 }
 
-[dir="rtl"] .hero-subtitle-cinematic {
-  letter-spacing: normal !important;
-  animation-name: hero-subtitle-reveal-rtl;
+/* Admin edit overlay affordances (only styled when edit mode is on). */
+.edit-mode [data-edit-ui],
+.edit-mode [data-edit-field] {
+  cursor: text;
+  border-radius: 4px;
+  outline: 1.5px dashed rgb(79 70 229 / 0);
+  outline-offset: 3px;
+  transition:
+    outline-color 150ms ease,
+    background-color 150ms ease;
 }
 
-.hero-aurora-left {
-  animation: hero-aurora-left 9s ease-in-out infinite alternate;
-  will-change: transform;
+.edit-mode [data-edit-ui]:hover,
+.edit-mode [data-edit-field]:hover {
+  outline-color: rgb(79 70 229 / 0.75);
+  background-color: rgb(79 70 229 / 0.06);
 }
 
-.hero-aurora-right {
-  animation: hero-aurora-right 11s ease-in-out infinite alternate;
-  will-change: transform;
+.edit-mode [data-edit-entry] {
+  outline: 1.5px dashed transparent;
+  outline-offset: 6px;
+  transition: outline-color 150ms ease;
 }
 
-.hero-aurora-center {
-  animation: hero-aurora-center 13s ease-in-out infinite alternate;
-  will-change: transform, opacity;
+.edit-mode [data-edit-entry]:hover {
+  outline-color: rgb(8 145 178 / 0.55);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-aurora-left,
-  .hero-aurora-right,
-  .hero-aurora-center {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
     animation: none !important;
-    transform: none !important;
-    filter: none !important;
-    opacity: 1 !important;
-    background-position: 0% 50% !important;
   }
 }

@@ -7,21 +7,27 @@ declare global {
 }
 
 const connectionString =
-  process.env["DATABASE_URL"] || "postgresql://postgres:postgres@localhost:5432/portfolio_dev";
+  process.env["DATABASE_URL"] || "postgresql://postgres:postgres@127.0.0.1:5439/portfolio_dev";
+
+const isProduction = process.env.NODE_ENV === "production";
 
 const clientOptions: postgres.Options<{}> = {
-  max: process.env.NODE_ENV === "production" ? 10 : 1,
+  // Serverless instances handle a few concurrent requests each; the Neon pooler does the rest.
+  max: isProduction ? 5 : 3,
   idle_timeout: 20,
-  connect_timeout: process.env.NODE_ENV === "test" ? 1 : 10,
+  connect_timeout: process.env.NODE_ENV === "test" ? 2 : 15,
+  // Transaction-mode poolers (Neon "-pooler" hosts, PgBouncer) cannot use named prepared statements.
+  prepare: false,
+  onnotice: () => {},
 };
 
-if (connectionString.includes("sslmode=require")) {
+if (/sslmode=require|neon\.tech/.test(connectionString)) {
   clientOptions.ssl = "require";
 }
 
 export const client = globalThis.__db_client ?? postgres(connectionString, clientOptions);
 
-if (process.env.NODE_ENV !== "production") {
+if (!isProduction) {
   globalThis.__db_client = client;
 }
 

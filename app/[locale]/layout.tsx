@@ -1,21 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
 import "../globals.css";
-import { DirectionProvider } from "@/modules/localization/presentation/direction-provider";
-import { ThemeProvider } from "@/modules/theme/presentation/theme-provider";
-import { ThemeScript } from "@/modules/theme/presentation/theme-script";
-import { getThemeFromCookie } from "@/modules/theme/infrastructure/theme-cookie";
-import type { Theme } from "@/modules/theme/domain/theme";
+import { fontVariables } from "@/lib/fonts";
+import { LOCALES, dirOf, isLocale, type Locale } from "@/i18n/config";
+import { I18nProvider } from "@/i18n/provider";
+import { getMessages } from "@/server/content/ui-text";
+import { getProfile } from "@/server/content/repository";
+import { siteUrl } from "@/lib/site";
+import { DocumentScript } from "@/ui/document-script";
+import { MotionProvider } from "@/ui/motion/motion-provider";
 
-import { MotionProvider } from "@/modules/motion/presentation/motion-provider";
-import { SkipLink, AnnouncerProvider } from "@/modules/accessibility/presentation";
-import { fontInter, fontIBMPlexSansArabic, fontSora, fontSpaceGrotesk, fontManrope } from "@/lib/fonts";
-
-export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "AI & Web Engineering Portfolio",
-};
+export function generateStaticParams() {
+  return LOCALES.map((locale) => ({ locale }));
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -23,64 +20,57 @@ export const viewport: Viewport = {
   maximumScale: 5,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#090d16" },
+    { media: "(prefers-color-scheme: dark)", color: "#07101f" },
   ],
 };
 
-export const dynamicParams = true;
-
-const SUPPORTED_LOCALES = ["ar", "en"] as const;
-type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
-
-export function generateStaticParams() {
-  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
+  const { locale: raw } = await params;
+  const locale: Locale = isLocale(raw) ? raw : "en";
+  const profile = await getProfile(locale);
+  const name = profile?.t.name ?? (locale === "ar" ? "أنس الدحامشة" : "Anas Al Dahamsheh");
+  const headline = profile?.t.headline ?? "AI Engineer";
+  const description = profile?.t.tagline || profile?.t.summary || headline;
+  return {
+    metadataBase: new URL(siteUrl()),
+    title: { default: `${name} — ${headline}`, template: `%s | ${name}` },
+    description,
+    applicationName: name,
+    authors: [{ name }],
+    creator: name,
+    alternates: {
+      canonical: `/${locale}`,
+      languages: { en: "/en", ar: "/ar", "x-default": "/en" },
+    },
+    openGraph: {
+      type: "website",
+      siteName: name,
+      title: `${name} — ${headline}`,
+      description,
+      locale: locale === "ar" ? "ar_JO" : "en_US",
+      alternateLocale: locale === "ar" ? ["en_US"] : ["ar_JO"],
+      url: `/${locale}`,
+    },
+    twitter: { card: "summary_large_image", title: `${name} — ${headline}`, description },
+    robots: { index: true, follow: true },
+  };
 }
 
-interface RootLayoutProps {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
-}
-
-export default async function RootLayout({ children, params }: RootLayoutProps) {
-  const { locale } = await params;
-
-  if (!SUPPORTED_LOCALES.includes(locale as SupportedLocale)) {
-    notFound();
-  }
-
-  const dir = locale === "ar" ? "rtl" : "ltr";
-
-  let serverTheme: Theme = "system";
-  try {
-    const cookieStore = await cookies();
-    const cookieHeader = cookieStore.toString();
-    serverTheme = getThemeFromCookie(cookieHeader);
-  } catch {
-    // Graceful fallback for static page generation and test environments
-    serverTheme = "system";
-  }
+export default async function RootLayout({ children, params }: LayoutProps<"/[locale]">) {
+  const { locale: raw } = await params;
+  if (!isLocale(raw)) notFound();
+  const locale = raw;
+  const messages = await getMessages(locale);
 
   return (
-    <html
-      lang={locale}
-      dir={dir}
-      className={`${fontInter.variable} ${fontIBMPlexSansArabic.variable} ${fontSora.variable} ${fontSpaceGrotesk.variable} ${fontManrope.variable} ${serverTheme === "dark" ? "dark" : ""}`.trim()}
-      suppressHydrationWarning
-    >
+    <html lang={locale} dir={dirOf(locale)} className={fontVariables} suppressHydrationWarning>
       <head>
-        <ThemeScript />
+        <DocumentScript />
       </head>
-      <body className="bg-background text-foreground selection:bg-primary selection:text-primary-foreground min-h-screen font-sans antialiased">
-        <ThemeProvider initialTheme={serverTheme}>
-          <MotionProvider>
-            <DirectionProvider dir={dir}>
-              <AnnouncerProvider>
-                <SkipLink locale={locale} />
-                {children}
-              </AnnouncerProvider>
-            </DirectionProvider>
-          </MotionProvider>
-        </ThemeProvider>
+      <body className="bg-background text-foreground min-h-screen antialiased">
+        <I18nProvider locale={locale} messages={messages}>
+          <MotionProvider>{children}</MotionProvider>
+        </I18nProvider>
       </body>
     </html>
   );

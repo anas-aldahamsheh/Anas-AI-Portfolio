@@ -46,6 +46,7 @@ anas-ai-portfolio-blueprint/
 
 # Private Test Suites
 tests/
+tests-legacy/
 
 # Security, Certificates & Secrets
 *.pem
