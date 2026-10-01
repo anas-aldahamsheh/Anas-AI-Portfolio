@@ -6,7 +6,12 @@ import { getTranslator } from "@/i18n/server";
 import { AuroraBackdrop } from "@/ui/page-hero";
 import { SignInForm } from "@/features/admin/sign-in-form";
 
-export const metadata: Metadata = { title: "Sign in", robots: { index: false, follow: false } };
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]/sign-in">): Promise<Metadata> {
+  const { t } = await getTranslator(toLocale((await params).locale));
+  return { title: t("auth.title"), robots: { index: false, follow: false } };
+}
 
 export default async function SignInPage({ params }: PageProps<"/[locale]/sign-in">) {
   const locale = toLocale((await params).locale);

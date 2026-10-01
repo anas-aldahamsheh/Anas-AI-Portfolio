@@ -80,12 +80,13 @@ export async function* runAgent(input: {
   message: string;
   history: ChatMessage[];
   locale: Locale;
+  page?: { path: string; title?: string | undefined };
   signal?: AbortSignal;
   trace: AgentTrace;
 }): AsyncGenerator<AgentEvent> {
   const { locale, trace } = input;
   const settings = await getAiSettings();
-  const registry = new SourceRegistry();
+  const registry = new SourceRegistry(locale);
   const [profile] = await listPublishedFresh("profile", locale).catch(() => []);
 
   const system = buildSystemPrompt({
@@ -95,6 +96,7 @@ export async function* runAgent(input: {
     locale,
     today: new Date().toISOString().slice(0, 10),
     ownerInstructions: settings.instructions[locale] || settings.instructions.en || "",
+    ...(input.page ? { page: input.page } : {}),
   });
 
   const contents = toContents(input.history, input.message);

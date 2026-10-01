@@ -4,11 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, m, useMotionValueEvent, useScroll, useSpring } from "motion/react";
-import { Menu, Sparkles, X } from "lucide-react";
+import { LayoutDashboard, LogIn, Menu, Sparkles, X } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
 import type { MessageKey } from "@/i18n/messages";
 import { cn } from "@/lib/utils";
 import { openAssistant } from "@/features/assistant/events";
+import { useAdminHint } from "@/features/admin/use-admin-hint";
 import { LanguageSwitch } from "./language-switch";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -30,6 +31,20 @@ export function Navbar({ logo }: { logo: ReactNode }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const isAdmin = useAdminHint();
+  const account = isAdmin
+    ? {
+        href: `/${locale}/admin`,
+        label: t("nav.dashboard"),
+        title: t("nav.dashboard"),
+        Icon: LayoutDashboard,
+      }
+    : {
+        href: `/${locale}/sign-in`,
+        label: t("nav.signIn"),
+        title: t("nav.signInLabel"),
+        Icon: LogIn,
+      };
 
   const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
@@ -60,10 +75,15 @@ export function Navbar({ logo }: { logo: ReactNode }) {
     };
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    // The page behind the menu is inert, so keyboard and screen-reader users stay between the
+    // menu and the header (whose toggle closes it).
+    const behind = [document.getElementById("main-content"), document.querySelector("footer")];
+    for (const element of behind) element?.setAttribute("inert", "");
     window.addEventListener("keydown", onKey);
     menuRef.current?.querySelector<HTMLElement>("a")?.focus();
     return () => {
       document.body.style.overflow = previousOverflow;
+      for (const element of behind) element?.removeAttribute("inert");
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
@@ -94,10 +114,10 @@ export function Navbar({ logo }: { logo: ReactNode }) {
         animate={{ y: hidden ? "-100%" : "0%" }}
         transition={{ type: "spring", stiffness: 380, damping: 38 }}
       >
-        <div className="mx-auto flex h-16 max-w-[1420px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
+        <div className="mx-auto flex h-16 max-w-[1420px] items-center justify-between gap-2 px-4 sm:gap-4 sm:px-6 lg:px-10">
           <Link
             href={hrefOf("")}
-            className="flex shrink-0 items-center transition-opacity hover:opacity-85"
+            className="flex min-w-0 items-center transition-opacity hover:opacity-85"
             aria-label={t("nav.overview")}
           >
             {logo}
@@ -146,9 +166,21 @@ export function Navbar({ logo }: { logo: ReactNode }) {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
             <LanguageSwitch />
             <ThemeToggle />
+            <Link
+              href={account.href}
+              title={account.title}
+              aria-label={account.title}
+              className="group hidden h-9 items-center gap-1.5 rounded-full border border-neutral-200/80 bg-white/80 px-2.5 text-xs font-semibold text-[#173B6C] shadow-2xs transition-all duration-200 hover:border-[#D0E2FF] hover:bg-[#EEF5FF] active:scale-95 sm:inline-flex xl:px-3.5 dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-neutral-200 dark:hover:bg-white/[0.08]"
+            >
+              <account.Icon
+                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
+                aria-hidden="true"
+              />
+              <span className="hidden xl:inline">{account.label}</span>
+            </Link>
             <button
               type="button"
               onClick={() => openAssistant()}
@@ -208,16 +240,15 @@ export function Navbar({ logo }: { logo: ReactNode }) {
             <button
               type="button"
               aria-label={t("nav.menuClose")}
-              className="absolute inset-0 bg-[#07101F]/30 backdrop-blur-sm"
+              className="absolute inset-0 bg-[#07101F]/40 dark:bg-black/50"
               onClick={() => setOpen(false)}
             />
             <m.div
               ref={menuRef}
               id="mobile-menu"
               role="dialog"
-              aria-modal="true"
               aria-label={t("nav.main")}
-              className="absolute inset-x-3 top-[4.5rem] origin-top rounded-3xl border border-neutral-200/80 bg-white/95 p-3 shadow-2xl backdrop-blur-xl dark:border-white/[0.08] dark:bg-[#0B1728]/95"
+              className="absolute inset-x-3 top-[4.5rem] max-h-[calc(100dvh-6rem)] origin-top overflow-y-auto overscroll-contain rounded-3xl border border-neutral-200/80 bg-white p-3 shadow-2xl dark:border-white/[0.08] dark:bg-[#0B1728]"
               initial={{ opacity: 0, y: -16, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.97 }}
@@ -264,8 +295,23 @@ export function Navbar({ logo }: { logo: ReactNode }) {
                   );
                 })}
                 <m.li
+                  variants={{
+                    hidden: { opacity: 0, x: locale === "ar" ? 16 : -16 },
+                    show: { opacity: 1, x: 0 },
+                  }}
+                  className="mt-1 border-t border-neutral-200/70 pt-2 dark:border-white/[0.08]"
+                >
+                  <Link
+                    href={account.href}
+                    className="flex items-center gap-2.5 rounded-2xl px-4 py-3 text-sm font-semibold text-[#173B6C] transition-colors hover:bg-neutral-100/80 dark:text-indigo-100 dark:hover:bg-white/[0.06]"
+                  >
+                    <account.Icon className="h-4 w-4 rtl:-scale-x-100" aria-hidden="true" />
+                    {account.title}
+                  </Link>
+                </m.li>
+                <m.li
                   variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }}
-                  className="pt-2"
+                  className="pt-1"
                 >
                   <button
                     type="button"

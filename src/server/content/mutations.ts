@@ -27,6 +27,8 @@ export interface EntryPatch {
   data?: Record<string, unknown>;
   i18n?: Partial<Record<Locale, Record<string, unknown>>>;
   expectedVersion?: number;
+  /** Use `data`/`i18n` as the complete new content instead of merging (restoring a revision). */
+  replace?: boolean;
 }
 
 const isFilled = (v: unknown) =>
@@ -187,13 +189,19 @@ export async function updateEntry(
     );
   }
   const collection = current.collection as CollectionName;
-  const mergedI18n: Record<string, Record<string, unknown>> = { ...current.i18n };
+  // A restore replaces the content wholesale: fields added after the snapshot must go too.
+  const mergedI18n: Record<string, Record<string, unknown>> = patch.replace
+    ? {}
+    : { ...current.i18n };
   for (const [locale, fields] of Object.entries(patch.i18n ?? {})) {
-    if (fields) mergedI18n[locale] = { ...(current.i18n[locale] ?? {}), ...fields };
+    if (fields)
+      mergedI18n[locale] = patch.replace
+        ? { ...fields }
+        : { ...(current.i18n[locale] ?? {}), ...fields };
   }
   const { data, i18n } = validate(
     collection,
-    { ...current.data, ...(patch.data ?? {}) },
+    patch.replace ? { ...(patch.data ?? {}) } : { ...current.data, ...(patch.data ?? {}) },
     mergedI18n,
   );
   const slug =
@@ -299,7 +307,13 @@ export async function restoreRevision(
   if (existing) {
     return updateEntry(
       existing.id,
-      { data: snapshot.data, i18n: snapshot.i18n, status: snapshot.status },
+      {
+        data: snapshot.data,
+        i18n: snapshot.i18n,
+        status: snapshot.status,
+        slug: snapshot.slug,
+        replace: true,
+      },
       actorId,
     );
   }

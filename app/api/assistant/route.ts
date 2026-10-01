@@ -17,6 +17,23 @@ const bodySchema = z.object({
     .array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().max(8000) }))
     .max(24)
     .default([]),
+  // The page the visitor is reading, so "this project" can be resolved. Untrusted: only a
+  // site path and a short title are accepted, and the prompt treats both as data.
+  page: z
+    .object({
+      path: z
+        .string()
+        .max(200)
+        .regex(/^\/[\w\-/%.]*$/),
+      title: z
+        .string()
+        .max(160)
+        .transform((value) => value.replace(/[\s"`]+/g, " ").trim())
+        .optional(),
+    })
+    .optional()
+    // A malformed page hint is dropped, never a reason to refuse the question.
+    .catch(undefined),
 });
 
 const encoder = new TextEncoder();
@@ -24,6 +41,16 @@ const sse = (event: string, data: unknown) =>
   encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
 
 export async function POST(request: Request) {
+  // JSON only (a cross-site page can't send it without a CORS preflight, which is refused) and
+  // never from another site in a browser, so other websites can't spend the model quota.
+  if (!(request.headers.get("content-type") ?? "").toLowerCase().startsWith("application/json")) {
+    return Response.json({ error: "unsupported_media_type" }, { status: 415 });
+  }
+  const fetchSite = request.headers.get("sec-fetch-site");
+  if (fetchSite && fetchSite !== "same-origin" && fetchSite !== "none") {
+    return Response.json({ error: "forbidden" }, { status: 403 });
+  }
+
   let body: z.infer<typeof bodySchema>;
   try {
     body = bodySchema.parse(await request.json());
@@ -69,6 +96,7 @@ export async function POST(request: Request) {
           message: body.message,
           history: body.history,
           locale: body.locale,
+          ...(body.page ? { page: body.page } : {}),
           signal: request.signal,
           trace,
         }) as AsyncGenerator<AgentEvent>) {

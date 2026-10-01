@@ -43,7 +43,7 @@ export function ProjectCard({
         data-edit-entry={project.id}
         data-edit-collection="project"
         data-edit-label={project.title}
-        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#E5EAF2] bg-white/85 shadow-sm backdrop-blur-md transition-[border-color,box-shadow] duration-300 hover:border-[#D0E2FF] hover:shadow-[0_24px_50px_-28px_rgba(23,59,108,0.45)] dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-white/[0.15]"
+        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#E5EAF2] bg-white/90 shadow-sm transition-[border-color,box-shadow] duration-300 hover:border-[#D0E2FF] hover:shadow-[0_24px_50px_-28px_rgba(23,59,108,0.45)] dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-white/[0.15]"
       >
         <Link
           href={href}

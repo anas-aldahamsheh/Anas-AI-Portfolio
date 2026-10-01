@@ -86,6 +86,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <section
         className="grain relative w-full overflow-hidden bg-white dark:bg-[#07101F]"
         aria-labelledby="hero-name"
+        data-pause-offscreen=""
       >
         <AuroraBackdrop intensity="home" />
         <div className="relative z-10 mx-auto max-w-[1420px] px-4 py-14 text-start sm:px-6 sm:py-20 lg:px-10 lg:py-24">
@@ -169,7 +170,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               {stats.map((stat) => (
                 <div
                   key={stat.key}
-                  className="rounded-2xl border border-[#E5EAF2] bg-white/60 px-4 py-3 backdrop-blur-sm dark:border-white/[0.08] dark:bg-white/[0.03]"
+                  className="rounded-2xl border border-[#E5EAF2] bg-white/75 px-4 py-3 dark:border-white/[0.08] dark:bg-white/[0.035]"
                 >
                   <dt className="text-[11px] font-semibold tracking-wider text-[#637089] uppercase dark:text-[#9AA8C0]">
                     {tx(stat.key)}

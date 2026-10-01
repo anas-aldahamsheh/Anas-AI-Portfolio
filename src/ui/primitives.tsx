@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 /** The site's card surface (glassy white / translucent dark), shared by every page. */
 export const cardSurface =
-  "rounded-2xl border border-[#E5EAF2] bg-white/85 shadow-xs backdrop-blur-md transition-[border-color,box-shadow,transform] duration-300 hover:border-[#D0E2FF] hover:shadow-[0_18px_40px_-24px_rgba(23,59,108,0.35)] dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-white/[0.15] dark:hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.8)]";
+  "rounded-2xl border border-[#E5EAF2] bg-white/90 shadow-xs transition-[border-color,box-shadow,transform] duration-300 hover:border-[#D0E2FF] hover:shadow-[0_18px_40px_-24px_rgba(23,59,108,0.35)] dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-white/[0.15] dark:hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.8)]";
 
 export function Card({
   children,

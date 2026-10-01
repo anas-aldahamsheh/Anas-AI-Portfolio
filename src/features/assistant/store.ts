@@ -32,6 +32,12 @@ interface State {
   busy: boolean;
 }
 
+/** The page the visitor is looking at, so "this project" can be resolved by the assistant. */
+export interface PageContext {
+  path: string;
+  title?: string;
+}
+
 const STORAGE_KEY = "pf_assistant_v1";
 const listeners = new Set<() => void>();
 let state: State = { conversationId: null, messages: [], busy: false };
@@ -57,10 +63,17 @@ function load() {
   } catch {
     // ignore corrupted storage
   }
+  // Last chance to save a conversation that is still waiting for its debounced write.
+  window.addEventListener("pagehide", persistNow);
 }
 
-function set(next: Partial<State>) {
-  state = { ...state, ...next };
+// Saving is debounced: a streamed answer would otherwise rewrite the whole conversation to
+// storage on every token, which is slow on phones.
+let persistTimer: ReturnType<typeof setTimeout> | null = null;
+
+function persistNow() {
+  if (persistTimer) clearTimeout(persistTimer);
+  persistTimer = null;
   try {
     sessionStorage.setItem(
       STORAGE_KEY,
@@ -69,6 +82,15 @@ function set(next: Partial<State>) {
   } catch {
     // storage full or disabled
   }
+}
+
+function schedulePersist() {
+  if (!persistTimer) persistTimer = setTimeout(persistNow, 500);
+}
+
+function set(next: Partial<State>) {
+  state = { ...state, ...next };
+  schedulePersist();
   listeners.forEach((listener) => listener());
 }
 
@@ -81,6 +103,29 @@ function patchMessage(
       m.id === id ? { ...m, ...(typeof patch === "function" ? patch(m) : patch) } : m,
     ),
   });
+}
+
+// Streamed text is applied in small batches (~25 renders a second at most) instead of once per
+// network chunk, so long answers stay smooth on slow devices.
+let pendingText = "";
+let pendingId: string | null = null;
+let flushTimer: ReturnType<typeof setTimeout> | null = null;
+
+function flushText() {
+  if (flushTimer) clearTimeout(flushTimer);
+  flushTimer = null;
+  if (!pendingId || !pendingText) return;
+  const id = pendingId;
+  const text = pendingText;
+  pendingText = "";
+  patchMessage(id, (m) => ({ content: m.content + text }));
+}
+
+function queueText(id: string, text: string) {
+  if (pendingId !== id) flushText();
+  pendingId = id;
+  pendingText += text;
+  if (!flushTimer) flushTimer = setTimeout(flushText, 40);
 }
 
 const subscribe = (listener: () => void) => {
@@ -140,6 +185,7 @@ async function* readEvents(
 export interface SendOptions {
   locale: Locale;
   messages: { rateLimited: string; error: string };
+  page?: PageContext | undefined;
 }
 
 export async function sendMessage(text: string, options: SendOptions) {
@@ -172,6 +218,7 @@ export async function sendMessage(text: string, options: SendOptions) {
         locale: options.locale,
         history,
         ...(state.conversationId ? { conversationId: state.conversationId } : {}),
+        ...(options.page ? { page: options.page } : {}),
       }),
       signal: controller.signal,
     });
@@ -183,6 +230,11 @@ export async function sendMessage(text: string, options: SendOptions) {
 
     for await (const { event, data } of readEvents(response.body)) {
       const payload = data as Record<string, unknown>;
+      if (event === "delta") {
+        queueText(reply.id, String(payload["text"] ?? ""));
+        continue;
+      }
+      flushText();
       switch (event) {
         case "meta":
           if (typeof payload["conversationId"] === "string")
@@ -196,9 +248,6 @@ export async function sendMessage(text: string, options: SendOptions) {
             const tool = typeof payload["tool"] === "string" ? payload["tool"] : undefined;
             return { steps: [...steps, tool ? { label, tool } : { label }] };
           });
-          break;
-        case "delta":
-          patchMessage(reply.id, (m) => ({ content: m.content + String(payload["text"] ?? "") }));
           break;
         case "final":
           patchMessage(reply.id, {
@@ -219,6 +268,7 @@ export async function sendMessage(text: string, options: SendOptions) {
           break;
       }
     }
+    flushText();
     patchMessage(reply.id, (m) =>
       m.status === "streaming"
         ? {
@@ -228,6 +278,7 @@ export async function sendMessage(text: string, options: SendOptions) {
         : {},
     );
   } catch (error) {
+    flushText();
     if ((error as Error).name === "AbortError") {
       patchMessage(reply.id, (m) => ({
         status: m.content ? "done" : "error",
@@ -238,6 +289,7 @@ export async function sendMessage(text: string, options: SendOptions) {
     }
   } finally {
     set({ busy: false });
+    persistNow();
   }
 }
 
@@ -247,7 +299,10 @@ export function stopStreaming() {
 
 export function resetConversation() {
   controller?.abort();
+  pendingText = "";
+  pendingId = null;
   set({ conversationId: null, messages: [], busy: false });
+  persistNow();
 }
 
 /** Re-asks the question that produced a failed answer. */

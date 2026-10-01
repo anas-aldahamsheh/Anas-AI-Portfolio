@@ -60,7 +60,15 @@ export default async function ProjectsPage({ params }: PageProps<"/[locale]/proj
             all: t("projects.filter.all"),
             search: t("projects.search"),
             empty: t("projects.empty"),
-            count: t("projects.count"),
+            clear: t("projects.clear"),
+            filter: t("projects.filter.label"),
+            counts: {
+              one: t("projects.count.one"),
+              two: t("projects.count.two"),
+              few: t("projects.count.few"),
+              many: t("projects.count.many"),
+              other: t("projects.count.other"),
+            },
           }}
         />
       </Container>

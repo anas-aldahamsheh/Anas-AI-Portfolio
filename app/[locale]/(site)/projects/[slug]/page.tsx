@@ -253,7 +253,7 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
           </div>
 
           <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-            <Reveal variant="end">
+            <Reveal variant="up">
               <Card className="space-y-4 p-6">
                 <h2 className="text-xs font-bold tracking-wider text-[#173B6C] uppercase dark:text-[#F4F7FF]">
                   {tx("project.stack")}
@@ -272,7 +272,7 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
               </Card>
             </Reveal>
             {previous || next ? (
-              <Reveal variant="end" delay={100}>
+              <Reveal variant="up" delay={100}>
                 <nav className="grid gap-3" aria-label={t("nav.projects")}>
                   {next ? (
                     <Link

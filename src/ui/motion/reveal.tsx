@@ -42,7 +42,16 @@ export function Reveal({
   );
 }
 
-/** Splits text into animated units (words for Arabic to keep letters joined, letters otherwise). */
+const ARABIC = /[؀-ۿ]/;
+const SPACE = /^\s+$/;
+
+/**
+ * Splits text into animated units (words for Arabic to keep letters joined, letters otherwise).
+ * Every unit is an inline-block, which bidi treats as one neutral character, so two rules keep
+ * mixed text readable: the wrapper takes the text's own direction (an English title on an
+ * Arabic page keeps its letter order), and inside Arabic text a run of Latin words stays one
+ * unit (otherwise "تقييم Large Language Models" would read "Models Language Large تقييم").
+ */
 export function SplitText({
   text,
   by = "auto",
@@ -56,13 +65,34 @@ export function SplitText({
   step?: number;
   className?: string;
 }) {
-  const arabic = /[؀-ۿ]/.test(text);
+  const arabic = ARABIC.test(text);
   const mode =
     by === "auto" ? (arabic || text.length > 40 ? "word" : "char") : arabic ? "word" : by;
-  const words = text.split(/(\s+)/);
+  const parts = text.split(/(\s+)/).filter(Boolean);
+  const words: string[] = [];
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i] ?? "";
+    const previous = words[words.length - 1];
+    const next = parts[i + 1];
+    if (
+      arabic &&
+      SPACE.test(part) &&
+      previous &&
+      !SPACE.test(previous) &&
+      !ARABIC.test(previous) &&
+      next &&
+      !ARABIC.test(next)
+    ) {
+      words[words.length - 1] = previous + part + next;
+      i++;
+      continue;
+    }
+    words.push(part);
+  }
   let index = 0;
   return (
     <span
+      dir={arabic ? "rtl" : "ltr"}
       className={className ? `split-text ${className}` : "split-text"}
       style={
         {

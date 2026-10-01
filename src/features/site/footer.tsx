@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cacheLife } from "next/cache";
-import { ArrowUpRight, FileText, Mail, Phone } from "lucide-react";
+import { ArrowUpRight, FileText, LogIn, Mail, Phone } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import { getTranslator } from "@/i18n/server";
 import type { MessageKey } from "@/i18n/messages";
@@ -168,10 +168,11 @@ export async function Footer({
             <p className="hidden md:block">{tx("footer.builtWith")}</p>
             <Link
               href={`/${locale}/sign-in`}
-              className="opacity-60 transition-opacity hover:opacity-100"
+              className="inline-flex items-center gap-1.5 font-semibold transition-colors hover:text-[#2F6FED] dark:hover:text-white"
               rel="nofollow"
             >
-              Admin
+              <LogIn className="h-3.5 w-3.5 rtl:-scale-x-100" aria-hidden="true" />
+              {t("nav.signInLabel")}
             </Link>
           </div>
         </div>

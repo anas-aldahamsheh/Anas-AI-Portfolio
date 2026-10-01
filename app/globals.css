@@ -201,9 +201,10 @@
     box-shadow: 0 10px 30px -8px rgb(79 70 229 / 0.65);
   }
 
+  /* Text is #1b56ca (5.9:1 on the pale blue); the brighter #2f6fed was under the 4.5:1 minimum. */
   .btn-action-secondary {
     background-color: #eef5ff;
-    color: #2f6fed;
+    color: #1b56ca;
     border: 1px solid #d0e2ff;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.02);
   }
@@ -211,7 +212,7 @@
   .btn-action-secondary:hover {
     background-color: #e0eeff;
     border-color: #b9d5ff;
-    color: #1b56ca;
+    color: #1546a8;
   }
 
   .dark .btn-action-secondary {
@@ -324,49 +325,68 @@
     animation-delay: calc(var(--split-base, 0ms) + var(--i, 0) * var(--split-step, 28ms));
   }
 
+  /* Smooth (compositor-only) blink: an eased opacity curve instead of steps(). */
   .typing-caret {
-    animation: caret-blink 1.05s steps(1) infinite;
+    animation: caret-blink 1.1s ease-in-out infinite;
   }
 
+  /* Static gradient: an infinite background-position pan repaints on the main thread every
+     frame, which is what made phones lag. */
   .text-gradient-accent {
-    background-image: linear-gradient(90deg, #4f46e5, #0891b2, #7c3aed, #4f46e5);
-    background-size: 200% 100%;
+    background-image: linear-gradient(90deg, #4f46e5, #0891b2 55%, #7c3aed);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    animation: gradient-pan 8s linear infinite;
   }
 
   .dark .text-gradient-accent {
-    background-image: linear-gradient(90deg, #8b8cff, #67e8f9, #c084fc, #8b8cff);
+    background-image: linear-gradient(90deg, #8b8cff, #67e8f9 55%, #c084fc);
   }
 
-  .border-beam {
-    position: relative;
-    isolation: isolate;
-  }
-
-  .border-beam::before {
-    content: "";
+  /* Glowing border with a light sweeping along it. Add <span class="beam" aria-hidden> inside a
+     `relative` element with a border radius. The ring is a static mask; only a small gradient
+     moves, with `transform`, so the GPU animates it without touching the main thread. */
+  .beam {
     position: absolute;
     inset: -1px;
-    z-index: -1;
+    z-index: 0;
     border-radius: inherit;
-    padding: 1px;
-    background: conic-gradient(
-      from var(--border-angle),
-      transparent 0deg,
-      #2f6fed 60deg,
-      #8b5cf6 120deg,
-      #06b6d4 180deg,
-      transparent 240deg
-    );
+    padding: var(--beam-width, 1.5px);
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--beam-rest, rgb(47 111 237 / 0.22));
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    animation: border-spin 4s linear infinite;
+  }
+
+  .dark .beam {
+    background: var(--beam-rest-dark, rgb(129 140 248 / 0.28));
+  }
+
+  .beam::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 45%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      #2f6fed 30%,
+      #8b5cf6 55%,
+      #06b6d4 78%,
+      transparent
+    );
+    transform: translate3d(-110%, 0, 0);
+    animation: beam-sweep var(--beam-duration, 4.5s) var(--ease-out-quint) infinite;
+    will-change: transform;
+  }
+
+  [dir="rtl"] .beam::before {
+    animation-direction: reverse;
   }
 
   .marquee-track {
@@ -423,9 +443,120 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
+  /* On touch screens the grain is invisible anyway, and blending it over the moving aurora
+     costs the GPU a full-screen pass every frame. */
+  @media (pointer: coarse) {
+    .grain::after {
+      display: none;
+    }
+  }
+
+  /* Aurora glows: soft radial gradients instead of 100px+ `filter: blur()` layers, which a
+     phone GPU had to re-blur on every frame while they drift. Same colours and placement. */
+  .aurora-left {
+    background: radial-gradient(
+      closest-side,
+      rgb(186 230 253 / 0.85),
+      rgb(224 242 254 / 0.55) 45%,
+      rgb(224 242 254 / 0.18) 72%,
+      transparent
+    );
+  }
+
+  .dark .aurora-left {
+    background: radial-gradient(
+      closest-side,
+      rgb(2 132 199 / 0.3),
+      rgb(3 105 161 / 0.16) 45%,
+      rgb(3 105 161 / 0.05) 72%,
+      transparent
+    );
+  }
+
+  .aurora-right {
+    background: radial-gradient(
+      closest-side,
+      rgb(221 214 254 / 0.9),
+      rgb(237 233 254 / 0.55) 45%,
+      rgb(237 233 254 / 0.18) 72%,
+      transparent
+    );
+  }
+
+  .dark .aurora-right {
+    background: radial-gradient(
+      closest-side,
+      rgb(124 58 237 / 0.3),
+      rgb(109 40 217 / 0.16) 45%,
+      rgb(109 40 217 / 0.05) 72%,
+      transparent
+    );
+  }
+
+  .aurora-center {
+    background: radial-gradient(
+      closest-side,
+      rgb(203 222 253 / 0.5),
+      rgb(221 214 254 / 0.28) 55%,
+      transparent
+    );
+  }
+
+  .dark .aurora-center {
+    background: radial-gradient(
+      closest-side,
+      rgb(63 95 228 / 0.18),
+      rgb(124 58 237 / 0.1) 55%,
+      transparent
+    );
+  }
+
+  /* Pause decorative loops while their section is off screen (set by the head script). */
+  [data-offscreen] *,
+  [data-offscreen] *::before,
+  [data-offscreen] *::after {
+    animation-play-state: paused !important;
+  }
+
   /* Header and chat launcher stay put during page transitions. */
   .vt-static {
     view-transition-name: none;
+  }
+
+  /* One-off attention ring around the assistant launcher (a few pulses after load). */
+  .launcher-halo {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow:
+      0 0 0 2px rgb(96 165 250 / 0.6),
+      0 0 22px 2px rgb(47 111 237 / 0.35);
+    animation: halo 2.8s var(--ease-out-quint) 1.8s 4;
+  }
+
+  .dark .launcher-halo {
+    box-shadow:
+      0 0 0 2px rgb(129 140 248 / 0.6),
+      0 0 22px 2px rgb(99 102 241 / 0.4);
+  }
+
+  /* Assistant window: a full-height sheet that follows the on-screen keyboard on phones
+     (variables set by useVisualViewport), a floating card from 640px up. */
+  .assistant-sheet {
+    bottom: var(--vv-bottom, 0px);
+    height: calc(100vh - 0.75rem);
+    height: calc(var(--vv-height, 100dvh) - 0.75rem);
+  }
+
+  /* From 640px: a floating card that never covers the 4rem header. */
+  @media (min-width: 640px) {
+    .assistant-sheet {
+      bottom: 1.5rem;
+      height: min(44rem, calc(100vh - 7rem));
+      height: min(44rem, calc(100dvh - 7rem));
+    }
   }
 }
 
@@ -436,7 +567,6 @@
 .reveal-ready [data-reveal] {
   opacity: 0;
   transform: var(--reveal-from, translate3d(0, 24px, 0));
-  filter: blur(var(--reveal-blur, 0px));
   transition:
     opacity 700ms var(--ease-out-quint) var(--reveal-delay, 0ms),
     transform 900ms var(--ease-out-expo) var(--reveal-delay, 0ms),
@@ -445,6 +575,18 @@
     background-color 300ms ease,
     border-color 300ms ease,
     box-shadow 300ms ease;
+}
+
+/* Only the blur variant carries a filter (a filter on every revealed block made each one its
+   own compositing layer). Touch devices get the same entrance without the blur pass. */
+.reveal-ready [data-reveal="blur"] {
+  filter: blur(var(--reveal-blur, 0px));
+}
+
+@media (pointer: coarse) {
+  .reveal-ready [data-reveal="blur"] {
+    filter: none;
+  }
 }
 
 .reveal-ready [data-reveal="up"] {
@@ -565,41 +707,71 @@
   }
 }
 
+/* Same text rise without the per-letter blur, for touch devices (lighter on mobile GPUs). */
+@keyframes split-rise-lite {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0.5em, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .split-unit {
+    animation-name: split-rise-lite;
+  }
+}
+
 /* Caret used by the role typewriter. */
 @keyframes caret-blink {
   0%,
-  45% {
+  40% {
     opacity: 1;
   }
-  50%,
-  95% {
+  55%,
+  90% {
+    opacity: 0.08;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Light sweeping along a .beam border (transform only, so it stays on the GPU). */
+@keyframes beam-sweep {
+  0% {
+    transform: translate3d(-110%, 0, 0);
+  }
+  55%,
+  100% {
+    transform: translate3d(240%, 0, 0);
+  }
+}
+
+/* Soft halo for the assistant launcher (transform + opacity only). */
+@keyframes halo {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(1.35);
     opacity: 0;
   }
+}
+
+/* Gentle shimmer for "thinking" labels (opacity only). */
+@keyframes soft-pulse {
+  0%,
   100% {
     opacity: 1;
   }
-}
-
-/* Animated gradient text for accents. */
-@keyframes gradient-pan {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 200% 50%;
-  }
-}
-
-/* Rotating conic border used on the assistant launcher and highlighted cards. */
-@property --border-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-@keyframes border-spin {
-  to {
-    --border-angle: 360deg;
+  50% {
+    opacity: 0.45;
   }
 }
 
@@ -673,10 +845,10 @@
   animation: vt-in 420ms var(--ease-out-expo) both;
 }
 
+/* Opacity + a small lift only: a blur filter over a full-page snapshot is very costly on phones. */
 @keyframes vt-out {
   to {
     opacity: 0;
-    filter: blur(4px);
     transform: translate3d(0, -8px, 0);
   }
 }
@@ -684,7 +856,6 @@
 @keyframes vt-in {
   from {
     opacity: 0;
-    filter: blur(4px);
     transform: translate3d(0, 14px, 0);
   }
 }
@@ -710,16 +881,6 @@ html[data-vt="theme"]::view-transition-new(root) {
 ::view-transition-group(.morph) {
   animation-duration: 450ms;
   animation-timing-function: var(--ease-out-expo);
-}
-
-::view-transition-image-pair(.morph) {
-  animation-name: vt-morph-blur;
-}
-
-@keyframes vt-morph-blur {
-  30% {
-    filter: blur(3px);
-  }
 }
 
 /* Admin edit overlay affordances (only styled when edit mode is on). */
@@ -750,27 +911,72 @@ html[data-vt="theme"]::view-transition-new(root) {
   outline-color: rgb(8 145 178 / 0.55);
 }
 
+/* ==================================================================================
+   Reduced motion: gentle, not frozen. Content still fades in, the role still types and the
+   numbers still count, but nothing slides, drifts, tilts, zooms or loops across the screen.
+   ================================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-delay: 0ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    transition-delay: 0ms !important;
+  html {
     scroll-behavior: auto !important;
   }
 
   .reveal-ready [data-reveal] {
-    opacity: 1;
-    transform: none;
-    filter: none;
+    --reveal-from: none !important;
+    filter: none !important;
+    transition:
+      opacity 520ms ease var(--reveal-delay, 0ms),
+      color 300ms ease,
+      background-color 300ms ease,
+      border-color 300ms ease !important;
   }
 
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
+  .split-unit {
+    animation-name: split-fade !important;
+    animation-duration: 600ms !important;
+  }
+
+  [class*="hero-aurora"],
+  .marquee-track,
+  .float-y,
+  .ping-soft,
+  .launcher-halo,
+  .beam::before,
+  .hero-name-shimmer-sweep::after {
     animation: none !important;
+  }
+
+  .btn-action-primary::after {
+    transition: none !important;
+  }
+
+  /* Page changes cross-fade instead of sliding; shared elements jump instead of flying. */
+  ::view-transition-old(.page) {
+    animation: vt-fade-out 160ms ease both !important;
+  }
+
+  ::view-transition-new(.page) {
+    animation: vt-fade-in 260ms ease both !important;
+  }
+
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+  }
+}
+
+@keyframes split-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
   }
 }

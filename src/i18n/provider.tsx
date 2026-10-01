@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";
 import type { Locale } from "./config";
 import type { MessageKey, Messages } from "./messages";
 
@@ -21,16 +21,18 @@ export function I18nProvider({
   messages: Messages;
   children: ReactNode;
 }) {
-  return (
-    <I18nContext.Provider value={{ locale, dir: locale === "ar" ? "rtl" : "ltr", messages }}>
-      {children}
-    </I18nContext.Provider>
+  const value = useMemo<I18nValue>(
+    () => ({ locale, dir: locale === "ar" ? "rtl" : "ltr", messages }),
+    [locale, messages],
   );
+  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 
 export function useI18n() {
   const value = useContext(I18nContext);
+  const messages = value?.messages;
+  // Stable between renders, so components can list `t` in effect dependencies safely.
+  const t = useCallback((key: MessageKey) => (messages ? messages[key] : key), [messages]);
   if (!value) throw new Error("useI18n must be used inside <I18nProvider>");
-  const t = (key: MessageKey) => value.messages[key];
   return { ...value, t };
 }

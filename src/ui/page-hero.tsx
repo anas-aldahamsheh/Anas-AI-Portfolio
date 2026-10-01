@@ -5,32 +5,43 @@ import { EditableText } from "./editable";
 import { HeroSpotlight } from "./hero-spotlight";
 import { SplitText } from "./motion/reveal";
 
-/** The aurora backdrop shared by the home hero and every page hero (the site's signature). */
+/**
+ * The aurora backdrop shared by the home hero and every page hero (the site's signature).
+ * The glows are radial gradients (see `.aurora-*` in globals.css) sized and placed to match the
+ * original blurred shapes, so phones don't re-blur three large layers on every frame.
+ */
+const AURORA = {
+  home: {
+    left: { width: 920, height: 760, insetInlineStart: -220, top: -216 },
+    right: { width: 940, height: 780, insetInlineEnd: -220, top: -200 },
+    center: { width: 760, height: 520, top: "calc(25% - 85px)" },
+  },
+  page: {
+    left: { width: 840, height: 700, insetInlineStart: -210, top: -206 },
+    right: { width: 860, height: 720, insetInlineEnd: -210, top: -190 },
+    center: { width: 700, height: 480, top: "calc(25% - 80px)" },
+  },
+} as const;
+
 export function AuroraBackdrop({ intensity = "page" }: { intensity?: "home" | "page" }) {
-  const home = intensity === "home";
+  const size = AURORA[intensity];
   return (
     <>
       <HeroSpotlight />
       <div
         aria-hidden="true"
-        className={cn(
-          "hero-aurora-left pointer-events-none absolute -start-20 -top-24 rounded-full bg-gradient-to-br from-[#BAE6FD]/80 via-[#E0F2FE]/65 to-transparent blur-[100px] dark:from-[#0284c7]/25 dark:via-[#0369a1]/15 dark:to-transparent",
-          home ? "h-[520px] w-[640px]" : "h-[480px] w-[580px]",
-        )}
+        className="hero-aurora-left aurora-left pointer-events-none absolute rounded-full"
+        style={size.left}
       />
       <div
         aria-hidden="true"
-        className={cn(
-          "hero-aurora-right pointer-events-none absolute -end-20 -top-20 rounded-full bg-gradient-to-bl from-[#DDD6FE]/85 via-[#EDE9FE]/65 to-transparent blur-[110px] dark:from-[#7c3aed]/25 dark:via-[#6d28d9]/15 dark:to-transparent",
-          home ? "h-[540px] w-[660px]" : "h-[500px] w-[600px]",
-        )}
+        className="hero-aurora-right aurora-right pointer-events-none absolute rounded-full"
+        style={size.right}
       />
       <div
         aria-hidden="true"
-        className={cn(
-          "hero-aurora-center pointer-events-none absolute inset-x-0 top-1/4 mx-auto rounded-full bg-gradient-to-r from-[#BAE6FD]/40 to-[#DDD6FE]/40 blur-[120px] dark:from-[#0284c7]/15 dark:to-[#7c3aed]/15",
-          home ? "h-[350px] w-[500px]" : "h-[320px] w-[460px]",
-        )}
+        className="hero-aurora-center aurora-center pointer-events-none absolute inset-x-0 mx-auto rounded-full"
+        style={size.center}
       />
       <div
         aria-hidden="true"
@@ -66,6 +77,7 @@ export function PageHero({
   const heading = <SplitText text={title} baseDelay={80} />;
   return (
     <section
+      data-pause-offscreen=""
       className={cn(
         "grain relative w-full overflow-hidden border-b border-[#E5EAF2] bg-white dark:border-white/[0.08] dark:bg-[#07101F]",
         className,

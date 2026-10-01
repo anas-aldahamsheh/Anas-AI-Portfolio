@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { adminStrings } from "../strings";
 import { EntryEditor } from "../editor/entry-editor";
 import { UiTextEditor } from "../editor/ui-text-editor";
+import { announceAdminHintChange } from "../use-admin-hint";
 
 interface Hovered {
   id: string;
@@ -74,7 +75,7 @@ export function AdminOverlay() {
       .then((r) => r.json() as Promise<{ admin: boolean }>)
       .then((result) => {
         if (!result.admin) {
-          void fetch("/api/admin/session", { method: "DELETE" });
+          void fetch("/api/admin/session", { method: "DELETE" }).then(announceAdminHintChange);
           document.documentElement.classList.remove("edit-mode");
           return;
         }

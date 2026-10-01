@@ -116,10 +116,11 @@ export function AdminApp() {
               );
             })}
           </nav>
-          <div className="mt-auto hidden space-y-1 lg:block">
+          {/* Shown on every screen size (it was desktop-only, leaving phones without sign-out). */}
+          <div className="mt-auto flex gap-1 border-t border-slate-100 pt-3 lg:block lg:space-y-1 lg:border-0 lg:pt-0 dark:border-white/[0.06]">
             <Link
               href={`/${locale}`}
-              className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-800 dark:hover:bg-white/5 dark:hover:text-white"
+              className="flex flex-1 items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-800 dark:hover:bg-white/5 dark:hover:text-white"
             >
               <ExternalLink className="h-4 w-4" aria-hidden="true" />
               {strings.viewSite}

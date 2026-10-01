@@ -20,9 +20,13 @@ export function CountUp({
 
   useEffect(() => {
     if (!inView) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Counting is not movement, so reduced-motion visitors get it too, just quicker.
+    const quick = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     count.set(0);
-    const controls = animate(count, value, { duration: 1.6, ease: [0.16, 1, 0.3, 1] });
+    const controls = animate(count, value, {
+      duration: quick ? 0.9 : 1.6,
+      ease: [0.16, 1, 0.3, 1],
+    });
     return () => controls.stop();
   }, [inView, value, count]);
 

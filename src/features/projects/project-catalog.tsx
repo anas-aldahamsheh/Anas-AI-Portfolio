@@ -6,6 +6,17 @@ import { useDeferredValue, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ProjectCard, type ProjectCardData, type ProjectCardLabels } from "./project-card";
 
+function countLabel(
+  n: number,
+  locale: string,
+  forms: Record<"one" | "two" | "few" | "many" | "other", string>,
+): string {
+  const category = new Intl.PluralRules(locale).select(n);
+  const form = category === "zero" ? forms.other : forms[category];
+  // Western digits, like the rest of the site.
+  return form.replace("{n}", String(n));
+}
+
 /** Search + technology filter with animated re-layout (cards glide into their new places). */
 export function ProjectCatalog({
   projects,
@@ -14,7 +25,15 @@ export function ProjectCatalog({
 }: {
   projects: ProjectCardData[];
   locale: string;
-  labels: ProjectCardLabels & { all: string; search: string; empty: string; count: string };
+  labels: ProjectCardLabels & {
+    all: string;
+    search: string;
+    empty: string;
+    clear: string;
+    filter: string;
+    /** Plural forms by Intl.PluralRules category ("{n} projects", Arabic has six forms). */
+    counts: Record<"one" | "two" | "few" | "many" | "other", string>;
+  };
 }) {
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState<string | null>(null);
@@ -62,7 +81,7 @@ export function ProjectCatalog({
             <button
               type="button"
               onClick={() => setQuery("")}
-              aria-label="Clear"
+              aria-label={labels.clear}
               className="absolute end-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-[#637089] hover:bg-neutral-100 dark:hover:bg-white/10"
             >
               <X className="h-3.5 w-3.5" />
@@ -70,7 +89,7 @@ export function ProjectCatalog({
           ) : null}
         </div>
         {tags.length > 1 ? (
-          <div className="flex flex-wrap gap-1.5" role="group" aria-label={labels.all}>
+          <div className="flex flex-wrap gap-1.5" role="group" aria-label={labels.filter}>
             {[null, ...tags].map((value) => {
               const active = tag === value;
               return (
@@ -102,7 +121,7 @@ export function ProjectCatalog({
       </div>
 
       <p className="text-xs font-medium text-[#637089] dark:text-[#9AA8C0]" aria-live="polite">
-        {visible.length} {labels.count}
+        {countLabel(visible.length, locale, labels.counts)}
       </p>
 
       {visible.length === 0 ? (

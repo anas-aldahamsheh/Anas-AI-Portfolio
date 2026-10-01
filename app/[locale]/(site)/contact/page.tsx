@@ -161,14 +161,21 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
         </div>
 
         <Reveal className="mt-10">
-          <div className="border-beam relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#173B6C] via-[#1E4B8A] to-[#2F6FED] p-8 text-white sm:p-10 dark:from-[#1e1b4b] dark:via-[#312e81] dark:to-[#4F46E5]">
-            <div
+          <div
+            data-pause-offscreen=""
+            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#173B6C] via-[#1E4B8A] to-[#2F6FED] p-8 text-white sm:p-10 dark:from-[#1e1b4b] dark:via-[#312e81] dark:to-[#4F46E5]"
+          >
+            <span
+              className="beam [inset:0] [--beam-rest-dark:rgb(255_255_255/0.12)] [--beam-rest:rgb(255_255_255/0.14)]"
               aria-hidden="true"
-              className="float-y pointer-events-none absolute -end-16 -top-16 h-56 w-56 rounded-full bg-cyan-400/30 blur-3xl"
             />
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute start-10 -bottom-20 h-56 w-56 rounded-full bg-violet-500/30 blur-3xl"
+              className="float-y pointer-events-none absolute -end-28 -top-28 h-80 w-80 rounded-full bg-[radial-gradient(closest-side,rgb(34_211_238/0.32),transparent)]"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute start-0 -bottom-32 h-80 w-80 rounded-full bg-[radial-gradient(closest-side,rgb(139_92_246/0.32),transparent)]"
             />
             <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div className="max-w-xl space-y-2">

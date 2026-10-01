@@ -9,16 +9,29 @@ export interface SourceRef {
   url: string | null;
 }
 
+const LOCALE_PREFIX = /^\/(en|ar)(?=\/|$|#)/;
+
 export class SourceRegistry {
   private byKey = new Map<string, SourceRef>();
   private byRef = new Map<number, SourceRef>();
   /** Every link that appeared in a tool result: the only links the answer may contain. */
   readonly links = new Set<string>();
 
+  /** `locale`: the visitor's language; internal links are rewritten to it. */
+  constructor(private readonly locale?: "en" | "ar") {}
+
+  /** "/en/cv" → "/ar/cv" for an Arabic visitor (external URLs are left alone). */
+  localize(url: string): string {
+    return this.locale ? url.replace(LOCALE_PREFIX, `/${this.locale}`) : url;
+  }
+
   /** Records all internal paths and http(s) URLs found anywhere in a tool result. */
   collectLinks(value: unknown): void {
     if (typeof value === "string") {
-      if (/^(\/(en|ar)(\/|$|#)|https?:\/\/|mailto:)/.test(value)) this.links.add(value);
+      if (/^(\/(en|ar)(\/|$|#)|https?:\/\/|mailto:)/.test(value)) {
+        this.links.add(value);
+        this.links.add(this.localize(value));
+      }
       return;
     }
     if (Array.isArray(value)) value.forEach((v) => this.collectLinks(v));
@@ -30,7 +43,7 @@ export class SourceRegistry {
     const existing = this.byKey.get(key);
     if (existing) return existing.ref;
     const ref = this.byRef.size + 1;
-    const entry = { ...source, ref };
+    const entry = { ...source, url: source.url ? this.localize(source.url) : null, ref };
     this.byKey.set(key, entry);
     this.byRef.set(ref, entry);
     return ref;
@@ -59,8 +72,8 @@ export function finalizeCitations(
   // Unwrap links the model invented; keep the visible text.
   const allowed = (href: string) =>
     registry.links.has(href) || registry.links.has(href.split("#")[0] ?? "");
-  text = text.replace(MARKDOWN_LINK, (match: string, label: string, href: string) =>
-    allowed(href) ? match : label,
+  text = text.replace(MARKDOWN_LINK, (_match: string, label: string, href: string) =>
+    allowed(href) ? `[${label}](${registry.localize(href)})` : label,
   );
   const order: number[] = [];
   const renumber = new Map<number, number>();

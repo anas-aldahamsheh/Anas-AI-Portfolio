@@ -10,14 +10,17 @@ export function NotFoundView() {
   const { t, locale } = useI18n();
   const Arrow = locale === "ar" ? ArrowRight : ArrowLeft;
   return (
-    <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden px-4 py-20">
+    <section
+      className="relative flex min-h-[70vh] items-center justify-center overflow-hidden px-4 py-20"
+      data-pause-offscreen=""
+    >
       <div
         aria-hidden="true"
-        className="hero-aurora-left pointer-events-none absolute -start-20 top-10 h-80 w-96 rounded-full bg-[#BAE6FD]/50 blur-[100px] dark:bg-[#0284c7]/20"
+        className="hero-aurora-left aurora-left pointer-events-none absolute -start-40 -top-16 h-[30rem] w-[36rem] rounded-full"
       />
       <div
         aria-hidden="true"
-        className="hero-aurora-right pointer-events-none absolute -end-20 bottom-10 h-80 w-96 rounded-full bg-[#DDD6FE]/60 blur-[110px] dark:bg-[#7c3aed]/20"
+        className="hero-aurora-right aurora-right pointer-events-none absolute -end-40 -bottom-16 h-[30rem] w-[36rem] rounded-full"
       />
       <div className="relative max-w-md text-center">
         <m.div

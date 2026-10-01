@@ -1,23 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 /**
  * Types each role, pauses, erases, and moves to the next. The first role is rendered on the
  * server (so the text is always there for SEO and no-JS); animation starts after hydration.
+ * Typing is not movement, so it also runs for reduced-motion visitors; it idles while the tab
+ * is hidden.
  */
 export function RolesTypewriter({ roles }: { roles: string[] }) {
-  const list = roles.filter(Boolean);
+  // Stable across renders (a fresh array every render re-armed the timer each time).
+  const key = roles.join("\u0000");
+  const list = useMemo(() => key.split("\u0000").filter(Boolean), [key]);
   const [index, setIndex] = useState(0);
   const [text, setText] = useState(list[0] ?? "");
   const [phase, setPhase] = useState<"hold" | "erase" | "type">("hold");
 
   useEffect(() => {
     if (list.length < 2) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let timer: ReturnType<typeof setTimeout>;
     if (phase === "hold") {
-      timer = setTimeout(() => setPhase("erase"), 2600);
+      const next = () => {
+        if (document.hidden) timer = setTimeout(next, 1000);
+        else setPhase("erase");
+      };
+      timer = setTimeout(next, 2600);
     } else if (phase === "erase") {
       timer =
         text.length > 0
@@ -40,7 +47,7 @@ export function RolesTypewriter({ roles }: { roles: string[] }) {
     <span className="inline-flex items-baseline">
       <span className="sr-only">{list.join(" · ")}</span>
       <span aria-hidden="true" className="text-gradient-accent font-semibold">
-        {text || " "}
+        {text || " "}
       </span>
       <span
         aria-hidden="true"

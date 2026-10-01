@@ -17,7 +17,10 @@ function authSecret(): string {
 
 /** Exact origins allowed to call the auth API (no wildcards). */
 function trustedOrigins(): string[] {
-  const origins = new Set<string>(["http://localhost:3000", "http://localhost:3100"]);
+  // Local dev servers are trusted only outside production.
+  const origins = new Set<string>(
+    process.env.NODE_ENV === "production" ? [] : ["http://localhost:3000", "http://localhost:3100"],
+  );
   for (const value of [
     process.env["BETTER_AUTH_URL"],
     process.env["NEXT_PUBLIC_APP_URL"],

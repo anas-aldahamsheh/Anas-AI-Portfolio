@@ -522,7 +522,8 @@ export interface Entry<C extends CollectionName = CollectionName> {
 }
 
 export function isCollectionName(value: string): value is CollectionName {
-  return value in COLLECTIONS;
+  // Own keys only: `in` also accepts inherited names such as "constructor".
+  return Object.hasOwn(COLLECTIONS, value);
 }
 
 /** Collections that hold exactly one entry (slug "main"). */

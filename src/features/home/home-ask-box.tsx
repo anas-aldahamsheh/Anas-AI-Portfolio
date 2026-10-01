@@ -24,8 +24,9 @@ export function HomeAskBox({ questions }: { questions: string[] }) {
           event.preventDefault();
           ask(value);
         }}
-        className="border-beam group relative flex items-center gap-2 rounded-2xl bg-white/85 p-1.5 shadow-[0_10px_40px_-18px_rgba(47,111,237,0.45)] backdrop-blur-xl transition-shadow focus-within:shadow-[0_14px_50px_-16px_rgba(47,111,237,0.6)] dark:bg-[#0B1728]/85"
+        className="group relative isolate flex items-center gap-2 rounded-2xl bg-white/95 p-1.5 shadow-[0_10px_40px_-18px_rgba(47,111,237,0.45)] transition-shadow focus-within:shadow-[0_14px_50px_-16px_rgba(47,111,237,0.6)] dark:bg-[#0B1728]/95"
       >
+        <span className="beam" aria-hidden="true" />
         <Sparkles
           className="ms-2.5 h-4 w-4 shrink-0 text-[#2F6FED] dark:text-indigo-300"
           aria-hidden="true"
@@ -62,7 +63,7 @@ export function HomeAskBox({ questions }: { questions: string[] }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 + i * 0.08 }}
             whileHover={{ y: -2 }}
-            className="rounded-full border border-[#D0E2FF] bg-white/70 px-3 py-1.5 text-xs font-medium text-[#1E40AF] backdrop-blur transition-colors hover:border-[#2F6FED]/60 hover:bg-[#EEF5FF] dark:border-white/10 dark:bg-white/[0.04] dark:text-indigo-100 dark:hover:border-indigo-400/40"
+            className="rounded-full border border-[#D0E2FF] bg-white/85 px-3 py-1.5 text-start text-xs font-medium text-[#1E40AF] transition-colors hover:border-[#2F6FED]/60 hover:bg-[#EEF5FF] dark:border-white/10 dark:bg-white/[0.05] dark:text-indigo-100 dark:hover:border-indigo-400/40"
           >
             {question}
           </m.button>

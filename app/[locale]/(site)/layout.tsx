@@ -20,13 +20,17 @@ export default async function SiteLayout({ children, params }: LayoutProps<"/[lo
   const name = profile?.t.name ?? "Anas Al Dahamsheh";
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col overflow-x-clip">
       <Navbar logo={<BrandLogo name={name} />} />
       <main id="main-content" className="flex-1" tabIndex={-1}>
         <ViewTransition default="page">{children}</ViewTransition>
       </main>
       <Footer locale={locale} profile={profile} />
-      <AssistantLauncher quickQuestions={quickQuestions} />
+      <AssistantLauncher
+        quickQuestions={quickQuestions}
+        name={name}
+        avatar={profile?.data.avatar || undefined}
+      />
       <AdminGate />
     </div>
   );
