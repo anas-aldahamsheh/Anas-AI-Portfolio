@@ -2,9 +2,12 @@
   "name": "anas-ai-portfolio",
   "version": "0.1.0",
   "private": true,
+  "description": "Bilingual (English / Arabic) AI engineer portfolio with a grounded, tool-calling AI assistant and hybrid RAG.",
+  "author": "Anas Aldahamsheh",
+  "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=22.0.0",
+    "node": ">=22.9.0",
     "pnpm": ">=10.0.0"
   },
   "scripts": {
@@ -20,11 +23,11 @@
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx src/lib/db/migrate.ts",
+    "db:migrate": "tsx --env-file-if-exists=.env.local src/lib/db/migrate.ts",
     "db:check": "drizzle-kit check",
     "db:studio": "drizzle-kit studio",
-    "db:seed": "tsx scripts/seed/index.ts",
-    "admin": "tsx scripts/admin.ts"
+    "db:seed": "tsx --env-file-if-exists=.env.local scripts/seed/index.ts",
+    "admin": "tsx --env-file-if-exists=.env.local scripts/admin.ts"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.3.7",
