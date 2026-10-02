@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Fragment, type ReactNode } from "react";
+import { textDir, type Dir } from "./direction";
 import type { SourceRef } from "./store";
 
 /**
@@ -73,6 +74,32 @@ function safeHref(href: string): { href: string; internal: boolean } | null {
   return null;
 }
 
+/** Phone numbers, emails and URLs keep their own left-to-right order inside Arabic text. */
+const LTR_TOKEN =
+  /(\+?\d[\d\s().-]{5,}\d|[\w.+-]+@[\w-]+(?:\.[\w-]+)+|https?:\/\/[^\s)]+|(?:www\.)?[\w-]+(?:\.[\w-]+)*\.(?:com|org|net|io|dev|app|ai)(?:\/[^\s)]*)?)/g;
+
+function isolate(text: string, keyPrefix: string): ReactNode[] {
+  const out: ReactNode[] = [];
+  let last = 0;
+  let i = 0;
+  for (const match of text.matchAll(LTR_TOKEN)) {
+    const index = match.index ?? 0;
+    if (index > last) out.push(text.slice(last, index));
+    out.push(
+      <bdi
+        key={`${keyPrefix}-t${i++}`}
+        dir="ltr"
+        className={/^[+\d]/.test(match[0]) ? "whitespace-nowrap" : undefined}
+      >
+        {match[0]}
+      </bdi>,
+    );
+    last = index + match[0].length;
+  }
+  if (last < text.length) out.push(text.slice(last));
+  return out;
+}
+
 function renderInline(text: string, sources: SourceRef[], keyPrefix: string): ReactNode[] {
   const out: ReactNode[] = [];
   let last = 0;
@@ -81,8 +108,8 @@ function renderInline(text: string, sources: SourceRef[], keyPrefix: string): Re
   // A fresh regex per call: bold text recurses, and a shared lastIndex would break the outer loop.
   const pattern = new RegExp(INLINE.source, "g");
   while ((match = pattern.exec(text)) !== null) {
-    if (match.index > last) out.push(text.slice(last, match.index));
     const key = `${keyPrefix}-${i++}`;
+    if (match.index > last) out.push(...isolate(text.slice(last, match.index), `${key}-p`));
     const [whole, , bold, bold2, italic, code, label, href, cites] = match;
     if (bold || bold2) {
       out.push(
@@ -103,7 +130,7 @@ function renderInline(text: string, sources: SourceRef[], keyPrefix: string): Re
       );
     } else if (label && href) {
       const link = safeHref(href);
-      if (!link) out.push(label);
+      if (!link) out.push(...isolate(label, key));
       else if (link.internal)
         out.push(
           <Link
@@ -129,7 +156,7 @@ function renderInline(text: string, sources: SourceRef[], keyPrefix: string): Re
     } else if (cites) {
       const refs = cites.split(",").map((n) => Number(n.trim()));
       out.push(
-        <span key={key} className="ms-0.5 inline-flex gap-0.5 align-super">
+        <bdi key={key} dir="ltr" className="ms-0.5 inline-flex gap-0.5 align-super">
           {refs.map((ref) => {
             const source = sources.find((s) => s.ref === ref);
             const chip = (
@@ -147,21 +174,33 @@ function renderInline(text: string, sources: SourceRef[], keyPrefix: string): Re
               </span>
             );
           })}
-        </span>,
+        </bdi>,
       );
     } else {
       out.push(whole);
     }
     last = match.index + whole.length;
   }
-  if (last < text.length) out.push(text.slice(last));
+  if (last < text.length) out.push(...isolate(text.slice(last), `${keyPrefix}-end`));
   return out;
 }
 
-export function Markdown({ text, sources = [] }: { text: string; sources?: SourceRef[] }) {
+export function Markdown({
+  text,
+  sources = [],
+  dir,
+}: {
+  text: string;
+  sources?: SourceRef[];
+  /** Direction of the whole answer; defaults to the direction of its own text. */
+  dir?: Dir;
+}) {
   const blocks = parseBlocks(text);
   return (
-    <div className="space-y-2.5 text-[13.5px] leading-relaxed text-[#334155] dark:text-[#CBD5E1]">
+    <div
+      dir={dir ?? textDir(text, "ltr")}
+      className="space-y-2.5 text-start text-[13.5px] leading-relaxed text-[#334155] dark:text-[#CBD5E1]"
+    >
       {blocks.map((block, b) => {
         const key = `b${b}`;
         if (block.type === "p") return <p key={key}>{renderInline(block.text, sources, key)}</p>;

@@ -33,6 +33,7 @@ import { useI18n } from "@/i18n/provider";
 import type { MessageKey } from "@/i18n/messages";
 import { cn } from "@/lib/utils";
 import { AssistantAvatar } from "./assistant-avatar";
+import { textDir } from "./direction";
 import { Markdown } from "./markdown";
 import { contextPrompts, readPageContext } from "./page-context";
 import {
@@ -157,9 +158,11 @@ function AssistantMessage({
 }) {
   const { t, locale } = useI18n();
   const streaming = message.status === "streaming";
+  // The answer, its sources and follow-ups are laid out in the answer's own language.
+  const dir = textDir(message.content, locale === "ar" ? "rtl" : "ltr");
 
   return (
-    <div className="group/msg space-y-2.5">
+    <div dir={dir} className="group/msg space-y-2.5 text-start">
       {streaming && !message.content ? <Thinking steps={message.steps} /> : null}
       {message.content ? (
         <div
@@ -168,7 +171,7 @@ function AssistantMessage({
               "[&>div>*:last-child]:after:ms-0.5 [&>div>*:last-child]:after:inline-block [&>div>*:last-child]:after:h-3.5 [&>div>*:last-child]:after:w-[2px] [&>div>*:last-child]:after:translate-y-0.5 [&>div>*:last-child]:after:animate-pulse [&>div>*:last-child]:after:bg-[#2F6FED] [&>div>*:last-child]:after:content-['']",
           )}
         >
-          <Markdown text={message.content} sources={message.sources ?? []} />
+          <Markdown text={message.content} sources={message.sources ?? []} dir={dir} />
         </div>
       ) : null}
 
@@ -212,7 +215,9 @@ function AssistantMessage({
                     )}
                     aria-hidden="true"
                   />
-                  <span className="truncate">{source.title}</span>
+                  <span className="truncate" dir="auto">
+                    {source.title}
+                  </span>
                 </span>
               );
               return source.url ? (
@@ -246,7 +251,8 @@ function AssistantMessage({
               <m.button
                 key={question}
                 type="button"
-                initial={{ opacity: 0, x: locale === "ar" ? 10 : -10 }}
+                dir={textDir(question, dir)}
+                initial={{ opacity: 0, x: dir === "rtl" ? 10 : -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.15 + i * 0.07 }}
                 onClick={() => onAsk(question)}
@@ -282,7 +288,7 @@ const MessageRow = memo(function MessageRow({
   name: string;
   avatar?: string | undefined;
 }) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   return (
     <m.div
       initial={{ opacity: 0, y: 12 }}
@@ -291,7 +297,10 @@ const MessageRow = memo(function MessageRow({
       className={cn("flex", message.role === "user" ? "justify-end" : "justify-start")}
     >
       {message.role === "user" ? (
-        <p className="max-w-[85%] rounded-[20px] rounded-ee-md bg-gradient-to-br from-[#173B6C] to-[#2F6FED] px-3.5 py-2.5 text-[14.5px] leading-relaxed whitespace-pre-wrap text-white shadow-md shadow-blue-500/15 sm:text-[13.5px] dark:from-[#4F46E5] dark:to-[#6366F1]">
+        <p
+          dir={textDir(message.content, locale === "ar" ? "rtl" : "ltr")}
+          className="max-w-[85%] rounded-[20px] rounded-ee-md bg-gradient-to-br from-[#173B6C] to-[#2F6FED] px-3.5 py-2.5 text-[14.5px] leading-relaxed whitespace-pre-wrap text-white shadow-md shadow-blue-500/15 sm:text-[13.5px] dark:from-[#4F46E5] dark:to-[#6366F1]"
+        >
           <span className="sr-only">{t("chat.youSaid")}: </span>
           {message.content}
         </p>
@@ -612,6 +621,7 @@ export function ChatView({
             value={input}
             maxLength={4000}
             enterKeyHint="send"
+            dir="auto"
             onChange={(event) => setInput(event.target.value)}
             onKeyDown={onKeyDown}
             placeholder={placeholder ?? t("chat.placeholder")}
