@@ -34,8 +34,8 @@ Apr 2023 – Dec 2025
 • Reviewed live-stream and user-generated content, identifying harmful material and policy violations and applying
 community guidelines to keep the platform safe.
 
-• Worked with the team to sharpen policy interpretation and reporting practices, experience that now underpins my
-AI safety and evaluation work.
+• Worked with the team to sharpen policy interpretation and reporting practices, experience that now underpins AI
+safety and evaluation work.
 
 SELECTED PROJECTS
 Noesis | Bilingual RAG Research Assistant with Verified Citations

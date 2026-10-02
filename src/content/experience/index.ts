@@ -67,7 +67,7 @@ const EXPERIENCE: Entry[] = [
           "Kept the platform safe by reviewing live-stream and user-generated content against community guidelines.",
         highlights: [
           "Reviewed live-stream and user-generated content, identifying harmful material and policy violations and applying community guidelines to keep the platform safe.",
-          "Worked with the team to sharpen policy interpretation and reporting practices, experience that now underpins my AI safety and evaluation work.",
+          "Worked with the team to sharpen policy interpretation and reporting practices, experience that now underpins AI safety and evaluation work.",
         ],
       },
       ar: {
@@ -78,7 +78,7 @@ const EXPERIENCE: Entry[] = [
           "حافظ على سلامة المنصة بمراجعة البث المباشر والمحتوى الذي ينشئه المستخدمون وفق إرشادات المجتمع.",
         highlights: [
           "مراجعة البث المباشر والمحتوى الذي ينشئه المستخدمون، وكشف المواد الضارة ومخالفات السياسات، وتطبيق إرشادات المجتمع للحفاظ على سلامة المنصة.",
-          "العمل مع الفريق على تحسين تفسير السياسات وممارسات الإبلاغ، وهي خبرة يقوم عليها اليوم عملي في سلامة الذكاء الاصطناعي وتقييمه.",
+          "العمل مع الفريق على تحسين تفسير السياسات وممارسات الإبلاغ، وهي خبرة يقوم عليها اليوم العمل في سلامة الذكاء الاصطناعي وتقييمه.",
         ],
       },
     },
