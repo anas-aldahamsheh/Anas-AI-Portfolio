@@ -6,6 +6,7 @@ import { listAllRows } from "./repository";
  * Text that described the placeholder projects the site launched with. A release takes it out of
  * the profile and experience entries already in the database (and the seed no longer has it).
  * Only exact matches are touched, so anything the owner has rewritten in the admin stays as is.
+ * The one exception is the profile's GitHub link, which always points to the main account.
  */
 const COLLECTIONS: CollectionName[] = ["profile", "experience"];
 
@@ -54,12 +55,18 @@ function clean(value: unknown): unknown {
   return value;
 }
 
+/** Profile fields every release sets: the owner's main GitHub account. */
+const PROFILE_DATA: Record<string, unknown> = {
+  github: "https://github.com/anas-aldahamsheh",
+};
+
 /** Applies the corrections; returns the slugs of the entries that changed. */
 export async function applyContentCorrections(actor: string): Promise<string[]> {
   const changed: string[] = [];
   for (const collection of COLLECTIONS) {
     for (const row of await listAllRows(collection)) {
-      const data = clean(row.data) as Record<string, unknown>;
+      let data = clean(row.data) as Record<string, unknown>;
+      if (collection === "profile") data = { ...data, ...PROFILE_DATA };
       const i18n = clean(row.i18n) as Record<string, Record<string, unknown>>;
       if (JSON.stringify(data) === JSON.stringify(row.data)) {
         if (JSON.stringify(i18n) === JSON.stringify(row.i18n)) continue;
