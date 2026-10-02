@@ -403,9 +403,17 @@ function DesktopStage({
     setIndex(target);
   };
 
+  // Centre the active thumbnail by scrolling the strip only: scrollIntoView would also scroll
+  // the page down to the gallery when a project page opens.
   useEffect(() => {
-    const thumb = stripRef.current?.querySelector<HTMLElement>(`[data-thumb="${index}"]`);
-    thumb?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+    const strip = stripRef.current;
+    const thumb = strip?.querySelector<HTMLElement>(`[data-thumb="${index}"]`);
+    if (!strip || !thumb) return;
+    const offset =
+      thumb.getBoundingClientRect().left -
+      strip.getBoundingClientRect().left -
+      (strip.clientWidth - thumb.offsetWidth) / 2;
+    strip.scrollBy({ left: offset, behavior: "smooth" });
   }, [index]);
 
   const onDragEnd = (_: unknown, info: PanInfo) => {
