@@ -1,0 +1,72 @@
+{
+  "slug": "vigil",
+  "featured": true,
+  "category": "Web Reliability",
+  "cover": "07-run-summary.png",
+  "tags": [
+    "Python",
+    "FastAPI",
+    "Playwright",
+    "SQLite",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "pytest"
+  ],
+  "repoPrivate": true,
+  "en": {
+    "title": "Vigil",
+    "summary": "Know, with evidence, whether a website really works: layered DNS, TCP, TLS, HTTP and real-browser checks for one link or thousands, with a verdict, a confidence score and the reason for every one.",
+    "metrics": [
+      "85 | links from a messy spreadsheet checked in 52 s",
+      "95.9% | average confidence across the verdicts",
+      "8 | verdicts plus 17 issue flags, each with a written reason",
+      "125 | backend tests, green on Linux and Windows"
+    ],
+    "role": "Sole engineer: the verification engine, the run manager, the reports and the bilingual interface.",
+    "problem": "A status code is not an answer. Plenty of \"dead\" links open fine in a browser, and plenty of 200 OK pages are parked domains, empty pages, server welcome pages or \"not found\" pages in disguise. Simple link checkers either cry wolf or miss real problems, and when your own connection drops they mark a thousand healthy sites as dead.",
+    "solution": "Vigil collects independent evidence and only calls a link dead when the layers agree. Each address is normalised (missing schemes, www, Arabic and other international domains, stray punctuation, duplicates) and checked as given first. DNS failures get a second opinion from independent resolvers, HTTP follows redirects and fingerprints the content, TCP and TLS diagnostics explain connection and certificate problems, and anything still unclear, such as a bot challenge or a JavaScript-only page, goes to a real browser.\n\nWhen the original address fails, Vigil tries the other scheme, the www variant and the site root and reports which one works. Failures are re-checked at low pressure before they are trusted, and canary checks pause the run if the machine itself goes offline. Every link ends with one of eight verdicts plus issue flags, a confidence score, a plain-language reason in English or Arabic and the full probe timeline.",
+    "architecture": "A Python FastAPI engine with httpx (HTTP/2), dnspython, cryptography for certificate details, selectolax for content analysis and Playwright Chromium for the browser layer. Runs live in SQLite, survive restarts and resume where they stopped; an adaptive governor keeps CPU and memory under their ceilings and a per-host limit keeps runs polite. A Next.js 16 static interface with React 19, Tailwind CSS 4 and Motion is served by the API and streams progress over server-sent events. Links come in from pasted text, spreadsheets, a web page, a sitemap, a REST API or a CLI.",
+    "challenges": "Telling apart the many ways a site can look broken or healthy without being so: bot challenges, rate limits, soft 404s, login walls, maintenance pages, parked domains, expired or self-signed certificates and JavaScript-only apps. Keeping very large runs fast, with a server-side filtered results table and reports that open safely in Excel.",
+    "decisions": "Use the cheapest layer that gives a sure answer and escalate to a real browser only when needed. Never hide a failure behind a working variant: report both. Neutralise spreadsheet formula injection in exports and protect the API against DNS rebinding.",
+    "results": "On a CRM-style spreadsheet of 85 rows written the way people write addresses (with and without https, bare domains, www names, an Arabic domain, duplicates and a typo) against 30 test sites that reproduce real-world cases, Vigil found the address column on its own and finished in 52 s with an average confidence of 95.9%: 71 working, 2 working but restricted, 4 site up but page missing, 3 server errors, 1 parked domain, 3 down and 1 invalid, all correct for the scenario behind each link. It caught a payment page behind a bot challenge (decided by the real browser), a rate-limited API, a soft 404, expired, self-signed and soon-expiring certificates, a redirect loop, a login wall and a domain that only works with www. The same file through the CLI gave identical counts.",
+    "highlights": [
+      "Every way to bring links in: paste any text, upload spreadsheets and many file types, extract links from a page, expand a sitemap, REST API and CLI",
+      "Layered verification: DNS with a second opinion, TCP, TLS, HTTP with content analysis and a real browser only when needed",
+      "8 verdicts, 17 issue flags, a confidence score and a written reason with the evidence for every link",
+      "Fallback variants that explain failures without hiding them",
+      "Verify pass for failures and canary checks that pause the run when the machine goes offline",
+      "Live run view with progress, speed, time left, verdict donut, attention list and site ranking",
+      "Reports as styled multi-sheet XLSX, CSV, JSON with full evidence or a standalone HTML page, in English or Arabic",
+      "First-class Arabic interface with RTL, light and dark themes and reduced-motion support"
+    ]
+  },
+  "ar": {
+    "title": "Vigil",
+    "summary": "اعرف بالدليل إذا كان الموقع يعمل فعلًا: فحوص متعددة الطبقات عبر DNS وTCP وTLS وHTTP ومتصفح حقيقي لرابط واحد أو لآلاف الروابط، مع حكم ونسبة ثقة وسبب لكل رابط.",
+    "metrics": [
+      "85 | رابطًا من جدول غير مرتب فُحصت خلال 52 ثانية",
+      "95.9% | متوسط الثقة في الأحكام",
+      "8 | أحكام و17 مؤشر مشكلة، لكل منها سبب مكتوب",
+      "125 | اختبارًا للباك إند، ناجحة على Linux وWindows"
+    ],
+    "role": "المهندس الوحيد على المشروع: محرك التحقق، مدير التشغيلات، التقارير، والواجهة ثنائية اللغة.",
+    "problem": "رمز الحالة ليس جوابًا. كثير من الروابط «الميتة» تفتح بشكل طبيعي في المتصفح، وكثير من صفحات 200 OK هي نطاقات مركونة أو صفحات فارغة أو صفحات ترحيب الخادم أو صفحات «غير موجود» متنكرة. أدوات فحص الروابط البسيطة إما تطلق إنذارات كاذبة أو تفوّت مشاكل حقيقية، وعندما ينقطع اتصالك أنت تعلّم آلاف المواقع السليمة كمعطّلة.",
+    "solution": "يجمع Vigil أدلة مستقلة ولا يحكم على رابط بأنه معطّل إلا عندما تتفق الطبقات. يُوحّد كل عنوان (البروتوكول الناقص، www، النطاقات العربية والدولية، علامات الترقيم الزائدة، والتكرار) ويُفحص أولًا كما كُتب. فشل DNS يحصل على رأي ثانٍ من خوادم مستقلة، وHTTP يتبع التحويلات ويحلل المحتوى، وتشخيصات TCP وTLS تشرح مشاكل الاتصال والشهادات، وما يبقى غامضًا، كتحدي البوتات أو صفحة تعمل بـJavaScript فقط، يذهب لمتصفح حقيقي.\n\nعندما يفشل العنوان الأصلي يجرّب Vigil البروتوكول الآخر ونسخة www وجذر الموقع ويخبرك أيها يعمل. الأعطال يُعاد فحصها بضغط منخفض قبل اعتمادها، وفحوص مرجعية توقف التشغيل إذا انقطع اتصال الجهاز نفسه. وينتهي كل رابط بواحد من ثمانية أحكام مع مؤشرات المشاكل ونسبة ثقة وسبب بلغة واضحة بالعربية أو الإنجليزية والخط الزمني الكامل للفحص.",
+    "architecture": "محرك Python وFastAPI مع httpx (HTTP/2) وdnspython وcryptography لتفاصيل الشهادات وselectolax لتحليل المحتوى وPlaywright Chromium لطبقة المتصفح. التشغيلات محفوظة في SQLite وتنجو من إعادة التشغيل وتُستأنف من حيث توقفت، ومنظّم تكيفي يبقي المعالج والذاكرة تحت سقوفهما، وحد لكل نطاق يبقي التشغيل مهذبًا. واجهة Next.js 16 مصدّرة كملفات ثابتة مع React 19 وTailwind CSS 4 وMotion يخدمها الـAPI وتبث التقدم عبر Server-Sent Events. وتصل الروابط من نص ملصوق أو جداول أو صفحة ويب أو خريطة موقع أو REST API أو سطر الأوامر.",
+    "challenges": "التمييز بين الطرق الكثيرة التي يبدو فيها الموقع معطّلًا أو سليمًا دون أن يكون كذلك: تحديات البوتات، حدود الطلبات، صفحات 404 المتنكرة، جدران تسجيل الدخول، صفحات الصيانة، النطاقات المركونة، الشهادات المنتهية أو الموقعة ذاتيًا، وتطبيقات JavaScript فقط. والإبقاء على التشغيلات الكبيرة جدًا سريعة، مع جدول نتائج مفلتر على الخادم وتقارير تُفتح بأمان في Excel.",
+    "decisions": "استخدام أرخص طبقة تعطي جوابًا مؤكدًا والتصعيد لمتصفح حقيقي فقط عند الحاجة. عدم إخفاء أي عطل خلف بديل يعمل: الإبلاغ عن الاثنين. وتعطيل حقن المعادلات في ملفات الجداول المصدّرة وحماية الـAPI من DNS rebinding.",
+    "results": "على جدول بأسلوب CRM من 85 صفًا كُتبت عناوينه كما يكتبها الناس (مع https وبدونه، نطاقات مجردة، أسماء www، نطاق عربي، تكرار، وخطأ إملائي) مقابل 30 موقع اختبار تحاكي حالات حقيقية، وجد Vigil عمود العناوين وحده وانتهى خلال 52 ثانية بمتوسط ثقة 95.9%: 71 سليمًا، 2 سليمين مع قيود، 4 مواقع تعمل والصفحة مفقودة، 3 أخطاء خادم، نطاق مركون واحد، 3 معطّلة، ورابط غير صالح، وكلها صحيحة بحسب السيناريو خلف كل رابط. التقط صفحة دفع خلف تحدي بوتات (حسمها المتصفح الحقيقي)، وAPI محدود الطلبات، وصفحة 404 متنكرة، وشهادات منتهية وموقعة ذاتيًا وقريبة الانتهاء، وحلقة تحويل، وجدار تسجيل دخول، ونطاقًا لا يعمل إلا مع www. والملف نفسه عبر سطر الأوامر أعطى الأرقام ذاتها.",
+    "highlights": [
+      "كل طرق إدخال الروابط: لصق أي نص، رفع جداول وأنواع ملفات كثيرة، استخراج روابط صفحة، توسيع خريطة موقع، REST API وسطر الأوامر",
+      "تحقق متعدد الطبقات: DNS برأي ثانٍ وTCP وTLS وHTTP مع تحليل المحتوى ومتصفح حقيقي عند الحاجة فقط",
+      "8 أحكام و17 مؤشر مشكلة ونسبة ثقة وسبب مكتوب مع الأدلة لكل رابط",
+      "بدائل احتياطية تشرح الأعطال دون إخفائها",
+      "إعادة تحقق من الأعطال وفحوص مرجعية توقف التشغيل عند انقطاع اتصال الجهاز",
+      "عرض مباشر للتشغيل مع التقدم والسرعة والوقت المتبقي ومخطط الأحكام وقائمة الانتباه وترتيب المواقع",
+      "تقارير XLSX منسقة متعددة الأوراق وCSV وJSON بالأدلة الكاملة أو صفحة HTML مستقلة، بالعربية أو الإنجليزية",
+      "واجهة عربية أصيلة من اليمين لليسار، وضع فاتح وداكن، ودعم تقليل الحركة"
+    ]
+  }
+}

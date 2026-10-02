@@ -3,6 +3,10 @@ import noesis from "./noesis/project.json";
 import noesisShowcase from "./noesis/showcase.json";
 import corpusforge from "./corpusforge/project.json";
 import corpusforgeShowcase from "./corpusforge/showcase.json";
+import sieve from "./sieve/project.json";
+import sieveShowcase from "./sieve/showcase.json";
+import vigil from "./vigil/project.json";
+import vigilShowcase from "./vigil/showcase.json";
 import websiteQaAgent from "./website-qa-agent/project.json";
 import websiteQaAgentShowcase from "./website-qa-agent/showcase.json";
 import cvChecker from "./cv-checker/project.json";
@@ -46,6 +50,8 @@ type ShowcaseSource = (Omit<
 const PROJECTS: { project: ProjectSource; showcase: ShowcaseSource }[] = [
   { project: noesis, showcase: noesisShowcase as ShowcaseSource },
   { project: corpusforge, showcase: corpusforgeShowcase as ShowcaseSource },
+  { project: sieve, showcase: sieveShowcase as ShowcaseSource },
+  { project: vigil, showcase: vigilShowcase as ShowcaseSource },
   { project: websiteQaAgent, showcase: websiteQaAgentShowcase as ShowcaseSource },
   { project: cvChecker, showcase: cvCheckerShowcase as ShowcaseSource },
   { project: examMaker, showcase: examMakerShowcase as ShowcaseSource },

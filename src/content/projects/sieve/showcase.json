@@ -1,0 +1,326 @@
+[
+  {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/sieve/demo-1.mp4",
+    "poster": "/images/projects/sieve/demo-1.webp",
+    "preview": "/images/projects/sieve/demo-1-preview.mp4",
+    "width": 1440,
+    "height": 900,
+    "duration": 63.4,
+    "caption": {
+      "en": "A real run: a message with four links is pasted, Sieve finds the URLs and probes the sites (HTTP for a news portal, Stealth for a bot-walled site, Browser for a JavaScript app), then crawls live with the engine mix filling in and ends on clean pages and an Arabic article's extracted text. The crawl is sped up.",
+      "ar": "تشغيل حقيقي: لصق رسالة فيها أربعة روابط، Sieve يستخرج الروابط ويفحص المواقع (HTTP لبوابة أخبار، Stealth لموقع محمي من البوتات، Browser لتطبيق JavaScript)، ثم يزحف مباشرة مع امتلاء توزيع المحركات، وينتهي بالصفحات النظيفة ونص مقال عربي مستخرج. الزحف مسرّع."
+    },
+    "source": "sieve-demo.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/01.webp",
+    "srcLarge": "/images/projects/sieve/01@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Overview dashboard after the runs: clean pages, words, data downloaded, duplicates removed, live CPU and memory gauges, and the resource governor.",
+      "ar": "لوحة النظرة العامة بعد التشغيلات: الصفحات النظيفة، الكلمات، البيانات المحمّلة، المكررات المحذوفة، مؤشرات المعالج والذاكرة المباشرة، ومنظّم الموارد."
+    },
+    "source": "01-overview.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/02.webp",
+    "srcLarge": "/images/projects/sieve/02@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "New job, step 1: a pasted message with links in the middle of prose; Sieve extracts 4 URLs across 4 sites and suggests a crawl mode.",
+      "ar": "مهمة جديدة، الخطوة 1: رسالة ملصوقة فيها روابط وسط النص؛ Sieve يستخرج 4 روابط من 4 مواقع ويقترح وضع الزحف."
+    },
+    "source": "02-new-job-input.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/03.webp",
+    "srcLarge": "/images/projects/sieve/03@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Step 2, site analysis: the bot-walled site is caught (HTTP 403, Cloudflare challenge) and Stealth is recommended with 90% confidence and the reasons.",
+      "ar": "الخطوة 2، تحليل الموقع: اكتشاف الموقع المحمي (HTTP 403، تحدي Cloudflare) والتوصية بـStealth بثقة 90% مع الأسباب."
+    },
+    "source": "03-site-probe-bot-wall.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/04.webp",
+    "srcLarge": "/images/projects/sieve/04@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Site analysis of the JavaScript app: 9 words in raw HTML vs 216 after rendering, so the Browser engine is recommended.",
+      "ar": "تحليل تطبيق JavaScript: 9 كلمات في HTML الخام مقابل 216 بعد العرض، فيُوصى بمحرك المتصفح."
+    },
+    "source": "04-site-probe-javascript-app.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/05.webp",
+    "srcLarge": "/images/projects/sieve/05@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Step 3, configuration: quick presets, engine choice with the probe's recommendation, crawl limits, scope, cleaning, extraction and AI fields.",
+      "ar": "الخطوة 3، الإعداد: إعدادات جاهزة، اختيار المحرك مع توصية الفحص، حدود الزحف، النطاق، التنظيف، الاستخراج، وحقول الذكاء الاصطناعي."
+    },
+    "source": "05-configure.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/06.webp",
+    "srcLarge": "/images/projects/sieve/06@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Step 4, review: the final plan before starting or saving it as a schedule.",
+      "ar": "الخطوة 4، المراجعة: الخطة النهائية قبل البدء أو حفظها كجدولة."
+    },
+    "source": "06-review.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/07.webp",
+    "srcLarge": "/images/projects/sieve/07@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "A job in the middle of a live run: progress ring, pages saved, duplicates, speed, the engine mix and the live feed of pages as they are cleaned.",
+      "ar": "مهمة في منتصف تشغيل مباشر: حلقة التقدم، الصفحات المحفوظة، المكررات، السرعة، توزيع المحركات، وتدفق الصفحات أثناء تنظيفها."
+    },
+    "source": "07-job-live-run.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/08.webp",
+    "srcLarge": "/images/projects/sieve/08@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The resource governor during the crawl: CPU near its 75% ceiling and holding, browser tabs and fetch workers throttled, live CPU and memory history.",
+      "ar": "منظّم الموارد أثناء الزحف: المعالج قرب سقفه 75% ومستقر، وتبويبات المتصفح وعمّال الجلب مضبوطة، مع سجل مباشر للمعالج والذاكرة."
+    },
+    "source": "08-resource-governor-live.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/09.webp",
+    "srcLarge": "/images/projects/sieve/09@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The finished four-site job: 290 pages, 47 clean, 220 duplicates removed, 13.5K words, 2 min 13 s.",
+      "ar": "المهمة المنتهية لأربعة مواقع: 290 صفحة، 47 نظيفة، 220 مكررًا محذوفًا، 13.5 ألف كلمة، خلال دقيقتين و13 ثانية."
+    },
+    "source": "09-job-results.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/10.webp",
+    "srcLarge": "/images/projects/sieve/10@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Engines used (HTTP, Stealth, Browser), the strategy chosen for each site, outcome mix, languages, HTTP statuses and quality flags.",
+      "ar": "المحركات المستخدمة (HTTP وStealth وBrowser)، والاستراتيجية لكل موقع، وتوزيع النتائج واللغات ورموز HTTP ومؤشرات الجودة."
+    },
+    "source": "10-engines-quality-languages.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/11.webp",
+    "srcLarge": "/images/projects/sieve/11@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Page browser filtered to clean pages, with language, word count, quality score, engine and flags for each page.",
+      "ar": "متصفح الصفحات مفلترًا على الصفحات النظيفة، مع اللغة وعدد الكلمات ودرجة الجودة والمحرك والمؤشرات لكل صفحة."
+    },
+    "source": "11-clean-pages.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/12.webp",
+    "srcLarge": "/images/projects/sieve/12@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "One Arabic article as clean text: headers, menus, cookie banner, sidebar and footer removed.",
+      "ar": "مقال عربي كنص نظيف: إزالة الترويسة والقوائم وشريط الكوكيز والشريط الجانبي والتذييل."
+    },
+    "source": "12-clean-text-arabic.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/13.webp",
+    "srcLarge": "/images/projects/sieve/13@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "AI fields filled by Gemini for an Arabic article: English topic, one-sentence summary, organizations and a boolean.",
+      "ar": "حقول ذكاء اصطناعي ملأها Gemini لمقال عربي: الموضوع بالإنجليزية، ملخص بجملة، المؤسسات، وقيمة منطقية."
+    },
+    "source": "13-ai-fields-gemini.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/14.webp",
+    "srcLarge": "/images/projects/sieve/14@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Site probe lab: the eight probe steps for the bot-walled site, the recommended plan and the HTTP and bot-protection details.",
+      "ar": "مختبر فحص المواقع: خطوات الفحص الثماني للموقع المحمي، الخطة الموصى بها، وتفاصيل HTTP والحماية من البوتات."
+    },
+    "source": "14-site-probe-lab.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/15.webp",
+    "srcLarge": "/images/projects/sieve/15@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Export: JSONL, JSON, CSV, Excel, Markdown or plain text, with filters for clean pages, duplicates, documents, minimum quality and language.",
+      "ar": "التصدير: JSONL وJSON وCSV وExcel وMarkdown ونص عادي، مع فلاتر للصفحات النظيفة والمكررات والمستندات والحد الأدنى للجودة واللغة."
+    },
+    "source": "15-export.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/16.webp",
+    "srcLarge": "/images/projects/sieve/16@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Full-text search in Arabic across every clean page collected, with highlighted matches.",
+      "ar": "بحث نصي كامل بالعربية في كل الصفحات النظيفة المجمعة مع إبراز المطابقات."
+    },
+    "source": "16-full-text-search.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/17.webp",
+    "srcLarge": "/images/projects/sieve/17@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Automation: recurring schedules with incremental runs and the inbox folder that turns any dropped file into a job.",
+      "ar": "الأتمتة: جدولات متكررة بتشغيلات تزايدية، ومجلد وارد يحوّل أي ملف يوضع فيه إلى مهمة."
+    },
+    "source": "17-automation.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/18.webp",
+    "srcLarge": "/images/projects/sieve/18@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Settings: Eco, Balanced, Turbo and Custom resource profiles with CPU and memory ceilings and live usage.",
+      "ar": "الإعدادات: ملفات موارد Eco وBalanced وTurbo وCustom مع سقوف المعالج والذاكرة والاستهلاك المباشر."
+    },
+    "source": "18-settings-resource-profiles.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/19.webp",
+    "srcLarge": "/images/projects/sieve/19@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Jobs list with status, progress, clean pages and speed.",
+      "ar": "قائمة المهام مع الحالة والتقدم والصفحات النظيفة والسرعة."
+    },
+    "source": "19-jobs.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/20.webp",
+    "srcLarge": "/images/projects/sieve/20@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The same job page in Arabic with a full right-to-left layout.",
+      "ar": "صفحة المهمة نفسها بالعربية من اليمين لليسار."
+    },
+    "source": "20-arabic-rtl.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/21.webp",
+    "srcLarge": "/images/projects/sieve/21@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The job page in the light theme.",
+      "ar": "صفحة المهمة في الوضع الفاتح."
+    },
+    "source": "21-light-theme.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/sieve/22.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile: overview with stat cards and live CPU/memory gauges.",
+      "ar": "على الجوال: النظرة العامة مع بطاقات الإحصاءات ومؤشرات المعالج والذاكرة."
+    },
+    "source": "22-mobile-overview.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/sieve/23.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile: the finished job with its progress ring and stats.",
+      "ar": "على الجوال: المهمة المنتهية مع حلقة التقدم والإحصاءات."
+    },
+    "source": "23-mobile-job.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/sieve/24.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile: new job wizard with the pasted message and the URLs found.",
+      "ar": "على الجوال: معالج المهمة الجديدة مع الرسالة الملصوقة والروابط المستخرجة."
+    },
+    "source": "24-mobile-new-job.png"
+  }
+]

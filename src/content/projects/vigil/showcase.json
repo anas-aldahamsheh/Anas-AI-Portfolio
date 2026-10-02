@@ -1,0 +1,287 @@
+[
+  {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/vigil/demo-1.mp4",
+    "poster": "/images/projects/vigil/demo-1.webp",
+    "preview": "/images/projects/vigil/demo-1-preview.mp4",
+    "width": 1440,
+    "height": 900,
+    "duration": 59.9,
+    "caption": {
+      "en": "A real run: one link with an expired certificate checked from the home bar with its evidence, then a CRM spreadsheet of 85 links dropped in, its address column detected, and the run streaming live to the summary, the charts and the evidence behind a link blocked by a bot challenge. The waiting is sped up.",
+      "ar": "تشغيل حقيقي: فحص رابط واحد بشهادة منتهية من شريط الصفحة الرئيسية مع أدلته، ثم إسقاط جدول CRM من 85 رابطًا واكتشاف عمود العناوين، وبث التشغيل مباشرة حتى الملخص والرسوم والدليل خلف رابط محجوب بتحدي بوتات. فترة الانتظار مسرّعة."
+    },
+    "source": "vigil-demo.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/01.webp",
+    "srcLarge": "/images/projects/vigil/01@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Home: the single-link check bar with Fast, Standard and Deep modes.",
+      "ar": "الصفحة الرئيسية: شريط فحص رابط واحد بأوضاع Fast وStandard وDeep."
+    },
+    "source": "01-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/02.webp",
+    "srcLarge": "/images/projects/vigil/02@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Instant result for one link: verdict, confidence, response details and certificate (expiring in 5 days).",
+      "ar": "نتيجة فورية لرابط واحد: الحكم ونسبة الثقة وتفاصيل الاستجابة والشهادة (تنتهي خلال 5 أيام)."
+    },
+    "source": "02-quick-check-result.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/03.webp",
+    "srcLarge": "/images/projects/vigil/03@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Paste tab: links pulled out of an ordinary message, including an Arabic domain.",
+      "ar": "تبويب اللصق: استخراج الروابط من رسالة عادية، ومنها نطاق عربي."
+    },
+    "source": "03-paste-any-text.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/04.webp",
+    "srcLarge": "/images/projects/vigil/04@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Page-links tab: every link on a web page extracted, with same-site and other-site filters.",
+      "ar": "تبويب روابط الصفحة: استخراج كل روابط صفحة ويب مع فلاتر للروابط الداخلية والخارجية."
+    },
+    "source": "04-extract-links-from-page.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/05.webp",
+    "srcLarge": "/images/projects/vigil/05@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "File tab: a CRM spreadsheet uploaded, sheet and address column detected, other columns kept for the report.",
+      "ar": "تبويب الملف: رفع جدول CRM واكتشاف الورقة وعمود العناوين، مع الإبقاء على بقية الأعمدة للتقرير."
+    },
+    "source": "05-spreadsheet-upload.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/06.webp",
+    "srcLarge": "/images/projects/vigil/06@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "A run in progress: progress ring, speed, time left and the verdict donut filling live.",
+      "ar": "تشغيل قيد التنفيذ: حلقة التقدم والسرعة والوقت المتبقي ومخطط الأحكام يمتلئ مباشرة."
+    },
+    "source": "06-live-run.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/07.webp",
+    "srcLarge": "/images/projects/vigil/07@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Finished run: 85 links in 52 s, 86% healthy, with the verdict breakdown and working, broken and needs-review totals.",
+      "ar": "تشغيل منتهٍ: 85 رابطًا خلال 52 ثانية، 86% سليمة، مع تفصيل الأحكام وإجمالي السليم والمعطّل وما يحتاج مراجعة."
+    },
+    "source": "07-run-summary.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/08.webp",
+    "srcLarge": "/images/projects/vigil/08@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Run summary metrics, the by-site ranking and the \"needs attention\" list with the reason for each problem.",
+      "ar": "مقاييس التشغيل، وترتيب المواقع، وقائمة «تحتاج انتباهًا» مع سبب كل مشكلة."
+    },
+    "source": "08-attention-and-sites.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/09.webp",
+    "srcLarge": "/images/projects/vigil/09@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Issues found (certificates, variants, HTTP only, slow…), HTTP status codes and the response-time histogram.",
+      "ar": "المشاكل المكتشفة (الشهادات، البدائل، HTTP فقط، البطء…)، ورموز حالة HTTP، ومخطط زمن الاستجابة."
+    },
+    "source": "09-issues-status-latency.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/10.webp",
+    "srcLarge": "/images/projects/vigil/10@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Results table with verdict chips, HTTP status, time, confidence, layer used, issues and reason.",
+      "ar": "جدول النتائج مع شارات الأحكام وحالة HTTP والزمن والثقة والطبقة المستخدمة والمشاكل والسبب."
+    },
+    "source": "10-results-table.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/11.webp",
+    "srcLarge": "/images/projects/vigil/11@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Evidence for one link: a payment page behind a bot challenge, decided by the real browser, 83% confidence.",
+      "ar": "دليل رابط واحد: صفحة دفع خلف تحدي بوتات، حسمها المتصفح الحقيقي بثقة 83%."
+    },
+    "source": "11-evidence-bot-challenge.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/12.webp",
+    "srcLarge": "/images/projects/vigil/12@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Evidence for a link that does not resolve while the www version works: \"Site up, variant worked\", 93% confidence.",
+      "ar": "دليل رابط لا يُحل نطاقه بينما تعمل نسخة www: «الموقع يعمل، والبديل نجح» بثقة 93%."
+    },
+    "source": "12-evidence-fallback.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/13.webp",
+    "srcLarge": "/images/projects/vigil/13@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Download menu: XLSX, CSV, JSON or HTML, by verdict, with separate sheets and English or Arabic labels.",
+      "ar": "قائمة التنزيل: XLSX وCSV وJSON وHTML، حسب الحكم، بأوراق منفصلة وعناوين عربية أو إنجليزية."
+    },
+    "source": "13-download-reports.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/14.webp",
+    "srcLarge": "/images/projects/vigil/14@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The standalone HTML report Vigil exports, with totals, verdict chips and a searchable table.",
+      "ar": "تقرير HTML المستقل الذي يصدّره Vigil، مع الإجماليات وشارات الأحكام وجدول قابل للبحث."
+    },
+    "source": "14-html-report.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/15.webp",
+    "srcLarge": "/images/projects/vigil/15@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Runs list with status and verdict mix for each run.",
+      "ar": "قائمة التشغيلات مع الحالة وتوزيع الأحكام لكل تشغيل."
+    },
+    "source": "15-runs.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/16.webp",
+    "srcLarge": "/images/projects/vigil/16@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The run summary in Arabic, right-to-left, dark theme.",
+      "ar": "ملخص التشغيل بالعربية من اليمين لليسار في الوضع الداكن."
+    },
+    "source": "16-arabic-dark-summary.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/17.webp",
+    "srcLarge": "/images/projects/vigil/17@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Home page in Arabic, dark theme.",
+      "ar": "الصفحة الرئيسية بالعربية في الوضع الداكن."
+    },
+    "source": "17-arabic-dark-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/18.webp",
+    "srcLarge": "/images/projects/vigil/18@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Results table in the dark theme.",
+      "ar": "جدول النتائج في الوضع الداكن."
+    },
+    "source": "18-dark-results.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/vigil/19.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile: home and check bar.",
+      "ar": "على الجوال: الصفحة الرئيسية وشريط الفحص."
+    },
+    "source": "19-mobile-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/vigil/20.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile: finished run summary.",
+      "ar": "على الجوال: ملخص تشغيل منتهٍ."
+    },
+    "source": "20-mobile-run-summary.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/vigil/21.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile: run summary in Arabic, dark theme.",
+      "ar": "على الجوال: ملخص التشغيل بالعربية في الوضع الداكن."
+    },
+    "source": "21-mobile-arabic-dark.png"
+  }
+]

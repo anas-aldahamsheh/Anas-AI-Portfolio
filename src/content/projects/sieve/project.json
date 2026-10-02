@@ -1,0 +1,77 @@
+{
+  "slug": "sieve",
+  "featured": true,
+  "category": "Data Engineering",
+  "cover": "09-job-results.png",
+  "tags": [
+    "Python",
+    "FastAPI",
+    "Playwright",
+    "SQLite",
+    "Web Scraping",
+    "Gemini",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Tailwind CSS"
+  ],
+  "repoPrivate": true,
+  "en": {
+    "title": "Sieve",
+    "summary": "An adaptive web-scraping engine that tests every site before touching it, picks the lightest method that sees the real content, and hands back clean, de-duplicated text.",
+    "metrics": [
+      "290 | pages crawled across 4 very different sites in 2:13",
+      "4 of 4 | sites given the right engine by the probe",
+      "220 | duplicate pages removed automatically",
+      "75% | CPU ceiling held by the resource governor"
+    ],
+    "role": "Sole engineer: the probe, the three fetch engines, the resource governor, the cleaning pipeline and the bilingual control room.",
+    "problem": "Most scrapers send the same request to every site and leave you to clean up the mess: bot walls return challenge pages, JavaScript apps return empty shells, and what does come back is full of menus, footers, cookie banners and duplicates. Pushing harder on a laptop just pins the CPU at 100%.",
+    "solution": "Sieve starts every site with an eight-step probe: a plain request, challenge-page detection (Cloudflare and similar), static HTML compared with a rendered copy, robots.txt, sitemaps and feeds, and the page structure. The result is a plan with an engine, a discovery method, per-host concurrency, delay, scrolling and extraction mode, plus a confidence score and the reasons in plain words.\n\nDuring the crawl each site starts on the engine the probe chose and escalates by itself when it gets blocked or receives an empty JavaScript shell: HTTP/2 first, then a browser-grade TLS fingerprint (\"stealth\"), then headless Chromium with scrolling and API capture. Every page then goes through a cleaning pipeline: main-content extraction cross-checked with trafilatura, boilerplate blocks learned across the site and removed from every page, Arabic and Latin normalisation, language detection, quality scoring, exact and near-duplicate removal (SHA-256 and SimHash) and optional PII redaction. PDF, DOCX, PPTX and XLSX links are downloaded and their text extracted, and optional AI fields use Gemini to fill typed values per page from a plain-language description.",
+    "architecture": "A Python FastAPI engine with httpx (HTTP/2), curl_cffi (browser TLS fingerprints) and Playwright Chromium, lxml and trafilatura for extraction, and aiosqlite on SQLite with FTS5 for storage and full-text search. A Next.js 16 static control room with React 19, Tailwind CSS 4, Motion, TanStack Query and Zustand is served by the engine and updated live over WebSocket. Jobs can be paused, resumed, re-run, scheduled with incremental runs or started by dropping a file into an inbox folder, and they resume after a crash.",
+    "challenges": "Going as fast as the machine allows without ever hitting 100%. A resource governor samples CPU and memory every second and raises or lowers concurrency (AIMD) under Eco, Balanced, Turbo or Custom ceilings, while each host gets its own throttle that backs off on 429, Retry-After and slow responses. Crawl traps such as calendar pages and endless query strings are capped.",
+    "decisions": "Probe first, then use the lightest engine that sees the real content, because a browser for every page is slow and plain HTTP misses half the modern web. Learn boilerplate across a site instead of guessing it per page. Keep every engine choice explainable and overridable by hand.",
+    "results": "In one recorded job on four very different test sites (a server-rendered Arabic and English news portal, a JavaScript-only documentation app, a knowledge base behind a Cloudflare-style bot wall and an infinite-scroll feed), the probe picked the right engine for every site: HTTP for the portal (36 URLs from its sitemap), Browser for the JavaScript app (9 words in raw HTML against 216 rendered), Stealth for the bot wall (plain HTTP got a 403 challenge, the browser-grade fingerprint passed) and Browser with auto-scroll for the feed. It fetched 290 pages in 2 min 13 s, removed 220 duplicates and 280 repeated template blocks, extracted 4 documents and kept 47 clean, unique pages with an average quality of 0.80, while the governor held the CPU under its 75% ceiling. A second run filled four Gemini AI fields for 6 Arabic and English articles with one call per page.",
+    "highlights": [
+      "Any input: pasted links or prose, TXT, CSV, TSV, JSON, XLSX, sitemaps and HTML",
+      "Eight-step site probe with a recommended plan, confidence score and reasons",
+      "Three engines with automatic per-page and per-site escalation, or forced by hand",
+      "Resource governor with live gauges of used, free and reserved memory and four profiles",
+      "Polite crawling: per-host throttling, Retry-After, robots.txt and crawl-trap limits",
+      "Cleaning pipeline with cross-page boilerplate removal, Arabic normalisation, quality scoring and near-duplicate removal",
+      "Structured fields by CSS, XPath or regex, plus Gemini AI fields with a typed schema",
+      "Full-text search and exports to JSONL, JSON, CSV, Excel, Markdown and plain text",
+      "Schedules, inbox folder and crash-safe checkpoints",
+      "English and Arabic control room with RTL, dark and light themes and a command palette"
+    ]
+  },
+  "ar": {
+    "title": "Sieve",
+    "summary": "محرك سحب بيانات من الويب يتكيف مع كل موقع: يختبر الموقع قبل لمسه، ويختار أخف طريقة ترى المحتوى الحقيقي، ويعيد نصًا نظيفًا بلا تكرار.",
+    "metrics": [
+      "290 | صفحة من 4 مواقع مختلفة جدًا خلال 2:13",
+      "4 من 4 | مواقع اختار لها الفحص المحرك الصحيح",
+      "220 | صفحة مكررة حُذفت تلقائيًا",
+      "75% | سقف المعالج الذي حافظ عليه منظّم الموارد"
+    ],
+    "role": "المهندس الوحيد على المشروع: فحص المواقع، محركات الجلب الثلاثة، منظّم الموارد، مسار التنظيف، وغرفة التحكم ثنائية اللغة.",
+    "problem": "معظم أدوات السحب ترسل الطلب نفسه لكل موقع وتتركك تنظف الفوضى: المواقع المحمية ترجع صفحات تحدٍّ، وتطبيقات JavaScript ترجع صفحات فارغة، وما يصل يكون مليئًا بالقوائم والتذييلات وأشرطة الكوكيز والتكرار. والضغط أكثر على جهاز عادي يرفع المعالج إلى 100%.",
+    "solution": "يبدأ Sieve كل موقع بفحص من ثماني خطوات: طلب عادي، كشف صفحات التحدي (Cloudflare وأمثالها)، مقارنة HTML الثابت بنسخة معروضة، قراءة robots.txt، اكتشاف خرائط الموقع والخلاصات، وفحص بنية الصفحة. والنتيجة خطة فيها المحرك وطريقة الاكتشاف والتزامن لكل نطاق والتأخير والتمرير ووضع الاستخراج، مع درجة ثقة والأسباب بكلمات واضحة.\n\nأثناء الزحف يبدأ كل موقع بالمحرك الذي اختاره الفحص ويصعّد تلقائيًا عند الحجب أو عند وصول صفحة JavaScript فارغة: HTTP/2 أولًا، ثم بصمة TLS بمستوى المتصفح («Stealth»)، ثم Chromium بلا واجهة مع التمرير والتقاط الـAPI. ثم تمر كل صفحة بمسار تنظيف: استخراج المحتوى الرئيسي مع مطابقته بـtrafilatura، وتعلّم الكتل المتكررة عبر الموقع وحذفها من كل الصفحات، وتوحيد النص العربي واللاتيني، وكشف اللغة، وتقييم الجودة، وحذف التكرار التام والقريب (SHA-256 وSimHash)، وحجب البيانات الشخصية اختياريًا. وتُحمّل روابط PDF وDOCX وPPTX وXLSX ويُستخرج نصها، وحقول الذكاء الاصطناعي الاختيارية تستخدم Gemini لملء قيم محددة النوع لكل صفحة من وصف بلغة عادية.",
+    "architecture": "محرك Python وFastAPI مع httpx (HTTP/2) وcurl_cffi (بصمات TLS للمتصفحات) وPlaywright Chromium، وlxml وtrafilatura للاستخراج، وaiosqlite على SQLite مع FTS5 للتخزين والبحث النصي الكامل. غرفة تحكم Next.js 16 مصدّرة كملفات ثابتة مع React 19 وTailwind CSS 4 وMotion وTanStack Query وZustand، يخدمها المحرك وتتحدث مباشرة عبر WebSocket. يمكن إيقاف المهام واستئنافها وإعادة تشغيلها وجدولتها بتشغيلات تزايدية أو بدؤها بوضع ملف في مجلد وارد، وتُستأنف بعد أي تعطل.",
+    "challenges": "الوصول لأقصى سرعة يسمح بها الجهاز دون بلوغ 100% أبدًا. منظّم موارد يقيس المعالج والذاكرة كل ثانية ويرفع التزامن أو يخفضه (AIMD) ضمن سقوف Eco أو Balanced أو Turbo أو Custom، بينما يحصل كل نطاق على مخفّض سرعة خاص يتراجع عند 429 وRetry-After والاستجابات البطيئة. ومصائد الزحف مثل صفحات التقويم وسلاسل المعاملات اللانهائية لها حدود.",
+    "decisions": "الفحص أولًا ثم أخف محرك يرى المحتوى الحقيقي، لأن المتصفح لكل صفحة بطيء وHTTP العادي يفوّت نصف الويب الحديث. تعلّم الكتل المتكررة عبر الموقع بدل تخمينها لكل صفحة. وكل اختيار للمحرك قابل للشرح ويمكن فرضه يدويًا.",
+    "results": "في مهمة مسجلة على أربعة مواقع اختبار مختلفة جدًا (بوابة أخبار عربية وإنجليزية تُعرض من الخادم، وتطبيق توثيق يعمل بـJavaScript فقط، وقاعدة معرفة خلف حماية بوتات بأسلوب Cloudflare، وخلاصة بتمرير لانهائي)، اختار الفحص المحرك الصحيح لكل موقع: HTTP للبوابة (36 رابطًا من خريطة الموقع)، وBrowser لتطبيق JavaScript (9 كلمات في HTML الخام مقابل 216 بعد العرض)، وStealth للموقع المحمي (HTTP العادي تلقى تحدي 403 وبصمة المتصفح عبرت)، وBrowser مع التمرير التلقائي للخلاصة. جلب 290 صفحة خلال دقيقتين و13 ثانية، وحذف 220 مكررًا و280 كتلة قالب متكررة، واستخرج 4 مستندات، واحتفظ بـ47 صفحة نظيفة وفريدة بمتوسط جودة 0.80، بينما حافظ المنظّم على المعالج تحت سقف 75%. وفي تشغيل ثانٍ ملأ Gemini أربعة حقول ذكية لـ6 مقالات عربية وإنجليزية باستدعاء واحد لكل صفحة.",
+    "highlights": [
+      "أي إدخال: روابط أو نص ملصوق، TXT وCSV وTSV وJSON وXLSX وخرائط المواقع وHTML",
+      "فحص من ثماني خطوات لكل موقع مع خطة موصى بها ودرجة ثقة وأسباب",
+      "ثلاثة محركات مع تصعيد تلقائي لكل صفحة ولكل موقع، أو اختيار يدوي",
+      "منظّم موارد بمؤشرات مباشرة للذاكرة المستخدمة والمتاحة والمحجوزة وأربعة ملفات أداء",
+      "زحف مهذب: تحديد سرعة لكل نطاق، Retry-After، robots.txt، وحدود لمصائد الزحف",
+      "مسار تنظيف يحذف القوالب المتكررة عبر الصفحات ويوحّد النص العربي ويقيّم الجودة ويحذف التكرار القريب",
+      "حقول منظمة عبر CSS أو XPath أو Regex، وحقول ذكاء اصطناعي من Gemini بمخطط محدد النوع",
+      "بحث نصي كامل وتصدير إلى JSONL وJSON وCSV وExcel وMarkdown ونص عادي",
+      "جدولات ومجلد وارد ونقاط استئناف آمنة من التعطل",
+      "غرفة تحكم عربية وإنجليزية من اليمين لليسار، وضع داكن وفاتح، ولوحة أوامر"
+    ]
+  }
+}
