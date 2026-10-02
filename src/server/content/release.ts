@@ -3,6 +3,7 @@ import { db } from "@/lib/db/client";
 import { appSettings, contentEntries } from "@/lib/db/schema";
 import { projectEntries, type ProjectRelease } from "@/content/projects";
 import { COLLECTIONS, LOCALES } from "./collections";
+import { applyContentCorrections } from "./corrections";
 import { createEntry, deleteEntry, reorderEntries, updateEntry } from "./mutations";
 import { listAllRows } from "./repository";
 
@@ -12,7 +13,7 @@ import { listAllRows } from "./repository";
  * owner makes afterwards in the admin are never overwritten by a later deploy. Bump the id to
  * publish a new version of the projects.
  */
-export const PROJECTS_RELEASE_ID = "projects-2026-10";
+export const PROJECTS_RELEASE_ID = "projects-2026-10-2";
 
 const releaseKey = (id: string) => `content_release:${id}`;
 const ACTOR = "content-release";
@@ -23,6 +24,8 @@ export interface ReleaseResult {
   created: string[];
   updated: string[];
   removed: string[];
+  /** Profile and experience entries cleaned of text about the placeholder projects. */
+  corrected?: string[];
 }
 
 /** Checks every entry against the collection schema before anything is written. */
@@ -59,7 +62,8 @@ export async function releaseApplied(id = PROJECTS_RELEASE_ID): Promise<boolean>
  * Makes the project collection exactly the release: entries are created or replaced by slug
  * (keeping their ids, so links and history survive), projects that are not in the release are
  * deleted (a revision is kept, so they can be restored from the admin) and the order follows
- * the release. The caller rebuilds the assistant's index afterwards.
+ * the release. Text about the placeholder projects is also taken out of the profile and
+ * experience entries. The caller rebuilds the assistant's index afterwards.
  */
 export async function applyProjectsRelease(
   options: { force?: boolean; id?: string; entries?: ProjectRelease[] } = {},
@@ -98,6 +102,7 @@ export async function applyProjectsRelease(
     result.removed.push(row.slug);
   }
   await reorderEntries("project", orderedIds);
+  result.corrected = await applyContentCorrections(ACTOR);
 
   const value = { appliedAt: new Date().toISOString(), ...result };
   await db

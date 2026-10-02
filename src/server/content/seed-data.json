@@ -26,7 +26,7 @@
           "about": [
             "I am an AI & Software Engineer with a Computer Engineering foundation. My primary focus is bridging the gap between cutting-edge AI research and building reliable, latency-bounded, and cost-efficient production software.",
             "In building LLM applications and agentic workflows, I believe the real engineering challenge is not making API calls — it is ensuring strict evidence grounding, eliminating hallucinations, minimizing retrieval latency, and building reproducible evaluation suites that prove system reliability.",
-            "I value simplicity, clean architecture, and rigorous testing. Whether engineering a hybrid dense/sparse RAG pipeline, writing low-latency edge daemons in Rust, or crafting accessible bilingual interfaces, my goal is to deliver durable engineering solutions that solve concrete business challenges."
+            "I value simplicity, clean architecture, and rigorous testing. Whether engineering a hybrid dense/sparse RAG pipeline or crafting accessible bilingual interfaces, my goal is to deliver durable engineering solutions that solve concrete business challenges."
           ],
           "location": "Amman, Jordan",
           "availability": "Open to AI engineering roles, remote or hybrid."
@@ -40,7 +40,7 @@
           "about": [
             "أنا مهندس برمجيات وذكاء اصطناعي بخلفية في هندسة الحاسوب. أركز جهودي على الجسر الفاصل بين أحدث أبحاث نماذج الذكاء الاصطناعي وبين تحويلها إلى أنظمة برمجية متكاملة، آمنة، وعالية الأداء تعمل بكفاءة على أرض الواقع.",
             "خلال عملي على الأنظمة المعتمدة على النماذج اللغوية الكبيرة (LLMs)، لاحظت أن التحدي الحقيقي ليس مجرد استدعاء واجهات الـ API، بل في ضمان ربط الإجابات بالحقائق (Grounding)، منع الهلوسة، تقليص أزمنة الاستجابة، وبناء مسارات تقييم قطعية تضمن الجودة قبل النشر إلى المستخدمين.",
-            "أؤمن بأن الكود الممتاز هو الكود البسيط، الموثق، والمختبر جيداً. سواء كنت أصمم محرك استرجاع هجين (Hybrid RAG)، أو أبني خادم حافة عالي الأداء بلغة Rust، أو أطور واجهات تفاعلية متجاوبة ثنائية اللغة، فإن هدفي الدائم هو تقديم حلول برمجية مستدامة تضيف قيمة مباشرة للأعمال."
+            "أؤمن بأن الكود الممتاز هو الكود البسيط، الموثق، والمختبر جيداً. سواء كنت أصمم محرك استرجاع هجين (Hybrid RAG) أو أطور واجهات تفاعلية متجاوبة ثنائية اللغة، فإن هدفي الدائم هو تقديم حلول برمجية مستدامة تضيف قيمة مباشرة للأعمال."
           ],
           "location": "عمّان، الأردن",
           "availability": "متاح لوظائف هندسة الذكاء الاصطناعي، عن بُعد أو بشكل هجين."
@@ -57,28 +57,15 @@
         "current": true,
         "companyUrl": "",
         "logo": "",
-        "technologies": [
-          "TypeScript",
-          "Next.js",
-          "Python",
-          "Rust",
-          "Qdrant",
-          "PostgreSQL",
-          "FastAPI",
-          "WebRTC",
-          "Docker"
-        ]
+        "technologies": ["TypeScript", "Next.js", "Python", "PostgreSQL", "FastAPI", "Docker"]
       },
       "i18n": {
         "en": {
           "role": "AI Engineer & Technical Systems Architect",
           "company": "Autonomous Systems & AI Engineering Projects",
           "location": "Amman, Jordan (Remote / Hybrid)",
-          "summary": "Architected and delivered end-to-end production AI platforms, hybrid RAG retrieval pipelines, edge policy consensus systems, and automated evaluation workflows.",
+          "summary": "Architected and delivered end-to-end production AI platforms, hybrid RAG retrieval pipelines and automated evaluation workflows.",
           "highlights": [
-            "Engineered autonomous multimodal RAG pipeline combining BGE-M3 dense embeddings and BM25 lexical search, achieving 99.4% citation accuracy and 180ms P95 latency.",
-            "Constructed embedded Rust edge policy consensus daemon with Ed25519 token verification, maintaining sub-3ms P99 latency under 50,000 requests/second.",
-            "Built real-time bidirectional neural speech stream utilizing WebRTC and low-latency chunked audio inference, reducing conversational lag to 125ms.",
             "Implemented deterministic benchmark evaluation suite testing retrieval recall, grounding fidelity, and bilingual consistency across Arabic and English."
           ]
         },
@@ -86,11 +73,8 @@
           "role": "مهندس ذكاء اصطناعي ومعماري أنظمة برمجية",
           "company": "مشاريع أنظمة الذكاء الاصطناعي وهندسة البرمجيات",
           "location": "عمان، الأردن (عن بُعد / هجين)",
-          "summary": "هندسة وتطوير منصات ذكاء اصطناعي إنتاجية، مسارات استرجاع هجينة (RAG)، بوابات حافة موزعة، ومسارات تقييم واختبار النماذج اللغوية.",
+          "summary": "هندسة وتطوير منصات ذكاء اصطناعي إنتاجية، مسارات استرجاع هجينة (RAG)، ومسارات تقييم واختبار النماذج اللغوية.",
           "highlights": [
-            "تصميم محرك RAG هجين يدمج التضمين الشعاعي والفهرسة المعجمية محققاً دقة اقتباس 99.4% وزمن استجابة 180ms.",
-            "تطوير خادم حافة بلغة Rust للتحقق المشفر من الصلاحيات بزمن استجابة P99 يقل عن 3ms تحت ضغط 50,000 طلب/ثانية.",
-            "بناء مسار تدفق صوتي عصبي ثنائي الاتجاه عبر WebRTC، مقلصاً زمن التأخر للمحادثة الحية إلى 125ms.",
             "تنفيذ حزمة تقييم معياري قطعية لقياس دقة الاسترجاع، الربط بالحقائق، والاتساق اللغوي ثنائي الاتجاه."
           ]
         }
@@ -124,7 +108,6 @@
           "location": "Amman, Jordan",
           "summary": "Developed scalable web applications, REST/GraphQL microservices, and fully accessible bilingual enterprise interfaces.",
           "highlights": [
-            "Engineered zero-runtime-overhead bilingual design systems strictly compliant with WCAG 2.2 AA accessibility standards across both light and dark themes.",
             "Optimized database queries and connection pooling in PostgreSQL, cutting median API response latency by 45%.",
             "Automated CI/CD deployment pipelines, automated integration testing with Vitest and Playwright, and secure secret management."
           ]
@@ -135,7 +118,6 @@
           "location": "عمان، الأردن",
           "summary": "تطوير تطبيقات ويب سحابية عالية القابلية للتوسع، خدمات مصغرة، وواجهات مؤسسية تدعم اللغتين العربية والإنجليزية بمعايير قياسية.",
           "highlights": [
-            "بناء أنظمة تصميم ثنائية اللغة متوافقة تماماً مع معايير إمكانية الوصول WCAG 2.2 AA في الوضعين الليلي والنهاري.",
             "تحسين استعلامات قواعد البيانات وإدارة الاتصالات في PostgreSQL، مخفضاً متوسط زمن استجابة الـ API بنسبة 45%.",
             "أتمتة مسارات النشر السحابي (CI/CD)، الفحوصات الآلية بـ Vitest و Playwright، وإدارة التشفير للأسرار."
           ]
