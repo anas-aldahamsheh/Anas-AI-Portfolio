@@ -83,6 +83,8 @@ export function parseCaptions(markdown: string, files: string[]): Map<string, st
       }
       const text = rest
         .replace(/^[\s`*_)\]]*(\.[a-z0-9]+)?[\s`*_)\]]*[:—–\-|]*\s*/i, "")
+        // A leading technical note such as "(48 s, 1440x900, H.264)" is not part of the caption.
+        .replace(/^\([^)]*\)\s*[:—–\-|]*\s*/, "")
         .replace(/[`*_]+/g, "")
         .replace(/\s*\|\s*$/, "")
         .trim();
@@ -178,10 +180,15 @@ async function importVideo(file: string, outDir: string, publicBase: string, ind
     "+faststart",
     path.join(outDir, `${name}.mp4`),
   ]);
+  // The preview loop and the poster come from the middle of the run, where the results are,
+  // rather than from the empty start screen.
+  const previewStart = Math.max(0, Math.min(info.duration * 0.4, info.duration - PREVIEW_SECONDS));
   await run("ffmpeg", [
     "-y",
     "-v",
     "error",
+    "-ss",
+    previewStart.toFixed(2),
     "-t",
     String(PREVIEW_SECONDS),
     "-i",
@@ -199,8 +206,7 @@ async function importVideo(file: string, outDir: string, publicBase: string, ind
     "+faststart",
     path.join(outDir, `${name}-preview.mp4`),
   ]);
-  // Poster: a frame a little into the recording (the first frame is often a blank page).
-  const at = Math.min(1.5, Math.max(0, info.duration / 3));
+  const at = Math.max(0, info.duration * 0.6);
   const frame = path.join(outDir, `${name}.png`);
   await run("ffmpeg", [
     "-y",
@@ -239,16 +245,29 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  const entries = (await readdir(inputDir)).sort((a, b) =>
-    a.localeCompare(b, "en", { numeric: true }),
-  );
-  const images = entries.filter((f) => /\.(png|jpe?g|webp)$/i.test(f));
-  const videos = entries.filter((f) => /\.(mp4|webm|mov)$/i.test(f));
+  // Media may sit in the folder itself or one level down (e.g. screenshots/, video/).
+  const entries: string[] = [];
+  for (const name of await readdir(inputDir, { withFileTypes: true })) {
+    if (name.isFile()) entries.push(name.name);
+    else if (name.isDirectory() && !name.name.startsWith(".")) {
+      for (const child of await readdir(path.join(inputDir, name.name))) {
+        entries.push(path.join(name.name, child));
+      }
+    }
+  }
+  entries.sort((a, b) => path.basename(a).localeCompare(path.basename(b), "en", { numeric: true }));
+  // Files starting with "_" are drafts the capture left behind.
+  const media = entries.filter((f) => !path.basename(f).startsWith("_"));
+  const images = media.filter((f) => /\.(png|jpe?g|webp)$/i.test(f));
+  const videos = media.filter((f) => /\.(mp4|webm|mov)$/i.test(f));
   if (images.length === 0 && videos.length === 0) throw new Error(`${inputDir}: no media found`);
 
   const captionsFile = arg("captions") ?? path.join(inputDir, "project.md");
   const captions = existsSync(captionsFile)
-    ? parseCaptions(await readFile(captionsFile, "utf8"), [...videos, ...images])
+    ? parseCaptions(
+        await readFile(captionsFile, "utf8"),
+        [...videos, ...images].map((f) => path.basename(f)),
+      )
     : new Map<string, string>();
 
   const outDir = path.join(ROOT, "public", "images", "projects", slug);
@@ -269,8 +288,11 @@ async function main() {
     const media = await importVideo(path.join(inputDir, file), outDir, publicBase, i + 1);
     items.push({
       ...media,
-      caption: { en: captions.get(file) ?? "", ar: previousAr.get(file) ?? "" },
-      source: file,
+      caption: {
+        en: captions.get(path.basename(file)) ?? "",
+        ar: previousAr.get(path.basename(file)) ?? "",
+      },
+      source: path.basename(file),
     });
     console.info(
       `video ${file} → ${media.src} (${media.width}x${media.height}, ${media.duration}s)`,
@@ -280,8 +302,11 @@ async function main() {
     const media = await importImage(path.join(inputDir, file), outDir, publicBase, i + 1);
     items.push({
       ...media,
-      caption: { en: captions.get(file) ?? "", ar: previousAr.get(file) ?? "" },
-      source: file,
+      caption: {
+        en: captions.get(path.basename(file)) ?? "",
+        ar: previousAr.get(path.basename(file)) ?? "",
+      },
+      source: path.basename(file),
     });
     console.info(`image ${file} → ${media.src} (${media.device})`);
   }

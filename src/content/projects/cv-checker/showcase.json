@@ -1,0 +1,286 @@
+[
+  {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/demo-1.mp4",
+    "poster": "/images/projects/cv-checker/demo-1.webp",
+    "preview": "/images/projects/cv-checker/demo-1-preview.mp4",
+    "width": 1440,
+    "height": 900,
+    "duration": 48.1,
+    "caption": {
+      "en": "A full real run: landing page, upload a resume, paste a job description, analyze (the waiting part is sped up 4x), score reveal and health cards, tour of the ATS breakdown, job match evidence and recommendations, then a job-tailored cover letter generated live and scrolled through.",
+      "ar": "تشغيل حقيقي كامل: رفع سيرة ذاتية، لصق إعلان وظيفة، التحليل، ثم جولة على النتيجة والأدلة والتوصيات، وتوليد رسالة تغطية مخصصة مباشرة."
+    },
+    "source": "cv-checker-demo.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/01.webp",
+    "srcLarge": "/images/projects/cv-checker/01@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Landing page: \"Elevate your resume with deep ATS intelligence\".",
+      "ar": "الصفحة الرئيسية: «ارتقِ بسيرتك الذاتية بذكاء ATS عميق»."
+    },
+    "source": "01-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/02.webp",
+    "srcLarge": "/images/projects/cv-checker/02@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The six core modules: resume health, job match and gap analysis, ghost skills, timeline gaps, grounded cover letters, zero-retention privacy.",
+      "ar": "الوحدات الست: صحة السيرة، المطابقة مع الوظيفة وتحليل الفجوات، المهارات بلا دليل، فجوات التسلسل الزمني، رسائل تغطية موثقة، وخصوصية بلا تخزين."
+    },
+    "source": "02-features.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/03.webp",
+    "srcLarge": "/images/projects/cv-checker/03@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The analysis page with the drag-and-drop resume upload and the optional job description.",
+      "ar": "صفحة التحليل مع رفع السيرة بالسحب والإفلات ووصف الوظيفة الاختياري."
+    },
+    "source": "03-analyze-upload.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/04.webp",
+    "srcLarge": "/images/projects/cv-checker/04@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Resume parsed: 1,715 characters extracted, status \"good\", with a preview of the extracted text.",
+      "ar": "قراءة السيرة: 1,715 حرفًا مستخرجًا بحالة «جيدة» مع معاينة للنص المستخرج."
+    },
+    "source": "04-resume-parsed-preview.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/05.webp",
+    "srcLarge": "/images/projects/cv-checker/05@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Target job description pasted in.",
+      "ar": "لصق وصف الوظيفة المستهدفة."
+    },
+    "source": "05-job-description.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/06.webp",
+    "srcLarge": "/images/projects/cv-checker/06@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Analysis running.",
+      "ar": "التحليل قيد التشغيل."
+    },
+    "source": "06-analyzing.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/07.webp",
+    "srcLarge": "/images/projects/cv-checker/07@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Results: 80/100 ATS compatibility, 95% confidence, 83/100 resume health, and the health cards including the detected 7-month gap.",
+      "ar": "النتائج: توافق ATS بنسبة 80/100، ثقة 95%، صحة السيرة 83/100، وبطاقات الصحة ومنها فجوة 7 أشهر مكتشفة."
+    },
+    "source": "07-results-score.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/08.webp",
+    "srcLarge": "/images/projects/cv-checker/08@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Job fit and gap analysis: must-have and preferred coverage, seniority match, and the missing must-have requirements.",
+      "ar": "المطابقة مع الوظيفة وتحليل الفجوات: تغطية المتطلبات الأساسية والمفضلة، توافق مستوى الخبرة، والمتطلبات الأساسية الناقصة."
+    },
+    "source": "08-job-fit-gap-analysis.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/09.webp",
+    "srcLarge": "/images/projects/cv-checker/09@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The deterministic ATS score breakdown: every category's signal, weight and points.",
+      "ar": "تفصيل نتيجة ATS الحتمية: إشارة كل فئة ووزنها ونقاطها."
+    },
+    "source": "09-ats-score-breakdown.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/10.webp",
+    "srcLarge": "/images/projects/cv-checker/10@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Requirement-by-requirement matching with the exact resume lines used as evidence and the evidence strength.",
+      "ar": "مطابقة كل متطلب على حدة مع أسطر السيرة المستخدمة كدليل وقوة الدليل."
+    },
+    "source": "10-job-match-evidence.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/11.webp",
+    "srcLarge": "/images/projects/cv-checker/11@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Prioritized recommendations: clarify the employment gap, address missing required qualifications.",
+      "ar": "توصيات مرتبة بالأولوية: توضيح فجوة العمل ومعالجة المؤهلات الأساسية الناقصة."
+    },
+    "source": "11-recommendations.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/12.webp",
+    "srcLarge": "/images/projects/cv-checker/12@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Generating a job-tailored cover letter grounded in verified achievements.",
+      "ar": "توليد رسالة تغطية مخصصة للوظيفة مبنية على إنجازات موثقة."
+    },
+    "source": "12-cover-letter-generating.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/13.webp",
+    "srcLarge": "/images/projects/cv-checker/13@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The finished cover letter, editable, with copy and PDF download.",
+      "ar": "رسالة التغطية الجاهزة، قابلة للتعديل والنسخ والتنزيل PDF."
+    },
+    "source": "13-cover-letter-result.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/14.webp",
+    "srcLarge": "/images/projects/cv-checker/14@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Full Arabic interface with right-to-left layout.",
+      "ar": "واجهة عربية كاملة من اليمين لليسار."
+    },
+    "source": "14-arabic-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/15.webp",
+    "srcLarge": "/images/projects/cv-checker/15@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The same analysis in Arabic.",
+      "ar": "التحليل نفسه بالعربية."
+    },
+    "source": "15-arabic-results.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/16.webp",
+    "srcLarge": "/images/projects/cv-checker/16@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Arabic results in dark mode.",
+      "ar": "النتائج بالعربية في الوضع الداكن."
+    },
+    "source": "16-arabic-results-dark.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/cv-checker/17.webp",
+    "srcLarge": "/images/projects/cv-checker/17@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The ATS score breakdown in Arabic, dark mode.",
+      "ar": "تفصيل نتيجة ATS بالعربية في الوضع الداكن."
+    },
+    "source": "17-arabic-ats-dark.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/cv-checker/18.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile landing page.",
+      "ar": "الصفحة الرئيسية على الجوال."
+    },
+    "source": "18-mobile-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/cv-checker/19.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile results with the score ring.",
+      "ar": "النتائج على الجوال مع حلقة النتيجة."
+    },
+    "source": "19-mobile-results.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/cv-checker/20.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile resume health cards (contact, timeline gap, skills, metrics).",
+      "ar": "بطاقات صحة السيرة على الجوال (التواصل، فجوة زمنية، المهارات، الأرقام)."
+    },
+    "source": "20-mobile-health-cards.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/cv-checker/21.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile recommendations tab.",
+      "ar": "تبويب التوصيات على الجوال."
+    },
+    "source": "21-mobile-recommendations.png"
+  }
+]

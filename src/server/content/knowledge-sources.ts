@@ -133,13 +133,37 @@ function sectionsFor(
       const links = [
         data.demoUrl && `Live demo: ${data.demoUrl}`,
         data.repoUrl && `Repository: ${data.repoUrl}`,
+        !data.repoUrl &&
+          data.repoPrivate &&
+          L(
+            locale,
+            "Source code: private repository (not public; available to discuss on request).",
+            "الكود المصدري: مستودع خاص (غير منشور، ويمكن شرحه عند الطلب).",
+          ),
       ]
         .filter(Boolean)
         .join("\n");
+      const screens = data.showcase
+        .map((item) => {
+          const text = (locale === "ar" ? item.caption.ar : item.caption.en) || item.caption.en;
+          if (!text) return "";
+          const kind =
+            item.kind === "video"
+              ? L(locale, "Recorded run", "تسجيل تشغيل")
+              : item.device === "mobile"
+                ? L(locale, "Mobile screen", "شاشة جوال")
+                : L(locale, "Screen", "شاشة");
+          return `${kind}: ${text}`;
+        })
+        .filter(Boolean);
       return {
         title: t.title,
         sections: compact([
           section(L(locale, "Overview", "نظرة عامة"), t.summary),
+          section(
+            L(locale, "Key numbers", "أرقام رئيسية"),
+            t.metrics.map((line) => line.replace(/\s*\|\s*/, " — ")),
+          ),
           section(L(locale, "Role", "الدور"), t.role),
           section(L(locale, "Problem", "المشكلة"), t.problem),
           section(L(locale, "What was built", "ما تم بناؤه"), t.solution),
@@ -159,6 +183,10 @@ function sectionsFor(
               .join(" · "),
           ),
           section(L(locale, "Links", "الروابط"), links),
+          section(
+            L(locale, "What the screenshots and recordings show", "ماذا تعرض الصور والتسجيلات"),
+            screens,
+          ),
         ]),
       };
     }

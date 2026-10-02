@@ -1,4 +1,6 @@
 import type { ShowcaseItem } from "@/server/content/collections";
+import cvChecker from "./cv-checker/project.json";
+import cvCheckerShowcase from "./cv-checker/showcase.json";
 
 /**
  * The projects shown on the site, versioned with the code. Each folder holds `project.json`
@@ -31,7 +33,9 @@ type ShowcaseSource = (Omit<
     source?: string;
   })[];
 
-const PROJECTS: { project: ProjectSource; showcase: ShowcaseSource }[] = [];
+const PROJECTS: { project: ProjectSource; showcase: ShowcaseSource }[] = [
+  { project: cvChecker, showcase: cvCheckerShowcase as ShowcaseSource },
+];
 
 export interface ProjectRelease {
   slug: string;

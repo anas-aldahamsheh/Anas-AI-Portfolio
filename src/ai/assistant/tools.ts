@@ -174,7 +174,7 @@ const listProjects: ToolDefinition = {
         period: formatPeriod(ctx.locale, p.data.startDate, p.data.endDate),
         page: entryUrl("project", p.slug, ctx.locale),
         demo: p.data.demoUrl || null,
-        repository: p.data.repoUrl || null,
+        repository: p.data.repoUrl || (p.data.repoPrivate ? "private (not public)" : null),
       })),
       ...(filter && matches.length === 0
         ? { note: `No project mentions "${filter}"; showing all.` }
@@ -188,7 +188,8 @@ const getProject: ToolDefinition = {
   declaration: {
     name: "get_project",
     description:
-      "Full case study of one project (problem, role, solution, architecture, decisions, results).",
+      "Full case study of one project (problem, role, solution, architecture, decisions, results, key " +
+      "numbers) and what its screenshots and recorded runs show.",
     parameters: {
       type: "object",
       properties: { slug: { type: "string", description: "Project slug from list_projects." } },
@@ -214,12 +215,23 @@ const getProject: ToolDefinition = {
       challenges: t.challenges,
       decisions: t.decisions,
       results: t.results,
+      keyNumbers: t.metrics.map((line) => line.replace(/\s*\|\s*/, " — ")),
       highlights: t.highlights,
       technologies: data.tags,
+      category: data.category,
       period: formatPeriod(ctx.locale, data.startDate, data.endDate),
       page: entryUrl("project", project.slug, ctx.locale),
       demo: data.demoUrl || null,
-      repository: data.repoUrl || null,
+      repository: data.repoUrl || (data.repoPrivate ? "private (not public)" : null),
+      media: {
+        screenshots: data.showcase.filter((item) => item.kind === "image").length,
+        recordings: data.showcase.filter((item) => item.kind === "video").length,
+        captions: data.showcase
+          .map(
+            (item) => (ctx.locale === "ar" ? item.caption.ar : item.caption.en) || item.caption.en,
+          )
+          .filter(Boolean),
+      },
     };
   },
 };
