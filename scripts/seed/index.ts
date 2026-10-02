@@ -1,6 +1,7 @@
 /**
  * Seeds the content tables with the starter content (only entries that don't exist yet, so it
- * never overwrites edits), then builds the assistant's knowledge index.
+ * never overwrites edits), applies the projects release (src/content/projects) if this database
+ * has not had it yet, then builds the assistant's knowledge index.
  *
  *   pnpm db:seed            # content + index
  *   pnpm db:seed --no-index # content only
@@ -10,6 +11,7 @@ import { and, eq } from "drizzle-orm";
 import { db, client } from "@/lib/db/client";
 import { contentEntries } from "@/lib/db/schema";
 import { rebuildKnowledge } from "@/server/knowledge/sync";
+import { applyProjectsRelease } from "@/server/content/release";
 
 async function main() {
   let inserted = 0;
@@ -33,6 +35,7 @@ async function main() {
     inserted++;
   }
   console.info(`content: ${inserted} inserted, ${seed.entries.length - inserted} already present`);
+  console.info("projects:", JSON.stringify(await applyProjectsRelease()));
 
   if (!process.argv.includes("--no-index")) {
     const result = await rebuildKnowledge();

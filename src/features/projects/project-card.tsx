@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, ExternalLink, Layers } from "lucide-react";
+import { ArrowRight, ExternalLink, Images, Layers, Lock, Play } from "lucide-react";
 import { ViewTransition } from "react";
 import { GithubIcon } from "@/ui/icons";
 import { MediaImage } from "@/ui/media-image";
 import { TiltCard } from "@/ui/tilt-card";
+import { LivePreview } from "./live-preview";
 import { cn } from "@/lib/utils";
 
 export interface ProjectCardData {
@@ -17,6 +18,11 @@ export interface ProjectCardData {
   repoUrl: string;
   featured: boolean;
   category: string;
+  repoPrivate: boolean;
+  /** Short silent loop played on hover, with its poster frame. */
+  preview: string;
+  poster: string;
+  screens: number;
 }
 
 export interface ProjectCardLabels {
@@ -24,6 +30,10 @@ export interface ProjectCardLabels {
   demo: string;
   code: string;
   featured: string;
+  private: string;
+  /** "{n} screens" */
+  screens: string;
+  video: string;
 }
 
 /** Project card; the cover morphs into the case-study hero on navigation (shared view transition). */
@@ -43,6 +53,7 @@ export function ProjectCard({
         data-edit-entry={project.id}
         data-edit-collection="project"
         data-edit-label={project.title}
+        data-preview-host=""
         className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#E5EAF2] bg-white/90 shadow-sm transition-[border-color,box-shadow] duration-300 hover:border-[#D0E2FF] hover:shadow-[0_24px_50px_-28px_rgba(23,59,108,0.45)] dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-white/[0.15]"
       >
         <Link
@@ -53,12 +64,28 @@ export function ProjectCard({
         >
           <ViewTransition name={`project-cover-${project.slug}`} share="morph" default="none">
             <div className="relative h-full w-full">
-              {project.cover ? (
+              {project.preview && project.poster ? (
+                <>
+                  <MediaImage
+                    src={project.cover || project.poster}
+                    alt=""
+                    sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                  />
+                  <LivePreview
+                    src={project.preview}
+                    poster={project.poster}
+                    alt=""
+                    playOnHover
+                    className="opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  />
+                </>
+              ) : project.cover ? (
                 <MediaImage
                   src={project.cover}
                   alt=""
                   sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                  className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#EBF6FE] via-white to-[#F3EEFE] dark:from-[#0B1728] dark:via-[#07101F] dark:to-[#150E2A]">
@@ -70,6 +97,22 @@ export function ProjectCard({
             </div>
           </ViewTransition>
           <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07101F]/35 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          {project.screens || project.preview ? (
+            <span className="pointer-events-none absolute end-3 bottom-3 flex items-center gap-1.5">
+              {project.preview ? (
+                <span className="flex items-center gap-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-semibold text-white backdrop-blur-sm">
+                  <Play className="h-2.5 w-2.5 fill-current" aria-hidden="true" />
+                  {labels.video}
+                </span>
+              ) : null}
+              {project.screens ? (
+                <span className="flex items-center gap-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-semibold text-white backdrop-blur-sm">
+                  <Images className="h-2.5 w-2.5" aria-hidden="true" />
+                  {labels.screens.replace("{n}", String(project.screens))}
+                </span>
+              ) : null}
+            </span>
+          ) : null}
         </Link>
         <div className="absolute start-3 top-3 flex flex-wrap items-center gap-1.5">
           {project.featured ? (
@@ -120,6 +163,12 @@ export function ProjectCard({
           <div className="flex-1" />
           <div className="relative z-10 mt-5 flex items-center justify-between gap-2 border-t border-[#E5EAF2] pt-4 dark:border-white/[0.08]">
             <div className="flex items-center gap-1">
+              {!project.repoUrl && project.repoPrivate ? (
+                <span className="flex items-center gap-1.5 px-2 py-2 text-[11px] font-semibold text-[#637089] dark:text-[#9AA8C0]">
+                  <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+                  {labels.private}
+                </span>
+              ) : null}
               {project.repoUrl ? (
                 <a
                   href={project.repoUrl}

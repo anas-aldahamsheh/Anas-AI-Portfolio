@@ -11,7 +11,9 @@ import {
   ExternalLink,
   Flag,
   Lightbulb,
+  Lock,
   Mountain,
+  PlayCircle,
   Rocket,
   Target,
   UserRound,
@@ -29,6 +31,9 @@ import { entryProps, fieldProps } from "@/ui/editable";
 import { GithubIcon } from "@/ui/icons";
 import { MediaImage } from "@/ui/media-image";
 import { AskButton } from "@/features/assistant/ask-button";
+import { LivePreview } from "@/features/projects/live-preview";
+import { ProjectMetrics } from "@/features/projects/project-metrics";
+import { ProjectShowcase } from "@/features/projects/project-showcase";
 
 export async function generateStaticParams() {
   const all = await Promise.all(LOCALES.map((locale) => listEntries("project", locale)));
@@ -86,6 +91,8 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
   const Back = locale === "ar" ? ArrowRight : ArrowLeft;
   const Forward = locale === "ar" ? ArrowLeft : ArrowRight;
   const sections = SECTIONS.filter((s) => project.t[s.field]);
+  const showcase = project.data.showcase;
+  const video = showcase.find((item) => item.kind === "video");
 
   return (
     <article className="w-full" {...entryProps(project, project.t.title)}>
@@ -156,9 +163,23 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
                     <GithubIcon className="h-4 w-4" />
                     {tx("projects.code")}
                   </a>
+                ) : project.data.repoPrivate ? (
+                  <span
+                    className="inline-flex items-center gap-2 rounded-full border border-dashed border-[#C9D6EA] px-4 py-2.5 text-sm font-semibold text-[#637089] dark:border-white/[0.15] dark:text-[#9AA8C0]"
+                    title={t("project.privateHint")}
+                  >
+                    <Lock className="h-4 w-4" aria-hidden="true" />
+                    {tx("project.private")}
+                  </span>
+                ) : null}
+                {video ? (
+                  <a href="#showcase" className="btn-action-primary">
+                    <PlayCircle className="h-4 w-4" aria-hidden="true" />
+                    {tx("project.showcase.watch")}
+                  </a>
                 ) : null}
                 <AskButton
-                  variant={project.data.demoUrl ? "secondary" : "primary"}
+                  variant={project.data.demoUrl || video ? "secondary" : "primary"}
                   prompt={
                     locale === "ar"
                       ? `احكيلي عن مشروع "${project.t.title}": شو المشكلة وشو بنى أنس وشو النتيجة؟`
@@ -175,7 +196,14 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
                   className="relative aspect-video w-full overflow-hidden rounded-3xl border border-[#E5EAF2] bg-neutral-100 shadow-[0_30px_80px_-40px_rgba(23,59,108,0.55)] dark:border-white/[0.08] dark:bg-[#0B1728]"
                   {...fieldProps(project, "cover")}
                 >
-                  {project.data.cover ? (
+                  {video?.preview ? (
+                    <LivePreview
+                      src={video.preview}
+                      poster={video.poster || project.data.cover}
+                      alt={project.t.title}
+                      priority
+                    />
+                  ) : project.data.cover ? (
                     <MediaImage
                       src={project.data.cover}
                       alt={project.t.title}
@@ -192,6 +220,51 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
           </div>
         </Container>
       </header>
+
+      {project.t.metrics.length ? (
+        <Container className="pt-10 sm:pt-14">
+          <ProjectMetrics items={project.t.metrics} label={t("project.metrics")} />
+        </Container>
+      ) : null}
+
+      {showcase.length ? (
+        <section id="showcase" className="scroll-mt-20" aria-labelledby="showcase-title">
+          <Container className="py-12 sm:py-16">
+            <Reveal className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
+              <p className="text-xs font-bold tracking-[0.2em] text-[#2F6FED] uppercase dark:text-indigo-300">
+                {tx("project.showcase.eyebrow")}
+              </p>
+              <h2
+                id="showcase-title"
+                className="font-display mt-2 text-2xl font-bold text-[#173B6C] sm:text-3xl dark:text-[#F4F7FF]"
+              >
+                {tx("project.showcase.title")}
+              </h2>
+              <p className="mt-2 text-sm text-[#637089] sm:text-base dark:text-[#9AA8C0]">
+                {tx("project.showcase.subtitle")}
+              </p>
+            </Reveal>
+            <div className="mx-auto max-w-5xl">
+              <ProjectShowcase
+                items={showcase}
+                title={project.t.title}
+                locale={locale}
+                labels={{
+                  video: t("project.showcase.video"),
+                  play: t("project.showcase.play"),
+                  desktop: t("project.showcase.desktop"),
+                  mobile: t("project.showcase.mobile"),
+                  prev: t("project.showcase.prev"),
+                  next: t("project.showcase.next"),
+                  open: t("project.showcase.open"),
+                  close: t("project.showcase.close"),
+                  of: t("project.showcase.of"),
+                }}
+              />
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       <Container className="py-10 sm:py-14 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
@@ -261,6 +334,12 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
                 <div {...fieldProps(project, "tags")}>
                   <TechChips items={project.data.tags} />
                 </div>
+                {project.data.repoPrivate && !project.data.repoUrl ? (
+                  <p className="flex items-start gap-2 border-t border-[#E5EAF2] pt-4 text-xs leading-relaxed text-[#637089] dark:border-white/[0.08] dark:text-[#9AA8C0]">
+                    <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                    {tx("project.privateHint")}
+                  </p>
+                ) : null}
                 {period ? (
                   <div className="border-t border-[#E5EAF2] pt-4 text-sm dark:border-white/[0.08]">
                     <p className="text-xs font-bold tracking-wider text-[#637089] uppercase dark:text-[#9AA8C0]">

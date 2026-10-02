@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "vercel-build": "tsx scripts/content/release.ts --deploy && next build",
     "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -27,7 +28,9 @@
     "db:check": "drizzle-kit check",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx --env-file-if-exists=.env.local scripts/seed/index.ts",
-    "admin": "tsx --env-file-if-exists=.env.local scripts/admin.ts"
+    "content:release": "tsx --env-file-if-exists=.env.local scripts/content/release.ts",
+    "admin": "tsx --env-file-if-exists=.env.local scripts/admin.ts",
+    "media:import": "tsx scripts/media/import-project.ts"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.3.7",
@@ -59,6 +62,7 @@
     "postcss": "^8.5.2",
     "prettier": "^3.5.1",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "sharp": "0.35.4",
     "tailwindcss": "4.3.3",
     "tsx": "^4.23.13",
     "typescript": "^5.7.3",

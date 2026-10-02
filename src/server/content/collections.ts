@@ -33,6 +33,33 @@ const yearMonth = z
 /** A media reference is either an uploaded asset (`/media/<id>`) or an external/static URL. */
 const media = z.string().trim().max(2000).optional().default("");
 
+const caption = z
+  .object({
+    en: z.string().trim().max(400).optional().default(""),
+    ar: z.string().trim().max(400).optional().default(""),
+  })
+  .optional()
+  .default({});
+
+/**
+ * One item of a project's showcase: a screenshot (with an optional larger variant for sharp
+ * screens) or a screen recording (with its poster frame and a light preview loop for cards).
+ */
+export const showcaseItemSchema = z.object({
+  kind: z.enum(["image", "video"]),
+  device: z.enum(["desktop", "mobile"]).default("desktop"),
+  src: z.string().trim().min(1).max(2000),
+  srcLarge: z.string().trim().max(2000).optional().default(""),
+  poster: z.string().trim().max(2000).optional().default(""),
+  preview: z.string().trim().max(2000).optional().default(""),
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+  duration: z.number().nonnegative().optional().default(0),
+  caption,
+});
+
+export type ShowcaseItem = z.infer<typeof showcaseItemSchema>;
+
 export type FieldKind =
   | "text"
   | "textarea"
@@ -178,12 +205,18 @@ export const projectCollection = {
     tags: stringList,
     category: z.string().trim().max(80).optional().default(""),
     featured: z.boolean().optional().default(false),
+    /** The source exists but is not public: the site says so instead of linking it. */
+    repoPrivate: z.boolean().optional().default(false),
     startDate: yearMonth,
     endDate: yearMonth,
+    /** Screenshots and screen recordings, in display order (written by `pnpm media:import`). */
+    showcase: z.array(showcaseItemSchema).max(60).optional().default([]),
   }),
   i18n: z.object({
     title: requiredText(160),
     summary: requiredText(600),
+    /** Headline numbers, one per line as "value | label" (e.g. "54 ms | median search time"). */
+    metrics: stringList,
     role: optionalText,
     problem: optionalText,
     solution: optionalText,
@@ -226,6 +259,16 @@ export const projectCollection = {
     },
     { name: "highlights", kind: "list", localized: true, label: L("Highlights", "أبرز النقاط") },
     {
+      name: "metrics",
+      kind: "list",
+      localized: true,
+      label: L("Key numbers", "أرقام رئيسية"),
+      help: L(
+        'One per line as "value | label", e.g. "54 ms | median search time".',
+        'كل سطر بالشكل "القيمة | الوصف"، مثلاً "54 ms | متوسط زمن البحث".',
+      ),
+    },
+    {
       name: "cover",
       kind: "media",
       localized: false,
@@ -235,6 +278,12 @@ export const projectCollection = {
     { name: "tags", kind: "tags", localized: false, label: L("Technologies", "التقنيات") },
     { name: "category", kind: "text", localized: false, label: L("Category", "التصنيف") },
     { name: "repoUrl", kind: "url", localized: false, label: L("Repository", "المستودع") },
+    {
+      name: "repoPrivate",
+      kind: "boolean",
+      localized: false,
+      label: L("Private source code", "الكود المصدري خاص"),
+    },
     { name: "demoUrl", kind: "url", localized: false, label: L("Live demo", "النسخة الحية") },
     { name: "startDate", kind: "date", localized: false, label: L("Start (YYYY-MM)", "البداية") },
     { name: "endDate", kind: "date", localized: false, label: L("End (YYYY-MM)", "النهاية") },
