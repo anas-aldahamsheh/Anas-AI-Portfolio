@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { appSettings, contentEntries } from "@/lib/db/schema";
 import { certificateEntries } from "@/content/certificates";
+import { educationEntries, experienceEntries } from "@/content/experience";
 import { projectEntries, type ProjectRelease } from "@/content/projects";
 import { COLLECTIONS, LOCALES, type CollectionName } from "./collections";
 import { applyContentCorrections } from "./corrections";
@@ -14,10 +15,12 @@ import { listAllRows } from "./repository";
  * owner makes afterwards in the admin are never overwritten by a later deploy. Bump the id to
  * publish a new version of the projects or certificates.
  */
-export const PROJECTS_RELEASE_ID = "content-2026-10-4";
+export const PROJECTS_RELEASE_ID = "content-2026-10-5";
 
 const releaseKey = (id: string) => `content_release:${id}`;
 const ACTOR = "content-release";
+
+type Changes = { created: string[]; updated: string[]; removed: string[] };
 
 export interface ReleaseResult {
   release: string;
@@ -27,7 +30,9 @@ export interface ReleaseResult {
   removed: string[];
   /** Profile and experience entries cleaned of text about the placeholder projects. */
   corrected?: string[];
-  certificates?: { created: string[]; updated: string[]; removed: string[] };
+  certificates?: Changes;
+  experience?: Changes;
+  education?: Changes;
 }
 
 /** Checks every entry against the collection schema before anything is written. */
@@ -35,6 +40,8 @@ export function validateProjectRelease(entries: ProjectRelease[]): string[] {
   return [
     ...validateEntries("project", entries),
     ...validateEntries("certificate", certificateEntries()),
+    ...validateEntries("experience", experienceEntries()),
+    ...validateEntries("education", educationEntries()),
   ];
 }
 
@@ -71,7 +78,7 @@ export async function releaseApplied(id = PROJECTS_RELEASE_ID): Promise<boolean>
  * Makes the project collection exactly the release: entries are created or replaced by slug
  * (keeping their ids, so links and history survive), projects that are not in the release are
  * deleted (a revision is kept, so they can be restored from the admin) and the order follows
- * the release. The certificates are synced the same way, and text about the placeholder
+ * the release. The certificates, experience and education are synced the same way, and text about the placeholder
  * projects is taken out of the profile and experience entries. The caller rebuilds the assistant's index afterwards.
  */
 export async function applyProjectsRelease(
@@ -89,6 +96,8 @@ export async function applyProjectsRelease(
 
   Object.assign(result, await syncCollection("project", entries));
   result.certificates = await syncCollection("certificate", certificateEntries());
+  result.experience = await syncCollection("experience", experienceEntries());
+  result.education = await syncCollection("education", educationEntries());
   result.corrected = await applyContentCorrections(ACTOR);
 
   const value = { appliedAt: new Date().toISOString(), ...result };
@@ -104,7 +113,7 @@ export async function applyProjectsRelease(
  * entries not in the list deleted (a revision is kept), and the order taken from the list.
  */
 async function syncCollection(collection: CollectionName, entries: ProjectRelease[]) {
-  const changes = { created: [] as string[], updated: [] as string[], removed: [] as string[] };
+  const changes: Changes = { created: [], updated: [], removed: [] };
   const existing = await listAllRows(collection);
   const bySlug = new Map(existing.map((row) => [row.slug, row]));
   const keep = new Set(entries.map((entry) => entry.slug));

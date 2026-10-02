@@ -17,17 +17,29 @@ const KIND: Record<CollectionName, KnowledgeKind> = {
 
 const L = (locale: Locale, en: string, ar: string) => (locale === "ar" ? ar : en);
 
+/** "2025-12" → "Dec 2025" (or the Arabic month); a bare year stays as is. */
+function formatYearMonth(locale: Locale, value?: string): string | undefined {
+  const match = value ? /^(\d{4})-(\d{2})$/.exec(value) : null;
+  if (!match) return value;
+  const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, 1));
+  return new Intl.DateTimeFormat(locale === "ar" ? "ar-u-nu-latn" : "en", {
+    month: locale === "ar" ? "long" : "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+}
+
 export function formatPeriod(
   locale: Locale,
   start?: string,
   end?: string,
   current?: boolean,
 ): string {
-  const s = start?.trim();
-  const e = current ? L(locale, "present", "حتى الآن") : end?.trim();
+  const s = formatYearMonth(locale, start?.trim());
+  const e = current ? L(locale, "Present", "حتى الآن") : formatYearMonth(locale, end?.trim());
   if (!s && !e) return "";
   if (s && e) return `${s} – ${e}`;
-  return s ?? e ?? "";
+  return s || e || "";
 }
 
 function section(heading: string, text: string | string[] | undefined): KnowledgeSection | null {
