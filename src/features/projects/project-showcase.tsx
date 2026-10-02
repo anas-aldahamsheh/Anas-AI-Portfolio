@@ -510,7 +510,10 @@ function DesktopStage({
             {text}
           </m.p>
         </AnimatePresence>
-        <span className="shrink-0 pt-0.5 font-mono text-xs font-semibold text-[#173B6C] dark:text-[#E2E8F0]">
+        <span
+          dir="ltr"
+          className="shrink-0 pt-0.5 font-mono text-xs font-semibold text-[#173B6C] dark:text-[#E2E8F0]"
+        >
           {pad(index + 1)}
           <span className="text-[#637089] dark:text-[#9AA8C0]"> / {pad(images.length)}</span>
         </span>
