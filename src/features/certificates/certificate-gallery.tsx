@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, m } from "motion/react";
-import { Award, BadgeCheck, CalendarDays, ExternalLink, X } from "lucide-react";
+import { Award, BadgeCheck, CalendarDays, ExternalLink, FileText, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { TiltCard } from "@/ui/tilt-card";
 
@@ -15,6 +15,7 @@ export interface CertificateData {
   credentialId: string;
   credentialUrl: string;
   image: string;
+  file: string;
   skills: string[];
   featured: boolean;
 }
@@ -26,6 +27,7 @@ interface Labels {
   skills: string;
   view: string;
   close: string;
+  file: string;
 }
 
 function CertificateImage({
@@ -317,6 +319,17 @@ export function CertificateGallery({
                   >
                     <ExternalLink className="h-4 w-4" aria-hidden="true" />
                     {labels.verify}
+                  </a>
+                ) : null}
+                {active.file ? (
+                  <a
+                    href={active.file}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex w-full items-center justify-center gap-2 rounded-full border border-[#D0E2FF] bg-[#EEF5FF] px-4 py-2.5 text-sm font-semibold text-[#2F6FED] transition-colors hover:bg-[#E0EEFF] dark:border-white/[0.1] dark:bg-white/[0.04] dark:text-indigo-200 dark:hover:bg-white/[0.08]"
+                  >
+                    <FileText className="h-4 w-4" aria-hidden="true" />
+                    {labels.file}
                   </a>
                 ) : null}
               </div>

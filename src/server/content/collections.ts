@@ -395,6 +395,7 @@ export const certificateCollection = {
     credentialId: z.string().trim().max(200).optional().default(""),
     credentialUrl: url,
     image: media,
+    file: media,
     skills: stringList,
     featured: z.boolean().optional().default(false),
   }),
@@ -419,6 +420,13 @@ export const certificateCollection = {
       localized: false,
       label: L("Certificate image", "صورة الشهادة"),
       accept: "image/*",
+    },
+    {
+      name: "file",
+      kind: "media",
+      localized: false,
+      label: L("Certificate file (PDF)", "ملف الشهادة (PDF)"),
+      accept: "application/pdf",
     },
     {
       name: "issueDate",

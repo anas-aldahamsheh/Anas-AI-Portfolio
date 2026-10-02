@@ -154,6 +154,7 @@ const en = {
   "certificates.skills": "Skills",
   "certificates.view": "View certificate",
   "certificates.close": "Close",
+  "certificates.file": "Open the certificate (PDF)",
   "certificates.empty": "Certificates will be listed here soon.",
 
   // Contact
@@ -413,6 +414,7 @@ const ar: Messages = {
   "certificates.skills": "المهارات",
   "certificates.view": "عرض الشهادة",
   "certificates.close": "إغلاق",
+  "certificates.file": "فتح الشهادة (PDF)",
   "certificates.empty": "ستُضاف الشهادات هنا قريباً.",
 
   "contact.hero.title": "لنعمل معاً",

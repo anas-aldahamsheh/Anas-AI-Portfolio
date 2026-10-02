@@ -17,6 +17,9 @@ function countLabel(
   return form.replace("{n}", String(n));
 }
 
+/** Tags that stay on the project cards but are not offered as filters. */
+const HIDDEN_FILTERS = new Set(["Gemini"]);
+
 /** Search + technology filter with animated re-layout (cards glide into their new places). */
 export function ProjectCatalog({
   projects,
@@ -42,7 +45,8 @@ export function ProjectCatalog({
   const tags = useMemo(() => {
     const counts = new Map<string, number>();
     for (const project of projects)
-      for (const t of project.tags) counts.set(t, (counts.get(t) ?? 0) + 1);
+      for (const t of project.tags)
+        if (!HIDDEN_FILTERS.has(t)) counts.set(t, (counts.get(t) ?? 0) + 1);
     return [...counts.entries()]
       .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
       .slice(0, 12)

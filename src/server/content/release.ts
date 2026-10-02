@@ -1,8 +1,9 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { appSettings, contentEntries } from "@/lib/db/schema";
+import { certificateEntries } from "@/content/certificates";
 import { projectEntries, type ProjectRelease } from "@/content/projects";
-import { COLLECTIONS, LOCALES } from "./collections";
+import { COLLECTIONS, LOCALES, type CollectionName } from "./collections";
 import { applyContentCorrections } from "./corrections";
 import { createEntry, deleteEntry, reorderEntries, updateEntry } from "./mutations";
 import { listAllRows } from "./repository";
@@ -11,9 +12,9 @@ import { listAllRows } from "./repository";
  * Content releases bring content that is versioned with the code (src/content) into the
  * database. Each release runs once per database: it is recorded in `app_settings`, so edits the
  * owner makes afterwards in the admin are never overwritten by a later deploy. Bump the id to
- * publish a new version of the projects.
+ * publish a new version of the projects or certificates.
  */
-export const PROJECTS_RELEASE_ID = "projects-2026-10-3";
+export const PROJECTS_RELEASE_ID = "content-2026-10-4";
 
 const releaseKey = (id: string) => `content_release:${id}`;
 const ACTOR = "content-release";
@@ -26,12 +27,20 @@ export interface ReleaseResult {
   removed: string[];
   /** Profile and experience entries cleaned of text about the placeholder projects. */
   corrected?: string[];
+  certificates?: { created: string[]; updated: string[]; removed: string[] };
 }
 
 /** Checks every entry against the collection schema before anything is written. */
 export function validateProjectRelease(entries: ProjectRelease[]): string[] {
+  return [
+    ...validateEntries("project", entries),
+    ...validateEntries("certificate", certificateEntries()),
+  ];
+}
+
+function validateEntries(collection: CollectionName, entries: ProjectRelease[]): string[] {
   const problems: string[] = [];
-  const spec = COLLECTIONS.project;
+  const spec = COLLECTIONS[collection];
   const slugs = new Set<string>();
   for (const entry of entries) {
     if (slugs.has(entry.slug)) problems.push(`${entry.slug}: duplicate slug`);
@@ -62,8 +71,8 @@ export async function releaseApplied(id = PROJECTS_RELEASE_ID): Promise<boolean>
  * Makes the project collection exactly the release: entries are created or replaced by slug
  * (keeping their ids, so links and history survive), projects that are not in the release are
  * deleted (a revision is kept, so they can be restored from the admin) and the order follows
- * the release. Text about the placeholder projects is also taken out of the profile and
- * experience entries. The caller rebuilds the assistant's index afterwards.
+ * the release. The certificates are synced the same way, and text about the placeholder
+ * projects is taken out of the profile and experience entries. The caller rebuilds the assistant's index afterwards.
  */
 export async function applyProjectsRelease(
   options: { force?: boolean; id?: string; entries?: ProjectRelease[] } = {},
@@ -78,7 +87,25 @@ export async function applyProjectsRelease(
   if (problems.length) throw new Error(`Invalid project content:\n- ${problems.join("\n- ")}`);
   if (entries.length === 0) throw new Error("The release has no projects.");
 
-  const existing = await listAllRows("project");
+  Object.assign(result, await syncCollection("project", entries));
+  result.certificates = await syncCollection("certificate", certificateEntries());
+  result.corrected = await applyContentCorrections(ACTOR);
+
+  const value = { appliedAt: new Date().toISOString(), ...result };
+  await db
+    .insert(appSettings)
+    .values({ key: releaseKey(id), value })
+    .onConflictDoUpdate({ target: appSettings.key, set: { value, updatedAt: new Date() } });
+  return result;
+}
+
+/**
+ * Makes one collection exactly the given entries: created or replaced by slug (keeping ids),
+ * entries not in the list deleted (a revision is kept), and the order taken from the list.
+ */
+async function syncCollection(collection: CollectionName, entries: ProjectRelease[]) {
+  const changes = { created: [] as string[], updated: [] as string[], removed: [] as string[] };
+  const existing = await listAllRows(collection);
   const bySlug = new Map(existing.map((row) => [row.slug, row]));
   const keep = new Set(entries.map((entry) => entry.slug));
 
@@ -89,27 +116,20 @@ export async function applyProjectsRelease(
     if (current) {
       const row = await updateEntry(current.id, { ...patch, replace: true }, ACTOR);
       orderedIds.push(row.id);
-      result.updated.push(entry.slug);
+      changes.updated.push(entry.slug);
     } else {
-      const row = await createEntry("project", { ...patch, slug: entry.slug }, ACTOR);
+      const row = await createEntry(collection, { ...patch, slug: entry.slug }, ACTOR);
       orderedIds.push(row.id);
-      result.created.push(row.slug);
+      changes.created.push(row.slug);
     }
   }
   for (const row of existing) {
     if (keep.has(row.slug)) continue;
     await deleteEntry(row.id, ACTOR);
-    result.removed.push(row.slug);
+    changes.removed.push(row.slug);
   }
-  await reorderEntries("project", orderedIds);
-  result.corrected = await applyContentCorrections(ACTOR);
-
-  const value = { appliedAt: new Date().toISOString(), ...result };
-  await db
-    .insert(appSettings)
-    .values({ key: releaseKey(id), value })
-    .onConflictDoUpdate({ target: appSettings.key, set: { value, updatedAt: new Date() } });
-  return result;
+  await reorderEntries(collection, orderedIds);
+  return changes;
 }
 
 /** Slugs of the projects currently in the database (for checks and logs). */
