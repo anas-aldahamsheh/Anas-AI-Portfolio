@@ -1,0 +1,183 @@
+[
+  {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/demo-1.mp4",
+    "poster": "/images/projects/website-qa-agent/demo-1.webp",
+    "preview": "/images/projects/website-qa-agent/demo-1-preview.mp4",
+    "width": 1440,
+    "height": 900,
+    "duration": 28.4,
+    "caption": {
+      "en": "A tour of the console: the animated intro, entering a target, choosing a Deep scan, setting budgets and checks, inline help, saving a profile and switching to the light theme.",
+      "ar": "جولة في لوحة التحكم: المقدمة المتحركة، إدخال الموقع المستهدف، اختيار فحص عميق، ضبط الحدود والفحوص، المساعدة المدمجة، حفظ ملف إعدادات، والتبديل للوضع الفاتح."
+    },
+    "source": "qa-interface-tour.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/01.webp",
+    "srcLarge": "/images/projects/website-qa-agent/01@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Animated welcome intro, the description typing itself out.",
+      "ar": "مقدمة ترحيب متحركة يُكتب فيها الوصف حرفًا حرفًا."
+    },
+    "source": "01-welcome-intro-typing.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/02.webp",
+    "srcLarge": "/images/projects/website-qa-agent/02@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The completed intro card listing the six audit areas.",
+      "ar": "بطاقة المقدمة مكتملة مع مجالات التدقيق الستة."
+    },
+    "source": "02-welcome-intro.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/03.webp",
+    "srcLarge": "/images/projects/website-qa-agent/03@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Run Center: run counters, the scan launcher and the check grid.",
+      "ar": "مركز التشغيل: عدادات التشغيلات، مُطلق الفحص، وشبكة الفحوص."
+    },
+    "source": "03-run-center.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/04.webp",
+    "srcLarge": "/images/projects/website-qa-agent/04@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Choosing the scan mode with a target URL entered.",
+      "ar": "اختيار وضع الفحص بعد إدخال رابط الموقع."
+    },
+    "source": "04-scan-mode-picker.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/05.webp",
+    "srcLarge": "/images/projects/website-qa-agent/05@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "A Deep scan configured: 250 pages, depth 6, request budget, rate and retries, checks selected, profile named.",
+      "ar": "فحص عميق مضبوط: 250 صفحة، عمق 6، ميزانية طلبات، معدل وإعادة محاولات، فحوص مختارة، وملف إعدادات مسمّى."
+    },
+    "source": "05-scan-configuration.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/06.webp",
+    "srcLarge": "/images/projects/website-qa-agent/06@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Inline help on every setting and check.",
+      "ar": "مساعدة مدمجة لكل إعداد وكل فحص."
+    },
+    "source": "06-inline-help.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/07.webp",
+    "srcLarge": "/images/projects/website-qa-agent/07@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Live progress feed panels and the saved, reusable scan profile.",
+      "ar": "لوحات التقدم المباشر وملف الإعدادات المحفوظ لإعادة الاستخدام."
+    },
+    "source": "07-live-progress-and-saved-profile.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/08.webp",
+    "srcLarge": "/images/projects/website-qa-agent/08@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Light theme.",
+      "ar": "الوضع الفاتح."
+    },
+    "source": "08-light-mode.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/09.webp",
+    "srcLarge": "/images/projects/website-qa-agent/09@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Full Arabic interface with right-to-left layout.",
+      "ar": "واجهة عربية كاملة من اليمين لليسار."
+    },
+    "source": "09-arabic-rtl.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/website-qa-agent/10.webp",
+    "srcLarge": "/images/projects/website-qa-agent/10@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The results workspace, where findings are grouped by page, severity, status and area.",
+      "ar": "مساحة النتائج، حيث تُجمع المشاكل حسب الصفحة والخطورة والحالة والمجال."
+    },
+    "source": "10-results-workspace.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/website-qa-agent/11.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile Run Center with stacked counters.",
+      "ar": "مركز التشغيل على الجوال مع العدادات المتراصة."
+    },
+    "source": "11-mobile-run-center.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/website-qa-agent/12.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile scan settings.",
+      "ar": "إعدادات الفحص على الجوال."
+    },
+    "source": "12-mobile-scan-settings.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/website-qa-agent/13.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile Arabic interface.",
+      "ar": "الواجهة العربية على الجوال."
+    },
+    "source": "13-mobile-arabic.png"
+  }
+]

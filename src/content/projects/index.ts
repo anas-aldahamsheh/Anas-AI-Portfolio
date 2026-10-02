@@ -1,4 +1,6 @@
 import type { ShowcaseItem } from "@/server/content/collections";
+import websiteQaAgent from "./website-qa-agent/project.json";
+import websiteQaAgentShowcase from "./website-qa-agent/showcase.json";
 import cvChecker from "./cv-checker/project.json";
 import cvCheckerShowcase from "./cv-checker/showcase.json";
 
@@ -34,6 +36,7 @@ type ShowcaseSource = (Omit<
   })[];
 
 const PROJECTS: { project: ProjectSource; showcase: ShowcaseSource }[] = [
+  { project: websiteQaAgent, showcase: websiteQaAgentShowcase as ShowcaseSource },
   { project: cvChecker, showcase: cvCheckerShowcase as ShowcaseSource },
 ];
 
