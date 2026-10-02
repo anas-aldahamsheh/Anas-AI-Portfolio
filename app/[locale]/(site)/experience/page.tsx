@@ -205,7 +205,7 @@ export default async function ExperiencePage({ params }: PageProps<"/[locale]/ex
                   variant="primary"
                   prompt={
                     locale === "ar"
-                      ? "شو أهم إنجازات أنس بخبراته العملية؟"
+                      ? "ما أهم إنجازات أنس في خبراته العملية؟"
                       : "What are Anas's most important achievements at work?"
                   }
                 >

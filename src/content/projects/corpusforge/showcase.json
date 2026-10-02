@@ -62,7 +62,7 @@
     "height": 900,
     "caption": {
       "en": "A job running live: progress ring, conversations flowing from sources through the forge, requests, tokens and cost updating in real time.",
-      "ar": "مهمة تعمل مباشرة: حلقة التقدم، المحادثات تنتقل من المصادر عبر الصهر، والطلبات والتوكنات والتكلفة تتحدث لحظيًا."
+      "ar": "مهمة تعمل مباشرة: حلقة التقدم، المحادثات تنتقل من المصادر عبر الصهر، والطلبات والتوكنات والتكلفة تُحدَّث لحظيًا."
     },
     "source": "04-job-live-1-desktop.png"
   },

@@ -46,7 +46,8 @@ async function main() {
     if (result.skipped) return;
     if (!flag("no-index")) {
       const { rebuildKnowledge } = await import("@/server/knowledge/sync");
-      console.info("knowledge:", JSON.stringify(await rebuildKnowledge()));
+      // A build can wait out per-minute embedding limits, so the index ends up complete.
+      console.info("knowledge:", JSON.stringify(await rebuildKnowledge({ patient: true })));
     }
     console.info("projects now:", (await projectSlugs()).join(", "));
   } finally {

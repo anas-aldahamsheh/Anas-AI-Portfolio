@@ -44,7 +44,7 @@ function cite(
 // ---------------------------------------------------------------------------------------------
 
 const searchKnowledge: ToolDefinition = {
-  label: { en: "Searching his knowledge base", ar: "بدوّر بالمعلومات" },
+  label: { en: "Searching his knowledge base", ar: "أبحث في المعلومات" },
   declaration: {
     name: "search_knowledge",
     description:
@@ -102,7 +102,7 @@ const searchKnowledge: ToolDefinition = {
 };
 
 const getProfile: ToolDefinition = {
-  label: { en: "Reading his profile", ar: "بقرأ ملفه الشخصي" },
+  label: { en: "Reading his profile", ar: "أقرأ ملفه الشخصي" },
   declaration: {
     name: "get_profile",
     description:
@@ -138,7 +138,7 @@ const getProfile: ToolDefinition = {
 };
 
 const listProjects: ToolDefinition = {
-  label: { en: "Looking through his projects", ar: "بستعرض مشاريعه" },
+  label: { en: "Looking through his projects", ar: "أستعرض مشاريعه" },
   declaration: {
     name: "list_projects",
     description:
@@ -231,7 +231,7 @@ export function findProject<T extends { slug: string; t: { title: string } }>(
 }
 
 const getProject: ToolDefinition = {
-  label: { en: "Opening the project case study", ar: "بفتح تفاصيل المشروع" },
+  label: { en: "Opening the project case study", ar: "أفتح تفاصيل المشروع" },
   declaration: {
     name: "get_project",
     description:
@@ -282,7 +282,7 @@ const getProject: ToolDefinition = {
 };
 
 const listExperience: ToolDefinition = {
-  label: { en: "Checking his work experience", ar: "بشوف خبراته العملية" },
+  label: { en: "Checking his work experience", ar: "أراجع خبراته العملية" },
   declaration: {
     name: "list_experience",
     description:
@@ -313,7 +313,7 @@ const listExperience: ToolDefinition = {
 };
 
 const listCredentials: ToolDefinition = {
-  label: { en: "Reviewing education and certificates", ar: "بشوف التعليم والشهادات" },
+  label: { en: "Reviewing education and certificates", ar: "أراجع التعليم والشهادات" },
   declaration: {
     name: "list_education_and_certificates",
     description:
@@ -361,7 +361,7 @@ const listCredentials: ToolDefinition = {
 };
 
 const getSkills: ToolDefinition = {
-  label: { en: "Mapping his skills to evidence", ar: "بربط مهاراته بالأدلة" },
+  label: { en: "Mapping his skills to evidence", ar: "أربط مهاراته بالأدلة" },
   declaration: {
     name: "get_skills",
     description:
@@ -416,7 +416,7 @@ const getSkills: ToolDefinition = {
 };
 
 const matchJob: ToolDefinition = {
-  label: { en: "Matching the role against his evidence", ar: "بطابق متطلبات الوظيفة مع خبراته" },
+  label: { en: "Matching the role against his evidence", ar: "أطابق متطلبات الوظيفة مع خبراته" },
   declaration: {
     name: "match_job_requirements",
     description:

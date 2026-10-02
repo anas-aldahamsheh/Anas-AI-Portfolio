@@ -62,7 +62,7 @@
     "height": 900,
     "caption": {
       "en": "The research steps expanded (two searches, 5 results each in 337 ms and 604 ms) and a citation hovered to preview the exact passage it rests on.",
-      "ar": "خطوات البحث مفتوحة (بحثان، 5 نتائج لكل منهما خلال 337 و604 ملي ثانية) ومعاينة المقطع الدقيق خلف أحد المراجع."
+      "ar": "خطوات البحث مفتوحة (بحثان، 5 نتائج لكل منهما خلال 337 و604 مللي ثانية) ومعاينة المقطع الدقيق خلف أحد المراجع."
     },
     "source": "04-steps-citation-desktop.png"
   },
@@ -88,7 +88,7 @@
     "height": 900,
     "caption": {
       "en": "Retrieval lab: an English question ranks the Arabic article on inflation and central banks first, as a strong match, in 622 ms.",
-      "ar": "مختبر الاسترجاع: سؤال بالإنجليزية يضع المقال العربي عن التضخم والبنوك المركزية أولًا كتطابق قوي خلال 622 ملي ثانية."
+      "ar": "مختبر الاسترجاع: سؤال بالإنجليزية يضع المقال العربي عن التضخم والبنوك المركزية أولًا كتطابق قوي خلال 622 مللي ثانية."
     },
     "source": "06-lab-desktop.png"
   },

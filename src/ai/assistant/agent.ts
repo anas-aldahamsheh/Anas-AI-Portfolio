@@ -104,7 +104,7 @@ export async function* runAgent(input: {
   const tools = [{ functionDeclarations: toolDeclarations() }];
   let answer = "";
 
-  yield { type: "status", stage: "thinking", label: T(locale, "Thinking", "عم فكّر") };
+  yield { type: "status", stage: "thinking", label: T(locale, "Thinking", "أفكّر") };
 
   // Stay on the model that answered first: thought signatures are only valid for that model.
   let models = settings.agentModels;
@@ -148,7 +148,7 @@ export async function* runAgent(input: {
             message: T(
               locale,
               "The assistant isn't available right now. You can still browse the site or contact Anas directly.",
-              "المساعد مش متاح هلأ. فيك تتصفح الموقع أو تتواصل مع أنس مباشرة.",
+              "المساعد غير متاح حاليًا. يمكنك تصفح الموقع أو التواصل مع أنس مباشرة.",
             ),
           }
         : {
@@ -157,7 +157,7 @@ export async function* runAgent(input: {
             message: T(
               locale,
               "The AI service is busy right now. Please try again in a moment.",
-              "خدمة الذكاء الاصطناعي مشغولة هلأ. جرّب كمان شوي.",
+              "خدمة الذكاء الاصطناعي مشغولة حاليًا. يُرجى المحاولة بعد قليل.",
             ),
           };
       return;
@@ -176,7 +176,7 @@ export async function* runAgent(input: {
           if (part.functionCall) calls.push(part.functionCall);
           else if (typeof part.text === "string" && !part.thought && part.text) {
             if (!stepText && calls.length === 0 && answer === "") {
-              yield { type: "status", stage: "writing", label: T(locale, "Writing", "عم بكتب") };
+              yield { type: "status", stage: "writing", label: T(locale, "Writing", "أكتب") };
             }
             stepText += part.text;
             yield { type: "delta", text: part.text };
@@ -192,7 +192,7 @@ export async function* runAgent(input: {
           message: T(
             locale,
             "Something interrupted the answer. Please try again.",
-            "صار خلل وقطع الجواب. جرّب مرة ثانية.",
+            "حدث خلل قطع الإجابة. يُرجى المحاولة مرة أخرى.",
           ),
         };
         return;
@@ -249,7 +249,7 @@ export async function* runAgent(input: {
       message: T(
         locale,
         "I couldn't put an answer together. Please rephrase and try again.",
-        "ما قدرت أجهّز جواب. جرّب تصيغ سؤالك بطريقة ثانية.",
+        "تعذّر تجهيز إجابة. يُرجى إعادة صياغة سؤالك والمحاولة مرة أخرى.",
       ),
     };
     return;

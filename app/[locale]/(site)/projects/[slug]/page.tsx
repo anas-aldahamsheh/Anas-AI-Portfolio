@@ -182,7 +182,7 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
                   variant={project.data.demoUrl || video ? "secondary" : "primary"}
                   prompt={
                     locale === "ar"
-                      ? `احكيلي عن مشروع "${project.t.title}": شو المشكلة وشو بنى أنس وشو النتيجة؟`
+                      ? `حدّثني عن مشروع «${project.t.title}»: ما المشكلة، وماذا بنى أنس، وما النتيجة؟`
                       : `Tell me about the "${project.t.title}" project: the problem, what Anas built, and the result.`
                   }
                 >

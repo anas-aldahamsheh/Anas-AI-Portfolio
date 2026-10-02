@@ -72,7 +72,7 @@ export default async function CvPage({ params }: PageProps<"/[locale]/cv">) {
             <AskButton
               prompt={
                 locale === "ar"
-                  ? "لخّصلي خبرة أنس المهنية"
+                  ? "لخّص لي خبرة أنس المهنية"
                   : "Summarize Anas's professional experience"
               }
             >

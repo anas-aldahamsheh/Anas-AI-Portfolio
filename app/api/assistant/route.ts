@@ -5,6 +5,7 @@ import { suggestFollowUps } from "@/ai/assistant/suggestions";
 import { getAiSettings } from "@/ai/settings";
 import { db } from "@/lib/db/client";
 import { assistantTurns } from "@/lib/db/schema";
+import { repairKnowledgeWhenDue } from "@/server/knowledge/sync";
 import { rateLimit, visitorId } from "@/server/security/rate-limit";
 
 export const maxDuration = 60;
@@ -113,7 +114,7 @@ export async function POST(request: Request) {
           code: "failed",
           message:
             body.locale === "ar"
-              ? "صار خلل غير متوقع. جرّب مرة ثانية."
+              ? "حدث خلل غير متوقع. يُرجى المحاولة مرة أخرى."
               : "Something went wrong. Please try again.",
         });
       } finally {
@@ -145,6 +146,11 @@ export async function POST(request: Request) {
       console.error("assistant_log_failed", error instanceof Error ? error.message : error);
     }
   });
+  after(() =>
+    repairKnowledgeWhenDue().catch((error) =>
+      console.error("knowledge_repair_failed", error instanceof Error ? error.message : error),
+    ),
+  );
 
   return new Response(stream, {
     headers: {

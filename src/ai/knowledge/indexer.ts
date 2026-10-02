@@ -1,8 +1,8 @@
 import { createHash } from "node:crypto";
-import { and, eq, inArray, isNull, notInArray, sql } from "drizzle-orm";
+import { and, eq, inArray, isNotNull, isNull, notInArray, sql } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { knowledgeChunks, knowledgeSources } from "@/lib/db/schema";
-import { embedTexts } from "@/ai/gemini/client";
+import { embedTexts, GeminiTransientError } from "@/ai/gemini/client";
 import { chunkDocument, embeddingInput, type KnowledgeSection } from "./chunker";
 import { toSearchText } from "./normalize";
 import { EMBEDDING, type KnowledgeKind } from "./config";
@@ -23,6 +23,8 @@ export interface KnowledgeSourceInput {
 }
 
 export interface SyncResult {
+  /** Chunks whose text was unchanged, so their vector was kept instead of re-embedded. */
+  reused?: number;
   added: number;
   updated: number;
   unchanged: number;
@@ -49,6 +51,69 @@ function hashSource(input: KnowledgeSourceInput): string {
     .digest("hex");
 }
 
+/** Chunks sent per embedding call; the free tier counts every chunk as one request. */
+const EMBED_BATCH = 50;
+
+export interface EmbedPacing {
+  /**
+   * Wait out per-minute rate limits instead of stopping (deploy-time builds can afford to; a
+   * request from the admin cannot). A spent daily quota always stops the run.
+   */
+  patient?: boolean;
+}
+
+/** "Please retry in 7h3m4.7s." → milliseconds, or null when the message gives no delay. */
+function retryDelayMs(message: string): number | null {
+  const match = /retry in (?:(\d+)h)?(?:(\d+)m)?(?:([\d.]+)s)?/i.exec(message);
+  if (!match || !match[0].trim().match(/\d/)) return null;
+  const [, h = "0", m = "0", sec = "0"] = match;
+  return ((Number(h) * 60 + Number(m)) * 60 + Number(sec)) * 1000;
+}
+
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Embeds texts batch by batch and keeps every vector it got: a failure part-way (usually a rate
+ * limit) leaves only the remaining texts without a vector, to be repaired later.
+ */
+async function embedInBatches(
+  texts: string[],
+  pacing: EmbedPacing = {},
+): Promise<(number[] | null)[]> {
+  const out: (number[] | null)[] = texts.map(() => null);
+  for (let start = 0; start < texts.length; start += EMBED_BATCH) {
+    const batch = texts.slice(start, start + EMBED_BATCH);
+    for (let attempt = 0; ; attempt++) {
+      try {
+        const vectors = await embedTexts(batch, {
+          model: EMBEDDING.model,
+          task: "RETRIEVAL_DOCUMENT",
+          dimensions: EMBEDDING.dimensions,
+        });
+        vectors.forEach((vector, i) => {
+          out[start + i] = vector;
+        });
+        break;
+      } catch (error) {
+        const rateLimited = error instanceof GeminiTransientError && error.status === 429;
+        // The API says how long to wait: seconds for the per-minute limit, hours once the
+        // daily quota is spent (then waiting is pointless).
+        const delay = rateLimited ? retryDelayMs((error as Error).message) : null;
+        if (rateLimited && pacing.patient && attempt < 4 && (delay ?? 60_000) <= 120_000) {
+          await wait((delay ?? 60_000) + 2_000);
+          continue;
+        }
+        console.error("knowledge_embedding_failed", error instanceof Error ? error.message : error);
+        return out;
+      }
+    }
+  }
+  return out;
+}
+
+const textKey = (heading: string, text: string) =>
+  createHash("sha256").update(embeddingInput({ heading, text })).digest("hex");
+
 function toVectorLiteral(vector: number[]): string {
   return `[${vector.map((v) => (Number.isFinite(v) ? v.toFixed(7) : "0")).join(",")}]`;
 }
@@ -69,6 +134,7 @@ interface PreparedSource {
 export async function syncKnowledge(
   inputs: KnowledgeSourceInput[],
   scope?: { kinds?: KnowledgeKind[]; entryIds?: string[]; all?: boolean },
+  pacing: EmbedPacing = {},
 ): Promise<SyncResult> {
   const result: SyncResult = {
     added: 0,
@@ -87,6 +153,7 @@ export async function syncKnowledge(
           key: knowledgeSources.sourceKey,
           hash: knowledgeSources.contentHash,
           status: knowledgeSources.status,
+          model: knowledgeSources.embeddingModel,
         })
         .from(knowledgeSources)
         .where(inArray(knowledgeSources.sourceKey, keys))
@@ -109,21 +176,43 @@ export async function syncKnowledge(
     changed.push({ input, hash, chunks });
   }
 
-  // 2. Embed every changed chunk in as few API calls as possible.
+  // 2. Reuse the vectors of chunks whose text did not change, then embed only the new text.
   const pending = changed.flatMap((source) => source.chunks);
-  if (pending.length > 0) {
-    try {
-      const vectors = await embedTexts(
-        pending.map((chunk) => embeddingInput(chunk)),
-        { model: EMBEDDING.model, task: "RETRIEVAL_DOCUMENT", dimensions: EMBEDDING.dimensions },
+  const previousIds = changed.flatMap((source) => {
+    const current = byKey.get(source.input.key);
+    return current && current.model === EMBEDDING.model ? [current.id] : [];
+  });
+  if (pending.length > 0 && previousIds.length > 0) {
+    const previous = await db
+      .select({
+        heading: knowledgeChunks.heading,
+        text: knowledgeChunks.text,
+        embedding: sql<string>`${knowledgeChunks.embedding}::text`,
+      })
+      .from(knowledgeChunks)
+      .where(
+        and(inArray(knowledgeChunks.sourceId, previousIds), isNotNull(knowledgeChunks.embedding)),
       );
-      pending.forEach((chunk, i) => {
-        chunk.embedding = vectors[i] ?? null;
-      });
-    } catch (error) {
-      result.embeddingFailures = pending.length;
-      console.error("knowledge_embedding_failed", error instanceof Error ? error.message : error);
-    }
+    const reusable = new Map(
+      previous.map((row) => [
+        textKey(row.heading, row.text),
+        JSON.parse(row.embedding) as number[],
+      ]),
+    );
+    for (const chunk of pending)
+      chunk.embedding = reusable.get(textKey(chunk.heading, chunk.text)) ?? null;
+    result.reused = pending.filter((chunk) => chunk.embedding).length;
+  }
+  const missing = pending.filter((chunk) => !chunk.embedding);
+  if (missing.length > 0) {
+    const vectors = await embedInBatches(
+      missing.map((chunk) => embeddingInput(chunk)),
+      pacing,
+    );
+    missing.forEach((chunk, i) => {
+      chunk.embedding = vectors[i] ?? null;
+    });
+    result.embeddingFailures = vectors.filter((vector) => !vector).length;
   }
 
   // 3. Write each changed source atomically: its old chunks disappear with the new ones' arrival.
@@ -218,41 +307,48 @@ export async function forgetEntries(entryIds: string[]): Promise<number> {
   return removed.length;
 }
 
-/** Re-embeds chunks stored without a vector (e.g. the embedding API was down during a save). */
-export async function repairMissingEmbeddings(limit = 256): Promise<number> {
-  const rows = await db
-    .select({
-      id: knowledgeChunks.id,
-      heading: knowledgeChunks.heading,
-      text: knowledgeChunks.text,
-      sourceId: knowledgeChunks.sourceId,
-    })
-    .from(knowledgeChunks)
-    .where(isNull(knowledgeChunks.embedding))
-    .limit(limit);
-  if (rows.length === 0) return 0;
-  const vectors = await embedTexts(
-    rows.map((row) => embeddingInput(row)),
-    { model: EMBEDDING.model, task: "RETRIEVAL_DOCUMENT", dimensions: EMBEDDING.dimensions },
-  );
-  await db.transaction(async (tx) => {
-    for (const [i, row] of rows.entries()) {
-      const vector = vectors[i];
-      if (!vector) continue;
-      await tx
-        .update(knowledgeChunks)
-        .set({ embedding: sql`${toVectorLiteral(vector)}::vector` })
-        .where(eq(knowledgeChunks.id, row.id));
-    }
-    const sourceIds = [...new Set(rows.map((row) => row.sourceId))];
-    await tx.execute(sql`
-      update knowledge_sources s set status = 'ready', error = null
-      where s.id in (${sql.join(
-        sourceIds.map((id) => sql`${id}::uuid`),
-        sql`, `,
-      )})
-        and not exists (select 1 from knowledge_chunks c where c.source_id = s.id and c.embedding is null)
-    `);
-  });
-  return rows.length;
+/**
+ * Re-embeds chunks stored without a vector (e.g. the embedding API was down or rate-limited
+ * during a save), in rounds until none are left or the API stops answering.
+ */
+export async function repairMissingEmbeddings(pacing: EmbedPacing = {}): Promise<number> {
+  let repaired = 0;
+  for (;;) {
+    const rows = await db
+      .select({
+        id: knowledgeChunks.id,
+        heading: knowledgeChunks.heading,
+        text: knowledgeChunks.text,
+        sourceId: knowledgeChunks.sourceId,
+      })
+      .from(knowledgeChunks)
+      .where(isNull(knowledgeChunks.embedding))
+      .limit(256);
+    if (rows.length === 0) return repaired;
+    const vectors = await embedInBatches(
+      rows.map((row) => embeddingInput(row)),
+      pacing,
+    );
+    const done = rows.flatMap((row, i) => (vectors[i] ? [{ row, vector: vectors[i] }] : []));
+    if (done.length === 0) return repaired;
+    await db.transaction(async (tx) => {
+      for (const { row, vector } of done) {
+        await tx
+          .update(knowledgeChunks)
+          .set({ embedding: sql`${toVectorLiteral(vector)}::vector` })
+          .where(eq(knowledgeChunks.id, row.id));
+      }
+      const sourceIds = [...new Set(done.map(({ row }) => row.sourceId))];
+      await tx.execute(sql`
+        update knowledge_sources s set status = 'ready', error = null
+        where s.id in (${sql.join(
+          sourceIds.map((id) => sql`${id}::uuid`),
+          sql`, `,
+        )})
+          and not exists (select 1 from knowledge_chunks c where c.source_id = s.id and c.embedding is null)
+      `);
+    });
+    repaired += done.length;
+    if (done.length < rows.length) return repaired;
+  }
 }
