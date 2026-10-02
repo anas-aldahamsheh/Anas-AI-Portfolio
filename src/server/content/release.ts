@@ -94,13 +94,34 @@ export async function applyProjectsRelease(
   const id = options.id ?? PROJECTS_RELEASE_ID;
   const entries = options.entries ?? projectEntries();
   const result: ReleaseResult = { release: id, created: [], updated: [], removed: [] };
-  if (!options.force && (await releaseApplied(id)))
-    return { ...result, skipped: "already_applied" };
-
   const problems = validateProjectRelease(entries);
   if (problems.length) throw new Error(`Invalid project content:\n- ${problems.join("\n- ")}`);
   if (entries.length === 0) throw new Error("The release has no projects.");
 
+  // Two deployments (Vercel and Netlify) build from the same push against the same database:
+  // the first one to claim the release applies it, the other skips it.
+  const claimed = await db
+    .insert(appSettings)
+    .values({ key: releaseKey(id), value: { claimedAt: new Date().toISOString() } })
+    .onConflictDoNothing()
+    .returning({ key: appSettings.key });
+  if (!options.force && claimed.length === 0) return { ...result, skipped: "already_applied" };
+  try {
+    await applyRelease(result, entries);
+  } catch (error) {
+    if (claimed.length) await db.delete(appSettings).where(eq(appSettings.key, releaseKey(id)));
+    throw error;
+  }
+
+  const value = { appliedAt: new Date().toISOString(), ...result };
+  await db
+    .insert(appSettings)
+    .values({ key: releaseKey(id), value })
+    .onConflictDoUpdate({ target: appSettings.key, set: { value, updatedAt: new Date() } });
+  return result;
+}
+
+async function applyRelease(result: ReleaseResult, entries: ProjectRelease[]) {
   Object.assign(result, await syncCollection("project", entries));
   result.certificates = await syncCollection("certificate", certificateEntries());
   result.experience = await syncCollection("experience", experienceEntries());
@@ -109,13 +130,6 @@ export async function applyProjectsRelease(
   result.profile = await syncProfile();
   result.cv = await syncCvDocument();
   result.corrected = await applyContentCorrections(ACTOR);
-
-  const value = { appliedAt: new Date().toISOString(), ...result };
-  await db
-    .insert(appSettings)
-    .values({ key: releaseKey(id), value })
-    .onConflictDoUpdate({ target: appSettings.key, set: { value, updatedAt: new Date() } });
-  return result;
 }
 
 /**
