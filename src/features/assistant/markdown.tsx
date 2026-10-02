@@ -85,13 +85,16 @@ function isolate(text: string, keyPrefix: string): ReactNode[] {
   for (const match of text.matchAll(LTR_TOKEN)) {
     const index = match.index ?? 0;
     if (index > last) out.push(text.slice(last, index));
+    const phone = /^[+\d]/.test(match[0]);
     out.push(
       <bdi
         key={`${keyPrefix}-t${i++}`}
         dir="ltr"
-        className={/^[+\d]/.test(match[0]) ? "whitespace-nowrap" : undefined}
+        className={phone ? "whitespace-nowrap" : undefined}
       >
-        {match[0]}
+        {/* A phone number is several digit groups; the isolate marks keep them in order even
+            where the element's own isolation is lost (a translated page, a copied snippet). */}
+        {phone ? `\u2066${match[0]}\u2069` : match[0]}
       </bdi>,
     );
     last = index + match[0].length;
