@@ -97,10 +97,11 @@ async function embedInBatches(
       } catch (error) {
         const rateLimited = error instanceof GeminiTransientError && error.status === 429;
         // The API says how long to wait: seconds for the per-minute limit, hours once the
-        // daily quota is spent (then waiting is pointless).
+        // daily quota is spent, and nothing when the plan refuses the call (waiting is pointless
+        // in both cases).
         const delay = rateLimited ? retryDelayMs((error as Error).message) : null;
-        if (rateLimited && pacing.patient && attempt < 4 && (delay ?? 60_000) <= 120_000) {
-          await wait((delay ?? 60_000) + 2_000);
+        if (rateLimited && pacing.patient && attempt < 4 && delay !== null && delay <= 120_000) {
+          await wait(delay + 2_000);
           continue;
         }
         console.error("knowledge_embedding_failed", error instanceof Error ? error.message : error);
