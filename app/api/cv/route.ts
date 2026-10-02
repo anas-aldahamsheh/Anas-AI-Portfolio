@@ -17,7 +17,12 @@ export async function GET(request: Request) {
   if (!cv) return new Response("CV not available yet.", { status: 404 });
 
   const mediaId = mediaIdFromUrl(cv);
-  if (!mediaId) return Response.redirect(new URL(cv, request.url), 302);
+  // A relative redirect keeps the download on whichever domain the visitor is on.
+  if (!mediaId)
+    return new Response(null, {
+      status: 302,
+      headers: { Location: cv, "Cache-Control": "no-store" },
+    });
   const media = await readMedia(mediaId);
   if (!media) return new Response("CV not available yet.", { status: 404 });
 

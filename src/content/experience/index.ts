@@ -23,7 +23,7 @@ const EXPERIENCE: Entry[] = [
         company: "ITC International",
         location: "",
         summary:
-          "Builds AI projects, chatbots and automation, red-teams and evaluates AI models, and creates training data.",
+          "Build AI projects, chatbots and automation, red-team and evaluate AI models, and create training data.",
         highlights: [
           "Build LLM-powered applications, chatbots and Python automation workflows end to end, from prompt and pipeline design to integration and testing.",
           "Create training and evaluation datasets for AI models, writing challenging multilingual prompts across formats, languages and Arabic dialects to target known and new failure modes.",
@@ -37,7 +37,7 @@ const EXPERIENCE: Entry[] = [
         company: "ITC International",
         location: "",
         summary:
-          "يبني مشاريع ذكاء اصطناعي وروبوتات محادثة وأدوات أتمتة، ويختبر نماذج الذكاء الاصطناعي اختبارًا عدائيًا ويقيّمها، ويُعدّ بيانات التدريب.",
+          "بناء مشاريع ذكاء اصطناعي وروبوتات محادثة وأدوات أتمتة، واختبار نماذج الذكاء الاصطناعي اختبارًا عدائيًا وتقييمها، وإعداد بيانات التدريب.",
         highlights: [
           "بناء تطبيقات وروبوتات محادثة تعتمد على النماذج اللغوية الكبيرة ومسارات أتمتة بلغة Python من البداية إلى النهاية، من تصميم الأوامر والمسارات إلى الدمج والاختبار.",
           "إعداد بيانات تدريب وتقييم لنماذج الذكاء الاصطناعي، بكتابة أوامر صعبة متعددة اللغات بصيغ ولغات ولهجات عربية مختلفة تستهدف مواطن الخلل المعروفة والجديدة.",
@@ -75,7 +75,7 @@ const EXPERIENCE: Entry[] = [
         company: "BIGO Live",
         location: "",
         summary:
-          "حافظ على سلامة المنصة بمراجعة البث المباشر والمحتوى الذي ينشئه المستخدمون وفق إرشادات المجتمع.",
+          "الحفاظ على سلامة المنصة بمراجعة البث المباشر والمحتوى الذي ينشئه المستخدمون وفق إرشادات المجتمع.",
         highlights: [
           "مراجعة البث المباشر والمحتوى الذي ينشئه المستخدمون، وكشف المواد الضارة ومخالفات السياسات، وتطبيق إرشادات المجتمع للحفاظ على سلامة المنصة.",
           "العمل مع الفريق على تحسين تفسير السياسات وممارسات الإبلاغ، وهي خبرة يقوم عليها اليوم العمل في سلامة الذكاء الاصطناعي وتقييمه.",
