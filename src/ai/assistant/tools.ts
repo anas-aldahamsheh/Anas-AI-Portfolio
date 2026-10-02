@@ -183,6 +183,48 @@ const listProjects: ToolDefinition = {
   },
 };
 
+/** Letters and digits only, so "Abu Jbara", "abu_jbara" and "abu-jbara" compare equal. */
+const compact = (value: string) => lower(value).replace(/[^\p{L}\p{N}]+/gu, "");
+
+function editDistance(a: string, b: string): number {
+  let row = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const next = [i];
+    for (let j = 1; j <= b.length; j++) {
+      next[j] = Math.min(
+        row[j]! + 1,
+        next[j - 1]! + 1,
+        row[j - 1]! + (a[i - 1] === b[j - 1] ? 0 : 1),
+      );
+    }
+    row = next;
+  }
+  return row[b.length]!;
+}
+
+/**
+ * Resolves the model's project reference: the exact slug, then the slug or title written another
+ * way, then a near-miss spelling of the slug (models often transliterate names differently).
+ */
+export function findProject<T extends { slug: string; t: { title: string } }>(
+  projects: T[],
+  query: string,
+): T | undefined {
+  const key = compact(query);
+  if (!key) return undefined;
+  const exact =
+    projects.find((p) => p.slug === query) ??
+    projects.find((p) => compact(p.slug) === key || compact(p.t.title) === key) ??
+    projects.find((p) => compact(p.t.title).includes(key) || key.includes(compact(p.slug)));
+  if (exact) return exact;
+  const ranked = projects
+    .map((p) => ({ p, d: editDistance(key, compact(p.slug)) }))
+    .sort((a, b) => a.d - b.d);
+  const [best, second] = ranked;
+  if (!best || best.d > Math.max(1, Math.floor(key.length / 4))) return undefined;
+  return second && second.d === best.d ? undefined : best.p;
+}
+
 const getProject: ToolDefinition = {
   label: { en: "Opening the project case study", ar: "بفتح تفاصيل المشروع" },
   declaration: {
@@ -199,9 +241,7 @@ const getProject: ToolDefinition = {
   async run(args, ctx) {
     const slug = str(args["slug"], 200);
     const projects = await listPublishedFresh("project", ctx.locale);
-    const project =
-      projects.find((p) => p.slug === slug) ??
-      projects.find((p) => lower(p.t.title).includes(lower(slug)) || lower(slug).includes(p.slug));
+    const project = findProject(projects, slug);
     if (!project) return { error: `No project "${slug}". Call list_projects to see valid slugs.` };
     const { t, data } = project;
     return {
