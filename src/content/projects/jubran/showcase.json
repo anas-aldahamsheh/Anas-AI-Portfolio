@@ -58,7 +58,7 @@
     "height": 1688,
     "caption": {
       "en": "\"What steaks do you have?\": the waiter answers with both steaks, their real descriptions and prices.",
-      "ar": "«شو أنواع الستيك عندكم؟» والنادل يجيب بنوعي الستيك مع وصفهما وسعرهما الحقيقي."
+      "ar": "«What steaks do you have?»: النادل يجيب بنوعي الستيك مع وصفهما وسعرهما الحقيقيين."
     },
     "source": "04-ai-waiter-menu-question.png"
   },
@@ -70,7 +70,7 @@
     "height": 1688,
     "caption": {
       "en": "One message orders a medium-well Rib-Eye, Musakhan and two Mango Tropic; the waiter suggests hummus to share.",
-      "ar": "رسالة واحدة تطلب ريب آي بدرجة نضج «ميديم ويل» ومسخن وكاسَي Mango Tropic، والنادل يقترح حمصًا للمشاركة."
+      "ar": "رسالة واحدة تطلب ريب آي بدرجة نضج «ميديوم ويل» ومسخن وكاسَي Mango Tropic، والنادل يقترح حمصًا للمشاركة."
     },
     "source": "05-ai-waiter-upsell.png"
   },
@@ -106,7 +106,7 @@
     "height": 1688,
     "caption": {
       "en": "Live tracker right after ordering, with the \"medium-well\" note on the steak.",
-      "ar": "المتتبع المباشر بعد الطلب مباشرة، مع ملاحظة «ميديم ويل» على الستيك."
+      "ar": "المتتبع المباشر بعد الطلب مباشرة، مع ملاحظة «ميديوم ويل» على الستيك."
     },
     "source": "08-guest-live-tracking-received.png"
   },

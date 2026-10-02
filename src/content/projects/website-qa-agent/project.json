@@ -20,20 +20,20 @@
     "title": "Website QA Agent",
     "summary": "A website quality console that crawls a site in a real Chromium browser and turns SEO, accessibility, performance, frontend, network, security and privacy problems into organized, evidence-backed findings with suggested fixes.",
     "metrics": [
-      "24 | selectable checks in one scan",
-      "7 | audit areas, from SEO to privacy",
+      "15 | checks ready to run, in a grid of 24",
+      "6 | audit areas, plus privacy and tracking checks",
       "Live | progress with ETA, coverage and navigation steps",
       "2 | run modes: local SQLite or a BullMQ + Redis queue"
     ],
     "role": "Sole engineer: the scan engine, the worker and queue, the dashboard and the security model.",
     "problem": "Checking a website properly means juggling separate tools for SEO, accessibility, performance, console errors, network failures and security headers, and none of them crawl the site the way a real visitor's browser does. Teams get scattered reports with no single place to triage what to fix first.",
-    "solution": "A Turborepo monorepo with a Next.js \"Run Center\" dashboard and a Playwright scan worker. A scan is configured with a target URL, a scan mode, crawl depth, page, request and time budgets, request rate and retries, plus a grid of 24 checks across discovery, experience, devices, quality, and security and APIs. Profiles can be saved and reused.\n\nWhile a scan runs, the dashboard shows status, elapsed time, ETA, pages scanned, queued and failed URLs, blocked and skipped pages, API endpoints, feature-check progress, the latest worker events and live navigation steps, with a Stop button. Results are grouped by page, severity, status and technical area, with evidence, suggested fixes and triage.",
+    "solution": "A Turborepo monorepo with a Next.js \"Run Center\" dashboard and a Playwright scan worker. A scan is configured with a target URL, a scan mode, crawl depth, page, request and time budgets, request rate and retries, plus a grid of 24 checks (15 available today) across discovery, experience, devices, quality, and security and APIs. Profiles can be saved and reused.\n\nWhile a scan runs, the dashboard shows status, elapsed time, ETA, pages scanned, queued and failed URLs, blocked and skipped pages, API endpoints, feature-check progress, the latest worker events and live navigation steps, with a Stop button. Results are grouped by page, severity, status and technical area, with evidence, suggested fixes and triage.",
     "architecture": "The engine audits each page in a real Chromium browser: title and meta quality, heading structure, canonical conflicts, JSON-LD validity and status codes; alt text, heading order and small text; LCP, CLS, TBT, transfer size and oversized JavaScript; console errors; failed and duplicate requests; missing security headers and exposed source maps; trackers without consent and PII or secrets in URLs (redacted before storage); overflow, broken media, duplicate IDs and RTL or language mismatches. Scans run through a local polling worker on SQLite, or through BullMQ and Redis with a scheduler for distributed execution. Contracts between the dashboard and the worker are Zod schemas.",
     "challenges": "A crawler that follows links on someone else's site can be turned against your own network or can trigger destructive actions. Every target and every in-page request therefore passes an SSRF guard that resolves DNS and rejects private, loopback, link-local and cloud-metadata addresses, and logout or destructive URLs are never followed.",
     "decisions": "Real-browser crawling instead of raw HTTP so runtime errors, layout problems and performance metrics match what visitors see. Budgets on pages, depth, requests and minutes so a scan always ends. Stored credentials encrypted with AES-256-GCM and operator authentication required in production.",
-    "results": "A complete scan workflow from configuration to triaged findings: Standard, Deep and Custom modes, 24 checks across seven audit areas, live progress without refreshing, reusable profiles, and a results workspace that ties every finding to its page, evidence and suggested fix. The interface ships in English and Arabic with dark and light themes.",
+    "results": "A complete scan workflow from configuration to triaged findings: Standard, Deep and Custom modes, 15 working checks across SEO, accessibility, performance, frontend, network, security and privacy, live progress without refreshing, reusable profiles, and a results workspace that ties every finding to its page, evidence and suggested fix. The interface ships in English and Arabic with dark and light themes.",
     "highlights": [
-      "Run Center with scan modes, budgets and 24 selectable checks",
+      "Run Center with scan modes, budgets and a grid of selectable checks",
       "Live run progress with ETA, coverage counters, events and navigation steps",
       "Crawl policy: include and exclude patterns, query-parameter rules, subdomain and external-domain policies",
       "SSRF-safe target and request validation, destructive-action and logout protection",
@@ -45,25 +45,25 @@
     "title": "Website QA Agent",
     "summary": "لوحة لفحص جودة المواقع تزحف على الموقع داخل متصفح Chromium حقيقي، وتحوّل مشاكل SEO وإمكانية الوصول والأداء والواجهة والشبكة والأمان والخصوصية إلى نتائج منظمة مدعومة بالأدلة مع اقتراحات للإصلاح.",
     "metrics": [
-      "24 | فحصًا قابلًا للاختيار في عملية واحدة",
-      "7 | مجالات تدقيق، من SEO حتى الخصوصية",
+      "15 | فحصًا جاهزًا للتشغيل ضمن شبكة من 24",
+      "6 | مجالات تدقيق، إضافة إلى فحوص الخصوصية والتتبع",
       "مباشر | تقدم الفحص مع الوقت المتبقي والتغطية وخطوات التنقل",
       "2 | وضعا تشغيل: SQLite محليًا أو طابور BullMQ مع Redis"
     ],
     "role": "المهندس الوحيد على المشروع: محرك الفحص، العامل والطابور، لوحة التحكم، ونموذج الأمان.",
     "problem": "فحص موقع بشكل صحيح يعني التنقل بين أدوات منفصلة لـSEO وإمكانية الوصول والأداء وأخطاء الكونسول وفشل الطلبات وترويسات الأمان، ولا واحدة منها تزحف على الموقع كما يفعل متصفح الزائر الحقيقي. والنتيجة تقارير متفرقة بلا مكان واحد لترتيب ما يجب إصلاحه أولًا.",
-    "solution": "مستودع Turborepo يضم لوحة «مركز التشغيل» بـNext.js وعامل فحص بـPlaywright. يُضبط الفحص برابط الموقع ووضع الفحص وعمق الزحف وحدود الصفحات والطلبات والوقت ومعدل الطلبات وإعادة المحاولات، مع شبكة من 24 فحصًا تغطي الاكتشاف والتجربة والأجهزة والجودة والأمان والـAPI. ويمكن حفظ ملفات الإعدادات وإعادة استخدامها.\n\nأثناء الفحص تعرض اللوحة الحالة والوقت المنقضي والمتبقي، والصفحات المفحوصة، والروابط في الطابور والفاشلة، والصفحات المحجوبة والمتخطاة، ونقاط الـAPI، وتقدم الفحوص، وآخر أحداث العامل وخطوات التنقل المباشرة، مع زر إيقاف. وتُجمع النتائج حسب الصفحة والخطورة والحالة والمجال التقني، مع الأدلة واقتراحات الإصلاح والفرز.",
+    "solution": "مستودع Turborepo يضم لوحة «مركز التشغيل» بـNext.js وعامل فحص بـPlaywright. يُضبط الفحص برابط الموقع ووضع الفحص وعمق الزحف وحدود الصفحات والطلبات والوقت ومعدل الطلبات وإعادة المحاولات، مع شبكة من 24 فحصًا (15 متاحة حاليًا) تغطي الاكتشاف والتجربة والأجهزة والجودة والأمان والـAPI. ويمكن حفظ ملفات الإعدادات وإعادة استخدامها.\n\nأثناء الفحص تعرض اللوحة الحالة والوقت المنقضي والمتبقي، والصفحات المفحوصة، والروابط في الطابور والفاشلة، والصفحات المحجوبة والمتخطاة، ونقاط الـAPI، وتقدم الفحوص، وآخر أحداث العامل وخطوات التنقل المباشرة، مع زر إيقاف. وتُجمع النتائج حسب الصفحة والخطورة والحالة والمجال التقني، مع الأدلة واقتراحات الإصلاح والفرز.",
     "architecture": "المحرك يدقق كل صفحة داخل Chromium حقيقي: جودة العنوان والوصف، بنية العناوين، تعارض الروابط القانونية، صحة JSON-LD ورموز الحالة؛ النص البديل للصور وترتيب العناوين والنصوص الصغيرة؛ LCP وCLS وTBT وحجم النقل وملفات JavaScript الضخمة؛ أخطاء الكونسول؛ الطلبات الفاشلة والمكررة؛ ترويسات الأمان الناقصة وملفات source map المكشوفة؛ أدوات التتبع بلا موافقة والبيانات الشخصية أو الأسرار في الروابط (تُحجب قبل التخزين)؛ والفيض الأفقي والوسائط المعطوبة والمعرفات المكررة وعدم تطابق الاتجاه أو اللغة. يعمل الفحص عبر عامل محلي على SQLite، أو عبر BullMQ وRedis مع مُجدول للتنفيذ الموزع، والعقود بين اللوحة والعامل مكتوبة كمخططات Zod.",
     "challenges": "الزاحف الذي يتبع روابط موقع شخص آخر يمكن أن يُستغل ضد شبكتك أو يطلق عمليات هدّامة. لذلك يمر كل هدف وكل طلب داخل الصفحة عبر حماية SSRF تحل اسم النطاق وترفض العناوين الخاصة وعناوين الحلقة المحلية وعناوين بيانات السحابة، ولا تُتبع أبدًا روابط تسجيل الخروج أو العمليات الهدّامة.",
     "decisions": "زحف بمتصفح حقيقي بدل طلبات HTTP خام حتى تطابق أخطاء التشغيل ومشاكل التخطيط ومقاييس الأداء ما يراه الزائر. حدود للصفحات والعمق والطلبات والدقائق حتى ينتهي كل فحص. تشفير بيانات الدخول المخزنة بـAES-256-GCM واشتراط مصادقة المشغل في بيئة الإنتاج.",
-    "results": "مسار فحص كامل من الإعداد حتى نتائج مفروزة: أوضاع Standard وDeep وCustom، و24 فحصًا عبر سبعة مجالات تدقيق، وتقدم مباشر بلا تحديث للصفحة، وملفات إعدادات قابلة لإعادة الاستخدام، ومساحة نتائج تربط كل مشكلة بصفحتها ودليلها واقتراح إصلاحها. الواجهة بالعربية والإنجليزية مع وضع داكن وفاتح.",
+    "results": "مسار فحص كامل من الإعداد حتى نتائج مفروزة: أوضاع Standard وDeep وCustom، و15 فحصًا عاملًا تغطي SEO وإمكانية الوصول والأداء والواجهة والشبكة والأمان والخصوصية، وتقدم مباشر بلا تحديث للصفحة، وملفات إعدادات قابلة لإعادة الاستخدام، ومساحة نتائج تربط كل مشكلة بصفحتها ودليلها واقتراح إصلاحها. الواجهة بالعربية والإنجليزية مع وضع داكن وفاتح.",
     "highlights": [
-      "مركز تشغيل بأوضاع فحص وحدود و24 فحصًا قابلًا للاختيار",
+      "مركز تشغيل بأوضاع فحص وحدود وشبكة فحوص قابلة للاختيار",
       "تقدم مباشر للفحص مع الوقت المتبقي وعدادات التغطية والأحداث وخطوات التنقل",
       "سياسة زحف: أنماط تضمين واستثناء، قواعد لمعاملات الروابط، وسياسات للنطاقات الفرعية والخارجية",
       "تحقق آمن من SSRF للأهداف والطلبات، وحماية من العمليات الهدّامة وتسجيل الخروج",
       "حجب الأسرار والبيانات الشخصية قبل تخزين أي شيء",
-      "عربي وإنجليزي من اليمين لليسار، وضع داكن وفاتح، ومقدمة ترحيب متحركة"
+      "عربي وإنجليزي مع دعم كامل للاتجاه من اليمين لليسار، وضع داكن وفاتح، ومقدمة ترحيب متحركة"
     ]
   }
 }

@@ -10,7 +10,7 @@
     "duration": 57.9,
     "caption": {
       "en": "A real run: two sources added (a file and a URL import), the request typed to the agent and its plan, Launch, the live job from 0% to 100% (sped up 14x; the real run took 3 min 11 s), and the finished dataset of accepted conversations.",
-      "ar": "تشغيل حقيقي: إضافة مصدرين (ملف واستيراد رابط)، كتابة الطلب للوكيل وخطته، الإطلاق، المهمة مباشرة من 0% إلى 100% (مسرّعة 14 مرة، والتشغيل الحقيقي استغرق 3 دقائق و11 ثانية)، ثم الداتاسيت النهائية من المحادثات المقبولة."
+      "ar": "تشغيل حقيقي: إضافة مصدرين (ملف واستيراد رابط)، كتابة الطلب للوكيل وخطته، الإطلاق، المهمة مباشرة من 0% إلى 100% (مسرّعة 14 مرة، والتشغيل الحقيقي استغرق 3 دقائق و11 ثانية)، ثم مجموعة البيانات النهائية من المحادثات المقبولة."
     },
     "source": "corpusforge-demo.mp4"
   },
@@ -23,7 +23,7 @@
     "height": 900,
     "caption": {
       "en": "Studio home: \"Turn any source into training data you can trust\", with the animated sources-forge-verified scene.",
-      "ar": "الصفحة الرئيسية للاستوديو: «حوّل أي مصدر إلى داتا تدريب تثق بها» مع مشهد المصادر ثم الصهر ثم التحقق المتحرك."
+      "ar": "الصفحة الرئيسية للاستوديو: «حوّل أي مصدر إلى بيانات تدريب تثق بها» مع مشهد المصادر ثم الصهر ثم التحقق المتحرك."
     },
     "source": "01-home-desktop.png"
   },
@@ -101,7 +101,7 @@
     "height": 900,
     "caption": {
       "en": "Dataset overview: 8 conversations, 70 turns, 55.2K characters, average quality 84.7 and the quality distribution.",
-      "ar": "نظرة عامة على الداتاسيت: 8 محادثات، 70 دورًا، 55.2 ألف حرف، متوسط جودة 84.7 وتوزيع الجودة."
+      "ar": "نظرة عامة على مجموعة البيانات: 8 محادثات، 70 دورًا، 55.2 ألف حرف، متوسط جودة 84.7 وتوزيع الجودة."
     },
     "source": "07-ds-overview-desktop.png"
   },
@@ -192,7 +192,7 @@
     "height": 900,
     "caption": {
       "en": "An Arabic customer-support conversation in the review drawer.",
-      "ar": "محادثة دعم فني بالعربية في لوحة المراجعة."
+      "ar": "محادثة دعم عملاء بالعربية في لوحة المراجعة."
     },
     "source": "14-ar-review-desktop.png"
   },
@@ -254,7 +254,7 @@
     "height": 1688,
     "caption": {
       "en": "Phone: the dataset overview with average quality 84.7.",
-      "ar": "على الجوال: نظرة عامة على الداتاسيت بمتوسط جودة 84.7."
+      "ar": "على الجوال: نظرة عامة على مجموعة البيانات بمتوسط جودة 84.7."
     },
     "source": "19-overview-mobile.png"
   }

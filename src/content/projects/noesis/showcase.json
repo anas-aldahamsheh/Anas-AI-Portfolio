@@ -10,7 +10,7 @@
     "duration": 39.6,
     "caption": {
       "en": "A real session: sign in, the overview, a new question typed and answered live with citations and verification, the research steps and a citation preview, then the knowledge graph with a document opened.",
-      "ar": "جلسة حقيقية: تسجيل الدخول، النظرة العامة، سؤال جديد يُكتب ويُجاب مباشرة مع المراجع والتحقق، خطوات البحث ومعاينة مرجع، ثم غراف المعرفة مع فتح مستند."
+      "ar": "جلسة حقيقية: تسجيل الدخول، النظرة العامة، سؤال جديد يُكتب ويُجاب مباشرة مع المراجع والتحقق، خطوات البحث ومعاينة مرجع، ثم مخطط المعرفة مع فتح مستند."
     },
     "source": "noesis-demo.mp4"
   },
@@ -36,7 +36,7 @@
     "height": 900,
     "caption": {
       "en": "Overview: 30 sources, 173 passages fully embedded, 180 training pairs, 51 graph links, the indexing pipeline and the language split.",
-      "ar": "النظرة العامة: 30 مصدرًا، 173 مقطعًا مفهرسًا بالكامل، 180 زوج تدريب، 51 رابطًا في الغراف، مسار الفهرسة وتوزيع اللغات."
+      "ar": "النظرة العامة: 30 مصدرًا، 173 مقطعًا مفهرسًا بالكامل، 180 زوج تدريب، 51 رابطًا في المخطط، مسار الفهرسة وتوزيع اللغات."
     },
     "source": "02-overview-desktop.png"
   },
@@ -101,7 +101,7 @@
     "height": 900,
     "caption": {
       "en": "Knowledge graph with \"Graphics Processing Units\" selected: its connections, passages, mined pairs and related sources with similarity scores.",
-      "ar": "غراف المعرفة مع تحديد «وحدات معالجة الرسوميات»: روابطها ومقاطعها والأزواج المستخرجة منها والمصادر المرتبطة مع درجات التشابه."
+      "ar": "مخطط المعرفة مع تحديد «وحدات معالجة الرسوميات»: روابطها ومقاطعها والأزواج المستخرجة منها والمصادر المرتبطة مع درجات التشابه."
     },
     "source": "07-graph-node-desktop.png"
   },
@@ -127,7 +127,7 @@
     "height": 900,
     "caption": {
       "en": "Five grounded pairs generated, each scored 100%, tagged by difficulty and strategy, ready to save to the dataset.",
-      "ar": "خمسة أزواج موثقة، كل منها بتقييم 100%، مصنفة حسب الصعوبة والاستراتيجية وجاهزة للحفظ في الداتاسيت."
+      "ar": "خمسة أزواج موثقة، كل منها بتقييم 100%، مصنفة حسب الصعوبة والاستراتيجية وجاهزة للحفظ في مجموعة البيانات."
     },
     "source": "09-miner-result-desktop.png"
   },
@@ -140,7 +140,7 @@
     "height": 900,
     "caption": {
       "en": "Dataset: 180 approved pairs, 100% average quality, composition by strategy, difficulty and language.",
-      "ar": "الداتاسيت: 180 زوجًا معتمدًا بمتوسط جودة 100% وتوزيعها حسب الاستراتيجية والصعوبة واللغة."
+      "ar": "مجموعة البيانات: 180 زوجًا معتمدًا بمتوسط جودة 100% وتوزيعها حسب الاستراتيجية والصعوبة واللغة."
     },
     "source": "10-dataset-desktop.png"
   },
@@ -166,7 +166,7 @@
     "height": 900,
     "caption": {
       "en": "The knowledge graph in dark theme, English and Arabic documents clustered by subject.",
-      "ar": "غراف المعرفة في الوضع الداكن، والمستندات العربية والإنجليزية متجمعة حسب الموضوع."
+      "ar": "مخطط المعرفة في الوضع الداكن، والمستندات العربية والإنجليزية متجمعة حسب الموضوع."
     },
     "source": "12-dark-graph-desktop.png"
   },
@@ -215,7 +215,7 @@
     "height": 1688,
     "caption": {
       "en": "Phone, Arabic interface: the knowledge graph.",
-      "ar": "على الجوال بالواجهة العربية: غراف المعرفة."
+      "ar": "على الجوال بالواجهة العربية: مخطط المعرفة."
     },
     "source": "16-graph-ar-mobile.png"
   }

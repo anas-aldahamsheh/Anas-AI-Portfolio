@@ -139,8 +139,8 @@
     "width": 1440,
     "height": 900,
     "caption": {
-      "en": "The results workspace, where findings are grouped by page, severity, status and area.",
-      "ar": "مساحة النتائج، حيث تُجمع المشاكل حسب الصفحة والخطورة والحالة والمجال."
+      "en": "The results workspace before any run, ready to group findings by page, severity, status and area.",
+      "ar": "مساحة النتائج قبل أي فحص، جاهزة لتجميع المشاكل حسب الصفحة والخطورة والحالة والمجال."
     },
     "source": "10-results-workspace.png"
   },

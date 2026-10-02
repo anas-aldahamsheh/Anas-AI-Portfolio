@@ -16,7 +16,7 @@
   "repoUrl": "https://github.com/anas-aldahamsheh/CV-Checker",
   "en": {
     "title": "CV Checker",
-    "summary": "A privacy-first ATS resume checker that scores a CV with transparent rules, matches it line by line to a job post, and writes cover letters grounded only in what the CV proves.",
+    "summary": "A privacy-first ATS resume checker that scores a CV with transparent rules, matches it requirement by requirement to a job post, and writes cover letters grounded only in what the CV proves.",
     "metrics": [
       "80/100 | ATS score on the real test run, every point explained",
       "7 months | employment gap detected to the month",
@@ -42,7 +42,7 @@
   },
   "ar": {
     "title": "CV Checker",
-    "summary": "مدقق سير ذاتية لأنظمة ATS يضع الخصوصية أولًا: يقيّم السيرة بقواعد شفافة، ويطابقها سطرًا بسطر مع إعلان الوظيفة، ويكتب رسائل تغطية مبنية فقط على ما تثبته السيرة.",
+    "summary": "مدقق سير ذاتية لأنظمة ATS يضع الخصوصية أولًا: يقيّم السيرة بقواعد شفافة، ويطابقها متطلبًا بمتطلب مع إعلان الوظيفة، ويكتب رسائل تغطية مبنية فقط على ما تثبته السيرة.",
     "metrics": [
       "80/100 | نتيجة ATS في التجربة الحقيقية، وكل نقطة مشروحة",
       "7 أشهر | فجوة عمل مكتشفة بدقة الشهر",
