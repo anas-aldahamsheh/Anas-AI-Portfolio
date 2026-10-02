@@ -30,6 +30,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import { useI18n } from "@/i18n/provider";
+import { fixOwnerName } from "@/lib/owner-name";
 import type { MessageKey } from "@/i18n/messages";
 import { cn } from "@/lib/utils";
 import { AssistantAvatar } from "./assistant-avatar";
@@ -171,7 +172,11 @@ function AssistantMessage({
               "[&>div>*:last-child]:after:ms-0.5 [&>div>*:last-child]:after:inline-block [&>div>*:last-child]:after:h-3.5 [&>div>*:last-child]:after:w-[2px] [&>div>*:last-child]:after:translate-y-0.5 [&>div>*:last-child]:after:animate-pulse [&>div>*:last-child]:after:bg-[#2F6FED] [&>div>*:last-child]:after:content-['']",
           )}
         >
-          <Markdown text={message.content} sources={message.sources ?? []} dir={dir} />
+          <Markdown
+            text={fixOwnerName(message.content)}
+            sources={message.sources ?? []}
+            dir={dir}
+          />
         </div>
       ) : null}
 

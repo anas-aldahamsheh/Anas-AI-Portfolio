@@ -9,6 +9,7 @@ import { getAiSettings } from "@/ai/settings";
 import type { Locale } from "@/server/content/collections";
 import { listPublishedFresh } from "@/server/content/repository";
 import { buildSystemPrompt } from "./prompt";
+import { fixOwnerName } from "@/lib/owner-name";
 import { finalizeCitations, SourceRegistry, type SourceRef } from "./sources";
 import { executeTool, toolDeclarations, toolLabel } from "./tools";
 
@@ -238,7 +239,7 @@ export async function* runAgent(input: {
     if (stepText) answer += "\n\n";
   }
 
-  const final = finalizeCitations(answer.trim(), registry);
+  const final = finalizeCitations(fixOwnerName(answer.trim()), registry);
   trace.answer = final.text;
   trace.sources = final.sources;
   if (!final.text) {

@@ -17,7 +17,7 @@ A bilingual portfolio whose **AI assistant knows everything the owner publishes 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-pgvector-4169E1?logo=postgresql&logoColor=white)
 ![Gemini](https://img.shields.io/badge/AI-Google_Gemini-8E75B2?logo=googlegemini&logoColor=white)
 
-**Engineered by Anas Aldahamsheh — تطوير: أنس الدحامشة**
+**Engineered by Anas Al Dahamsheh — تطوير: أنس الدهامشة**
 
 <img src="public/screenshots/home.jpg" alt="Portfolio home page" width="100%" />
 
@@ -222,9 +222,10 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 👨‍💻 Author
 
-**Anas Aldahamsheh — أنس الدحامشة**
+**Anas Al Dahamsheh — أنس الدهامشة**
 
-- 📞 Phone: `+962 789 495 167`
+- 📧 Email: anasaldahamsheh@outlook.com
+- 📞 Phone: `+962 789495167`
 - 💼 LinkedIn: [linkedin.com/in/anas-aldahamsheh](https://www.linkedin.com/in/anas-aldahamsheh)
 - 🐙 GitHub: [github.com/anas-aldahamsheh](https://github.com/anas-aldahamsheh)
 

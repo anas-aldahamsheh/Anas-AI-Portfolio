@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   const { locale: raw } = await params;
   const locale: Locale = isLocale(raw) ? raw : "en";
   const profile = await getProfile(locale);
-  const name = profile?.t.name ?? (locale === "ar" ? "أنس الدحامشة" : "Anas Al Dahamsheh");
+  const name = profile?.t.name ?? (locale === "ar" ? "أنس الدهامشة" : "Anas Al Dahamsheh");
   const headline = profile?.t.headline ?? "AI Engineer";
   const description = profile?.t.tagline || profile?.t.summary || headline;
   return {

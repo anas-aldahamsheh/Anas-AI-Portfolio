@@ -1,0 +1,136 @@
+Anas Al Dahamsheh
+AI Engineer | LLM, RAG, AI Agents & Full-Stack Development
+Amman, Jordan | +962 789495167 | anasaldahamsheh@outlook.com
+linkedin.com/in/anas-aldahamsheh | github.com/anas-aldahamsheh | Portfolio: anas-ai-portfolio.netlify.app
+
+PROFESSIONAL SUMMARY
+AI Engineer who builds production-ready large language model (LLM) applications end to end: retrieval-augmented
+generation (RAG), AI agents with tool calling, chatbots, automation and LLM evaluation, backed by full-stack
+delivery in Python (FastAPI) and TypeScript (React, Next.js). At ITC International, builds AI projects, chatbots and
+automation, red-teams and evaluates AI models, and creates training data. Independently designed and shipped 10
+bilingual (English/Arabic) applications, including a hybrid-search research assistant that ranks the correct passage
+first 93.9% of the time with a 54 ms median search over ~97,000 passages, and an agentic platform that generates
+verified fine-tuning datasets. Test-driven, with a trust-and-safety background that shapes reliable, responsible AI.
+
+PROFESSIONAL EXPERIENCE
+AI Engineer | ITC International
+Dec 2025 – Present
+• Build LLM-powered applications, chatbots and Python automation workflows end to end, from prompt and
+pipeline design to integration and testing.
+
+• Create training and evaluation datasets for AI models, writing challenging multilingual prompts across formats,
+languages and Arabic dialects to target known and new failure modes.
+
+• Design adversarial test scenarios (AI red teaming) that probe LLM reliability, factual accuracy, hallucination, bias
+and unsafe behavior.
+
+• Evaluate model outputs against a structured rubric (accuracy, relevance, completeness, neutrality, safety, source
+validation) and trace the root cause of each failure with supporting evidence.
+• Deliver reproducible defect reports (prompt, response, weakness, recommended correction) that drive model
+improvements and technical investigation.
+
+Content Security Moderator | BIGO Live
+Apr 2023 – Dec 2025
+• Reviewed live-stream and user-generated content, identifying harmful material and policy violations and applying
+community guidelines to keep the platform safe.
+
+• Worked with the team to sharpen policy interpretation and reporting practices, experience that now underpins my
+AI safety and evaluation work.
+
+SELECTED PROJECTS
+Noesis | Bilingual RAG Research Assistant with Verified Citations
+Python, FastAPI, React, TypeScript, SQLite FTS5, USearch (HNSW), Gemini API, embeddings, GitHub Actions
+
+• Engineered hybrid bilingual retrieval (BM25 + dense embeddings in an HNSW index + offline vectors) fused with
+reciprocal rank fusion (RRF) and MMR: correct passage ranked first 93.9% of the time, other-language document
+90%, 54 ms median search over ~97,000 passages.
+• Built a tool-calling research agent (6 tools) that streams cited answers on ~3K input tokens per answer, plus a
+deterministic sentence-level citation verifier for English and Arabic that needs no extra model call.
+• Added a knowledge graph, a grounded Q&A dataset miner with JSONL/Alpaca export, JWT auth with rotating
+refresh tokens, role-based access and an audit trail; 133 automated tests (97 backend, 36 frontend) in CI.
+
+Corpusforge | Agentic Training-Data Platform for LLM Fine-Tuning
+Python, FastAPI, async SQLAlchemy, Next.js, TypeScript, Gemini API, OpenAI-compatible APIs, SSE
+
+• Designed a planning agent (function calling) that turns a plain-language goal into a costed job, then generates
+multi-turn conversations grounded in uploaded files, imported URLs or web research.
+
+• Built a quality gate of deterministic checks (grounding, language, privacy, variety), feedback-driven repair loops,
+deduplication and 0–100 scoring: a real job delivered 8/8 accepted conversations (average quality 84.7) in 3 min
+11 s for $0.02.
+• Implemented adaptive rate limiting (sliding request/token windows, AIMD concurrency, 429 back-off), resumable
+jobs, live SSE monitoring and export to OpenAI JSONL, ShareGPT, Alpaca and Parquet; runs on Gemini or any
+OpenAI-compatible endpoint (OpenAI, Ollama, vLLM).
+
+Jubran & Abu Jbara | AI Waiter and QR Ordering Platform for Two Amman Restaurants
+Python, FastAPI, Next.js, TypeScript, PostgreSQL, pgvector, WebSockets, Docker, Gemini and OpenAI APIs
+
+• Built a bilingual AI waiter chatbot with tool calling and semantic menu search (pgvector, 266 embedded
+documents for a 229-dish menu) that places orders only after server-side validation and explicit guest
+confirmation.
+• Delivered a real-time staff floor and guest order tracking over WebSockets with a transactional outbox, Alembic
+migrations and Docker Compose; manual ordering keeps working during AI-provider outages; 262 automated
+tests.
+
+Sieve | Adaptive Web Scraping and Data Extraction Engine
+Python, FastAPI, httpx, Playwright, trafilatura, SQLite FTS5, Next.js, WebSockets, Gemini API
+
+• Designed an 8-step site probe that selects HTTP/2, a browser-grade TLS client or headless Chromium per site
+and escalates automatically; one job crawled 290 pages across 4 site types in 2 min 13 s.
+
+• Built an NLP cleaning pipeline (boilerplate learning, Arabic normalization, language detection, SHA-256 +
+SimHash near-duplicate removal, PII redaction), LLM-extracted typed JSON fields and an AIMD resource
+governor that keeps CPU under its ceiling.
+
+Vigil | Website Health Checker at Scale
+Python, FastAPI, dnspython, httpx, Playwright, Next.js, TypeScript, SSE, GitHub Actions
+
+• Built layered DNS, TCP, TLS and HTTP verification with real-browser escalation, returning 9 verdicts with
+confidence scores and evidence; an 85-link audit finished in 52 s with every verdict correct.
+• Raised throughput from ~1 to 6–7 URLs per second with adaptive concurrency; 226 automated tests (182
+backend, 44 frontend) on Ubuntu and Windows CI.
+
+CV Checker | ATS Resume Analyzer with Grounded LLM Generation
+Next.js, TypeScript, Gemini API (structured output), Zod, Vitest, Playwright, axe-core
+
+• Built an explainable, rule-based ATS scoring engine and requirement-to-evidence job matching; LLM output is
+schema-validated with grounding checks and a deterministic fallback, and no resume data is ever stored.
+More projects: Exam Maker (AI interview simulator with AES-256-GCM sealed answer keys and rubric-based LLM
+grading), Giant Store (e-commerce with a RAG shopping assistant), Website QA Agent (Playwright crawler for SEO,
+accessibility and security audits; Turborepo, BullMQ, Redis). Live demos: anas-ai-portfolio.netlify.app
+
+TECHNICAL SKILLS
+Programming Languages: Python, TypeScript, JavaScript, SQL, HTML, CSS
+Generative AI & LLMs: LLM application development, RAG, AI agents, agentic workflows, tool/function calling,
+chatbots, prompt engineering, structured outputs, LangChain, LangGraph, LlamaIndex, Model Context Protocol
+(MCP), Gemini API, OpenAI API, Ollama
+Machine Learning: PyTorch, Hugging Face Transformers, scikit-learn, fine-tuning (LoRA), NumPy, pandas
+LLM Evaluation & Safety: AI red teaming, LLM evaluation, hallucination and grounding checks, citation verification,
+rubric-based scoring, bias and safety testing, training data creation
+Retrieval, NLP & Data: Embeddings, vector search, hybrid search (BM25 + dense), HNSW, pgvector, RRF, MMR,
+Arabic NLP, language detection, near-duplicate detection, web scraping, fine-tuning dataset generation
+Backend: FastAPI, Node.js, REST APIs, async Python, Pydantic, SQLAlchemy, Alembic, WebSockets, server-sent
+events, JWT authentication, rate limiting, automation
+Frontend: React, Next.js, Tailwind CSS, Zustand, TanStack Query, responsive English/Arabic (RTL) interfaces
+Databases & DevOps: PostgreSQL, SQLite, Redis, Prisma, Docker, Docker Compose, AWS (EC2, S3, Lambda),
+Git, GitHub Actions (CI/CD), Netlify, Vercel
+Testing: pytest, Vitest, Playwright, end-to-end testing, accessibility testing (axe-core)
+
+EDUCATION
+Bachelor of Science in Computer Engineering | Al-Balqa Applied University
+
+2025
+
+Faculty of Engineering Technology, Amman, Jordan
+
+CERTIFICATIONS AND TRAINING
+• Full Stack Development Training (130 hours) | Digital Opportunity Trust (DOT) Jordan | May 2026 | Credential ID:
+DOT-AM-FS-2-25-YGA-An-0526
+• Retrieval-Augmented Generation for Enhanced AI Outputs | IBM SkillsBuild | Sep 2026
+• Generative AI Essentials: Using LLMs to Work with Data | IBM SkillsBuild | Sep 2026
+• Craft Precise Prompts for AI Models | IBM SkillsBuild | Sep 2026
+• Getting Started with Generative AI | IBM SkillsBuild | Sep 2026
+
+LANGUAGES
+Arabic (Native) | English (Professional working proficiency)
+

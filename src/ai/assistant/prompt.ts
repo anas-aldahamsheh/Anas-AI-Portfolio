@@ -1,3 +1,4 @@
+import { OWNER_NAME } from "@/lib/owner-name";
 import type { Locale } from "@/server/content/collections";
 
 export interface PromptContext {
@@ -55,6 +56,8 @@ export function buildSystemPrompt(ctx: PromptContext): string {
       "with its citation; `total` says how many there are. Never answer such a question with a selection or " +
       '"some of" his work. This overrides the length guidance in rule 5. Only narrow the list when the visitor ' +
       "asks for something specific (a technology, the best one, a single project).",
+    `11. His name: write it exactly "${OWNER_NAME.en}" in English and "${OWNER_NAME.ar}" in Arabic, in every ` +
+      "answer, including short refusals. Never transliterate, translate, add diacritics to or otherwise change it.",
     "",
     `Today: ${ctx.today}. The site is currently shown in ${ctx.locale === "ar" ? "Arabic" : "English"}; ` +
       `internal links should start with /${ctx.locale}/.`,

@@ -1,8 +1,10 @@
+import { readFileSync, statSync } from "node:fs";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { appSettings, contentEntries } from "@/lib/db/schema";
 import { certificateEntries } from "@/content/certificates";
 import { educationEntries, experienceEntries } from "@/content/experience";
+import { CV_FILE, CV_FILE_NAME, CV_TEXT_FILE, PROFILE, skillGroupEntries } from "@/content/profile";
 import { projectEntries, type ProjectRelease } from "@/content/projects";
 import { COLLECTIONS, LOCALES, type CollectionName } from "./collections";
 import { applyContentCorrections } from "./corrections";
@@ -15,7 +17,7 @@ import { listAllRows } from "./repository";
  * owner makes afterwards in the admin are never overwritten by a later deploy. Bump the id to
  * publish a new version of the projects or certificates.
  */
-export const PROJECTS_RELEASE_ID = "content-2026-10-8";
+export const PROJECTS_RELEASE_ID = "content-2026-10-9";
 
 const releaseKey = (id: string) => `content_release:${id}`;
 const ACTOR = "content-release";
@@ -33,6 +35,9 @@ export interface ReleaseResult {
   certificates?: Changes;
   experience?: Changes;
   education?: Changes;
+  skills?: Changes;
+  profile?: string;
+  cv?: string;
 }
 
 /** Checks every entry against the collection schema before anything is written. */
@@ -42,6 +47,8 @@ export function validateProjectRelease(entries: ProjectRelease[]): string[] {
     ...validateEntries("certificate", certificateEntries()),
     ...validateEntries("experience", experienceEntries()),
     ...validateEntries("education", educationEntries()),
+    ...validateEntries("skill_group", skillGroupEntries()),
+    ...validateEntries("profile", [{ slug: "main", orderIndex: 0, ...PROFILE }]),
   ];
 }
 
@@ -98,6 +105,9 @@ export async function applyProjectsRelease(
   result.certificates = await syncCollection("certificate", certificateEntries());
   result.experience = await syncCollection("experience", experienceEntries());
   result.education = await syncCollection("education", educationEntries());
+  result.skills = await syncCollection("skill_group", skillGroupEntries());
+  result.profile = await syncProfile();
+  result.cv = await syncCvDocument();
   result.corrected = await applyContentCorrections(ACTOR);
 
   const value = { appliedAt: new Date().toISOString(), ...result };
@@ -139,6 +149,47 @@ async function syncCollection(collection: CollectionName, entries: ProjectReleas
   }
   await reorderEntries(collection, orderedIds);
   return changes;
+}
+
+/**
+ * Brings the profile in line with the CV: contact details, texts and the CV download. Fields
+ * the release does not set (the photo) keep their current value.
+ */
+async function syncProfile(): Promise<string> {
+  const [current] = await listAllRows("profile");
+  const patch = { data: PROFILE.data, i18n: PROFILE.i18n, status: "published" as const };
+  if (current) {
+    await updateEntry(current.id, patch, ACTOR);
+    return "updated";
+  }
+  await createEntry("profile", { ...patch, slug: "main" }, ACTOR);
+  return "created";
+}
+
+/** Makes the CV the assistant's "cv" knowledge document, with its text already extracted. */
+async function syncCvDocument(): Promise<string> {
+  const text = readFileSync(CV_TEXT_FILE, "utf8").trim();
+  const patch = {
+    data: {
+      file: CV_FILE,
+      fileName: CV_FILE_NAME,
+      mimeType: "application/pdf",
+      sizeBytes: statSync(`public${CV_FILE}`).size,
+      role: "cv",
+      extractedText: text,
+      extractedAt: new Date().toISOString(),
+      extractionError: "",
+    },
+    i18n: { en: { title: "Curriculum Vitae (CV)" }, ar: { title: "السيرة الذاتية" } },
+    status: "published" as const,
+  };
+  const current = (await listAllRows("document")).find((row) => row.data["role"] === "cv");
+  if (current) {
+    await updateEntry(current.id, patch, ACTOR);
+    return "updated";
+  }
+  await createEntry("document", { ...patch, slug: "cv" }, ACTOR);
+  return "created";
 }
 
 /** Slugs of the projects currently in the database (for checks and logs). */
