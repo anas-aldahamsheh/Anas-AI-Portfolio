@@ -7,6 +7,7 @@ import { useEffect, useRef, useSyncExternalStore } from "react";
 import { useI18n } from "@/i18n/provider";
 import { AssistantAvatar } from "./assistant-avatar";
 import { ChatView } from "./chat-view";
+import { OPEN_EVENT } from "./events";
 import { resetConversation, useAssistantState } from "./store";
 import { useVisualViewport } from "./use-visual-viewport";
 
@@ -86,6 +87,43 @@ export function AssistantPanel({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose, wide]);
+
+  // On tablets and desktops a click anywhere outside the card closes it, like the X. Clicks that
+  // open the assistant (an "Ask AI" button) keep it open, and so does finishing a text
+  // selection that started inside the card. Phones use the scrim behind the sheet instead.
+  useEffect(() => {
+    if (!open || !wide) return;
+    let reopening = false;
+    let pressedInside = false;
+    const onOpen = () => {
+      reopening = true;
+      setTimeout(() => (reopening = false), 0);
+    };
+    // Where the press started decides: a selection dragged out of the card is not a click outside.
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      pressedInside = target instanceof Node && Boolean(panelRef.current?.contains(target));
+    };
+    const onClick = (event: MouseEvent) => {
+      const panel = panelRef.current;
+      const target = event.target;
+      if (reopening || pressedInside || !panel || !(target instanceof Node)) return;
+      if (!target.isConnected || panel.contains(target)) return;
+      onClose();
+    };
+    // Attach after the click that opened the panel has finished.
+    const frame = requestAnimationFrame(() => {
+      document.addEventListener("pointerdown", onPointerDown, true);
+      document.addEventListener("click", onClick);
+    });
+    window.addEventListener(OPEN_EVENT, onOpen);
+    return () => {
+      cancelAnimationFrame(frame);
+      document.removeEventListener("pointerdown", onPointerDown, true);
+      document.removeEventListener("click", onClick);
+      window.removeEventListener(OPEN_EVENT, onOpen);
+    };
+  }, [open, wide, onClose]);
 
   // The phone sheet covers the page: stop the page behind it from scrolling.
   useEffect(() => {

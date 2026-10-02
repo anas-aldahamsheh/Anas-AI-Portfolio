@@ -142,7 +142,8 @@ const listProjects: ToolDefinition = {
   declaration: {
     name: "list_projects",
     description:
-      "All of Anas's projects with one-line summaries, technologies and links. Optionally filter by a " +
+      "All of Anas's projects (the complete list) with one-line summaries, technologies and links. Use it for any " +
+      "general question about his projects or work. Optionally filter by a " +
       "technology or keyword (matches title, summary and tags).",
     parameters: {
       type: "object",
@@ -162,9 +163,13 @@ const listProjects: ToolDefinition = {
       const haystack = lower([p.t.title, p.t.summary, p.data.category, ...p.data.tags].join(" "));
       return haystack.includes(filter);
     });
+    const shown = matches.length || !filter ? matches : projects;
     return {
       total: projects.length,
-      projects: (matches.length || !filter ? matches : projects).map((p) => ({
+      ...(shown.length === projects.length
+        ? { note: `These are all ${projects.length} projects; mention every one of them.` }
+        : {}),
+      projects: shown.map((p) => ({
         ref: cite(ctx, p.id, p.t.title, "project", entryUrl("project", p.slug, ctx.locale)),
         slug: p.slug,
         title: p.t.title,
@@ -177,7 +182,7 @@ const listProjects: ToolDefinition = {
         repository: p.data.repoUrl || (p.data.repoPrivate ? "private (not public)" : null),
       })),
       ...(filter && matches.length === 0
-        ? { note: `No project mentions "${filter}"; showing all.` }
+        ? { filterNote: `No project mentions "${filter}"; showing all.` }
         : {}),
     };
   },
@@ -311,7 +316,8 @@ const listCredentials: ToolDefinition = {
   label: { en: "Reviewing education and certificates", ar: "بشوف التعليم والشهادات" },
   declaration: {
     name: "list_education_and_certificates",
-    description: "Anas's degrees and professional certificates/courses.",
+    description:
+      "All of Anas's degrees and professional certificates/courses (the complete list, with verification links).",
   },
   async run(_args, ctx) {
     const [education, certificates] = await Promise.all([
@@ -319,6 +325,8 @@ const listCredentials: ToolDefinition = {
       listPublishedFresh("certificate", ctx.locale),
     ]);
     return {
+      totalCertificates: certificates.length,
+      note: `These are all ${certificates.length} certificates; when asked about his certificates, mention every one of them.`,
       education: education.map((e) => ({
         ref: cite(
           ctx,
