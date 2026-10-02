@@ -1,0 +1,15 @@
+# Second deployment of the site on Netlify (the Vercel one stays the main one).
+# The Next.js runtime (@netlify/plugin-nextjs) is added by Netlify automatically.
+[build]
+  command = "pnpm vercel-build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Previews and branch deploys must not write the content release to the shared database.
+[context.deploy-preview]
+  command = "pnpm build"
+
+[context.branch-deploy]
+  command = "pnpm build"
