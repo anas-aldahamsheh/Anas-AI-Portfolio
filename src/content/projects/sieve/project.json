@@ -42,7 +42,8 @@
       "Structured fields by CSS, XPath or regex, plus Gemini AI fields with a typed schema",
       "Full-text search and exports to JSONL, JSON, CSV, Excel, Markdown and plain text",
       "Schedules, inbox folder and crash-safe checkpoints",
-      "English and Arabic control room with RTL, dark and light themes and a command palette"
+      "English and Arabic control room with RTL, dark and light themes and a command palette",
+      "Tested live on real sites from a Windows PC: Indeed through Cloudflare with the stealth engine, G2's DataDome wall reported honestly, and Hacker News crawled at the 30 s delay its robots.txt asks for"
     ]
   },
   "ar": {
@@ -71,7 +72,8 @@
       "حقول منظمة عبر CSS أو XPath أو Regex، وحقول ذكاء اصطناعي من Gemini بمخطط محدد النوع",
       "بحث نصي كامل وتصدير إلى JSONL وJSON وCSV وExcel وMarkdown ونص عادي",
       "جدولات ومجلد وارد ونقاط استئناف آمنة من التعطل",
-      "غرفة تحكم عربية وإنجليزية مع دعم كامل للاتجاه من اليمين لليسار، وضع داكن وفاتح، ولوحة أوامر"
+      "غرفة تحكم عربية وإنجليزية مع دعم كامل للاتجاه من اليمين لليسار، وضع داكن وفاتح، ولوحة أوامر",
+      "اختُبر مباشرةً على مواقع حقيقية من جهاز Windows: Indeed خلف Cloudflare عبر محرك التخفي، وجدار DataDome في G2 مع الإفصاح عنه بوضوح، وHacker News بمهلة 30 ثانية كما يطلب ملف robots.txt"
     ]
   }
 }

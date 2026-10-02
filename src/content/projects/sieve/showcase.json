@@ -15,6 +15,93 @@
     "source": "sieve-demo.mp4"
   },
   {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/sieve/live-demo-1.mp4",
+    "poster": "/images/projects/sieve/live-demo-1.webp",
+    "preview": "/images/projects/sieve/live-demo-1-preview.mp4",
+    "width": 1440,
+    "height": 900,
+    "duration": 65.4,
+    "caption": {
+      "en": "A live run on real websites, recorded on a Windows PC: the overview with live CPU and memory, probes of Indeed and G2, and the finished Indeed and Hacker News jobs.",
+      "ar": "تشغيل حي على مواقع حقيقية، مسجّل على جهاز Windows: لوحة النظرة العامة مع المعالج والذاكرة لحظيًا، وفحص Indeed وG2، ومهمتا Indeed وHacker News بعد اكتمالهما."
+    },
+    "source": "live-sieve-run.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/live-01.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Live run on a real PC: CPU and memory gauges, and the resource governor backing off when memory passes its 80% ceiling.",
+      "ar": "تشغيل حي على جهاز حقيقي: مؤشرات المعالج والذاكرة، ومنظّم الموارد يخفّف الحمل عندما تتجاوز الذاكرة سقف 80%."
+    },
+    "source": "live-01-overview-live-resources.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/live-02.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Live probe of indeed.com: Cloudflare challenges plain HTTP, a browser-grade TLS fingerprint gets through, so the stealth engine is chosen with 90% confidence.",
+      "ar": "فحص حي لموقع indeed.com: يعترض Cloudflare طلبات HTTP العادية، بينما تمر بصمة TLS مماثلة للمتصفح، فيُختار محرك التخفي بثقة 90%."
+    },
+    "source": "live-02-probe-indeed-cloudflare-stealth.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/live-03.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Live probe of g2.com: Cloudflare and DataDome block even a real browser, and Sieve says so, warning that results may be partial.",
+      "ar": "فحص حي لموقع g2.com: يحجب Cloudflare وDataDome حتى المتصفح الحقيقي، ويصرّح Sieve بذلك وينبّه إلى أن النتائج قد تكون جزئية."
+    },
+    "source": "live-03-probe-g2-datadome-blocked.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/live-04.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The three live jobs: Indeed behind Cloudflare, a JavaScript-rendered quotes site and rate-limited Hacker News, all completed.",
+      "ar": "المهام الحية الثلاث: Indeed خلف Cloudflare، وموقع اقتباسات يُعرض بـJavaScript، وHacker News المحدود المعدل، وكلها مكتملة."
+    },
+    "source": "live-04-jobs-list.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/live-05.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The Indeed job: 5 of 5 pages saved as clean through the stealth engine, 6,177 words, no errors.",
+      "ar": "مهمة Indeed: حُفظت الصفحات الخمس كلها نظيفة عبر محرك التخفي، بإجمالي 6,177 كلمة ومن دون أخطاء."
+    },
+    "source": "live-05-job-indeed-results.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/sieve/live-06.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The Hacker News job: robots.txt asks for 30 s between requests, so Sieve used plain HTTP one request at a time and respected the delay.",
+      "ar": "مهمة Hacker News: يطلب ملف robots.txt مهلة 30 ثانية بين الطلبات، فاستخدم Sieve طلبات HTTP عادية واحدًا تلو الآخر والتزم بالمهلة."
+    },
+    "source": "live-06-job-hn-crawl-delay.png"
+  },
+  {
     "kind": "image",
     "device": "desktop",
     "src": "/images/projects/sieve/01.webp",

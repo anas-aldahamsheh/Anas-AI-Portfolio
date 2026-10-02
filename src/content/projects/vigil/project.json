@@ -39,7 +39,8 @@
       "Verify pass for failures and canary checks that pause the run when the machine goes offline",
       "Live run view with progress, speed, time left, verdict donut, attention list and site ranking",
       "Reports as styled multi-sheet XLSX, CSV, JSON with full evidence or a standalone HTML page, in English or Arabic",
-      "First-class Arabic interface with RTL, light and dark themes and reduced-motion support"
+      "First-class Arabic interface with RTL, light and dark themes and reduced-motion support",
+      "Tested live on hard cases (a bot wall, a parked domain, a domain that does not exist) and on a 5,210-link spreadsheet of news sites, whose Excel report exported in about 3 s"
     ]
   },
   "ar": {
@@ -66,7 +67,8 @@
       "إعادة تحقق من الأعطال وفحوص مرجعية توقف التشغيل عند انقطاع اتصال الجهاز",
       "عرض مباشر للتشغيل مع التقدم والسرعة والوقت المتبقي ومخطط الأحكام وقائمة الانتباه وترتيب المواقع",
       "تقارير XLSX منسقة متعددة الأوراق وCSV وJSON بالأدلة الكاملة أو صفحة HTML مستقلة، بالعربية أو الإنجليزية",
-      "واجهة عربية أصيلة من اليمين لليسار، وضع فاتح وداكن، ودعم تقليل الحركة"
+      "واجهة عربية أصيلة من اليمين لليسار، وضع فاتح وداكن، ودعم تقليل الحركة",
+      "اختُبر مباشرةً على حالات صعبة (جدار حماية من الروبوتات، ونطاق متوقف، ونطاق غير موجود) وعلى جدول بيانات يضم 5,210 روابط لمواقع إخبارية، وصُدّر تقريره بصيغة Excel في نحو 3 ثوانٍ"
     ]
   }
 }

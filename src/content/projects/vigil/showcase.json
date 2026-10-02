@@ -15,6 +15,93 @@
     "source": "vigil-demo.mp4"
   },
   {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/vigil/live-demo-1.mp4",
+    "poster": "/images/projects/vigil/live-demo-1.webp",
+    "preview": "/images/projects/vigil/live-demo-1-preview.mp4",
+    "width": 1440,
+    "height": 900,
+    "duration": 54.5,
+    "caption": {
+      "en": "A live run on real websites, recorded on a Windows PC: quick checks of hard cases, then a 5,210-link spreadsheet of news sites with its issues, status codes and results.",
+      "ar": "تشغيل حي على مواقع حقيقية، مسجّل على جهاز Windows: فحوص سريعة لحالات صعبة، ثم جدول بيانات يضم 5,210 روابط لمواقع إخبارية مع المشكلات ورموز الحالة والنتائج."
+    },
+    "source": "live-vigil-run.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/live-01.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Live run on a real PC: the check screen.",
+      "ar": "تشغيل حي على جهاز حقيقي: شاشة الفحص."
+    },
+    "source": "live-01-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/live-02.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Live check of g2.com: a bot-protection challenge (Cloudflare and DataDome) blocks automated access, so the verdict is \"Working, restricted\" with 83 confidence.",
+      "ar": "فحص حي لموقع g2.com: يحجب تحدٍّ للحماية من الروبوتات (Cloudflare وDataDome) الوصول الآلي، فتكون النتيجة «يعمل، مقيّد» بثقة 83."
+    },
+    "source": "live-02-quick-check-bot-wall.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/live-03.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Live check of citynews.org: the domain resolves to a parking or for-sale page, so it is reported as a parked domain, not as working.",
+      "ar": "فحص حي لموقع citynews.org: يؤدي النطاق إلى صفحة نطاق متوقف أو معروض للبيع، فيُصنَّف نطاقًا متوقفًا لا موقعًا عاملًا."
+    },
+    "source": "live-03-quick-check-parked.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/live-04.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Live check of a domain that does not exist: DNS has no such domain and no fallback address opens, so the verdict is Down with 99 confidence.",
+      "ar": "فحص حي لنطاق غير موجود: لا يعرف نظام DNS هذا النطاق ولا يعمل أي عنوان بديل، فتكون النتيجة «متوقف» بثقة 99."
+    },
+    "source": "live-04-quick-check-dead-domain.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/live-05.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The 5,210-link news-site spreadsheet while it ran: issues found, HTTP status codes, response times and the results table with each link's verdict and reason.",
+      "ar": "جدول المواقع الإخبارية ذو الـ5,210 روابط أثناء الفحص: المشكلات المكتشفة، ورموز حالة HTTP، وأزمنة الاستجابة، وجدول النتائج مع حكم كل رابط وسببه."
+    },
+    "source": "live-07-batch-insights.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/vigil/live-06.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The runs list with the news-site batch and its verdict mix.",
+      "ar": "قائمة عمليات الفحص مع دفعة المواقع الإخبارية وتوزيع نتائجها."
+    },
+    "source": "live-08-runs.png"
+  },
+  {
     "kind": "image",
     "device": "desktop",
     "src": "/images/projects/vigil/01.webp",
