@@ -1,0 +1,252 @@
+[
+  {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/jubran/demo-1.mp4",
+    "poster": "/images/projects/jubran/demo-1.webp",
+    "preview": "/images/projects/jubran/demo-1-preview.mp4",
+    "width": 1600,
+    "height": 900,
+    "duration": 61.1,
+    "caption": {
+      "en": "Side by side: a guest on a phone orders a steak dinner through the AI waiter in English while the staff floor updates live; the order lands on table T1, staff start preparing and mark it ready, and the guest's tracker follows in real time.",
+      "ar": "جنبًا إلى جنب: ضيف على هاتفه يطلب عشاء ستيك عبر النادل الذكي بالإنجليزية بينما تتحدث خريطة الصالة مباشرة؛ يصل الطلب إلى الطاولة T1، ويبدأ الموظفون التحضير ثم يعلّمونه جاهزًا، ومتتبع الضيف يلحق لحظيًا."
+    },
+    "source": "video-01-ai-waiter-live-floor.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/01.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Scanning table T1's QR opens a personal welcome: menu, smart waiter, live order and table service.",
+      "ar": "مسح رمز QR للطاولة T1 يفتح ترحيبة شخصية: المنيو، النادل الذكي، الطلب المباشر، وخدمة الطاولة."
+    },
+    "source": "01-guest-qr-welcome-en.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/02.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "The same menu fully in Arabic and right-to-left, with dish photos, descriptions and prices.",
+      "ar": "المنيو نفسه بالعربية بالكامل ومن اليمين لليسار، مع صور الأطباق ووصفها وأسعارها."
+    },
+    "source": "02-guest-menu-ar.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/03.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Dish sheet for the Beef Tenderloin Steak: photo, description, price, quantity and special instructions.",
+      "ar": "بطاقة طبق Beef Tenderloin Steak: صورة ووصف وسعر وكمية وتعليمات خاصة."
+    },
+    "source": "03-guest-dish-details.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/04.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "\"What steaks do you have?\": the waiter answers with both steaks, their real descriptions and prices.",
+      "ar": "«شو أنواع الستيك عندكم؟» والنادل يجيب بنوعي الستيك مع وصفهما وسعرهما الحقيقي."
+    },
+    "source": "04-ai-waiter-menu-question.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/05.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "One message orders a medium-well Rib-Eye, Musakhan and two Mango Tropic; the waiter suggests hummus to share.",
+      "ar": "رسالة واحدة تطلب ريب آي بدرجة نضج «ميديم ويل» ومسخن وكاسَي Mango Tropic، والنادل يقترح حمصًا للمشاركة."
+    },
+    "source": "05-ai-waiter-upsell.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/06.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "A priced summary card (63.45 JOD) the server only sends after the guest confirms.",
+      "ar": "بطاقة ملخص مسعّرة (63.45 دينار) لا يرسلها الخادم إلا بعد تأكيد الضيف."
+    },
+    "source": "06-ai-waiter-order-summary.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/07.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "After an explicit \"yes\", order JB-107 is placed and linked to live tracking.",
+      "ar": "بعد «نعم» صريحة يُرسل الطلب JB-107 ويُربط بالتتبع المباشر."
+    },
+    "source": "07-ai-waiter-order-sent.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/08.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Live tracker right after ordering, with the \"medium-well\" note on the steak.",
+      "ar": "المتتبع المباشر بعد الطلب مباشرة، مع ملاحظة «ميديم ويل» على الستيك."
+    },
+    "source": "08-guest-live-tracking-received.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/09.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "The kitchen moved it along and the guest sees Ready on their phone.",
+      "ar": "المطبخ حرّك الطلب والضيف يرى «جاهز» على هاتفه."
+    },
+    "source": "09-guest-live-tracking-ready.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/10.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "The manual path: a basket that stays a draft until confirmed.",
+      "ar": "المسار اليدوي: سلة تبقى مسودة حتى التأكيد."
+    },
+    "source": "10-guest-basket.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/11.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "One-tap table service: call staff, tissues, clean table, request bill, complaints.",
+      "ar": "خدمة الطاولة بلمسة: نداء الموظف، محارم، تنظيف الطاولة، طلب الحساب، والشكاوى."
+    },
+    "source": "11-guest-table-services.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/jubran/12.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "The guest welcome in Arabic for another table.",
+      "ar": "ترحيبة الضيف بالعربية لطاولة أخرى."
+    },
+    "source": "12-guest-qr-welcome-ar.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/jubran/13.webp",
+    "srcLarge": "/images/projects/jubran/13@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Staff live floor: the new order lands on T1 among 8 busy tables, with KPIs and service queue.",
+      "ar": "خريطة الصالة المباشرة: الطلب الجديد يصل إلى T1 بين 8 طاولات مشغولة، مع المؤشرات وطابور الخدمات."
+    },
+    "source": "13-admin-floor-new-order.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/jubran/14.webp",
+    "srcLarge": "/images/projects/jubran/14@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The same floor as compact cards.",
+      "ar": "الصالة نفسها كبطاقات مختصرة."
+    },
+    "source": "14-admin-floor-cards.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/jubran/15.webp",
+    "srcLarge": "/images/projects/jubran/15@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Table T1's visit: guest, running bill (63.45 JOD), order JB-107 and one-tap close.",
+      "ar": "زيارة الطاولة T1: الضيف، الحساب الجاري (63.45 دينار)، الطلب JB-107، وإغلاق بلمسة."
+    },
+    "source": "15-admin-table-details.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/jubran/16.webp",
+    "srcLarge": "/images/projects/jubran/16@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Menu management for 229 dishes in 27 categories, with photos, prices and availability.",
+      "ar": "إدارة منيو من 229 طبقًا في 27 فئة، مع الصور والأسعار والتوفر."
+    },
+    "source": "16-admin-menu.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/jubran/17.webp",
+    "srcLarge": "/images/projects/jubran/17@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Tables & QR: active QR per table with PDF download, replace, disable and \"try as customer\".",
+      "ar": "الطاولات وQR: رمز فعّال لكل طاولة مع تنزيل PDF والاستبدال والتعطيل و«جرّب كزبون»."
+    },
+    "source": "17-admin-tables-qr.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/jubran/18.webp",
+    "srcLarge": "/images/projects/jubran/18@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The live floor in dark mode.",
+      "ar": "خريطة الصالة المباشرة في الوضع الداكن."
+    },
+    "source": "18-admin-floor-dark.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/jubran/19.webp",
+    "srcLarge": "/images/projects/jubran/19@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Staff sign-in over the restaurant's dining-room photo.",
+      "ar": "دخول الموظفين فوق صورة لصالة المطعم."
+    },
+    "source": "19-admin-login.png"
+  }
+]

@@ -1,0 +1,240 @@
+[
+  {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/abu-jbara/demo-1.mp4",
+    "poster": "/images/projects/abu-jbara/demo-1.webp",
+    "preview": "/images/projects/abu-jbara/demo-1-preview.mp4",
+    "width": 1600,
+    "height": 900,
+    "duration": 60.7,
+    "caption": {
+      "en": "Side by side: a guest on a phone orders through the AI waiter in Jordanian Arabic while the staff floor updates live; the order lands on table T1, staff start preparing and mark it ready, and the guest's tracker follows each step in real time.",
+      "ar": "جنبًا إلى جنب: ضيف على هاتفه يطلب عبر النادل الذكي باللهجة الأردنية بينما تتحدث خريطة الصالة عند الموظفين مباشرة؛ يصل الطلب إلى الطاولة T1، ويبدأ الموظفون التحضير ثم يعلّمونه جاهزًا، ومتتبع الضيف يلحق كل خطوة لحظيًا."
+    },
+    "source": "video-01-ai-waiter-live-floor.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/01.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "The guest scans table T1's QR and lands on a personal welcome in Arabic: menu, smart waiter, live order and table service.",
+      "ar": "الضيف يمسح رمز QR للطاولة T1 فتظهر له ترحيبة شخصية بالعربية: المنيو، النادل الذكي، الطلب المباشر، وخدمة الطاولة."
+    },
+    "source": "01-guest-qr-welcome-ar.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/02.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "The photo menu in English with real prices, categories and the \"Ask your smart waiter\" shortcut.",
+      "ar": "منيو مصوّر بالإنجليزية بأسعار حقيقية وفئات واختصار «اسأل نادلك الذكي»."
+    },
+    "source": "02-guest-menu-en.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/03.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Dish sheet: photos, bilingual name, price, availability, quantity and special instructions.",
+      "ar": "بطاقة الطبق: صور، اسم بلغتين، السعر، التوفر، الكمية، وتعليمات خاصة."
+    },
+    "source": "03-guest-dish-details.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/04.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Asked in Jordanian Arabic \"what kinds of hummus do you have?\", the waiter lists every hummus dish with its exact menu price.",
+      "ar": "سؤال باللهجة الأردنية «شو أنواع الحمص عندكم؟» والنادل يعرض كل أطباق الحمص بأسعارها الدقيقة من المنيو."
+    },
+    "source": "04-ai-waiter-menu-question.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/05.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "One message adds 2 hummus, 6 falafel and two teas (one without sugar); the waiter suggests a matching side.",
+      "ar": "رسالة واحدة تضيف صحني حمص و6 أقراص فلافل وكاسَي شاي (واحد بدون سكر)، والنادل يقترح طبقًا جانبيًا مناسبًا."
+    },
+    "source": "05-ai-waiter-adds-dishes.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/06.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "A priced summary card (15 JOD) that the server will only send after the guest confirms.",
+      "ar": "بطاقة ملخص مسعّرة (15 دينار) لا يرسلها الخادم إلا بعد تأكيد الضيف."
+    },
+    "source": "06-ai-waiter-order-summary.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/07.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "The guest replies \"yes, send it to the kitchen\" and order AJ-107 is placed, with a link to track it.",
+      "ar": "الضيف يرد «آه ابعته عالمطبخ» فيُرسل الطلب AJ-107 مع رابط لمتابعته."
+    },
+    "source": "07-ai-waiter-order-sent.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/08.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Live tracking: the kitchen pressed \"Start preparing\" and the guest's tracker moved on its own; notes are kept per line.",
+      "ar": "تتبع مباشر: المطبخ ضغط «ابدأ التحضير» فتحرك متتبع الضيف وحده، مع الملاحظات محفوظة لكل صنف."
+    },
+    "source": "08-guest-live-tracking-preparing.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/09.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Seconds later the order flips to Ready on the guest's phone.",
+      "ar": "بعد ثوانٍ يتحول الطلب إلى «جاهز» على هاتف الضيف."
+    },
+    "source": "09-guest-live-tracking-ready.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/10.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "The manual path: a basket that stays a draft until the guest confirms it.",
+      "ar": "المسار اليدوي: سلة تبقى مسودة حتى يؤكدها الضيف."
+    },
+    "source": "10-guest-basket.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/abu-jbara/11.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "One-tap table service: call staff, tissues, clean table, request bill, complaints.",
+      "ar": "خدمة الطاولة بلمسة: نداء الموظف، محارم، تنظيف الطاولة، طلب الحساب، والشكاوى."
+    },
+    "source": "11-guest-table-services.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/abu-jbara/12.webp",
+    "srcLarge": "/images/projects/abu-jbara/12@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Staff live floor: the restaurant's floor plan with every table's state, KPIs, service queue and incoming orders.",
+      "ar": "خريطة الصالة المباشرة للموظفين: مخطط المطعم بحالة كل طاولة، والمؤشرات، وطابور الخدمات، والطلبات الواردة."
+    },
+    "source": "12-admin-floor.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/abu-jbara/13.webp",
+    "srcLarge": "/images/projects/abu-jbara/13@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The same floor as compact cards for quick scanning.",
+      "ar": "الصالة نفسها كبطاقات مختصرة للمتابعة السريعة."
+    },
+    "source": "13-admin-floor-cards.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/abu-jbara/14.webp",
+    "srcLarge": "/images/projects/abu-jbara/14@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Table T1's visit: guests, running bill, order AJ-107 and one-tap close.",
+      "ar": "زيارة الطاولة T1: الضيوف، الحساب الجاري، الطلب AJ-107، وإغلاق بلمسة."
+    },
+    "source": "14-admin-table-details.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/abu-jbara/15.webp",
+    "srcLarge": "/images/projects/abu-jbara/15@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Menu management: categories, dish photos, prices, availability switches and search.",
+      "ar": "إدارة المنيو: الفئات وصور الأطباق والأسعار ومفاتيح التوفر والبحث."
+    },
+    "source": "15-admin-menu.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/abu-jbara/16.webp",
+    "srcLarge": "/images/projects/abu-jbara/16@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Tables & QR: each table's active QR with PDF download, replace, disable and \"try as customer\".",
+      "ar": "الطاولات وQR: رمز فعّال لكل طاولة مع تنزيل PDF والاستبدال والتعطيل و«جرّب كزبون»."
+    },
+    "source": "16-admin-tables-qr.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/abu-jbara/17.webp",
+    "srcLarge": "/images/projects/abu-jbara/17@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The live floor in dark mode.",
+      "ar": "خريطة الصالة المباشرة في الوضع الداكن."
+    },
+    "source": "17-admin-floor-dark.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/abu-jbara/18.webp",
+    "srcLarge": "/images/projects/abu-jbara/18@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Staff sign-in with the restaurant's heritage illustration.",
+      "ar": "دخول الموظفين مع رسم تراثي للمطعم."
+    },
+    "source": "18-admin-login.png"
+  }
+]

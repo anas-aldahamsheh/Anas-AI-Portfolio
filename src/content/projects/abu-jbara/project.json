@@ -1,0 +1,70 @@
+{
+  "slug": "abu-jbara",
+  "category": "AI Restaurant Tech",
+  "cover": "12-admin-floor.png",
+  "tags": [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Python",
+    "FastAPI",
+    "PostgreSQL",
+    "pgvector",
+    "WebSockets",
+    "Gemini"
+  ],
+  "repoPrivate": true,
+  "en": {
+    "title": "Abu Jbara",
+    "summary": "QR table ordering for an Amman hummus-and-falafel house: guests order from their phone by tapping or by chatting with an AI waiter that speaks Jordanian Arabic, while staff watch every table live on the restaurant's floor map.",
+    "metrics": [
+      "4 | messages in Jordanian Arabic from question to placed order",
+      "15.00 JOD | order total, every price matching the menu",
+      "~2 s | from confirmation to the staff floor map",
+      "257 | automated tests passing"
+    ],
+    "role": "Sole engineer: product design, the FastAPI backend and data model, the AI waiter and its guards, the real-time layer, and the bilingual guest and staff apps.",
+    "problem": "At a busy restaurant, guests wait to order, call for the bill and repeat requests, and staff juggle tables from memory. Off-the-shelf QR menus only show a list of dishes, and a chatbot that takes orders is risky: a language model can invent dishes, prices or confirmations, and most cannot understand how people in Amman actually talk.",
+    "solution": "Every table has its own QR code. Scanning it opens a guest app tied to that table, with no sign-up: a photo menu with real prices, a basket that is re-priced on the server and confirmed before it reaches the kitchen, live order tracking (received, in the kitchen, ready), one-tap table services (call staff, tissues, clean table, bill, complaints) and changes to a sent order until it is ready.\n\nThe AI waiter understands Jordanian dialect, standard Arabic, English and a mix of them. It answers from the restaurant's own menu, recommends, adds dishes with notes such as \"one tea without sugar\", summarises the order with exact prices and sends it only after the guest confirms. Staff run the room from a live floor map of the real layout, an incoming-orders panel, a service queue, per-table visits with the running bill, menu management, printable QR codes and per-purpose AI settings.",
+    "architecture": "A Next.js 16 guest and staff app talks to a FastAPI backend on async SQLAlchemy and PostgreSQL with pgvector. The waiter uses Gemini tool calling, and every tool call goes through server-side checks. Menu search is hybrid, combining dish-name matching with vector embeddings, and falls back to name matching on its own when the embedding provider is unavailable. Order, status and service events are written to a transactional outbox and pushed to guests and staff over WebSockets. AI provider, model and key are set per purpose (chat, menu search, dictation, live voice), with keys encrypted at rest.",
+    "challenges": "Letting a language model take real orders without trusting it: a dish can only be ordered after it was shown to the guest, the table and guest always come from the QR session rather than the conversation, the order needs an explicit confirmation in a later message, and prices are recomputed at submit. Understanding dialect requests like \"شاي بدون سكر\" and keeping each note on the right line. Keeping the floor map, the kitchen and every guest's phone in sync in real time.",
+    "decisions": "Guards in code, not in the prompt, so a clever message cannot place an unconfirmed order or change a price. A transactional outbox so a live update is never lost or sent for an order that did not commit. Graceful degradation everywhere: semantic search falls back to name matching and the guest can always order by tapping. Production refuses to start with weak secrets.",
+    "results": "In a recorded run on Gemini 3.1 Flash Lite, a guest asked about hummus in Jordanian Arabic, ordered two plates of hummus with pine nuts, six falafel and two teas (one without sugar), declined a suggested side, received a priced summary and confirmed by text. Order AJ-107 reached the kitchen at 15.00 JOD with both tea notes attached, and every price in the chat matched the menu exactly. The order appeared on the staff floor map about two seconds after confirmation, and as staff pressed Start preparing and Ready, the guest's tracker followed live. Waiter replies arrived in roughly 1 to 4 seconds, and the automated suite passed 257 tests.",
+    "highlights": [
+      "AI waiter in Jordanian Arabic, English or a mix, with priced summaries and explicit confirmation",
+      "Server-side guards on every AI action",
+      "Hybrid menu search with pgvector and automatic fallback",
+      "Live floor map of the real restaurant layout over WebSockets",
+      "Change a sent order until it is ready, with changes highlighted for the kitchen",
+      "QR codes per table with printable PDFs",
+      "Arabic and English with full RTL, light and dark themes, phone-first guest app"
+    ]
+  },
+  "ar": {
+    "title": "أبو جبارة",
+    "summary": "طلب من الطاولة عبر QR لمطعم حمص وفلافل في عمّان: الزبون يطلب من جواله باللمس أو بالدردشة مع نادل ذكي يحكي باللهجة الأردنية، والموظفون يتابعون كل طاولة مباشرة على خريطة صالة المطعم.",
+    "metrics": [
+      "4 | رسائل باللهجة الأردنية من السؤال لحد ما انطلب الطلب",
+      "15.00 دينار | مجموع الطلب، وكل سعر مطابق للمنيو",
+      "~2 ثانية | من التأكيد لحد خريطة صالة الموظفين",
+      "257 | اختبارًا آليًا ناجحًا"
+    ],
+    "role": "المهندس الوحيد على المشروع: تصميم المنتج، الواجهة الخلفية بـ FastAPI ونموذج البيانات، النادل الذكي وضوابطه، طبقة التحديث اللحظي، وتطبيقا الزبون والموظفين بلغتين.",
+    "problem": "في مطعم مزدحم، الزبون بستنى ليطلب ويطلب الفاتورة ويعيد طلباته، والموظفون بتابعوا الطاولات من الذاكرة. قوائم QR الجاهزة بتعرض قائمة أطباق فقط، والشات بوت اللي بياخذ طلبات مخاطرة: النموذج اللغوي ممكن يخترع أطباق أو أسعار أو تأكيدات، وأغلبها ما بيفهم كيف الناس بعمّان بتحكي فعلًا.",
+    "solution": "لكل طاولة رمز QR خاص فيها. مسحه بيفتح تطبيق زبون مربوط بهاي الطاولة بدون تسجيل: منيو بالصور والأسعار الحقيقية، سلة بيُعاد تسعيرها على السيرفر وبتتأكد قبل ما توصل المطبخ، تتبع مباشر للطلب (استُلم، بالمطبخ، جاهز)، خدمات طاولة بنقرة (نداء الموظف، محارم، تنظيف الطاولة، الفاتورة، شكوى)، وتعديل الطلب المرسل لحد ما يجهز.\n\nالنادل الذكي بفهم اللهجة الأردنية والفصحى والإنجليزية والخلط بينهم. بجاوب من منيو المطعم نفسه، وبيقترح، وبيضيف أطباق مع ملاحظات مثل «كاسة شاي بدون سكر»، وبيلخص الطلب بالأسعار الدقيقة وما بيبعثه إلا بعد ما الزبون يأكد. والموظفون بيديروا الصالة من خريطة مباشرة لتوزيع المطعم الحقيقي، ولوحة للطلبات الواردة، وقائمة طلبات الخدمة، وزيارة كل طاولة مع الحساب الجاري، وإدارة المنيو، ورموز QR قابلة للطباعة، وإعدادات ذكاء اصطناعي لكل غرض.",
+    "architecture": "تطبيق Next.js 16 للزبون والموظفين بيحكي مع واجهة خلفية FastAPI فوق SQLAlchemy غير المتزامن وPostgreSQL مع pgvector. النادل بيستخدم استدعاء الأدوات في Gemini، وكل استدعاء بيمر على فحوصات بالسيرفر. البحث بالمنيو هجين بيجمع مطابقة أسماء الأطباق مع التضمينات الشعاعية، وبيرجع لمطابقة الأسماء لحاله لما مزود التضمينات ما يكون متاح. أحداث الطلبات والحالات والخدمات بتنكتب في صندوق صادر ضمن نفس المعاملة وبتنبعث للزبائن والموظفين عبر WebSockets. المزود والنموذج والمفتاح بينضبطوا لكل غرض (الدردشة، بحث المنيو، الإملاء، الصوت المباشر)، والمفاتيح مشفرة بالتخزين.",
+    "challenges": "إنه النموذج اللغوي ياخذ طلبات حقيقية بدون ما نثق فيه: الطبق ما بينطلب إلا إذا انعرض للزبون، والطاولة والزبون دايمًا من جلسة QR مش من المحادثة، والطلب بده تأكيد صريح برسالة لاحقة، والأسعار بتنحسب من جديد عند الإرسال. فهم طلبات باللهجة مثل «شاي بدون سكر» وإبقاء كل ملاحظة على السطر الصح. وإبقاء خريطة الصالة والمطبخ وجوال كل زبون متزامنين لحظيًا.",
+    "decisions": "الضوابط بالكود مش بالبرومبت، فما في رسالة ذكية بتقدر تبعث طلب غير مؤكد أو تغير سعر. صندوق صادر ضمن المعاملة حتى ما يضيع أي تحديث مباشر وما ينبعث تحديث لطلب ما انحفظ. تراجع سلس بكل مكان: البحث الدلالي بيرجع لمطابقة الأسماء، والزبون دايمًا بيقدر يطلب باللمس. وبيئة الإنتاج بترفض تشتغل بأسرار ضعيفة.",
+    "results": "بتجربة مسجلة على Gemini 3.1 Flash Lite، زبون سأل عن الحمص باللهجة الأردنية، وطلب صحنين حمص بالصنوبر وست حبات فلافل وكاستين شاي (وحدة بدون سكر)، ورفض طبق جانبي مقترح، واستلم ملخص بالأسعار وأكد بالكتابة. الطلب AJ-107 وصل المطبخ بقيمة 15.00 دينار مع ملاحظتي الشاي، وكل سعر بالمحادثة طابق المنيو تمامًا. الطلب ظهر على خريطة صالة الموظفين بعد حوالي ثانيتين من التأكيد، ولما الموظفون ضغطوا «ابدأ التحضير» و«جاهز» تتبع الزبون لحقهم مباشرة. ردود النادل وصلت خلال 1 إلى 4 ثواني تقريبًا، ونجحت 257 اختبارًا آليًا.",
+    "highlights": [
+      "نادل ذكي باللهجة الأردنية أو الإنجليزية أو الخلط بينهم، مع ملخص بالأسعار وتأكيد صريح",
+      "ضوابط على السيرفر لكل إجراء بيعمله الذكاء الاصطناعي",
+      "بحث هجين بالمنيو مع pgvector وتراجع تلقائي",
+      "خريطة مباشرة لتوزيع المطعم الحقيقي عبر WebSockets",
+      "تعديل الطلب المرسل لحد ما يجهز، مع إبراز التعديلات للمطبخ",
+      "رمز QR لكل طاولة مع ملفات PDF للطباعة",
+      "عربي وإنجليزي مع دعم كامل للاتجاه من اليمين لليسار، وضع فاتح وداكن، وتطبيق زبون مصمم للجوال أولًا"
+    ]
+  }
+}

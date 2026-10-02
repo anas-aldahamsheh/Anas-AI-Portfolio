@@ -15,6 +15,10 @@ import examMaker from "./exam-maker/project.json";
 import examMakerShowcase from "./exam-maker/showcase.json";
 import aiGiantStore from "./ai-giant-store/project.json";
 import aiGiantStoreShowcase from "./ai-giant-store/showcase.json";
+import abuJbara from "./abu-jbara/project.json";
+import abuJbaraShowcase from "./abu-jbara/showcase.json";
+import jubran from "./jubran/project.json";
+import jubranShowcase from "./jubran/showcase.json";
 
 /**
  * The projects shown on the site, versioned with the code. Each folder holds `project.json`
@@ -56,6 +60,8 @@ const PROJECTS: { project: ProjectSource; showcase: ShowcaseSource }[] = [
   { project: cvChecker, showcase: cvCheckerShowcase as ShowcaseSource },
   { project: examMaker, showcase: examMakerShowcase as ShowcaseSource },
   { project: aiGiantStore, showcase: aiGiantStoreShowcase as ShowcaseSource },
+  { project: abuJbara, showcase: abuJbaraShowcase as ShowcaseSource },
+  { project: jubran, showcase: jubranShowcase as ShowcaseSource },
 ];
 
 export interface ProjectRelease {
