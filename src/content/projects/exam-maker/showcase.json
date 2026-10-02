@@ -1,0 +1,312 @@
+[
+  {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/demo-1.mp4",
+    "poster": "/images/projects/exam-maker/demo-1.webp",
+    "preview": "/images/projects/exam-maker/demo-1-preview.mp4",
+    "width": 1440,
+    "height": 900,
+    "duration": 58,
+    "caption": {
+      "en": "A full run from input to result: role and focus areas, level, format, length and language, Gemini writing the exam, the ready gate and timer, MCQ and written answers with the navigator updating live, submission, the grading pipeline and the 97/100 results with topic analytics, AI debrief and review.",
+      "ar": "تشغيل كامل من الإدخال حتى النتيجة: الدور ومجالات التركيز، المستوى والصيغة والطول واللغة، Gemini يكتب الامتحان، بوابة الجاهزية والمؤقت، إجابات اختيار من متعدد وكتابية مع تحديث المتصفح المباشر، التسليم، مسار التصحيح، ونتيجة 97/100 مع تحليلات المواضيع والتقييم الذكي والمراجعة."
+    },
+    "source": "video-exam-run.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/01.webp",
+    "srcLarge": "/images/projects/exam-maker/01@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Home page of the Interview Assessment Platform with its six core capabilities.",
+      "ar": "الصفحة الرئيسية لمنصة تقييم المقابلات وقدراتها الست."
+    },
+    "source": "01-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/02.webp",
+    "srcLarge": "/images/projects/exam-maker/02@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Configuring a Senior, mixed-format, 10-question, 30-minute assessment.",
+      "ar": "إعداد تقييم لمستوى Senior بصيغة مختلطة، 10 أسئلة و30 دقيقة."
+    },
+    "source": "02-exam-setup.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/03.webp",
+    "srcLarge": "/images/projects/exam-maker/03@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Gemini synthesizing a custom assessment for the target role and tech stack.",
+      "ar": "Gemini يبني تقييمًا مخصصًا للدور والتقنيات المستهدفة."
+    },
+    "source": "03-generating-exam.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/04.webp",
+    "srcLarge": "/images/projects/exam-maker/04@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The ready gate summarizing session parameters before the timer starts.",
+      "ar": "بوابة الجاهزية تلخص إعدادات الجلسة قبل بدء المؤقت."
+    },
+    "source": "04-ready-gate.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/05.webp",
+    "srcLarge": "/images/projects/exam-maker/05@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Timed exam session with countdown, progress bar and question navigator.",
+      "ar": "جلسة امتحان بمؤقت تنازلي وشريط تقدم ومتصفح للأسئلة."
+    },
+    "source": "05-timed-exam-session.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/06.webp",
+    "srcLarge": "/images/projects/exam-maker/06@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Answering a multiple-choice question about a blocked Node.js event loop.",
+      "ar": "الإجابة عن سؤال اختيار من متعدد حول حلقة أحداث Node.js محجوبة."
+    },
+    "source": "06-mcq-answered.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/07.webp",
+    "srcLarge": "/images/projects/exam-maker/07@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Writing a technical answer on PostgreSQL index design for a 50M-row table.",
+      "ar": "كتابة إجابة تقنية عن تصميم فهارس PostgreSQL لجدول من 50 مليون صف."
+    },
+    "source": "07-written-answer.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/08.webp",
+    "srcLarge": "/images/projects/exam-maker/08@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Final question answered, with one question flagged for review in the navigator.",
+      "ar": "آخر سؤال مجاب، مع سؤال معلّم للمراجعة في المتصفح."
+    },
+    "source": "08-navigator-flagged.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/09.webp",
+    "srcLarge": "/images/projects/exam-maker/09@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Submission dialog showing answered, flagged and remaining time.",
+      "ar": "نافذة التسليم تعرض المجاب والمعلّم والوقت المتبقي."
+    },
+    "source": "09-submit-confirmation.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/10.webp",
+    "srcLarge": "/images/projects/exam-maker/10@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Grading pipeline: deterministic MCQ scoring, rubric evaluation, then analytics.",
+      "ar": "مسار التصحيح: تصحيح حتمي للاختيار من متعدد، ثم تقييم بالمعايير، ثم التحليلات."
+    },
+    "source": "10-grading-in-progress.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/11.webp",
+    "srcLarge": "/images/projects/exam-maker/11@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Senior Frontend result: 95/100, 10 of 10 correct, with difficulty and topic breakdown.",
+      "ar": "نتيجة Senior Frontend: 95/100، و10 من 10 صحيحة، مع تفصيل حسب الصعوبة والموضوع."
+    },
+    "source": "11-results-senior-frontend-95.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/12.webp",
+    "srcLarge": "/images/projects/exam-maker/12@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Backend Engineer result: 97/100 with topic-level performance.",
+      "ar": "نتيجة Backend Engineer: 97/100 مع الأداء على مستوى المواضيع."
+    },
+    "source": "12-results-backend-97.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/13.webp",
+    "srcLarge": "/images/projects/exam-maker/13@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "AI debrief with strengths, growth areas, interview readiness and study plan.",
+      "ar": "تقييم ذكي بنقاط القوة ومجالات التطور والجاهزية للمقابلة وخطة دراسة."
+    },
+    "source": "13-ai-evaluation-study-plan.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/14.webp",
+    "srcLarge": "/images/projects/exam-maker/14@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Question-by-question review with the correct answer and explanation.",
+      "ar": "مراجعة سؤالًا بسؤال مع الإجابة الصحيحة والشرح."
+    },
+    "source": "14-question-review.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/15.webp",
+    "srcLarge": "/images/projects/exam-maker/15@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "A written answer scored 16/17 with five-dimension rubric scores and feedback.",
+      "ar": "إجابة كتابية بدرجة 16/17 مع درجات المعايير الخمسة والملاحظات."
+    },
+    "source": "15-written-rubric-evaluation.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/16.webp",
+    "srcLarge": "/images/projects/exam-maker/16@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Exam history with both attempts stored locally.",
+      "ar": "سجل الامتحانات مع المحاولتين محفوظتين محليًا."
+    },
+    "source": "16-exam-history.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/17.webp",
+    "srcLarge": "/images/projects/exam-maker/17@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Comparing two attempts side by side, topic by topic.",
+      "ar": "مقارنة محاولتين جنبًا إلى جنب، موضوعًا بموضوع."
+    },
+    "source": "17-compare-attempts.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/18.webp",
+    "srcLarge": "/images/projects/exam-maker/18@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Full Arabic interface in right-to-left layout.",
+      "ar": "واجهة عربية كاملة من اليمين لليسار."
+    },
+    "source": "18-arabic-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/exam-maker/19.webp",
+    "srcLarge": "/images/projects/exam-maker/19@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Results dashboard in Arabic.",
+      "ar": "لوحة النتائج بالعربية."
+    },
+    "source": "19-arabic-results.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/exam-maker/20.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile home page.",
+      "ar": "الصفحة الرئيسية على الجوال."
+    },
+    "source": "20-mobile-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/exam-maker/21.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile exam setup.",
+      "ar": "إعداد الامتحان على الجوال."
+    },
+    "source": "21-mobile-setup.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/exam-maker/22.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile results with the 97/100 score.",
+      "ar": "النتائج على الجوال بدرجة 97/100."
+    },
+    "source": "22-mobile-results.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/exam-maker/23.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile question review.",
+      "ar": "مراجعة الأسئلة على الجوال."
+    },
+    "source": "23-mobile-review.png"
+  }
+]

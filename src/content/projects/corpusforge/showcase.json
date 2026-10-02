@@ -1,0 +1,261 @@
+[
+  {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/demo-1.mp4",
+    "poster": "/images/projects/corpusforge/demo-1.webp",
+    "preview": "/images/projects/corpusforge/demo-1-preview.mp4",
+    "width": 1440,
+    "height": 900,
+    "duration": 57.9,
+    "caption": {
+      "en": "A real run: two sources added (a file and a URL import), the request typed to the agent and its plan, Launch, the live job from 0% to 100% (sped up 14x; the real run took 3 min 11 s), and the finished dataset of accepted conversations.",
+      "ar": "تشغيل حقيقي: إضافة مصدرين (ملف واستيراد رابط)، كتابة الطلب للوكيل وخطته، الإطلاق، المهمة مباشرة من 0% إلى 100% (مسرّعة 14 مرة، والتشغيل الحقيقي استغرق 3 دقائق و11 ثانية)، ثم الداتاسيت النهائية من المحادثات المقبولة."
+    },
+    "source": "corpusforge-demo.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/01.webp",
+    "srcLarge": "/images/projects/corpusforge/01@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Studio home: \"Turn any source into training data you can trust\", with the animated sources-forge-verified scene.",
+      "ar": "الصفحة الرئيسية للاستوديو: «حوّل أي مصدر إلى داتا تدريب تثق بها» مع مشهد المصادر ثم الصهر ثم التحقق المتحرك."
+    },
+    "source": "01-home-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/02.webp",
+    "srcLarge": "/images/projects/corpusforge/02@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Sources: an uploaded guide and a web page imported by URL, cleaned of menus, ads and footers.",
+      "ar": "المصادر: دليل مرفوع وصفحة ويب مستوردة برابط بعد تنظيفها من القوائم والإعلانات والتذييل."
+    },
+    "source": "02-sources-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/03.webp",
+    "srcLarge": "/images/projects/corpusforge/03@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The planning agent reads the sources and proposes a job: 8 grounded conversations in English and Jordanian Arabic, about 32 requests and 2 minutes, for $0.0005 of planning.",
+      "ar": "وكيل التخطيط يقرأ المصادر ويقترح مهمة: 8 محادثات موثقة بالإنجليزية واللهجة الأردنية، حوالي 32 طلبًا ودقيقتين، بتكلفة تخطيط 0.0005 دولار."
+    },
+    "source": "03-agent-proposal-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/04.webp",
+    "srcLarge": "/images/projects/corpusforge/04@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "A job running live: progress ring, conversations flowing from sources through the forge, requests, tokens and cost updating in real time.",
+      "ar": "مهمة تعمل مباشرة: حلقة التقدم، المحادثات تنتقل من المصادر عبر الصهر، والطلبات والتوكنات والتكلفة تتحدث لحظيًا."
+    },
+    "source": "04-job-live-1-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/05.webp",
+    "srcLarge": "/images/projects/corpusforge/05@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Live conversations landing with their scores, rate-limit gauges handling a provider pause (\"Resuming in 42s\"), the log and the job plan.",
+      "ar": "محادثات تصل مع درجاتها، ومؤشرات حدود الطلبات تتعامل مع توقف من المزود («الاستئناف خلال 42 ثانية»)، والسجل وخطة المهمة."
+    },
+    "source": "05-job-live-2-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/06.webp",
+    "srcLarge": "/images/projects/corpusforge/06@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The main job finished in 3 min 11 s: 8 of 8 accepted, 53 requests, 114.9K tokens, $0.02.",
+      "ar": "المهمة الرئيسية انتهت خلال 3 دقائق و11 ثانية: 8 من 8 مقبولة، 53 طلبًا، 114.9 ألف توكن، 0.02 دولار."
+    },
+    "source": "06-job-done-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/07.webp",
+    "srcLarge": "/images/projects/corpusforge/07@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Dataset overview: 8 conversations, 70 turns, 55.2K characters, average quality 84.7 and the quality distribution.",
+      "ar": "نظرة عامة على الداتاسيت: 8 محادثات، 70 دورًا، 55.2 ألف حرف، متوسط جودة 84.7 وتوزيع الجودة."
+    },
+    "source": "07-ds-overview-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/08.webp",
+    "srcLarge": "/images/projects/corpusforge/08@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The generated conversations in English and Arabic with scores, turn counts and status.",
+      "ar": "المحادثات المولدة بالإنجليزية والعربية مع الدرجات وعدد الأدوار والحالة."
+    },
+    "source": "08-conversations-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/09.webp",
+    "srcLarge": "/images/projects/corpusforge/09@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Reviewing a 9-turn conversation (score 89, persona: frustrated homeowner) with one-key Accept, Flag and Reject.",
+      "ar": "مراجعة محادثة من 9 أدوار (درجة 89، الشخصية: صاحب منزل منزعج) مع قبول أو تعليم أو رفض بضغطة زر."
+    },
+    "source": "09-review-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/10.webp",
+    "srcLarge": "/images/projects/corpusforge/10@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Quality breakdown per dimension: structure, source privacy, language, variety, answer length, style and grounding.",
+      "ar": "تفصيل الجودة لكل بُعد: البنية، خصوصية المصدر، اللغة، التنوع، طول الإجابة، الأسلوب، والاستناد للمصادر."
+    },
+    "source": "10-review-quality-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/11.webp",
+    "srcLarge": "/images/projects/corpusforge/11@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The source passages behind the answers, so every figure can be checked.",
+      "ar": "مقاطع المصادر خلف الإجابات، حتى يمكن التحقق من كل رقم."
+    },
+    "source": "11-review-evidence-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/12.webp",
+    "srcLarge": "/images/projects/corpusforge/12@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Export to OpenAI chat JSONL, ShareGPT, Alpaca, CSV, Excel or Parquet.",
+      "ar": "التصدير إلى OpenAI chat JSONL وShareGPT وAlpaca وCSV وExcel وParquet."
+    },
+    "source": "12-export-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/13.webp",
+    "srcLarge": "/images/projects/corpusforge/13@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The full Arabic right-to-left interface on the conversations list.",
+      "ar": "الواجهة العربية الكاملة من اليمين لليسار على قائمة المحادثات."
+    },
+    "source": "13-ar-conversations-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/14.webp",
+    "srcLarge": "/images/projects/corpusforge/14@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "An Arabic customer-support conversation in the review drawer.",
+      "ar": "محادثة دعم فني بالعربية في لوحة المراجعة."
+    },
+    "source": "14-ar-review-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/15.webp",
+    "srcLarge": "/images/projects/corpusforge/15@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The studio home in the light theme.",
+      "ar": "الصفحة الرئيسية في الوضع الفاتح."
+    },
+    "source": "15-light-home-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/corpusforge/16.webp",
+    "srcLarge": "/images/projects/corpusforge/16@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The finished job in the light theme.",
+      "ar": "المهمة المنتهية في الوضع الفاتح."
+    },
+    "source": "16-light-job-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/corpusforge/17.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Phone: the studio home.",
+      "ar": "على الجوال: الصفحة الرئيسية للاستوديو."
+    },
+    "source": "17-home-mobile.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/corpusforge/18.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Phone: a job running live at 75%.",
+      "ar": "على الجوال: مهمة تعمل مباشرة عند 75%."
+    },
+    "source": "18-job-live-mobile.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/corpusforge/19.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Phone: the dataset overview with average quality 84.7.",
+      "ar": "على الجوال: نظرة عامة على الداتاسيت بمتوسط جودة 84.7."
+    },
+    "source": "19-overview-mobile.png"
+  }
+]

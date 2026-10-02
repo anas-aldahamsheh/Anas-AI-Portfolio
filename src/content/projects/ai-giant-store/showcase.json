@@ -1,0 +1,247 @@
+[
+  {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/demo-1.mp4",
+    "poster": "/images/projects/ai-giant-store/demo-1.webp",
+    "preview": "/images/projects/ai-giant-store/demo-1-preview.mp4",
+    "width": 1440,
+    "height": 900,
+    "duration": 51,
+    "caption": {
+      "en": "A full shopping run: the animated home page, Cmd+K search, adding to the cart, asking the AI assistant for a $1,000 desk setup and getting real product cards, the SAVE20 coupon, the four-step checkout and the order confirmation.",
+      "ar": "رحلة شراء كاملة: الصفحة الرئيسية المتحركة، البحث بـCmd+K، الإضافة للسلة، طلب تجهيز مكتب بـ1,000 دولار من المساعد الذكي مع بطاقات منتجات حقيقية، كوبون SAVE20، الدفع بأربع خطوات، وتأكيد الطلب."
+    },
+    "source": "video-shopping-run.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/01.webp",
+    "srcLarge": "/images/projects/ai-giant-store/01@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Bilingual welcome screen introducing the platform and its key modules.",
+      "ar": "شاشة ترحيب ثنائية اللغة تعرّف بالمنصة ووحداتها الرئيسية."
+    },
+    "source": "01-welcome-screen.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/02.webp",
+    "srcLarge": "/images/projects/ai-giant-store/02@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Home page hero with AI-powered search, quick prompts and the recently added products panel.",
+      "ar": "واجهة الصفحة الرئيسية مع بحث مدعوم بالذكاء الاصطناعي واقتراحات سريعة ولوحة أحدث المنتجات."
+    },
+    "source": "02-home-hero.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/03.webp",
+    "srcLarge": "/images/projects/ai-giant-store/03@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Trending and best-seller product rails with ratings, prices and one-click add to cart.",
+      "ar": "شرائط المنتجات الرائجة والأكثر مبيعًا مع التقييمات والأسعار والإضافة للسلة بنقرة."
+    },
+    "source": "03-home-product-rails.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/04.webp",
+    "srcLarge": "/images/projects/ai-giant-store/04@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Product catalog with category, brand, price, rating and stock filters, and discount badges.",
+      "ar": "كتالوج المنتجات مع فلاتر الفئة والعلامة والسعر والتقييم والتوفر وشارات الخصم."
+    },
+    "source": "04-catalog-filters.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/05.webp",
+    "srcLarge": "/images/projects/ai-giant-store/05@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Cmd+K instant search returning matching cameras, lenses and the Cameras category as you type.",
+      "ar": "بحث فوري بـCmd+K يعرض الكاميرات والعدسات وفئة الكاميرات أثناء الكتابة."
+    },
+    "source": "05-instant-search.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/06.webp",
+    "srcLarge": "/images/projects/ai-giant-store/06@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Product page with pricing, rating, stock status, quantity, wishlist and compare actions.",
+      "ar": "صفحة المنتج مع السعر والتقييم وحالة التوفر والكمية وقائمة الأمنيات والمقارنة."
+    },
+    "source": "06-product-details.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/07.webp",
+    "srcLarge": "/images/projects/ai-giant-store/07@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The AI assistant planning a $1,800 photography starter kit and recommending real catalog products.",
+      "ar": "المساعد الذكي يخطط لعدة تصوير بميزانية 1,800 دولار ويقترح منتجات حقيقية من الكتالوج."
+    },
+    "source": "07-ai-assistant-english.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/08.webp",
+    "srcLarge": "/images/projects/ai-giant-store/08@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The AI assistant answering in Arabic with a grounded smartwatch recommendation.",
+      "ar": "المساعد الذكي يجيب بالعربية بتوصية ساعة ذكية مستندة للكتالوج."
+    },
+    "source": "08-ai-assistant-arabic.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/09.webp",
+    "srcLarge": "/images/projects/ai-giant-store/09@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Comparison board for three camera products with automatic \"highest rating per dollar\" insight.",
+      "ar": "لوحة مقارنة لثلاث كاميرات مع استنتاج تلقائي لأعلى تقييم مقابل كل دولار."
+    },
+    "source": "09-compare-products.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/10.webp",
+    "srcLarge": "/images/projects/ai-giant-store/10@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Cart with the SAVE20 coupon applied and free shipping unlocked.",
+      "ar": "السلة مع كوبون SAVE20 مطبق والشحن المجاني مفعّل."
+    },
+    "source": "10-cart-coupon.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/11.webp",
+    "srcLarge": "/images/projects/ai-giant-store/11@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Order confirmation after the four-step checkout, with discount and totals.",
+      "ar": "تأكيد الطلب بعد الدفع بأربع خطوات، مع الخصم والإجماليات."
+    },
+    "source": "11-order-confirmation.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/12.webp",
+    "srcLarge": "/images/projects/ai-giant-store/12@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Admin command center with revenue, orders, average order value and catalog size.",
+      "ar": "مركز تحكم المدير بالإيرادات والطلبات ومتوسط قيمة الطلب وحجم الكتالوج."
+    },
+    "source": "12-admin-overview.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/13.webp",
+    "srcLarge": "/images/projects/ai-giant-store/13@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Creating a new product live from the admin dashboard.",
+      "ar": "إنشاء منتج جديد مباشرة من لوحة المدير."
+    },
+    "source": "13-admin-create-product.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/ai-giant-store/14.webp",
+    "srcLarge": "/images/projects/ai-giant-store/14@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The newly created keyboard published instantly with its own product page.",
+      "ar": "لوحة المفاتيح الجديدة منشورة فورًا بصفحة منتج خاصة بها."
+    },
+    "source": "14-new-product-live.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/ai-giant-store/15.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile home page with the bottom navigation and Ask AI entry point.",
+      "ar": "الصفحة الرئيسية على الجوال مع شريط التنقل السفلي ومدخل «اسأل الذكاء الاصطناعي»."
+    },
+    "source": "15-mobile-home.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/ai-giant-store/16.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile product catalog cards.",
+      "ar": "بطاقات الكتالوج على الجوال."
+    },
+    "source": "16-mobile-catalog.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/ai-giant-store/17.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Mobile product page with add to cart, buy now, wishlist and compare.",
+      "ar": "صفحة المنتج على الجوال مع الإضافة للسلة والشراء الفوري والأمنيات والمقارنة."
+    },
+    "source": "17-mobile-product.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/ai-giant-store/18.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "The AI assistant on mobile recommending a 4K monitor for coding and photo editing.",
+      "ar": "المساعد الذكي على الجوال يقترح شاشة 4K للبرمجة وتحرير الصور."
+    },
+    "source": "18-mobile-ai-assistant.png"
+  }
+]

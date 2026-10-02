@@ -1,0 +1,222 @@
+[
+  {
+    "kind": "video",
+    "device": "desktop",
+    "src": "/images/projects/noesis/demo-1.mp4",
+    "poster": "/images/projects/noesis/demo-1.webp",
+    "preview": "/images/projects/noesis/demo-1-preview.mp4",
+    "width": 1440,
+    "height": 900,
+    "duration": 39.6,
+    "caption": {
+      "en": "A real session: sign in, the overview, a new question typed and answered live with citations and verification, the research steps and a citation preview, then the knowledge graph with a document opened.",
+      "ar": "جلسة حقيقية: تسجيل الدخول، النظرة العامة، سؤال جديد يُكتب ويُجاب مباشرة مع المراجع والتحقق، خطوات البحث ومعاينة مرجع، ثم غراف المعرفة مع فتح مستند."
+    },
+    "source": "noesis-demo.mp4"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/01.webp",
+    "srcLarge": "/images/projects/noesis/01@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Sign-in page with the animated particle knowledge sphere and the headline \"Turn your documents into an expert that cites its sources.\"",
+      "ar": "صفحة الدخول مع كرة المعرفة المتحركة من الجزيئات وعنوان «حوّل مستنداتك إلى خبير يستشهد بمصادره»."
+    },
+    "source": "01-login-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/02.webp",
+    "srcLarge": "/images/projects/noesis/02@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Overview: 30 sources, 173 passages fully embedded, 180 training pairs, 51 graph links, the indexing pipeline and the language split.",
+      "ar": "النظرة العامة: 30 مصدرًا، 173 مقطعًا مفهرسًا بالكامل، 180 زوج تدريب، 51 رابطًا في الغراف، مسار الفهرسة وتوزيع اللغات."
+    },
+    "source": "02-overview-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/03.webp",
+    "srcLarge": "/images/projects/noesis/03@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "A real answer to a two-part question: 2 research steps, 6 sources examined, numbered citations, source cards and \"Verified against sources, 100%\".",
+      "ar": "جواب حقيقي عن سؤال من جزأين: خطوتا بحث، 6 مصادر مفحوصة، مراجع مرقمة، بطاقات المصادر و«موثّق من المصادر 100%»."
+    },
+    "source": "03-answer-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/04.webp",
+    "srcLarge": "/images/projects/noesis/04@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The research steps expanded (two searches, 5 results each in 337 ms and 604 ms) and a citation hovered to preview the exact passage it rests on.",
+      "ar": "خطوات البحث مفتوحة (بحثان، 5 نتائج لكل منهما خلال 337 و604 ملي ثانية) ومعاينة المقطع الدقيق خلف أحد المراجع."
+    },
+    "source": "04-steps-citation-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/05.webp",
+    "srcLarge": "/images/projects/noesis/05@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "An Arabic question answered in Arabic from English sources in 3.3 s, labelled \"Cited across languages, 100%\".",
+      "ar": "سؤال بالعربية أُجيب بالعربية من مصادر إنجليزية خلال 3.3 ثانية، بتصنيف «موثّق عبر اللغات 100%»."
+    },
+    "source": "05-arabic-answer-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/06.webp",
+    "srcLarge": "/images/projects/noesis/06@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Retrieval lab: an English question ranks the Arabic article on inflation and central banks first, as a strong match, in 622 ms.",
+      "ar": "مختبر الاسترجاع: سؤال بالإنجليزية يضع المقال العربي عن التضخم والبنوك المركزية أولًا كتطابق قوي خلال 622 ملي ثانية."
+    },
+    "source": "06-lab-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/07.webp",
+    "srcLarge": "/images/projects/noesis/07@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Knowledge graph with \"Graphics Processing Units\" selected: its connections, passages, mined pairs and related sources with similarity scores.",
+      "ar": "غراف المعرفة مع تحديد «وحدات معالجة الرسوميات»: روابطها ومقاطعها والأزواج المستخرجة منها والمصادر المرتبطة مع درجات التشابه."
+    },
+    "source": "07-graph-node-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/08.webp",
+    "srcLarge": "/images/projects/noesis/08@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The miner drafting question and answer pairs from two selected passages.",
+      "ar": "المنقّب يصيغ أزواج أسئلة وأجوبة من مقطعين مختارين."
+    },
+    "source": "08-miner-running-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/09.webp",
+    "srcLarge": "/images/projects/noesis/09@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Five grounded pairs generated, each scored 100%, tagged by difficulty and strategy, ready to save to the dataset.",
+      "ar": "خمسة أزواج موثقة، كل منها بتقييم 100%، مصنفة حسب الصعوبة والاستراتيجية وجاهزة للحفظ في الداتاسيت."
+    },
+    "source": "09-miner-result-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/10.webp",
+    "srcLarge": "/images/projects/noesis/10@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Dataset: 180 approved pairs, 100% average quality, composition by strategy, difficulty and language.",
+      "ar": "الداتاسيت: 180 زوجًا معتمدًا بمتوسط جودة 100% وتوزيعها حسب الاستراتيجية والصعوبة واللغة."
+    },
+    "source": "10-dataset-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/11.webp",
+    "srcLarge": "/images/projects/noesis/11@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "Model usage: calls, tokens, latency and estimated cost per task after the real runs.",
+      "ar": "استهلاك النماذج: الاستدعاءات والتوكنات وزمن الاستجابة والتكلفة التقديرية لكل مهمة بعد التشغيلات الحقيقية."
+    },
+    "source": "11-usage-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/12.webp",
+    "srcLarge": "/images/projects/noesis/12@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The knowledge graph in dark theme, English and Arabic documents clustered by subject.",
+      "ar": "غراف المعرفة في الوضع الداكن، والمستندات العربية والإنجليزية متجمعة حسب الموضوع."
+    },
+    "source": "12-dark-graph-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "desktop",
+    "src": "/images/projects/noesis/13.webp",
+    "srcLarge": "/images/projects/noesis/13@2x.webp",
+    "width": 1440,
+    "height": 900,
+    "caption": {
+      "en": "The overview in dark theme.",
+      "ar": "النظرة العامة في الوضع الداكن."
+    },
+    "source": "13-dark-overview-desktop.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/noesis/14.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Phone, Arabic interface: the cross-language answer with its research step and citations.",
+      "ar": "على الجوال بالواجهة العربية: الجواب عبر اللغات مع خطوة البحث والمراجع."
+    },
+    "source": "14-chat-ar-mobile.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/noesis/15.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Phone: the overview with the knowledge sphere.",
+      "ar": "على الجوال: النظرة العامة مع كرة المعرفة."
+    },
+    "source": "15-overview-mobile.png"
+  },
+  {
+    "kind": "image",
+    "device": "mobile",
+    "src": "/images/projects/noesis/16.webp",
+    "width": 780,
+    "height": 1688,
+    "caption": {
+      "en": "Phone, Arabic interface: the knowledge graph.",
+      "ar": "على الجوال بالواجهة العربية: غراف المعرفة."
+    },
+    "source": "16-graph-ar-mobile.png"
+  }
+]

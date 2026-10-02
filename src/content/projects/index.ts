@@ -1,8 +1,16 @@
 import type { ShowcaseItem } from "@/server/content/collections";
+import noesis from "./noesis/project.json";
+import noesisShowcase from "./noesis/showcase.json";
+import corpusforge from "./corpusforge/project.json";
+import corpusforgeShowcase from "./corpusforge/showcase.json";
 import websiteQaAgent from "./website-qa-agent/project.json";
 import websiteQaAgentShowcase from "./website-qa-agent/showcase.json";
 import cvChecker from "./cv-checker/project.json";
 import cvCheckerShowcase from "./cv-checker/showcase.json";
+import examMaker from "./exam-maker/project.json";
+import examMakerShowcase from "./exam-maker/showcase.json";
+import aiGiantStore from "./ai-giant-store/project.json";
+import aiGiantStoreShowcase from "./ai-giant-store/showcase.json";
 
 /**
  * The projects shown on the site, versioned with the code. Each folder holds `project.json`
@@ -20,7 +28,7 @@ export interface ProjectSource {
   demoUrl?: string;
   startDate?: string;
   endDate?: string;
-  /** Defaults to the first desktop screenshot. */
+  /** Source file name of the screenshot used as the cover (defaults to the first desktop one). */
   cover?: string;
   en: Record<string, unknown>;
   ar: Record<string, unknown>;
@@ -36,8 +44,12 @@ type ShowcaseSource = (Omit<
   })[];
 
 const PROJECTS: { project: ProjectSource; showcase: ShowcaseSource }[] = [
+  { project: noesis, showcase: noesisShowcase as ShowcaseSource },
+  { project: corpusforge, showcase: corpusforgeShowcase as ShowcaseSource },
   { project: websiteQaAgent, showcase: websiteQaAgentShowcase as ShowcaseSource },
   { project: cvChecker, showcase: cvCheckerShowcase as ShowcaseSource },
+  { project: examMaker, showcase: examMakerShowcase as ShowcaseSource },
+  { project: aiGiantStore, showcase: aiGiantStoreShowcase as ShowcaseSource },
 ];
 
 export interface ProjectRelease {
@@ -50,8 +62,14 @@ export interface ProjectRelease {
 export function projectEntries(): ProjectRelease[] {
   return PROJECTS.map(({ project, showcase }, orderIndex) => {
     const items = showcase.map(({ source: _source, ...item }) => item);
+    const chosen = project.cover
+      ? showcase.find((item) => item.source === project.cover && item.kind === "image")
+      : undefined;
+    if (project.cover && !chosen) {
+      throw new Error(`${project.slug}: cover "${project.cover}" is not one of its screenshots`);
+    }
     const cover =
-      project.cover ??
+      chosen?.src ??
       items.find((item) => item.kind === "image" && item.device === "desktop")?.src ??
       items.find((item) => item.kind === "video")?.poster ??
       "";

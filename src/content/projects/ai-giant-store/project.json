@@ -1,0 +1,72 @@
+{
+  "slug": "ai-giant-store",
+  "category": "AI E-commerce",
+  "cover": "07-ai-assistant-english.png",
+  "tags": [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Gemini",
+    "RAG",
+    "Zustand",
+    "Zod",
+    "Framer Motion",
+    "Vitest"
+  ],
+  "repoUrl": "https://github.com/anas-aldahamsheh/AI-Giant-Store",
+  "en": {
+    "title": "Giant Store",
+    "summary": "An AI-powered storefront where a Gemini shopping assistant, grounded in the store's own catalog through local RAG, recommends only real products, in English or Arabic.",
+    "metrics": [
+      "0 | invented products: every recommendation is re-checked by id",
+      "$977 | desk setup built by the assistant for a $1,000 budget",
+      "4 | step checkout with coupons and saved addresses",
+      "40 | automated tests passing"
+    ],
+    "role": "Sole engineer: the storefront, the shopping assistant and its retrieval pipeline, checkout and the admin dashboard.",
+    "problem": "Shopping assistants built on a language model love to recommend products the store does not sell, quote wrong prices and answer in the wrong language. A store also needs the assistant to keep working when the model is slow or unavailable.",
+    "solution": "A complete storefront built with Next.js 16, React 19 and Tailwind CSS 4 that needs no database or backend setup. Each question to the assistant goes through retrieval: the catalog is split into product chunks, embedded locally with fast hashed embeddings, and only the most relevant products are passed to Gemini with a strict, versioned system prompt that forbids inventing products, matches the shopper's language and returns structured JSON.\n\nThe server then sanitizes the answer: every recommended product is validated against the catalog by id, so a hallucinated item can never reach the page. Recommendations arrive as product cards with a one-tap Add. If no key is set or the model is unavailable, a built-in local advisor answers instead.",
+    "architecture": "Next.js App Router with route handlers and a proxy. Cart, wishlist and compare live in persisted Zustand stores; auth and orders in React Context; catalog, accounts and orders are kept in the browser so the store starts with one command. The chat endpoint is hardened with same-origin checks, a body-size limit, JSON-only input, Zod validation and rate limiting. Admin-created products appear instantly in the storefront, the instant search, the recommendation rails and the assistant's index.",
+    "challenges": "Making the assistant useful and trustworthy at the same time: grounding it in the catalog, keeping prices and names exact, answering naturally in Arabic or English, and failing gracefully. A full shopping experience around it had to stay fast and smooth on phones.",
+    "decisions": "Local retrieval with hashed embeddings instead of an external embedding API, so the feature has no extra cost or setup. Server-side validation of every model output instead of trusting the prompt. Motion built with Framer Motion that respects reduced-motion settings.",
+    "results": "In real runs on the production build, the assistant planned a $1,800 photography kit around a $1,199 camera, recommended a $199 GPS smartwatch in fluent Arabic, and built a $977 desk setup (a 4K monitor, a desk and a mouse) for a $1,000 budget, all as real product cards. A three-item order of $1,707 with the SAVE20 coupon took $341.40 off, unlocked free shipping and was saved at $1,474.85 with tax, and a product created in the admin went live instantly with its own page. 40 tests across 12 files pass.",
+    "highlights": [
+      "Bilingual AI shopping assistant with local RAG and product cards",
+      "Server-side answer sanitization and a local fallback advisor",
+      "Catalog filters, sorting, grid and list views and quick view",
+      "Cmd+K instant search across products, categories and suggestions",
+      "Compare board with a best-rating-per-dollar insight",
+      "Cart with coupons and a free-shipping progress bar, four-step checkout",
+      "Accounts with order history, wishlist and reviews; role-based admin dashboard with metrics and product management",
+      "Animated, fully responsive interface with a mobile bottom navigation"
+    ]
+  },
+  "ar": {
+    "title": "Giant Store",
+    "summary": "متجر إلكتروني مدعوم بالذكاء الاصطناعي، فيه مساعد تسوق بـGemini يستند إلى كتالوج المتجر نفسه عبر RAG محلي، ولا يقترح إلا منتجات حقيقية، بالعربية أو الإنجليزية.",
+    "metrics": [
+      "0 | منتجات مختلقة: كل توصية يُعاد التحقق منها بالمعرّف",
+      "$977 | تجهيز مكتب بناه المساعد لميزانية 1,000 دولار",
+      "4 | خطوات للدفع مع كوبونات وعناوين محفوظة",
+      "40 | اختبارًا آليًا ناجحًا"
+    ],
+    "role": "المهندس الوحيد على المشروع: المتجر، مساعد التسوق ومسار الاسترجاع الخاص به، الدفع، ولوحة المدير.",
+    "problem": "مساعدات التسوق المبنية على نماذج لغوية تحب اقتراح منتجات لا يبيعها المتجر، وذكر أسعار خاطئة، والإجابة بلغة غير لغة المتسوق. والمتجر يحتاج أيضًا أن يبقى المساعد يعمل عندما يكون النموذج بطيئًا أو غير متاح.",
+    "solution": "متجر متكامل مبني بـNext.js 16 وReact 19 وTailwind CSS 4 لا يحتاج قاعدة بيانات ولا إعداد باك إند. كل سؤال للمساعد يمر بالاسترجاع: يُقسم الكتالوج إلى مقاطع منتجات، وتُضمّن محليًا بتضمينات سريعة، ولا يُمرر إلى Gemini إلا المنتجات الأكثر صلة، مع تعليمات نظام صارمة ومرقمة الإصدار تمنع اختلاق المنتجات، وتطابق لغة المتسوق، وتعيد JSON منظمًا.\n\nثم ينظف الخادم الإجابة: كل منتج مقترح يُتحقق منه مقابل الكتالوج بالمعرّف، فلا يصل أي منتج مختلق للصفحة أبدًا. وتصل التوصيات كبطاقات منتجات مع زر إضافة بنقرة. وإذا لم يوجد مفتاح أو تعذر النموذج، يجيب مستشار محلي مدمج بدلًا منه.",
+    "architecture": "Next.js App Router مع Route Handlers وProxy. السلة والأمنيات والمقارنة في مخازن Zustand محفوظة، والمصادقة والطلبات في React Context، والكتالوج والحسابات والطلبات محفوظة في المتصفح فيعمل المتجر بأمر واحد. نقطة المحادثة محمية بالتحقق من نفس المصدر وحد لحجم الطلب وإدخال JSON فقط وتحقق Zod وحدود للطلبات. والمنتجات التي ينشئها المدير تظهر فورًا في المتجر والبحث الفوري وشرائط التوصيات وفهرس المساعد.",
+    "challenges": "جعل المساعد مفيدًا وموثوقًا في الوقت نفسه: ربطه بالكتالوج، والإبقاء على الأسعار والأسماء دقيقة، والإجابة بشكل طبيعي بالعربية أو الإنجليزية، والتعامل اللبق مع الأعطال. وتجربة تسوق كاملة حوله كان عليها أن تبقى سريعة وسلسة على الجوال.",
+    "decisions": "استرجاع محلي بتضمينات سريعة بدل واجهة تضمين خارجية، فلا تكلفة ولا إعداد إضافي. تحقق من كل مخرجات النموذج على الخادم بدل الثقة بالتعليمات وحدها. وحركة مبنية بـFramer Motion تحترم إعداد تقليل الحركة.",
+    "results": "في تشغيلات حقيقية على نسخة الإنتاج، خطط المساعد لعدة تصوير بـ1,800 دولار حول كاميرا بـ1,199 دولار، واقترح ساعة ذكية بـGPS بسعر 199 دولار بعربية سلسة، وبنى تجهيز مكتب بـ977 دولار (شاشة 4K ومكتب وفأرة) لميزانية 1,000 دولار، وكلها كبطاقات منتجات حقيقية. وطلب من ثلاثة منتجات بـ1,707 دولار مع كوبون SAVE20 خصم 341.40 دولار وفعّل الشحن المجاني وحُفظ بإجمالي 1,474.85 دولار مع الضريبة، ومنتج أنشأه المدير ظهر فورًا بصفحة خاصة به. وتنجح 40 اختبارًا في 12 ملفًا.",
+    "highlights": [
+      "مساعد تسوق ذكي ثنائي اللغة مع RAG محلي وبطاقات منتجات",
+      "تنظيف إجابات النموذج على الخادم ومستشار محلي بديل",
+      "فلاتر للكتالوج وترتيب وعرض شبكي أو قائمة ونظرة سريعة",
+      "بحث فوري بـCmd+K في المنتجات والفئات والاقتراحات",
+      "لوحة مقارنة مع استنتاج أعلى تقييم مقابل كل دولار",
+      "سلة بكوبونات وشريط تقدم للشحن المجاني، ودفع بأربع خطوات",
+      "حسابات بسجل الطلبات والأمنيات والمراجعات، ولوحة مدير حسب الصلاحيات مع المقاييس وإدارة المنتجات",
+      "واجهة متحركة ومتجاوبة بالكامل مع شريط تنقل سفلي للجوال"
+    ]
+  }
+}

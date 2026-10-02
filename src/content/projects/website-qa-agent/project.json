@@ -1,6 +1,7 @@
 {
   "slug": "website-qa-agent",
   "category": "QA Automation",
+  "cover": "05-scan-configuration.png",
   "tags": [
     "Next.js",
     "React",
