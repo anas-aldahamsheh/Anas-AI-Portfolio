@@ -43,7 +43,15 @@ async function main() {
   try {
     const result = await applyProjectsRelease({ force: flag("force") });
     console.info("release:", JSON.stringify(result));
-    if (result.skipped) return;
+    if (result.skipped) {
+      // Another deployment already applied this release; still finish any embeddings it left
+      // missing (for example when the daily quota ran out), so every deploy completes the index.
+      if (!flag("no-index")) {
+        const { repairMissingEmbeddings } = await import("@/ai/knowledge/indexer");
+        console.info("knowledge repaired:", await repairMissingEmbeddings({ patient: true }));
+      }
+      return;
+    }
     if (!flag("no-index")) {
       const { rebuildKnowledge } = await import("@/server/knowledge/sync");
       // A build can wait out per-minute embedding limits, so the index ends up complete.
