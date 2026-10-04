@@ -878,6 +878,32 @@ html[data-vt="theme"]::view-transition-new(root) {
   }
 }
 
+/* The assistant (panel and its mobile scrim) gets its own snapshots, painted above the page's,
+   so page content never slides over the open chat while a page change animates. */
+.assistant-scrim {
+  view-transition-name: assistant-scrim;
+}
+
+.assistant-sheet {
+  view-transition-name: assistant-panel;
+}
+
+::view-transition-group(assistant-scrim),
+::view-transition-group(assistant-panel) {
+  z-index: 10;
+  animation: none;
+}
+
+::view-transition-old(assistant-scrim),
+::view-transition-old(assistant-panel) {
+  display: none;
+}
+
+::view-transition-new(assistant-scrim),
+::view-transition-new(assistant-panel) {
+  animation: none;
+}
+
 ::view-transition-group(.morph) {
   animation-duration: 450ms;
   animation-timing-function: var(--ease-out-expo);

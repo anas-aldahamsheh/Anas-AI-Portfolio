@@ -150,7 +150,7 @@ export function AssistantPanel({
             <m.div
               key="scrim"
               aria-hidden="true"
-              className="fixed inset-0 z-50 bg-slate-950/45"
+              className="assistant-scrim fixed inset-0 z-50 bg-slate-950/45"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
