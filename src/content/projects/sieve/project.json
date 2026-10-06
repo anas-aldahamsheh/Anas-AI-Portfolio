@@ -2,6 +2,7 @@
   "slug": "sieve",
   "featured": true,
   "category": "Data Engineering",
+  "demoUrl": "https://sieve.anaslabs.com",
   "cover": "09-job-results.png",
   "tags": [
     "Python",

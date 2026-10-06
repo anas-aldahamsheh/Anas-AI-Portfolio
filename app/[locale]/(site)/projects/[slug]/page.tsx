@@ -173,7 +173,10 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
                   </span>
                 ) : null}
                 {video ? (
-                  <a href="#showcase" className="btn-action-primary">
+                  <a
+                    href="#showcase"
+                    className={project.data.demoUrl ? "btn-action-secondary" : "btn-action-primary"}
+                  >
                     <PlayCircle className="h-4 w-4" aria-hidden="true" />
                     {tx("project.showcase.watch")}
                   </a>

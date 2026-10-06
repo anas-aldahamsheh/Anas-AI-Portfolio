@@ -1,6 +1,7 @@
 {
   "slug": "jubran",
   "category": "AI Restaurant Tech",
+  "demoUrl": "https://jubran.anaslabs.com/login",
   "cover": "13-admin-floor-new-order.png",
   "tags": [
     "Next.js",

@@ -1,6 +1,7 @@
 {
   "slug": "ai-giant-store",
   "category": "AI E-commerce",
+  "demoUrl": "https://ai-giant-store.anaslabs.com",
   "cover": "07-ai-assistant-english.png",
   "tags": [
     "Next.js",

@@ -17,7 +17,7 @@ import { listAllRows } from "./repository";
  * owner makes afterwards in the admin are never overwritten by a later deploy. Bump the id to
  * publish a new version of the projects or certificates.
  */
-export const PROJECTS_RELEASE_ID = "content-2026-10-13";
+export const PROJECTS_RELEASE_ID = "content-2026-10-14";
 
 const releaseKey = (id: string) => `content_release:${id}`;
 const ACTOR = "content-release";

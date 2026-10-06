@@ -2,6 +2,7 @@
   "slug": "vigil",
   "featured": true,
   "category": "Web Reliability",
+  "demoUrl": "https://vigil.anaslabs.com",
   "cover": "07-run-summary.png",
   "tags": [
     "Python",

@@ -2,6 +2,7 @@
   "slug": "noesis",
   "featured": true,
   "category": "Agentic RAG",
+  "demoUrl": "https://noesis.anaslabs.com",
   "cover": "03-answer-desktop.png",
   "tags": [
     "Python",

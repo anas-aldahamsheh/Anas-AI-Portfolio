@@ -2,6 +2,7 @@
   "slug": "corpusforge",
   "featured": true,
   "category": "AI Agent",
+  "demoUrl": "https://forge.anaslabs.com",
   "cover": "06-job-done-desktop.png",
   "tags": [
     "Python",

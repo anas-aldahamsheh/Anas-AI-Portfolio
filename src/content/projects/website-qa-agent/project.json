@@ -1,6 +1,7 @@
 {
   "slug": "website-qa-agent",
   "category": "QA Automation",
+  "demoUrl": "https://qa.anaslabs.com",
   "cover": "05-scan-configuration.png",
   "tags": [
     "Next.js",

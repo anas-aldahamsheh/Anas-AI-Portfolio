@@ -1,6 +1,7 @@
 {
   "slug": "cv-checker",
   "category": "AI Product",
+  "demoUrl": "https://cv-checker.anaslabs.com",
   "cover": "07-results-score.png",
   "tags": [
     "Next.js",

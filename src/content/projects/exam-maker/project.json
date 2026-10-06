@@ -1,6 +1,7 @@
 {
   "slug": "exam-maker",
   "category": "AI EdTech",
+  "demoUrl": "https://exam-maker.anaslabs.com",
   "cover": "11-results-senior-frontend-95.png",
   "tags": [
     "Next.js",
