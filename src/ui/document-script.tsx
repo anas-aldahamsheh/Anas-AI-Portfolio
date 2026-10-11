@@ -1,6 +1,7 @@
 /**
  * Runs before first paint:
- *  1. applies the saved theme (no light/dark flash);
+ *  1. applies the saved theme (no light/dark flash). Light is the default: dark only when the
+ *     visitor picked it with the toggle, never just because the OS is in dark mode;
  *  2. enables scroll reveals only when JS is alive — content is never hidden for crawlers or
  *     failed scripts (reduced-motion visitors get a plain fade, see globals.css);
  *  3. pauses decorative loops inside `[data-pause-offscreen]` sections while they are off
@@ -12,7 +13,7 @@ const SCRIPT = `(function(){try{
 var d=document.documentElement;
 var m=document.cookie.match(/(?:^|; )pf_theme=([^;]+)/),t=m?m[1]:null;
 try{if(!t)t=localStorage.getItem('pf_theme');}catch(e){}
-var dark=t==='dark'||((!t||t==='system')&&matchMedia('(prefers-color-scheme: dark)').matches);
+var dark=t==='dark';
 d.classList.toggle('dark',dark);d.style.colorScheme=dark?'dark':'light';
 try{if(/(?:^|; )pf_admin=1/.test(document.cookie)&&localStorage.getItem('pf_edit')==='1')d.classList.add('edit-mode');}catch(e){}
 if(!('IntersectionObserver' in window))return;

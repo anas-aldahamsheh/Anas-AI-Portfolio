@@ -18,10 +18,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#07101f" },
-  ],
+  // Light is the default whatever the OS prefers, so the browser bar stays light too.
+  themeColor: "#ffffff",
 };
 
 /** Social preview image (1200×630) shown when the site is shared. */
